@@ -1,6 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
+import { Geist, Geist_Mono, Inter, Marcellus } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: 'swap',
+});
+
+const marcellus = Marcellus({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-marcellus",
+  display: 'swap',
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,8 +39,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${marcellus.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {process.env.NODE_ENV === "development" && (
+          <Script
+            src="//unpkg.com/react-grab/dist/index.global.js"
+            crossOrigin="anonymous"
+            strategy="beforeInteractive"
+          />
+        )}
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

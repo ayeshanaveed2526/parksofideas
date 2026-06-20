@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User, Heart, ShoppingBag } from "lucide-react";
+import { Search, User, Heart, ShoppingBag, Menu } from "lucide-react";
 
 /**
  * MainNavbar — the second bar.
@@ -35,13 +35,13 @@ export default function MainNavbar() {
         </Link>
 
         {/* Nav links */}
-        <ul className="flex items-center text-[#1a1a1a]">
+        <ul className="hidden lg:flex relative lg:right-[30px] items-center text-[#1a1a1a]">
           {navLinks.map((link) => (
             <li
               key={link.label}
               style={{
                 position: "relative",
-                fontWeight: "semibold",
+                fontWeight: 500,
                 fontSize: "14px",
                 lineHeight: 1.14,
                 letterSpacing: "0.13em",
@@ -70,6 +70,9 @@ export default function MainNavbar() {
           </button>
           <button aria-label="Cart" className="transition-all duration-200 hover:scale-125 hover:opacity-70">
             <ShoppingBag size={20} strokeWidth={1.5} />
+          </button>
+          <button aria-label="Menu" className="lg:hidden transition-all duration-200 hover:scale-125 hover:opacity-70">
+            <Menu size={24} strokeWidth={1.5} />
           </button>
         </div>
       </div>
