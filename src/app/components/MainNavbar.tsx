@@ -59,16 +59,16 @@ export default function MainNavbar() {
 
         {/* Right icons */}
         <div className="flex items-center gap-6 text-black">
-          <button aria-label="Search" className="hover:opacity-70">
+          <button aria-label="Search" className="transition-all duration-200 hover:scale-125 hover:opacity-70">
             <Search size={20} strokeWidth={1.5} />
           </button>
-          <button aria-label="Account" className="hover:opacity-70">
+          <button aria-label="Account" className="transition-all duration-200 hover:scale-125 hover:opacity-70">
             <User size={20} strokeWidth={1.5} />
           </button>
-          <button aria-label="Wishlist" className="hover:opacity-70">
+          <button aria-label="Wishlist" className="transition-all duration-200 hover:scale-125 hover:opacity-70">
             <Heart size={20} strokeWidth={1.5} />
           </button>
-          <button aria-label="Cart" className="hover:opacity-70">
+          <button aria-label="Cart" className="transition-all duration-200 hover:scale-125 hover:opacity-70">
             <ShoppingBag size={20} strokeWidth={1.5} />
           </button>
         </div>
