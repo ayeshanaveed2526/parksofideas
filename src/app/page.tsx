@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Herosection from "./components/Herosection";
 import ShopByCategory from "./components/ShopByCategory";
+import TopCategory from "./components/TopCategory";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Header />
       <Herosection />
       <ShopByCategory />
+      <TopCategory />
     </main>
   );
 }
