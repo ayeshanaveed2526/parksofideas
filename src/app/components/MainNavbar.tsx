@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, User, Heart, ShoppingBag, Menu } from "lucide-react";
 
@@ -8,6 +9,16 @@ import { Search, User, Heart, ShoppingBag, Menu } from "lucide-react";
  * Spec: 1521px x 90px, white background.
  */
 export default function MainNavbar() {
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 46);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navLinks = [
     { label: "HOME", href: "/" },
     { label: "SHOP", href: "/shop" },
@@ -19,7 +30,7 @@ export default function MainNavbar() {
   ];
 
   return (
-    <div className="w-full bg-white">
+    <div className={`w-full bg-white transition-all duration-300 ${isSticky ? "shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b border-gray-100" : ""}`}>
       <div className="mx-auto flex h-[90px] w-full max-w-[1521px] items-center justify-between px-[50px]">
         {/* Logo */}
         <Link href="/" aria-label="Luchiana Home">
