@@ -45,7 +45,7 @@ export default function MainNavbar() {
   return (
     <>
       <div className={`w-full bg-white transition-all duration-300 ${isSticky ? "shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b border-gray-100" : ""}`}>
-        <div className="mx-auto flex h-[70px] md:h-[90px] w-full max-w-[1521px] items-center justify-between px-4 sm:px-6 md:px-[50px]">
+        <div className="mx-auto flex h-[70px] md:h-[90px] w-full items-center justify-between px-4 sm:px-6 md:px-[50px] 2xl:px-[100px]">
           {/* Logo */}
           <Link href="/" aria-label="Luchiana Home" className="shrink-0">
             <svg className="w-[140px] sm:w-[170px] md:w-[205px] h-auto" viewBox="0 0 205 18" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +83,7 @@ export default function MainNavbar() {
           </ul>
 
           {/* Right icons */}
-          <div className="flex items-center gap-4 sm:gap-6 text-black">
+          <div className="flex items-center gap-3 sm:gap-6 text-black">
             <button aria-label="Search" className="transition-all duration-200 hover:scale-125 hover:opacity-70">
               <Search size={20} strokeWidth={1.5} />
             </button>

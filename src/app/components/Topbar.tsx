@@ -31,9 +31,9 @@ export default function TopBar() {
         borderBottom: "1px solid rgb(205, 174, 159)",
       }}
     >
-      <div className="mx-auto flex h-full w-full max-w-[1521px] items-center justify-between px-4 sm:px-6 md:px-[50px] text-[13px]">
+      <div className="mx-auto flex h-full w-full items-center justify-between px-4 sm:px-6 md:px-[50px] 2xl:px-[100px] text-[13px]">
         {/* Social icons — left */}
-        <div className="flex items-center gap-4 sm:gap-5" style={{ minWidth: "fit-content" }}>
+        <div className="flex items-center gap-3 sm:gap-5" style={{ minWidth: "fit-content" }}>
           <a
             href="#"
             aria-label="Facebook"
@@ -142,7 +142,7 @@ export default function TopBar() {
 
         {/* Mobile-only: phone + language dropdown */}
         <div 
-          className="flex lg:hidden items-center gap-4"
+          className="flex lg:hidden items-center gap-3 sm:gap-4"
           style={{
             fontStyle: "normal",
             fontWeight: 400,

@@ -43,26 +43,26 @@ const categories = [
 export default function ShopByCategory() {
   return (
     <div className="w-full bg-[#f6f6f6] py-[80px]">
-      <div className="mx-auto flex w-full max-w-[1561px] items-center justify-center px-4 xl:px-[120px]">
+      <div className="mx-auto flex w-full items-center justify-center px-4 xl:px-[120px]">
         <div
-          className="flex w-full flex-wrap lg:flex-nowrap items-start justify-center gap-[30px] md:gap-[40px] lg:gap-0 lg:-mt-[20px] lg:-mr-[40px]"
+          className="flex w-full flex-wrap lg:flex-nowrap items-start justify-center gap-[15px] sm:gap-[30px] md:gap-[40px] lg:gap-0 lg:-mt-[20px] lg:-mr-[40px]"
           style={{ listStyle: "none" }}
         >
           {categories.map((category, index) => (
             <Link
               key={index}
               href={category.link}
-              className="group flex shrink-0 flex-col items-center justify-start transition-transform duration-300 hover:scale-[1.05] w-[130px] md:w-[140px] lg:w-[160px] lg:h-[158.9375px] lg:mt-[20px] lg:mr-[40px]"
+              className="group flex shrink-0 flex-col items-center justify-start transition-transform duration-300 hover:scale-[1.05] w-[100px] sm:w-[130px] md:w-[140px] lg:w-[160px] lg:h-[158.9375px] lg:mt-[20px] lg:mr-[40px]"
               style={{ boxSizing: "border-box" }}
             >
-              <div className="flex h-[80px] w-[80px] md:h-[90px] md:w-[90px] lg:h-[104px] lg:w-[104px] shrink-0 items-center justify-center rounded-full bg-white overflow-hidden transition-all duration-300">
+              <div className="flex h-[75px] w-[75px] sm:h-[80px] sm:w-[80px] md:h-[90px] md:w-[90px] lg:h-[104px] lg:w-[104px] shrink-0 items-center justify-center rounded-full bg-white overflow-hidden transition-all duration-300">
                 <div className="relative h-full w-full">
                   <Image
                     src={category.image}
                     alt={category.name}
                     fill
                     style={{ objectFit: "contain" }}
-                    sizes="(max-width: 768px) 80px, (max-width: 1024px) 90px, 104px"
+                    sizes="(max-width: 640px) 75px, (max-width: 768px) 80px, (max-width: 1024px) 90px, 104px"
                   />
                 </div>
               </div>

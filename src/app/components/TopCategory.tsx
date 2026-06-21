@@ -350,7 +350,7 @@ export default function TopCategory() {
 
         /* ── Container ── */
         .tp-container {
-          max-width: 1560px;
+          width: 100%;
           margin: 0 auto;
           padding: 0 12px;
         }
@@ -658,6 +658,30 @@ export default function TopCategory() {
         }
 
         /* ════════════════ RESPONSIVE ════════════════ */
+
+        /* < 400px – Very small mobile */
+        @media (max-width: 399px) {
+          .tp-grid {
+            gap: 8px;
+          }
+          .tp-container {
+            padding: 0 8px;
+          }
+          .tp-card {
+            --btn-size: 30px;
+            --btn-icon: 12px;
+            --atc-h: 32px;
+            --atc-fs: 9px;
+            --name-fs: 11px;
+            --desc-fs: 10px;
+            --price-fs: 12px;
+            --info-pt: 16px;
+            --info-pb: 12px;
+          }
+          .tp-card-info {
+            min-height: 120px;
+          }
+        }
 
         /* ≥ 560px – Tablet: 3 columns */
         @media (min-width: 560px) {

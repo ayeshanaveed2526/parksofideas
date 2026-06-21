@@ -115,8 +115,16 @@ export default function NewProducts() {
         setVisibleCount(2);
         setCardWidth(360);
         setGap(30);
-      } else {
+      } else if (w < 1600) {
         setVisibleCount(3);
+        setCardWidth(360);
+        setGap(30);
+      } else if (w < 2000) {
+        setVisibleCount(4);
+        setCardWidth(360);
+        setGap(30);
+      } else {
+        setVisibleCount(5);
         setCardWidth(360);
         setGap(30);
       }
@@ -305,9 +313,8 @@ export default function NewProducts() {
           align-items: center;
           justify-content: center;
           width: 100%;
-          max-width: 1521px;
           margin: 0 auto;
-          padding: 0 40px;
+          padding: 0 24px;
           box-sizing: border-box;
         }
 

@@ -22,7 +22,7 @@ export default function VideoSection() {
   };
 
   return (
-    <section className="relative mx-auto w-full max-w-[1521px] h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden bg-white">
+    <section className="relative mx-auto w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden bg-white">
       {/* Background/Video Container */}
       <div
         className="relative w-full h-full bg-[#fae8e2] bg-cover bg-center transition-all duration-700"

@@ -61,7 +61,7 @@ export default function Herosection() {
   return (
     <div className="relative w-full overflow-hidden bg-white">
       {/* Container matching Navbar max width */}
-      <div className="relative mx-auto flex w-full max-w-[1521px] flex-col md:flex-row">
+      <div className="relative mx-auto flex w-full flex-col md:flex-row">
         
         {/* Left Column (Pink Slider) */}
         <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 flex-shrink-0 items-center overflow-hidden group">
@@ -103,7 +103,7 @@ export default function Herosection() {
                   {slide.subtitle}
                 </span>
                 <div
-                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[24px] min-[380px]:text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
                     idx === currentLeft ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   }`}
                   style={{
@@ -247,7 +247,7 @@ export default function Herosection() {
                   {slide.subtitle}
                 </span>
                 <h1 
-                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[24px] min-[380px]:text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
                     idx === currentRight ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   }`}
                   style={{

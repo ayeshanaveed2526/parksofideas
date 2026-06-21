@@ -123,7 +123,6 @@ export default function Footer() {
         .footer-wrapper {
           position: relative;
           width: 100%;
-          max-width: 1521px;
           height: auto;
           min-height: 382px;
           margin: 0 auto;
@@ -157,7 +156,7 @@ export default function Footer() {
           flex-direction: column;
           width: 100%;
           height: 100%;
-          padding: 50px 40px 30px;
+          padding: 40px 15px 30px;
           box-sizing: border-box;
           min-height: 382px;
         }

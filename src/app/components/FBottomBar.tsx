@@ -104,7 +104,6 @@ export default function FBottomBar() {
         /* ── Ticker Bar ── */
         .fb-ticker-bar {
           width: 100%;
-          max-width: 1521px;
           height: 60px;
           margin: 0 auto;
           background-color: #ffffff;
@@ -163,7 +162,6 @@ export default function FBottomBar() {
         /* ── Banners Grid ── */
         .fb-banners-grid {
           width: 100%;
-          max-width: 1521px;
           margin: 0 auto;
           display: grid;
           grid-template-columns: 1fr;
