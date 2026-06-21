@@ -5,6 +5,7 @@ import TopCategory from "./components/TopCategory";
 import VideoSection from "./components/VideoSection";
 import NewProducts from "./components/NewProducts";
 import FBottomBar from "./components/FBottomBar";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <VideoSection />
       <NewProducts />
       <FBottomBar />
+      <Footer />
     </main>
   );
 }
