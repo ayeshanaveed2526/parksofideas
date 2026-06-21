@@ -94,22 +94,31 @@ export default function NewProducts() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(3);
   const [cardWidth, setCardWidth] = useState(360);
-  const gap = 30;
+  const [gap, setGap] = useState(30);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 450) {
+      const w = window.innerWidth;
+      if (w < 400) {
         setVisibleCount(1);
-        setCardWidth(window.innerWidth - 60);
-      } else if (window.innerWidth < 768) {
+        setCardWidth(w - 48);
+        setGap(16);
+      } else if (w < 640) {
         setVisibleCount(1);
-        setCardWidth(360);
-      } else if (window.innerWidth < 1180) {
+        setCardWidth(Math.min(360, w - 80));
+        setGap(20);
+      } else if (w < 900) {
+        setVisibleCount(2);
+        setCardWidth(Math.min(320, (w - 120) / 2));
+        setGap(20);
+      } else if (w < 1180) {
         setVisibleCount(2);
         setCardWidth(360);
+        setGap(30);
       } else {
         setVisibleCount(3);
         setCardWidth(360);
+        setGap(30);
       }
     };
 
@@ -169,8 +178,8 @@ export default function NewProducts() {
                   className="np-card" 
                   style={{ width: `${cardWidth}px`, flex: `0 0 ${cardWidth}px` }}
                 >
-                  {/* Image wrapper (Size: 360px * 318px) */}
-                  <div className="np-card-img-wrap" style={{ position: 'relative', height: '318px', overflow: 'hidden' }}>
+                  {/* Image wrapper */}
+                  <div className="np-card-img-wrap" style={{ position: 'relative', overflow: 'hidden' }}>
                     {/* Left Badges */}
                     {leftBadges.length > 0 && (
                       <div className="np-badges-left">
@@ -229,7 +238,7 @@ export default function NewProducts() {
                     </button>
                   </div>
 
-                  {/* Description Box (Size: 360px * 255px) */}
+                  {/* Description Box */}
                   <div className="np-card-info">
                     <h3 className="np-card-name">{product.name}</h3>
                     <p className="np-card-desc">{product.description}</p>
@@ -272,7 +281,7 @@ export default function NewProducts() {
         .np-section {
           width: 100%;
           background-color: #f3f3f3;
-          padding: 85px 0 95px;
+          padding: 50px 0 60px;
           font-family: var(--font-inter), "Inter", sans-serif;
           overflow: hidden;
         }
@@ -280,13 +289,13 @@ export default function NewProducts() {
         .np-title {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 400;
-          font-size: 36px;
+          font-size: 24px;
           line-height: 1.28;
           letter-spacing: .14em;
           text-transform: uppercase;
           color: #000;
           text-align: center;
-          margin: 0 0 48px;
+          margin: 0 0 30px;
           padding-left: 0.25em;
         }
 
@@ -298,7 +307,7 @@ export default function NewProducts() {
           width: 100%;
           max-width: 1521px;
           margin: 0 auto;
-          padding: 0 80px;
+          padding: 0 40px;
           box-sizing: border-box;
         }
 
@@ -317,13 +326,13 @@ export default function NewProducts() {
         /* Arrows */
         .np-arrow {
           position: absolute;
-          top: calc(318px / 2);
+          top: 35%;
           transform: translateY(-50%);
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 58px;
-          height: 58px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           background-color: rgba(26, 26, 26, 0.5);
           color: #ffffff;
@@ -344,14 +353,14 @@ export default function NewProducts() {
         }
 
         .np-arrow-left {
-          left: 10px;
+          left: 4px;
         }
 
         .np-arrow-right {
-          right: 10px;
+          right: 4px;
         }
 
-        /* Card (Width: 360px) */
+        /* Card */
         .np-card {
           background: #ffffff;
           display: flex;
@@ -361,60 +370,60 @@ export default function NewProducts() {
           border: 1px solid #f0f0f0;
           transition: box-shadow 0.3s ease;
 
-          --btn-size: 52px;
-          --btn-icon: 20px;
-          --atc-h: 54px;
-          --atc-fs: 13px;
+          --btn-size: 42px;
+          --btn-icon: 16px;
+          --atc-h: 42px;
+          --atc-fs: 11px;
         }
 
         .np-card:hover {
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
-        /* Image area (Size: 360px * 318px) */
+        /* Image area */
         .np-card-img-wrap {
           position: relative;
           width: 100%;
-          height: 318px;
+          aspect-ratio: 360 / 280;
           background: #ffffff;
           overflow: hidden;
         }
 
         .np-card-img {
           position: absolute;
-          inset: 24px;
+          inset: 16px;
         }
 
         /* Badges */
         .np-badges-left {
           position: absolute;
-          top: 15px;
-          left: 15px;
+          top: 10px;
+          left: 10px;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 4px;
           z-index: 6;
         }
 
         .np-badges-right {
           position: absolute;
-          top: 15px;
-          right: 15px;
+          top: 10px;
+          right: 10px;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 4px;
           z-index: 6;
         }
 
         .np-badge {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 600;
-          font-size: 10px;
+          font-size: 9px;
           line-height: 1;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #ffffff;
-          padding: 6px 12px;
+          padding: 4px 8px;
         }
 
         /* Hover Overlay Bg */
@@ -524,30 +533,30 @@ export default function NewProducts() {
           color: #ffffff;
         }
 
-        /* Description Box (Size: 360px * 255px) */
+        /* Description Box */
         .np-card-info {
           width: 100%;
-          height: 255px;
           box-sizing: border-box;
-          padding: 40px 24px 35px;
+          padding: 24px 16px 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
           background: #ffffff;
           text-align: center;
+          min-height: 180px;
         }
 
         .np-card-name {
           font-family: var(--font-marcellus), "Marcellus", serif;
           font-weight: 400;
-          font-size: 22px;
+          font-size: 16px;
           line-height: 1.26;
-          letter-spacing: 0.22em;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
           color: #000000;
-          margin: 0 0 12px;
-          padding-left: 0.22em;
+          margin: 0 0 8px;
+          padding-left: 0.18em;
           transition: color 0.15s linear;
         }
 
@@ -558,37 +567,37 @@ export default function NewProducts() {
         .np-card-desc {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 400;
-          font-size: 13px;
-          line-height: 1.6;
+          font-size: 12px;
+          line-height: 1.5;
           color: rgb(97, 97, 97);
-          margin: 0 0 15px;
+          margin: 0 0 12px;
           max-width: 90%;
         }
 
         /* Rating Stars */
         .np-card-rating {
           display: flex;
-          gap: 4px;
-          margin-bottom: 20px;
+          gap: 3px;
+          margin-bottom: 12px;
         }
 
         .np-star {
           color: #e4c1b1;
-          font-size: 16px;
+          font-size: 14px;
         }
 
         /* Prices */
         .np-card-prices {
           margin-top: auto;
           display: flex;
-          gap: 12px;
+          gap: 10px;
           align-items: center;
         }
 
         .np-price-old {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 400;
-          font-size: 15px;
+          font-size: 13px;
           color: rgb(160, 160, 160);
           text-decoration: line-through;
         }
@@ -596,33 +605,171 @@ export default function NewProducts() {
         .np-price-current {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 600;
-          font-size: 17px;
+          font-size: 15px;
           color: #000000;
           letter-spacing: 0.02em;
         }
 
-        /* Responsive styling */
-        @media (max-width: 767px) {
+        /* ── Responsive: sm ── */
+        @media (min-width: 640px) {
+          .np-section {
+            padding: 65px 0 75px;
+          }
+
+          .np-title {
+            font-size: 30px;
+            margin-bottom: 38px;
+          }
+
           .np-slider-container {
             padding: 0 60px;
           }
 
           .np-arrow {
-            width: 46px;
-            height: 46px;
+            width: 50px;
+            height: 50px;
           }
 
           .np-arrow-left {
-            left: 5px;
+            left: 8px;
           }
 
           .np-arrow-right {
-            right: 5px;
+            right: 8px;
+          }
+
+          .np-card {
+            --btn-size: 48px;
+            --btn-icon: 18px;
+            --atc-h: 48px;
+            --atc-fs: 12px;
+          }
+
+          .np-card-img {
+            inset: 20px;
+          }
+
+          .np-card-info {
+            padding: 32px 20px 28px;
+            min-height: 210px;
+          }
+
+          .np-card-name {
+            font-size: 19px;
+            letter-spacing: 0.2em;
+          }
+
+          .np-card-desc {
+            font-size: 13px;
+          }
+
+          .np-star {
+            font-size: 15px;
+          }
+
+          .np-price-current {
+            font-size: 16px;
+          }
+
+          .np-badge {
+            font-size: 10px;
+            padding: 5px 10px;
+          }
+
+          .np-badges-left {
+            top: 15px;
+            left: 15px;
+            gap: 6px;
+          }
+
+          .np-badges-right {
+            top: 15px;
+            right: 15px;
+            gap: 6px;
+          }
+        }
+
+        /* ── Responsive: desktop ── */
+        @media (min-width: 1180px) {
+          .np-section {
+            padding: 85px 0 95px;
           }
 
           .np-title {
-            font-size: 28px;
-            margin-bottom: 30px;
+            font-size: 36px;
+            margin-bottom: 48px;
+          }
+
+          .np-slider-container {
+            padding: 0 80px;
+          }
+
+          .np-arrow {
+            width: 58px;
+            height: 58px;
+            top: calc(318px / 2);
+          }
+
+          .np-arrow-left {
+            left: 10px;
+          }
+
+          .np-arrow-right {
+            right: 10px;
+          }
+
+          .np-card {
+            --btn-size: 52px;
+            --btn-icon: 20px;
+            --atc-h: 54px;
+            --atc-fs: 13px;
+          }
+
+          .np-card-img-wrap {
+            aspect-ratio: 360 / 318;
+          }
+
+          .np-card-img {
+            inset: 24px;
+          }
+
+          .np-card-info {
+            padding: 40px 24px 35px;
+            min-height: 255px;
+          }
+
+          .np-card-name {
+            font-size: 22px;
+            letter-spacing: 0.22em;
+            margin: 0 0 12px;
+          }
+
+          .np-card-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 15px;
+          }
+
+          .np-card-rating {
+            gap: 4px;
+            margin-bottom: 20px;
+          }
+
+          .np-star {
+            font-size: 16px;
+          }
+
+          .np-price-old {
+            font-size: 15px;
+          }
+
+          .np-price-current {
+            font-size: 17px;
+          }
+
+          .np-badge {
+            font-size: 10px;
+            padding: 6px 12px;
           }
         }
       `}</style>

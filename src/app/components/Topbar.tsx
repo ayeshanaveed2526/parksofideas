@@ -31,9 +31,9 @@ export default function TopBar() {
         borderBottom: "1px solid rgb(205, 174, 159)",
       }}
     >
-      <div className="mx-auto flex h-full w-full max-w-[1521px] items-center justify-between px-[50px] text-[13px]">
+      <div className="mx-auto flex h-full w-full max-w-[1521px] items-center justify-between px-4 sm:px-6 md:px-[50px] text-[13px]">
         {/* Social icons — left */}
-        <div className="flex items-center justify-between" style={{ width: "144px", height: "25px" }}>
+        <div className="flex items-center gap-4 sm:gap-5" style={{ minWidth: "fit-content" }}>
           <a
             href="#"
             aria-label="Facebook"
@@ -64,9 +64,9 @@ export default function TopBar() {
           </a>
         </div>
 
-        {/* Contact info — right */}
+        {/* Contact info — right (hidden on mobile, visible on lg+) */}
         <div 
-          className="flex items-center gap-[34px]"
+          className="hidden lg:flex items-center gap-[34px]"
           style={{
             position: "relative",
             fontStyle: "normal",
@@ -118,6 +118,57 @@ export default function TopBar() {
             >
               <span>{lang}</span>
               <FaChevronDown size={11} color="black" className="transition-colors group-hover:text-black" />
+            </button>
+
+            {open && (
+              <ul className="absolute right-0 top-[28px] z-10 min-w-[120px] rounded-sm bg-white py-1 text-[#5b4a40] shadow-md">
+                {languages.map((l) => (
+                  <li key={l}>
+                    <button
+                      onClick={() => {
+                        setLang(l);
+                        setOpen(false);
+                      }}
+                      className="block w-full px-3 py-1 text-left hover:bg-[#f5e9e3]"
+                    >
+                      {l}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile-only: phone + language dropdown */}
+        <div 
+          className="flex lg:hidden items-center gap-4"
+          style={{
+            fontStyle: "normal",
+            fontWeight: 400,
+            fontSize: "11px",
+            lineHeight: "15px",
+            letterSpacing: "0.05em",
+            fontFamily: "Inter, sans-serif",
+            color: "#574943"
+          }}
+        >
+          <a
+            href="tel:+1234567890"
+            className="flex items-center gap-1.5 transition-opacity hover:opacity-70"
+          >
+            <BsTelephone size={11} color="black" />
+            <span className="hidden sm:inline">+123 456 7890</span>
+          </a>
+
+          {/* Language dropdown (mobile) */}
+          <div className="relative">
+            <button
+              onClick={() => setOpen((v) => !v)}
+              className="group flex items-center gap-1 transition-colors hover:text-black"
+            >
+              <span>{lang}</span>
+              <FaChevronDown size={10} color="black" className="transition-colors group-hover:text-black" />
             </button>
 
             {open && (

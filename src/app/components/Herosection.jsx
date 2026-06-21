@@ -7,7 +7,7 @@ export default function Herosection() {
   const leftSlides = [
     {
       id: 1,
-      image: "/images/pink_slide_1.png",
+      image: "/images/Gemini_Generated_Image_9aoqnd9aoqnd9aoq.png",
       subtitle: "PACKAGE",
       title: "PREMIUM",
       link: "#",
@@ -31,7 +31,7 @@ export default function Herosection() {
   const rightSlides = [
     {
       id: 1,
-      image: "/images/beige_slide_1.png",
+      image: "/images/Gemini_Generated_Image_n9mh33n9mh33n9mh.png",
       subtitle: "NEW BRAND",
       title: "TOUCH",
       link: "#",
@@ -64,7 +64,7 @@ export default function Herosection() {
       <div className="relative mx-auto flex w-full max-w-[1521px] flex-col md:flex-row">
         
         {/* Left Column (Pink Slider) */}
-        <div className="relative flex h-[478px] w-full md:w-[760.5px] flex-shrink-0 items-center overflow-hidden group">
+        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 flex-shrink-0 items-center overflow-hidden group">
           {leftSlides.map((slide, idx) => (
             <div
               key={slide.id}
@@ -86,15 +86,15 @@ export default function Herosection() {
               </div>
 
               {/* Content */}
-              <div className="relative z-10 flex w-full flex-col px-[40px] md:px-[80px]">
+              <div className="relative z-10 flex w-full flex-col px-6 sm:px-[40px] md:px-[80px]">
                 <span 
-                  className={`mb-4 text-[#1a1a1a] text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
+                  className={`mb-3 sm:mb-4 text-[#1a1a1a] text-[12px] sm:text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
                     idx === currentLeft ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                   style={{
                     fontFamily: "var(--font-marcellus), sans-serif",
                     fontWeight: 400,
-                    letterSpacing: "0.8em",
+                    letterSpacing: "0.5em",
                     lineHeight: "20px",
                     textTransform: "uppercase",
                     transitionDelay: idx === currentLeft ? "200ms" : "0ms"
@@ -103,7 +103,7 @@ export default function Herosection() {
                   {slide.subtitle}
                 </span>
                 <div
-                  className={`mb-10 text-[#1a1a1a] text-[34px] sm:text-[46px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
                     idx === currentLeft ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   }`}
                   style={{
@@ -116,7 +116,7 @@ export default function Herosection() {
                     wordWrap: "break-word",
                     wordBreak: "break-word",
                     position: "relative",
-                    left: "-6px",
+                    left: "-4px",
                     display: "inline-block",
                     transitionDelay: idx === currentLeft ? "400ms" : "0ms"
                   }}
@@ -138,13 +138,13 @@ export default function Herosection() {
                       display: "inline-block",
                       outline: "none",
                       fontWeight: 400,
-                      fontSize: "12px",
+                      fontSize: "11px",
                       lineHeight: 1.2,
                       textAlign: "center",
                       letterSpacing: "0.265em",
                       textIndent: "0.265em",
                       textTransform: "uppercase",
-                      padding: "17px 30px",
+                      padding: "14px 24px",
                       textDecoration: "none"
                     }}
                   >
@@ -155,8 +155,8 @@ export default function Herosection() {
             </div>
           ))}
 
-          {/* Circular Stamp */}
-          <div className="absolute right-[230px] top-[40px] z-20 flex h-[130px] w-[130px] items-center justify-center rounded-full bg-[#fcecf0]">
+          {/* Circular Stamp — hidden on small mobile */}
+          <div className="absolute right-4 sm:right-8 md:right-[230px] top-4 sm:top-[40px] z-20 hidden sm:flex h-[90px] w-[90px] md:h-[130px] md:w-[130px] items-center justify-center rounded-full bg-[#fcecf0]">
              <svg viewBox="0 0 100 100" className="h-[90%] w-[90%] animate-[spin_20s_linear_infinite]">
                <defs>
                  <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" />
@@ -170,7 +170,7 @@ export default function Herosection() {
           </div>
 
           {/* Navigation Dots */}
-          <div className="absolute bottom-6 left-[40px] md:left-[80px] z-20 flex gap-2">
+          <div className="absolute bottom-4 sm:bottom-6 left-6 sm:left-[40px] md:left-[80px] z-20 flex gap-2">
             {leftSlides.map((_, idx) => (
               <button
                 key={idx}
@@ -187,7 +187,7 @@ export default function Herosection() {
           {/* Navigation Arrows */}
           <button
             onClick={() => setCurrentLeft((prev) => (prev - 1 + leftSlides.length) % leftSlides.length)}
-            className="absolute left-4 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Previous Slide"
           >
@@ -197,7 +197,7 @@ export default function Herosection() {
           </button>
           <button
             onClick={() => setCurrentLeft((prev) => (prev + 1) % leftSlides.length)}
-            className="absolute right-4 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Next Slide"
           >
@@ -208,7 +208,7 @@ export default function Herosection() {
         </div>
 
         {/* Right Column (Beige Slider) */}
-        <div className="relative flex h-[478px] w-full md:w-[760.5px] flex-shrink-0 items-center overflow-hidden group">
+        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 flex-shrink-0 items-center overflow-hidden group">
           {rightSlides.map((slide, idx) => (
             <div
               key={slide.id}
@@ -230,15 +230,15 @@ export default function Herosection() {
               </div>
 
               {/* Content */}
-              <div className="relative z-10 flex w-full flex-col px-[40px] md:px-[80px]">
+              <div className="relative z-10 flex w-full flex-col px-6 sm:px-[40px] md:px-[80px]">
                 <span 
-                  className={`mb-4 text-[#1a1a1a] text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
+                  className={`mb-3 sm:mb-4 text-[#1a1a1a] text-[12px] sm:text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
                     idx === currentRight ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                   style={{
                     fontFamily: "var(--font-marcellus), sans-serif",
                     fontWeight: 400,
-                    letterSpacing: "0.8em",
+                    letterSpacing: "0.5em",
                     lineHeight: "20px",
                     textTransform: "uppercase",
                     transitionDelay: idx === currentRight ? "200ms" : "0ms"
@@ -247,7 +247,7 @@ export default function Herosection() {
                   {slide.subtitle}
                 </span>
                 <h1 
-                  className={`mb-10 text-[#1a1a1a] text-[34px] sm:text-[46px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
                     idx === currentRight ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   }`}
                   style={{
@@ -260,7 +260,7 @@ export default function Herosection() {
                     wordWrap: "break-word",
                     wordBreak: "break-word",
                     position: "relative",
-                    left: "-6px",
+                    left: "-4px",
                     display: "inline-block",
                     transitionDelay: idx === currentRight ? "400ms" : "0ms"
                   }}
@@ -282,13 +282,13 @@ export default function Herosection() {
                       display: "inline-block",
                       outline: "none",
                       fontWeight: 400,
-                      fontSize: "12px",
+                      fontSize: "11px",
                       lineHeight: 1.2,
                       textAlign: "center",
                       letterSpacing: "0.265em",
                       textIndent: "0.265em",
                       textTransform: "uppercase",
-                      padding: "17px 30px",
+                      padding: "14px 24px",
                       textDecoration: "none"
                     }}
                   >
@@ -300,7 +300,7 @@ export default function Herosection() {
           ))}
 
           {/* Navigation Dots */}
-          <div className="absolute bottom-6 left-[40px] md:left-[80px] z-20 flex gap-2">
+          <div className="absolute bottom-4 sm:bottom-6 left-6 sm:left-[40px] md:left-[80px] z-20 flex gap-2">
             {rightSlides.map((_, idx) => (
               <button
                 key={idx}
@@ -317,7 +317,7 @@ export default function Herosection() {
           {/* Navigation Arrows */}
           <button
             onClick={() => setCurrentRight((prev) => (prev - 1 + rightSlides.length) % rightSlides.length)}
-            className="absolute left-4 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Previous Slide"
           >
@@ -327,7 +327,7 @@ export default function Herosection() {
           </button>
           <button
             onClick={() => setCurrentRight((prev) => (prev + 1) % rightSlides.length)}
-            className="absolute right-4 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Next Slide"
           >
@@ -338,10 +338,10 @@ export default function Herosection() {
         </div>
       </div>
 
-      {/* Sticky Buy Theme Button (Right Edge) */}
+      {/* Sticky Buy Theme Button (Right Edge) — hidden on mobile */}
       <a 
         href="#"
-        className="fixed right-0 top-1/2 z-50 -translate-y-1/2 transition-transform duration-300 hover:-translate-x-2"
+        className="fixed right-0 top-1/2 z-50 -translate-y-1/2 transition-transform duration-300 hover:-translate-x-2 hidden md:block"
         aria-label="Buy Theme"
       >
         <svg width="44" height="120" viewBox="0 0 44 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-lg">

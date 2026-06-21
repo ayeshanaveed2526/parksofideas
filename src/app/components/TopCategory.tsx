@@ -273,35 +273,36 @@ export default function TopCategory() {
         .tp-section {
           width: 100%;
           background-color: #f3f3f3;
-          padding: 75px 0 85px;
-        font-family: var(--font-inter), "Inter", sans-serif;
+          padding: 45px 0 55px;
+          font-family: var(--font-inter), "Inter", sans-serif;
         }
 
         /* ── Title ── */
         .tp-title {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 400;
-          font-size: 36px;
+          font-size: 24px;
           line-height: 1.28;
           letter-spacing: .14em;
           text-transform: uppercase;
           color: #000;
           text-align: center;
-          margin: 0 0 28px;
+          margin: 0 0 22px;
           padding-left: 0.25em;
         }
 
         /* ── Tabs ── */
         .tp-tabs-wrap {
           position: relative;
-          margin-bottom: 48px;
+          margin-bottom: 28px;
         }
 
         .tp-tabs {
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 40px;
+          gap: 16px;
+          flex-wrap: wrap;
         }
 
         .tp-tabs-rule {
@@ -316,9 +317,9 @@ export default function TopCategory() {
         .tp-tab {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 600;
-          font-size: 14px;
+          font-size: 11px;
           line-height: 1;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.15em;
           text-transform: uppercase;
           color: rgba(0, 0, 0, 0.3);
           background: none;
@@ -351,13 +352,13 @@ export default function TopCategory() {
         .tp-container {
           max-width: 1560px;
           margin: 0 auto;
-          padding: 0 15px;
+          padding: 0 12px;
         }
 
         .tp-view-all-wrap {
           display: flex;
           justify-content: center;
-          margin-top: 48px;
+          margin-top: 32px;
         }
 
         .tp-view-all-btn {
@@ -391,15 +392,15 @@ export default function TopCategory() {
 
         /* ── Grid ── */
         .tp-grid {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 20px;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          justify-items: center;
         }
 
         /* ── Card ── */
         .tp-card {
-          flex: 0 0 260px;
+          width: 100%;
           max-width: 260px;
           background: #fff;
           display: flex;
@@ -407,20 +408,20 @@ export default function TopCategory() {
           cursor: pointer;
 
           /* Dimension Variables */
-          --btn-size: 52px;
-          --btn-icon: 20px;
-          --atc-h: 54px;
-          --atc-fs: 13px;
+          --btn-size: 34px;
+          --btn-icon: 14px;
+          --atc-h: 36px;
+          --atc-fs: 10px;
           
-          --name-fs: 20px;
-          --desc-fs: 13px;
-          --price-fs: 16px;
+          --name-fs: 14px;
+          --desc-fs: 11px;
+          --price-fs: 13px;
           
-          --info-pt: 50px;
-          --info-pb: 45px;
+          --info-pt: 24px;
+          --info-pb: 20px;
         }
 
-        /* ── Image wrapper (Top box: 260x230px at desktop) ── */
+        /* ── Image wrapper ── */
         .tp-card-img-wrap {
           position: relative;
           width: 100%;
@@ -431,14 +432,14 @@ export default function TopCategory() {
 
         .tp-card-img {
           position: absolute;
-          inset: 12px;
+          inset: 8px;
         }
 
         /* ── Badges ── */
         .tp-badges-left {
           position: absolute;
-          top: 10px;
-          left: 10px;
+          top: 6px;
+          left: 6px;
           display: flex;
           flex-direction: column;
           gap: 4px;
@@ -447,8 +448,8 @@ export default function TopCategory() {
 
         .tp-badges-right {
           position: absolute;
-          top: 10px;
-          right: 10px;
+          top: 6px;
+          right: 6px;
           display: flex;
           flex-direction: column;
           gap: 4px;
@@ -458,28 +459,28 @@ export default function TopCategory() {
         .tp-badge {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 600;
-          font-size: 10px;
+          font-size: 8px;
           line-height: 1;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #fff;
-          padding: 5px 10px;
+          padding: 3px 6px;
         }
 
         /* ── Out of stock pill ── */
         .tp-oos {
           position: absolute;
-          bottom: 10px;
-          right: 10px;
+          bottom: 6px;
+          right: 6px;
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 600;
-          font-size: 10px;
+          font-size: 8px;
           line-height: 1;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #fff;
           background: #5bab6d;
-          padding: 6px 12px;
+          padding: 4px 8px;
           z-index: 6;
         }
 
@@ -605,18 +606,18 @@ export default function TopCategory() {
           border-color: #ccc;
         }
 
-        /* ── Card info (Bottom box: 260x312px at desktop) ── */
+        /* ── Card info ── */
         .tp-card-info {
           width: 100%;
-          aspect-ratio: 260 / 312;
           box-sizing: border-box;
-          padding: var(--info-pt) 20px var(--info-pb);
+          padding: var(--info-pt) 12px var(--info-pb);
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
           background: #fff;
           text-align: center;
+          min-height: 140px;
         }
 
         .tp-card-name {
@@ -624,11 +625,11 @@ export default function TopCategory() {
           font-weight: 400;
           font-size: var(--name-fs);
           line-height: 1.26;
-          letter-spacing: 0.25em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           color: #000;
-          margin: 0 0 12px;
-          padding-left: 0.25em;
+          margin: 0 0 8px;
+          padding-left: 0.2em;
           transition: color 0.15s linear;
         }
 
@@ -658,88 +659,227 @@ export default function TopCategory() {
 
         /* ════════════════ RESPONSIVE ════════════════ */
 
-        /* ≤ 559px  – Fluid mobile scaling */
-        @media (max-width: 559px) {
+        /* ≥ 560px – Tablet: 3 columns */
+        @media (min-width: 560px) {
           .tp-section {
-            padding: 45px 0 55px;
+            padding: 55px 0 65px;
           }
 
           .tp-title {
-            font-size: 24px;
-            letter-spacing: 0.2em;
-            margin-bottom: 22px;
-          }
-
-          .tp-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            font-size: 28px;
+            margin-bottom: 24px;
           }
 
           .tp-tabs {
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
+            gap: 24px;
           }
 
           .tp-tab {
             font-size: 12px;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
           }
 
           .tp-tabs-wrap {
-            margin-bottom: 28px;
+            margin-bottom: 36px;
+          }
+
+          .tp-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
           }
 
           .tp-container {
-            padding: 0 12px;
+            padding: 0 16px;
           }
 
-          .tp-view-all-wrap {
-            margin-top: 32px;
-          }
-
-          /* Scale down card elements proportionally using variables */
           .tp-card {
-            flex: 1 1 auto;
-            max-width: none;
-            --btn-size: 34px;
-            --btn-icon: 14px;
-            --atc-h: 36px;
-            --atc-fs: 10px;
-            
-            --name-fs: 14px;
-            --desc-fs: 11px;
-            --price-fs: 13px;
-            
+            --btn-size: 38px;
+            --btn-icon: 16px;
+            --atc-h: 40px;
+            --atc-fs: 11px;
+            --name-fs: 16px;
+            --desc-fs: 12px;
+            --price-fs: 14px;
             --info-pt: 30px;
             --info-pb: 25px;
           }
 
-          .tp-badge {
-            font-size: 8px;
-            padding: 3px 6px;
+          .tp-card-info {
+            min-height: 170px;
+            padding: var(--info-pt) 14px var(--info-pb);
           }
-          
-          .tp-oos {
-            font-size: 8px;
+
+          .tp-badge {
+            font-size: 9px;
             padding: 4px 8px;
-            bottom: 6px;
-            right: 6px;
+          }
+
+          .tp-oos {
+            font-size: 9px;
+            padding: 5px 10px;
           }
 
           .tp-badges-left {
-            top: 6px;
-            left: 6px;
+            top: 8px;
+            left: 8px;
           }
 
           .tp-badges-right {
-            top: 6px;
-            right: 6px;
+            top: 8px;
+            right: 8px;
           }
 
           .tp-card-img {
-            inset: 8px;
+            inset: 10px;
+          }
+
+          .tp-view-all-wrap {
+            margin-top: 38px;
+          }
+        }
+
+        /* ≥ 900px – Tablet-large: 4 columns */
+        @media (min-width: 900px) {
+          .tp-section {
+            padding: 65px 0 75px;
+          }
+
+          .tp-title {
+            font-size: 32px;
+            margin-bottom: 26px;
+          }
+
+          .tp-tabs {
+            gap: 32px;
+          }
+
+          .tp-tab {
+            font-size: 13px;
+            letter-spacing: 0.2em;
+          }
+
+          .tp-tabs-wrap {
+            margin-bottom: 40px;
+          }
+
+          .tp-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+          }
+
+          .tp-container {
+            padding: 0 20px;
+          }
+
+          .tp-card {
+            --btn-size: 44px;
+            --btn-icon: 18px;
+            --atc-h: 46px;
+            --atc-fs: 12px;
+            --name-fs: 17px;
+            --desc-fs: 12px;
+            --price-fs: 15px;
+            --info-pt: 36px;
+            --info-pb: 30px;
+          }
+
+          .tp-card-info {
+            min-height: 200px;
+            padding: var(--info-pt) 16px var(--info-pb);
+          }
+        }
+
+        /* ≥ 1190px – Desktop: 6 columns (original spec, max 260px cards) */
+        @media (min-width: 1190px) {
+          .tp-section {
+            padding: 75px 0 85px;
+          }
+
+          .tp-title {
+            font-size: 36px;
+            letter-spacing: .14em;
+            margin: 0 0 28px;
+          }
+
+          .tp-tabs {
+            gap: 40px;
+          }
+
+          .tp-tab {
+            font-size: 14px;
+            letter-spacing: 0.2em;
+          }
+
+          .tp-tabs-wrap {
+            margin-bottom: 48px;
+          }
+
+          .tp-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+          }
+
+          .tp-container {
+            padding: 0 15px;
+          }
+
+          .tp-card {
+            flex: 0 0 260px;
+            max-width: 260px;
+            width: auto;
+            --btn-size: 52px;
+            --btn-icon: 20px;
+            --atc-h: 54px;
+            --atc-fs: 13px;
+            --name-fs: 20px;
+            --desc-fs: 13px;
+            --price-fs: 16px;
+            --info-pt: 50px;
+            --info-pb: 45px;
+          }
+
+          .tp-card-info {
+            min-height: auto;
+            aspect-ratio: 260 / 312;
+            padding: var(--info-pt) 20px var(--info-pb);
+          }
+
+          .tp-card-name {
+            letter-spacing: 0.25em;
+            margin: 0 0 12px;
+            padding-left: 0.25em;
+          }
+
+          .tp-badge {
+            font-size: 10px;
+            padding: 5px 10px;
+          }
+
+          .tp-oos {
+            font-size: 10px;
+            padding: 6px 12px;
+            bottom: 10px;
+            right: 10px;
+          }
+
+          .tp-badges-left {
+            top: 10px;
+            left: 10px;
+          }
+
+          .tp-badges-right {
+            top: 10px;
+            right: 10px;
+          }
+
+          .tp-card-img {
+            inset: 12px;
+          }
+
+          .tp-view-all-wrap {
+            margin-top: 48px;
           }
         }
       `}</style>

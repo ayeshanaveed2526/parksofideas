@@ -22,7 +22,7 @@ export default function VideoSection() {
   };
 
   return (
-    <section className="relative mx-auto w-full max-w-[1521px] h-[600px] overflow-hidden bg-white">
+    <section className="relative mx-auto w-full max-w-[1521px] h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden bg-white">
       {/* Background/Video Container */}
       <div
         className="relative w-full h-full bg-[#fae8e2] bg-cover bg-center transition-all duration-700"
@@ -50,7 +50,7 @@ export default function VideoSection() {
           {/* Play/Pause Button */}
           <button
             type="button"
-            className="group flex h-[66px] w-[66px] items-center justify-center rounded-full bg-black text-white hover:bg-white hover:text-black transition-all duration-300 shadow-xl cursor-pointer transform hover:scale-105 active:scale-95"
+            className="group flex h-[50px] w-[50px] sm:h-[58px] sm:w-[58px] md:h-[66px] md:w-[66px] items-center justify-center rounded-full bg-black text-white hover:bg-white hover:text-black transition-all duration-300 shadow-xl cursor-pointer transform hover:scale-105 active:scale-95"
             aria-label={isPlaying ? "Pause video" : "Play video"}
           >
             {isPlaying ? (
@@ -59,7 +59,7 @@ export default function VideoSection() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="h-8 w-8 transition-colors duration-300"
+                className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 transition-colors duration-300"
               >
                 <path fillRule="evenodd" d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" clipRule="evenodd" />
               </svg>
@@ -69,7 +69,7 @@ export default function VideoSection() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="h-6 w-6 translate-x-0.5 transition-colors duration-300"
+                className="h-5 w-5 sm:h-5.5 sm:w-5.5 md:h-6 md:w-6 translate-x-0.5 transition-colors duration-300"
               >
                 <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
               </svg>
@@ -78,18 +78,18 @@ export default function VideoSection() {
 
           {/* Centered Text (Two lines) */}
           <div
-            className={`mt-[28px] flex flex-col items-center text-[20px] sm:text-[28px] md:text-[34px] font-light uppercase select-none transition-all duration-300 ${isPlaying ? "text-white drop-shadow-md" : "text-[#1a1a1a]"
+            className={`mt-4 sm:mt-5 md:mt-[28px] flex flex-col items-center text-[16px] sm:text-[22px] md:text-[28px] lg:text-[34px] font-light uppercase select-none transition-all duration-300 ${isPlaying ? "text-white drop-shadow-md" : "text-[#1a1a1a]"
               }`}
             style={{
               fontFamily: "var(--font-inter), sans-serif",
               lineHeight: "1.4",
               textAlign: "center",
               fontWeight: 200,
-              letterSpacing: "10px"
+              letterSpacing: "clamp(3px, 1.5vw, 10px)"
             }}
           >
-            <span style={{ paddingLeft: "10px" }}>WATCH THE BRAND</span>
-            <span style={{ paddingLeft: "10px" }}>PRESENTATION</span>
+            <span style={{ paddingLeft: "clamp(3px, 1.5vw, 10px)" }}>WATCH THE BRAND</span>
+            <span style={{ paddingLeft: "clamp(3px, 1.5vw, 10px)" }}>PRESENTATION</span>
           </div>
         </div>
       </div>

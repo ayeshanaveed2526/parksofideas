@@ -3,7 +3,8 @@ import MainNavbar from "./MainNavbar";
 
 /**
  * Header — drop this at the top of your layout.
- * Renders the 46px utility TopBar followed by the 90px MainNavbar.
+ * Renders the 46px utility TopBar followed by the MainNavbar.
+ * On mobile, TopBar is still 46px but hidden on scroll via sticky offset.
  */
 export default function Header() {
     return (

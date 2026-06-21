@@ -72,7 +72,6 @@ export default function FBottomBar() {
             className="fb-banner-box"
             style={{
               backgroundImage: `url('${banner.image}')`,
-              height: '290px',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               overflow: 'hidden',
@@ -106,7 +105,7 @@ export default function FBottomBar() {
         .fb-ticker-bar {
           width: 100%;
           max-width: 1521px;
-          height: 80px;
+          height: 60px;
           margin: 0 auto;
           background-color: #ffffff;
           border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -139,17 +138,17 @@ export default function FBottomBar() {
         .fb-ticker-item {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 500;
-          font-size: 16px;
-          line-height: 80px;
+          font-size: 12px;
+          line-height: 60px;
           color: #1a1a1a;
           text-transform: uppercase;
         }
 
         .fb-ticker-separator {
-          margin: 0 20px;
+          margin: 0 14px;
           color: #1a1a1a;
-          font-size: 12px;
-          line-height: 80px;
+          font-size: 9px;
+          line-height: 60px;
         }
 
         @keyframes marquee {
@@ -167,13 +166,13 @@ export default function FBottomBar() {
           max-width: 1521px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: 1fr;
           box-sizing: border-box;
         }
 
         .fb-banner-box {
           position: relative;
-          height: 290px;
+          height: 220px;
           background-size: cover;
           background-position: center;
           display: flex;
@@ -212,28 +211,28 @@ export default function FBottomBar() {
           flex-direction: column;
           align-items: flex-start;
           text-align: left;
-          padding: 20px 45px;
-          max-width: 60%;
+          padding: 20px 24px;
+          max-width: 80%;
         }
 
         .fb-banner-subtitle {
           font-family: var(--font-marcellus), "Marcellus", serif;
           font-weight: 400;
-          font-size: 16px;
+          font-size: 13px;
           line-height: 1;
-          letter-spacing: 0.35em;
+          letter-spacing: 0.3em;
           text-transform: uppercase;
-          margin: 0 0 11px;
+          margin: 0 0 8px;
         }
 
         .fb-banner-title {
           font-family: var(--font-inter), "Inter", sans-serif !important;
           font-weight: 200 !important;
-          font-size: 38px !important;
+          font-size: 26px !important;
           line-height: 1.185 !important;
           letter-spacing: .14em !important;
           text-transform: uppercase !important;
-          margin: 0 0 25px;
+          margin: 0 0 18px;
           white-space: nowrap;
         }
 
@@ -242,13 +241,13 @@ export default function FBottomBar() {
           align-items: center;
           justify-content: center;
           outline: none;
-          width: 141px;
-          height: 50px;
+          width: 120px;
+          height: 42px;
           padding: 0;
           text-align: center;
           font-family: var(--font-marcellus), "Marcellus", serif;
           font-weight: 400;
-          font-size: 14px;
+          font-size: 12px;
           letter-spacing: 0.22em;
           text-indent: 0.22em; /* shifts text slightly to align properly with letter-spacing */
           text-transform: uppercase;
@@ -302,26 +301,96 @@ export default function FBottomBar() {
           text-shadow: none;
         }
 
-        /* ── Responsive ── */
-        @media (max-width: 991px) {
-          .fb-banners-grid {
-            grid-template-columns: 1fr;
+        /* ── Responsive: tablet ── */
+        @media (min-width: 640px) {
+          .fb-ticker-bar {
+            height: 70px;
           }
-          
+
+          .fb-ticker-item {
+            font-size: 14px;
+            line-height: 70px;
+          }
+
+          .fb-ticker-separator {
+            margin: 0 18px;
+            font-size: 10px;
+            line-height: 70px;
+          }
+
           .fb-banner-box {
             height: 250px;
           }
+
+          .fb-banner-content {
+            padding: 20px 30px;
+          }
+
+          .fb-banner-subtitle {
+            font-size: 14px;
+          }
+
+          .fb-banner-title {
+            font-size: 30px !important;
+          }
         }
 
-        @media (max-width: 480px) {
+        /* ── Responsive: medium ── */
+        @media (min-width: 768px) {
+          .fb-banners-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          .fb-banner-box {
+            height: 260px;
+          }
+        }
+
+        /* ── Responsive: desktop ── */
+        @media (min-width: 992px) {
+          .fb-ticker-bar {
+            height: 80px;
+          }
+
           .fb-ticker-item {
-            font-size: 11px;
+            font-size: 16px;
+            line-height: 80px;
           }
+
           .fb-ticker-separator {
-            margin: 0 25px;
+            margin: 0 20px;
+            font-size: 12px;
+            line-height: 80px;
           }
+
+          .fb-banners-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          .fb-banner-box {
+            height: 290px;
+          }
+
+          .fb-banner-content {
+            padding: 20px 45px;
+            max-width: 60%;
+          }
+
+          .fb-banner-subtitle {
+            font-size: 16px;
+            letter-spacing: 0.35em;
+            margin: 0 0 11px;
+          }
+
           .fb-banner-title {
-            font-size: 28px;
+            font-size: 38px !important;
+            margin: 0 0 25px;
+          }
+
+          .fb-banner-btn {
+            width: 141px;
+            height: 50px;
+            font-size: 14px;
           }
         }
       `}</style>
