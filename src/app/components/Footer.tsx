@@ -134,7 +134,7 @@ export default function Footer() {
           border-top: 1px solid rgba(0,0,0,0.05);
         }
 
-        /* Isometric Diamond Background Pattern with Peach Gradient */
+        /* Image Background Pattern */
         .footer-bg-pattern {
           position: absolute;
           top: 0;
@@ -142,14 +142,11 @@ export default function Footer() {
           width: 100%;
           height: 100%;
           z-index: 0;
-          background-color: #ffffff;
-          background-image: 
-            radial-gradient(100% 150% at top center, rgba(250, 232, 226, 0.9) 0%, rgba(255, 255, 255, 0) 50%),
-            linear-gradient(135deg, transparent 49%, rgba(0,0,0,0.03) 49%, rgba(0,0,0,0.03) 51%, transparent 51%), 
-            linear-gradient(45deg, transparent 49%, rgba(0,0,0,0.03) 49%, rgba(0,0,0,0.03) 51%, transparent 51%);
-          background-size: 100% 100%, 140px 140px, 140px 140px;
-          background-position: top center, 0 0, 0 0;
-          background-repeat: no-repeat, repeat, repeat;
+          // background-color: #ffffff;
+          background-image: url('/footer.png');
+          background-size: cover;
+          background-position: top center;
+          background-repeat: no-repeat;
           pointer-events: none;
         }
 
