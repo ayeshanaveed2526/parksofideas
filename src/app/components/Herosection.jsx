@@ -14,14 +14,14 @@ export default function Herosection() {
     },
     {
       id: 2,
-      image: "/images/pink_slide_2.png",
+      image: "/images/pink_slide_2_v2.png",
       subtitle: "ORGANIC",
       title: "BEAUTY",
       link: "#",
     },
     {
       id: 3,
-      image: "/images/pink_slide_3.png",
+      image: "/images/pink_slide_3_v2.png",
       subtitle: "BOTANICAL",
       title: "ESSENCE",
       link: "#",
@@ -38,14 +38,14 @@ export default function Herosection() {
     },
     {
       id: 2,
-      image: "/images/beige_slide_2.png",
+      image: "/images/beige_slide_2_v2.png",
       subtitle: "PURE SAND",
       title: "LUXURY",
       link: "#",
     },
     {
       id: 3,
-      image: "/images/beige_slide_3.png",
+      image: "/images/beige_slide_3_v2.png",
       subtitle: "MINIMALIST",
       title: "SERUM",
       link: "#",
@@ -55,20 +55,8 @@ export default function Herosection() {
   const [currentLeft, setCurrentLeft] = useState(0);
   const [currentRight, setCurrentRight] = useState(0);
 
-  useEffect(() => {
-    // const leftInterval = setInterval(() => {
-    //   setCurrentLeft((prev) => (prev + 1) % leftSlides.length);
-    // }, 6000);
-
-    // const rightInterval = setInterval(() => {
-    //   setCurrentRight((prev) => (prev + 1) % rightSlides.length);
-    // }, 7000);
-
-    // return () => {
-    //   clearInterval(leftInterval);
-    //   clearInterval(rightInterval);
-    // };
-  }, []);
+  // Manual sliding only, no automatic transitions
+  useEffect(() => {}, []);
 
   return (
     <div className="relative w-full overflow-hidden bg-white">

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Product {
   id: number;
@@ -259,6 +260,11 @@ export default function TopCategory() {
             );
           })}
         </div>
+        <div className="tp-view-all-wrap">
+          <a href="#" className="tp-view-all-btn">
+            VIEW ALL
+          </a>
+        </div>
       </div>
 
       {/* ═══════════════════ STYLES ═══════════════════ */}
@@ -346,6 +352,41 @@ export default function TopCategory() {
           max-width: 1560px;
           margin: 0 auto;
           padding: 0 15px;
+        }
+
+        .tp-view-all-wrap {
+          display: flex;
+          justify-content: center;
+          margin-top: 48px;
+        }
+
+        .tp-view-all-btn {
+          display: inline-block;
+          outline: none;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 1.2;
+          text-align: center;
+          letter-spacing: 0.265em;
+          text-indent: 0.265em;
+          text-transform: uppercase;
+          padding: 17px 30px 17px 30px;
+          width: 146px;
+          height: 50px;
+          border: 1px solid #000;
+          background-color: transparent;
+          color: #000;
+          font-family: var(--font-inter), "Inter", sans-serif;
+          text-decoration: none;
+          cursor: pointer;
+          transition: background-color 0.3s ease, color 0.3s ease;
+          box-sizing: border-box;
+          white-space: nowrap;
+        }
+
+        .tp-view-all-btn:hover {
+          background-color: #000;
+          color: #fff;
         }
 
         /* ── Grid ── */
@@ -652,6 +693,10 @@ export default function TopCategory() {
 
           .tp-container {
             padding: 0 12px;
+          }
+
+          .tp-view-all-wrap {
+            margin-top: 32px;
           }
 
           /* Scale down card elements proportionally using variables */
