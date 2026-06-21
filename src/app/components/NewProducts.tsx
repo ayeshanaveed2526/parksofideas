@@ -170,7 +170,7 @@ export default function NewProducts() {
                   style={{ width: `${cardWidth}px`, flex: `0 0 ${cardWidth}px` }}
                 >
                   {/* Image wrapper (Size: 360px * 318px) */}
-                  <div className="np-card-img-wrap">
+                  <div className="np-card-img-wrap" style={{ position: 'relative', height: '318px', overflow: 'hidden' }}>
                     {/* Left Badges */}
                     {leftBadges.length > 0 && (
                       <div className="np-badges-left">
@@ -271,7 +271,7 @@ export default function NewProducts() {
       <style jsx>{`
         .np-section {
           width: 100%;
-          background-color: #ffffff;
+          background-color: #f3f3f3;
           padding: 85px 0 95px;
           font-family: var(--font-inter), "Inter", sans-serif;
           overflow: hidden;

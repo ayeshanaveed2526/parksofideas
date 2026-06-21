@@ -168,7 +168,7 @@ export default function TopCategory() {
             return (
               <article key={product.id} className="tp-card">
                 {/* ▸ Image area (Top box) */}
-                <div className="tp-card-img-wrap">
+                <div className="tp-card-img-wrap" style={{ position: 'relative', aspectRatio: '260/230', overflow: 'hidden' }}>
                   {/* Left Badges */}
                   {leftBadges.length > 0 && (
                     <div className="tp-badges-left">
