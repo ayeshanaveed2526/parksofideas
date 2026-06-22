@@ -106,7 +106,7 @@ export default function MainNavbar() {
   return (
     <>
       <div className={`w-full bg-white transition-all duration-300 ${isSticky ? "shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b border-gray-100" : ""}`}>
-        <div className="relative mx-auto flex h-[70px] md:h-[90px] w-full items-center justify-between px-4 sm:px-6 md:px-[50px] 2xl:px-[100px]">
+        <div className="relative mx-auto flex h-[70px] md:h-[90px] w-full items-center justify-between px-[15px] md:px-[50px]">
           {/* Logo */}
           <Link href="/" aria-label="Luchiana Home" className="shrink-0">
             <svg className="w-[140px] sm:w-[170px] md:w-[205px] h-auto" viewBox="0 0 205 18" xmlns="http://www.w3.org/2000/svg">
