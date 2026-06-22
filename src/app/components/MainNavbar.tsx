@@ -143,9 +143,9 @@ export default function MainNavbar() {
                 {/* Mega Menu for HOME */}
                 {link.label === "HOME" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[1160px] h-[229px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200] border-t border-gray-100 cursor-default"
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[100vw] max-w-[1160px] h-[229px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200] border-t border-gray-100 cursor-default overflow-x-auto"
                   >
-                    <div className="flex items-center justify-center gap-[30px] w-full h-full px-10">
+                    <div className="flex items-center justify-center gap-[15px] xl:gap-[30px] w-max xl:w-full h-full px-4 xl:px-10 min-w-min mx-auto">
                       {homeVariants.map((v) => (
                         <Link href="/" key={v.name} className="flex flex-col items-center gap-[15px]">
                           <div className="w-[89px] h-[98px] relative border border-transparent hover:border-black transition-colors bg-gray-50">
@@ -166,7 +166,7 @@ export default function MainNavbar() {
                 {/* Mega Menu for SHOP */}
                 {link.label === "SHOP" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[1160px] h-[535px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200] border-t border-gray-100 cursor-default px-[60px] py-[50px] grid grid-cols-4 gap-[40px] text-left"
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[100vw] max-w-[1160px] h-[535px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200] border-t border-gray-100 cursor-default px-[20px] xl:px-[60px] py-[50px] grid grid-cols-4 gap-[20px] xl:gap-[40px] text-left overflow-x-auto"
                   >
                     {/* Col 1 */}
                     <div className="flex flex-col">
@@ -339,10 +339,10 @@ export default function MainNavbar() {
                 {/* Mega Menu for MEGA */}
                 {link.label === "MEGA" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[1160px] h-[538px] bg-[#f9f9f9] shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200] border-t border-gray-100 cursor-default flex text-left"
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[100vw] max-w-[1160px] h-auto min-h-[538px] bg-[#f9f9f9] shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200] border-t border-gray-100 cursor-default flex text-left"
                   >
                     {/* Sidebar section */}
-                    <div className="w-[300px] h-[523px] bg-white pt-[50px] pl-[50px] flex flex-col gap-[40px]">
+                    <div className="w-[250px] xl:w-[300px] shrink-0 min-h-[523px] bg-white pt-[50px] pl-[30px] xl:pl-[50px] flex flex-col gap-[40px]">
                       <div>
                         <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-[0.1em] uppercase" style={{ fontFamily: "Inter, sans-serif" }}>BRANDS</h4>
                         <ul className="flex flex-col gap-[18px]">
@@ -366,7 +366,7 @@ export default function MainNavbar() {
                     </div>
                     
                     {/* Image section */}
-                    <div className="w-[860px] h-[523px] pt-[41px] px-[20px] pb-[10px] flex gap-[20px] overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-track]:bg-[#f0f0f0] [&::-webkit-scrollbar-thumb]:bg-[#c0c0c0] [&::-webkit-scrollbar-thumb]:hover:bg-[#a0a0a0]">
+                    <div className="flex-1 pt-[41px] px-[20px] pb-[10px] flex gap-[20px] overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-track]:bg-[#f0f0f0] [&::-webkit-scrollbar-thumb]:bg-[#c0c0c0] [&::-webkit-scrollbar-thumb]:hover:bg-[#a0a0a0]">
                       {/* Product 1 */}
                       <div className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
                         <div className="relative w-[260px] h-[230px] flex items-center justify-center p-4 overflow-hidden border-b border-[#f2f2f2]">

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  FaFacebookF, 
-  FaYoutube, 
-  FaChevronDown 
+import {
+  FaFacebookF,
+  FaYoutube,
+  FaChevronDown
 } from "react-icons/fa";
 import { RiInstagramFill, RiWhatsappFill } from "react-icons/ri";
 import { BsTelephone, BsEnvelope, BsGeoAlt, BsClock } from "react-icons/bs";
@@ -19,10 +19,10 @@ export default function TopBar() {
   const [lang, setLang] = useState("English");
   const [open, setOpen] = useState(false);
 
-  const languages = ["English", "Français", "العربية"];
+  const languages = ["English", "German"];
 
   return (
-    <div 
+    <div
       className="w-full"
       style={{
         height: "46px",
@@ -65,7 +65,7 @@ export default function TopBar() {
         </div>
 
         {/* Contact info — right (hidden on mobile, visible on lg+) */}
-        <div 
+        <div
           className="hidden lg:flex items-center gap-[34px]"
           style={{
             position: "relative",
@@ -94,7 +94,7 @@ export default function TopBar() {
             <span>info@luchiana.com</span>
           </a>
 
-          <a 
+          <a
             href="#"
             className="flex items-center gap-2 transition-opacity hover:opacity-70"
           >
@@ -102,7 +102,7 @@ export default function TopBar() {
             <span>25 West 21th Street, Miami FL, USA</span>
           </a>
 
-          <a 
+          <a
             href="#"
             className="flex items-center gap-2 transition-opacity hover:opacity-70"
           >
@@ -114,14 +114,14 @@ export default function TopBar() {
           <div className="relative">
             <button
               onClick={() => setOpen((v) => !v)}
-              className="group flex items-center gap-1 transition-colors hover:text-black"
+              className="group flex items-center gap-[5px] transition-opacity hover:opacity-70 text-[#574943]"
             >
-              <span>{lang}</span>
-              <FaChevronDown size={11} color="black" className="transition-colors group-hover:text-black" />
+              <span className="font-medium">{lang}</span>
+              <FaChevronDown size={7} color="black" className="mt-[2px]" />
             </button>
 
             {open && (
-              <ul className="absolute right-0 top-[28px] z-10 min-w-[120px] rounded-sm bg-white py-1 text-[#5b4a40] shadow-md">
+              <ul className="absolute right-0 top-[26px] z-50 min-w-[110px] rounded-sm bg-[#e4c1b1] py-2 text-[#574943] shadow-lg border border-[#d6b2a1]">
                 {languages.map((l) => (
                   <li key={l}>
                     <button
@@ -129,7 +129,7 @@ export default function TopBar() {
                         setLang(l);
                         setOpen(false);
                       }}
-                      className="block w-full px-3 py-1 text-left hover:bg-[#f5e9e3]"
+                      className="block w-full px-4 py-1.5 text-left hover:bg-[#d6b2a1] transition-colors"
                     >
                       {l}
                     </button>
@@ -141,7 +141,7 @@ export default function TopBar() {
         </div>
 
         {/* Mobile-only: phone + language dropdown */}
-        <div 
+        <div
           className="flex lg:hidden items-center gap-3 sm:gap-4"
           style={{
             fontStyle: "normal",
@@ -165,14 +165,14 @@ export default function TopBar() {
           <div className="relative">
             <button
               onClick={() => setOpen((v) => !v)}
-              className="group flex items-center gap-1 transition-colors hover:text-black"
+              className="group flex items-center gap-[5px] transition-opacity hover:opacity-70 text-white"
             >
-              <span>{lang}</span>
-              <FaChevronDown size={10} color="black" className="transition-colors group-hover:text-black" />
+              <span className="font-medium">{lang}</span>
+              <FaChevronDown size={7} color="white" className="mt-[2px]" />
             </button>
 
             {open && (
-              <ul className="absolute right-0 top-[28px] z-10 min-w-[120px] rounded-sm bg-white py-1 text-[#5b4a40] shadow-md">
+              <ul className="absolute right-0 top-[26px] z-50 min-w-[110px] rounded-sm bg-[#e4c1b1] py-2 text-[#574943] shadow-lg border border-[#d6b2a1]">
                 {languages.map((l) => (
                   <li key={l}>
                     <button
@@ -180,7 +180,7 @@ export default function TopBar() {
                         setLang(l);
                         setOpen(false);
                       }}
-                      className="block w-full px-3 py-1 text-left hover:bg-[#f5e9e3]"
+                      className="block w-full px-4 py-1.5 text-left hover:bg-[#d6b2a1] transition-colors"
                     >
                       {l}
                     </button>
