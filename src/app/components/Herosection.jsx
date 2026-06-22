@@ -347,7 +347,7 @@ export default function Herosection() {
       {/* Sticky Buy Theme Button (Right Edge) — hidden on mobile */}
       <a 
         href="#"
-        className="fixed right-0 top-1/2 z-50 -translate-y-1/2 transition-transform duration-300 hover:-translate-x-2 hidden md:block"
+        className="fixed right-0 top-1/2 z-50 -translate-y-1/2 transition-transform duration-300 origin-right hover:scale-110 hidden md:block"
         aria-label="Buy Theme"
       >
         <svg width="44" height="120" viewBox="0 0 44 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-lg">
