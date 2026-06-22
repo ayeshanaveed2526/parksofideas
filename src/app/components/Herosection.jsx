@@ -55,8 +55,14 @@ export default function Herosection() {
   const [currentLeft, setCurrentLeft] = useState(0);
   const [currentRight, setCurrentRight] = useState(0);
 
-  // Manual sliding only, no automatic transitions
-  useEffect(() => {}, []);
+  // Automatic sliding every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentLeft((prev) => (prev + 1) % leftSlides.length);
+      setCurrentRight((prev) => (prev + 1) % rightSlides.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [leftSlides.length, rightSlides.length]);
 
   return (
     <div className="relative w-full overflow-hidden bg-white">

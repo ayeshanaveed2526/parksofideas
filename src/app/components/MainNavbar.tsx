@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Search, User, Heart, ShoppingBag, Menu, X } from "lucide-react";
 
 /**
@@ -42,10 +43,21 @@ export default function MainNavbar() {
     { label: "CONTACT", href: "/contact" },
   ];
 
+  const homeVariants = [
+    { name: "MAIN", image: "/luchiana-assets/products/main.jpg" },
+    { name: "NATURAL", image: "/luchiana-assets/products/natural.jpg" },
+    { name: "COMPACT", image: "/luchiana-assets/products/compact.jpg" },
+    { name: "BOXED", image: "/luchiana-assets/products/boxed.jpg" },
+    { name: "WIDE", image: "/luchiana-assets/products/wide.jpg" },
+    { name: "BRANDED", image: "/luchiana-assets/products/branded.jpg" },
+    { name: "ORGANIC", image: "/luchiana-assets/products/organic.jpg" },
+    { name: "SALON", image: "/luchiana-assets/products/salon.jpg" },
+  ];
+
   return (
     <>
       <div className={`w-full bg-white transition-all duration-300 ${isSticky ? "shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b border-gray-100" : ""}`}>
-        <div className="mx-auto flex h-[70px] md:h-[90px] w-full items-center justify-between px-4 sm:px-6 md:px-[50px] 2xl:px-[100px]">
+        <div className="relative mx-auto flex h-[70px] md:h-[90px] w-full items-center justify-between px-4 sm:px-6 md:px-[50px] 2xl:px-[100px]">
           {/* Logo */}
           <Link href="/" aria-label="Luchiana Home" className="shrink-0">
             <svg className="w-[140px] sm:w-[170px] md:w-[205px] h-auto" viewBox="0 0 205 18" xmlns="http://www.w3.org/2000/svg">
@@ -60,24 +72,47 @@ export default function MainNavbar() {
           </Link>
 
           {/* Nav links — desktop */}
-          <ul className="hidden lg:flex relative lg:right-[30px] items-center text-[#1a1a1a]">
+          <ul className="hidden lg:flex items-center h-full text-[#1a1a1a] mr-[30px]">
             {navLinks.map((link) => (
               <li
                 key={link.label}
+                className="group flex items-center h-full"
                 style={{
-                  position: "relative",
                   fontWeight: 500,
                   fontSize: "14px",
                   lineHeight: 1.14,
                   letterSpacing: "0.13em",
                   textTransform: "uppercase",
-                  margin: "15px 20px",
+                  margin: "0 20px",
                   fontFamily: "Inter, sans-serif",
                 }}
               >
-                <Link href={link.href} className="hover:text-[#8c6f63] transition-colors">
+                <Link href={link.href} className="hover:text-[#8c6f63] transition-colors flex items-center h-full">
                   {link.label}
                 </Link>
+
+                {/* Mega Menu for HOME */}
+                {link.label === "HOME" && (
+                  <div
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[1160px] h-[229px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[200] border-t border-gray-100 cursor-default"
+                  >
+                    <div className="flex items-center justify-center gap-[30px] w-full h-full px-10">
+                      {homeVariants.map((v) => (
+                        <Link href="/" key={v.name} className="flex flex-col items-center gap-[15px]">
+                          <div className="w-[89px] h-[98px] relative border border-transparent hover:border-black transition-colors bg-gray-50">
+                            <Image src={v.image} alt={v.name} fill style={{ objectFit: "cover" }} />
+                          </div>
+                          <span
+                            className="text-[12px] text-[#1a1a1a] hover:text-[#8c6f63] transition-colors"
+                            style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, letterSpacing: "0.15em" }}
+                          >
+                            {v.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
@@ -96,8 +131,8 @@ export default function MainNavbar() {
             <button aria-label="Cart" className="transition-all duration-200 hover:scale-125 hover:opacity-70">
               <ShoppingBag size={20} strokeWidth={1.5} />
             </button>
-            <button 
-              aria-label="Menu" 
+            <button
+              aria-label="Menu"
               className="lg:hidden transition-all duration-200 hover:scale-125 hover:opacity-70"
               onClick={() => setMobileMenuOpen(true)}
             >
@@ -110,21 +145,19 @@ export default function MainNavbar() {
       {/* ── Mobile Menu Drawer ── */}
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[200] bg-black/50 transition-opacity duration-300 lg:hidden ${
-          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-[200] bg-black/50 transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         onClick={() => setMobileMenuOpen(false)}
       />
-      
+
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-[201] h-full w-[280px] sm:w-[320px] bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 z-[201] h-full w-[280px] sm:w-[320px] bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         {/* Close button */}
         <div className="flex items-center justify-between px-6 h-[70px] border-b border-gray-100">
-          <span 
+          <span
             className="text-[14px] font-medium tracking-[0.15em] uppercase"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
