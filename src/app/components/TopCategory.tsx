@@ -428,6 +428,7 @@ export default function TopCategory() {
           aspect-ratio: 260 / 230;
           background: #fff;
           overflow: hidden;
+          border-bottom: 1px solid #f2f2f2;
         }
 
         .tp-card-img {

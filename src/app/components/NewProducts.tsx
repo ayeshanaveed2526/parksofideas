@@ -152,7 +152,7 @@ export default function NewProducts() {
 
   return (
     <section className="np-section">
-      <h2 className="np-title">NEW PRODUCTS</h2>
+      {/* <h2 className="np-title">NEW PRODUCTS</h2> */}
       
       <div className="np-slider-container">
         {/* Left Arrow */}
@@ -394,6 +394,7 @@ export default function NewProducts() {
           aspect-ratio: 360 / 280;
           background: #ffffff;
           overflow: hidden;
+          border-bottom: 1px solid #f2f2f2;
         }
 
         .np-card-img {
