@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Heart, Share2 } from 'lucide-react';
 import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { Product } from '../../data/mockProducts';
@@ -21,24 +21,40 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
     setQuantity(quantity + 1);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
   return (
     <div className="flex flex-col h-full justify-center md:pl-10">
       <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <h1 className="text-3xl md:text-4xl font-serif tracking-widest text-gray-900 mb-4 uppercase">
+        <motion.h1 variants={itemVariants} className="text-3xl md:text-4xl font-serif tracking-widest text-gray-900 mb-4 uppercase">
           {product.name}
-        </h1>
-        <p className="text-gray-500 mb-6 text-sm">{product.shortDescription}</p>
+        </motion.h1>
+        <motion.p variants={itemVariants} className="text-gray-500 mb-6 text-sm">{product.shortDescription}</motion.p>
         
-        <div className="text-2xl font-semibold mb-8">
+        <motion.div variants={itemVariants} className="text-2xl font-semibold mb-8">
           ${product.price.toFixed(2)}
-        </div>
+        </motion.div>
 
         {/* Add to Cart Section */}
-        <div className="flex items-center gap-4 mb-8">
+        <motion.div variants={itemVariants} className="flex items-center gap-4 mb-8">
           <div className="flex items-center border border-gray-300 h-12 w-32">
             <button 
               onClick={handleDecrease}
@@ -61,23 +77,23 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <span className="relative z-10 group-hover:text-black">ADD TO CART</span>
             <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </button>
-        </div>
+        </motion.div>
 
         {/* Wishlist */}
-        <button className="flex items-center gap-2 text-xs font-semibold text-gray-600 hover:text-black mb-8 transition-colors group">
+        <motion.button variants={itemVariants} className="flex items-center gap-2 text-xs font-semibold text-gray-600 hover:text-black mb-8 transition-colors group">
           <Heart className="w-4 h-4 group-hover:fill-black transition-colors" />
           <span>ADD TO WISHLIST</span>
-        </button>
+        </motion.button>
 
         {/* Meta info */}
-        <div className="flex flex-col gap-2 text-xs text-gray-500 mb-8 border-t pt-8">
+        <motion.div variants={itemVariants} className="flex flex-col gap-2 text-xs text-gray-500 mb-8 border-t pt-8">
           <p><span className="font-semibold text-gray-800">SKU:</span> {product.sku}</p>
           <p><span className="font-semibold text-gray-800">CATEGORY:</span> {product.category}</p>
           <p><span className="font-semibold text-gray-800">TAGS:</span> {product.tags.join(', ')}</p>
-        </div>
+        </motion.div>
 
         {/* Social Share */}
-        <div className="flex items-center gap-4 text-xs font-semibold text-gray-800">
+        <motion.div variants={itemVariants} className="flex items-center gap-4 text-xs font-semibold text-gray-800">
           <span>SHARE</span>
           <div className="flex gap-3 text-gray-400">
             <FaFacebookF className="w-4 h-4 hover:text-black cursor-pointer transition-colors" />
@@ -85,7 +101,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <FaInstagram className="w-4 h-4 hover:text-black cursor-pointer transition-colors" />
             <Share2 className="w-4 h-4 hover:text-black cursor-pointer transition-colors" />
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );

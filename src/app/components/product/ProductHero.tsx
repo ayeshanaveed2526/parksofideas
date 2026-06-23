@@ -10,9 +10,17 @@ interface ProductHeroProps {
 
 const ProductHero: React.FC<ProductHeroProps> = ({ category, productName }) => {
   return (
-    <div className="relative w-full h-80 bg-[#8cbcc9] flex flex-col items-center justify-center overflow-hidden">
-      {/* Background Pattern or Animation could go here */}
-      <motion.div 
+    <div
+      className="relative w-full h-80 flex flex-col items-center justify-center overflow-hidden"
+      style={{
+        backgroundColor: '#8cbcc9',
+        backgroundImage: "url('/luchiana-assets/products/luchiana-1911690231.png')",
+        backgroundSize: "150px",
+        backgroundRepeat: "repeat",
+        backgroundPosition: "center"
+      }}
+    >
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}

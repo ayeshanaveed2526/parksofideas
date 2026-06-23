@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import FBottomBar from '../../components/FBottomBar';
 import ProductHero from '../../components/product/ProductHero';
 import ProductGallery from '../../components/product/ProductGallery';
 import ProductInfo from '../../components/product/ProductInfo';
 import ProductTabs from '../../components/product/ProductTabs';
 import RelatedProducts from '../../components/product/RelatedProducts';
+import AnimatedBackground from '../../components/product/AnimatedBackground';
 import { mockProducts } from '../../data/mockProducts';
 import { notFound } from 'next/navigation';
 
@@ -31,8 +31,10 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       ];
 
   return (
-    <main className="min-h-screen bg-white">
-      <Header />
+    <main className="min-h-screen relative overflow-hidden bg-transparent">
+      <AnimatedBackground />
+      <div className="relative z-10">
+        <Header />
       
       <ProductHero category={product.category} productName={product.name} />
 
@@ -54,11 +56,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       {/* Product Tabs */}
       <ProductTabs product={product} />
 
-      {/* Related Products */}
-      <RelatedProducts />
-
-      <FBottomBar />
-      <Footer />
+        <RelatedProducts />
+        <Footer />
+      </div>
     </main>
   );
 }

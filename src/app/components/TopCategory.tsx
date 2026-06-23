@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface Product {
   id: number;
@@ -161,7 +162,7 @@ export default function TopCategory() {
       {/* ── Grid ── */}
       <div className="tp-container">
         <div className="tp-grid">
-          {currentProducts.map((product) => {
+          {currentProducts.map((product, idx) => {
             const leftBadges = product.badges.filter((b) => b.text !== "FEATURED");
             const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
 

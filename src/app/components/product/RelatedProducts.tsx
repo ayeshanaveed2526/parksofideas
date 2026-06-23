@@ -32,7 +32,7 @@ const relatedProducts = [
 
 const RelatedProducts: React.FC = () => {
   return (
-    <div className="w-full max-w-6xl mx-auto my-20 py-10 bg-[#f9f9f9]">
+    <div className="w-full max-w-6xl mx-auto my-20 py-10">
       <h2 className="text-center text-2xl font-serif tracking-widest text-black mb-12 uppercase">
         Related Products
       </h2>

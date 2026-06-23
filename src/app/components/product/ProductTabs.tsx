@@ -18,7 +18,13 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
   ] as const;
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-20">
+    <motion.div 
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="w-full max-w-4xl mx-auto my-20"
+    >
       {/* Tab Headers */}
       <div className="flex justify-center border-b border-gray-200 mb-8 relative">
         {tabs.map((tab) => (
@@ -55,18 +61,28 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
           >
             {activeTab === 'description' && (
               <>
-                <div className="flex-1">
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="flex-1"
+                >
                   <h3 className="text-2xl font-serif text-black mb-4 uppercase tracking-widest">From Lady Gaga</h3>
-                  <p>{product.description}</p>
-                </div>
-                <div className="flex-1">
+                  <p className="leading-relaxed">{product.description}</p>
+                </motion.div>
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="flex-1"
+                >
                   <div className="w-full h-80 bg-gray-100 flex items-center justify-center relative overflow-hidden group">
                      {/* Replace with actual image related to description, simulating Lady Gaga image */}
                      <div className="absolute inset-0 bg-pink-600/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10" />
                      <img src="/images/description-feature.jpg" alt="Feature" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop'; }} />
                      <h2 className="absolute bottom-10 right-10 text-white font-serif text-4xl font-bold z-20 mix-blend-overlay">VOCE<br/>VIVA</h2>
                   </div>
-                </div>
+                </motion.div>
               </>
             )}
 
@@ -111,7 +127,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
           </motion.div>
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

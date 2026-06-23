@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface Product {
   id: number;
@@ -187,9 +188,13 @@ export default function NewProducts() {
                   key={product.id} 
                   style={{ display: 'contents', textDecoration: 'none' }}
                 >
-                  <article 
+                  <motion.article 
                     className="np-card" 
                     style={{ width: `${cardWidth}px`, flex: `0 0 ${cardWidth}px` }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "100px" }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                   >
                   {/* Image wrapper */}
                   <div className="np-card-img-wrap" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -271,7 +276,7 @@ export default function NewProducts() {
                       <span className="np-price-current">{product.price}</span>
                     </div>
                   </div>
-                  </article>
+                  </motion.article>
                 </Link>
               );
             })}

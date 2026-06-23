@@ -1,76 +1,107 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Float, PresentationControls, ContactShadows, Environment, useTexture } from '@react-three/drei';
-import * as THREE from 'three';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductGalleryProps {
   images: string[];
 }
 
-// A simple 3D plane with the texture
-const ThreeDImage = ({ url }: { url: string }) => {
-  const texture = useTexture(url);
-  
-  return (
-    <mesh castShadow receiveShadow>
-      {/* Aspect ratio can be adjusted based on actual images */}
-      <planeGeometry args={[4, 5]} />
-      <meshStandardMaterial map={texture} side={THREE.DoubleSide} transparent />
-    </mesh>
-  );
-};
-
 const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
-  const [activeImage, setActiveImage] = useState(images[0] || '');
+  const [activeIdx, setActiveIdx] = useState(0);
+  const activeImage = images[activeIdx] || '';
 
   return (
-    <div className="flex flex-col md:flex-row gap-6">
-      {/* Thumbnails */}
-      <div className="flex md:flex-col gap-4 order-2 md:order-1">
+    <div className="flex flex-col md:flex-row gap-8 lg:gap-12 w-full">
+      {/* Thumbnails Sidebar */}
+      <div className="flex md:flex-col gap-4 order-2 md:order-1 shrink-0 z-10">
         {images.map((img, idx) => (
-          <div 
+          <button
             key={idx}
-            className={`w-20 h-24 border cursor-pointer transition-all duration-300 ${activeImage === img ? 'border-black' : 'border-transparent hover:border-gray-300'}`}
-            onClick={() => setActiveImage(img)}
+            className={`relative w-20 h-24 overflow-hidden border transition-all duration-500 ease-out 
+              ${activeIdx === idx ? 'border-black scale-105 shadow-md' : 'border-transparent hover:border-gray-200 opacity-60 hover:opacity-100'}`}
+            onClick={() => setActiveIdx(idx)}
+            aria-label={`View image ${idx + 1}`}
           >
-            {/* Using standard img for thumbnails for performance */}
-            <img src={img} alt={`Thumbnail ${idx}`} className="w-full h-full object-cover" />
-          </div>
+            <div className="absolute inset-0 bg-[#f9f9f9]" />
+            <img 
+              src={img} 
+              alt={`Thumbnail ${idx + 1}`} 
+              className="relative w-full h-full object-cover mix-blend-multiply" 
+            />
+            {activeIdx === idx && (
+              <motion.div 
+                layoutId="active-thumb-indicator"
+                className="absolute bottom-0 left-0 right-0 h-1 bg-black"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              />
+            )}
+          </button>
         ))}
       </div>
 
-      {/* Main Image with Three.js */}
-      <div className="flex-1 bg-[#f9f9f9] relative min-h-[500px] flex items-center justify-center order-1 md:order-2 overflow-hidden group">
-        <div className="absolute top-4 left-4 z-10 bg-black text-white text-xs px-2 py-1 font-bold">
-          NEW
-        </div>
+      {/* Main Image Showcase */}
+      <div className="flex-1 relative order-1 md:order-2 flex items-center justify-center min-h-[500px] lg:min-h-[600px] group overflow-hidden bg-transparent">
         
-        {/* Three.js Canvas */}
-        <div className="w-full h-full absolute inset-0 cursor-grab active:cursor-grabbing">
-          <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
-            <PresentationControls 
-              global 
-              snap={true} 
-              rotation={[0, 0, 0]} 
-              polar={[-Math.PI / 10, Math.PI / 10]} 
-              azimuth={[-Math.PI / 4, Math.PI / 4]}
-            >
-              <Float rotationIntensity={0.2} floatIntensity={0.5} speed={2}>
-                <ThreeDImage url={activeImage || '/placeholder.png'} />
-              </Float>
-            </PresentationControls>
-            <ContactShadows position={[0, -3, 0]} opacity={0.4} scale={10} blur={2} far={4} />
-            <Environment preset="city" />
-          </Canvas>
+        {/* Soft elegant glow behind the image */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[80%] h-[80%] bg-gradient-to-tr from-gray-100 to-transparent rounded-full blur-3xl opacity-50" />
         </div>
-        
-        <div className="absolute bottom-4 right-4 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
-          Drag to interact
+
+        <div className="absolute top-6 left-6 z-20">
+          <motion.span 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="inline-block bg-black text-white text-xs px-3 py-1.5 font-bold tracking-widest uppercase"
+          >
+            NEW
+          </motion.span>
         </div>
+
+        {/* The Animated Image */}
+        <div className="relative w-full h-full flex items-center justify-center p-8 z-10 cursor-crosshair">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={activeImage}
+              src={activeImage}
+              alt="Product Showcase"
+              initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+              transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
+              className="w-full h-full object-contain max-h-[600px] mix-blend-multiply"
+            />
+          </AnimatePresence>
+          
+          {/* Subtle floating continuous animation */}
+          <motion.div 
+            className="absolute inset-0 pointer-events-none"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+          >
+            <AnimatePresence mode="wait">
+               <motion.img
+                key={activeImage + "-shadow"}
+                src={activeImage}
+                alt=""
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.15 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6 }}
+                className="w-full h-full object-contain max-h-[600px] scale-95 translate-y-8 blur-2xl mix-blend-multiply saturate-0"
+              />
+            </AnimatePresence>
+          </motion.div>
+        </div>
+
+        {/* Hover zoom instruction */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          className="absolute bottom-6 right-6 text-xs font-semibold text-gray-400 tracking-widest uppercase z-20 pointer-events-none"
+        >
+          Hover to zoom
+        </motion.div>
       </div>
     </div>
   );
