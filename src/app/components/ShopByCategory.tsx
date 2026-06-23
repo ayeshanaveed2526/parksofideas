@@ -6,12 +6,12 @@ const categories = [
   {
     name: "SKINCARE",
     image: "/images/luchiana-0654733209.jpg",
-    link: "#",
+    link: "/product/1",
   },
   {
     name: "LIPS",
     image: "/images/luchiana-0654102558.jpg",
-    link: "#",
+    link: "/product/1",
   },
   // {
   //   name: "LIPS",
@@ -21,22 +21,22 @@ const categories = [
   {
     name: "HAIR",
     image: "/images/luchiana-0654445062.jpg",
-    link: "#",
+    link: "/product/1",
   },
   {
     name: "EYE",
     image: "/images/luchiana-0654822752-115x115.jpg",
-    link: "#",
+    link: "/product/1",
   },
   {
     name: "MAKEUP",
     image: "/images/luchiana-0654132591.jpg",
-    link: "#",
+    link: "/product/1",
   },
   {
     name: "FRAGRANCE",
     image: "/images/luchiana-0654439537.jpg",
-    link: "#",
+    link: "/product/1",
   },
 ];
 

@@ -166,7 +166,8 @@ export default function TopCategory() {
             const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
 
             return (
-              <article key={product.id} className="tp-card">
+              <Link href={`/product/${product.id}`} key={product.id} style={{ display: 'contents', textDecoration: 'none' }}>
+                <article className="tp-card">
                 {/* ▸ Image area (Top box) */}
                 <div className="tp-card-img-wrap" style={{ position: 'relative', aspectRatio: '260/230', overflow: 'hidden' }}>
                   {/* Left Badges */}
@@ -240,9 +241,9 @@ export default function TopCategory() {
                       OUT OF STOCK
                     </button>
                   ) : product.isExternal ? (
-                    <a href="#" className="tp-atc-btn">
+                    <button type="button" className="tp-atc-btn" onClick={(e) => e.preventDefault()}>
                       BUY ON AMAZON
-                    </a>
+                    </button>
                   ) : (
                     <button className="tp-atc-btn" type="button">
                       + ADD TO CART
@@ -256,7 +257,8 @@ export default function TopCategory() {
                   <p className="tp-card-desc">{product.description}</p>
                   <span className="tp-card-price">{product.price}</span>
                 </div>
-              </article>
+                </article>
+              </Link>
             );
           })}
         </div>

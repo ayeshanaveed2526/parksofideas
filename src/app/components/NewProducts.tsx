@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Product {
   id: number;
@@ -18,7 +19,7 @@ interface Product {
 
 const productsData: Product[] = [
   {
-    id: 1,
+    id: 13,
     name: "AIRBRUSH MATTE",
     description: "Skin-perfecting bronzed filter for the face.",
     price: "$40.00",
@@ -31,7 +32,7 @@ const productsData: Product[] = [
     ],
   },
   {
-    id: 2,
+    id: 14,
     name: "EYELINER PACK",
     description: "A hyper-saturated, water-resistant, liquid eyeliner.",
     price: "$40.00 – $80.00",
@@ -43,7 +44,7 @@ const productsData: Product[] = [
     ],
   },
   {
-    id: 3,
+    id: 15,
     name: "FACE & BODY FOUNDATION",
     description: "A foundation for the face and body.",
     price: "$40.00",
@@ -55,7 +56,7 @@ const productsData: Product[] = [
     ],
   },
   {
-    id: 4,
+    id: 16,
     name: "VELVET LIPSTICK",
     description: "Luxurious velvet matte lipstick with rich pigment.",
     price: "$25.00",
@@ -67,7 +68,7 @@ const productsData: Product[] = [
     ],
   },
   {
-    id: 5,
+    id: 17,
     name: "HYDRATING SERUM",
     description: "Deeply hydrates and replenishes the skin barrier.",
     price: "$55.00",
@@ -78,7 +79,7 @@ const productsData: Product[] = [
     ],
   },
   {
-    id: 6,
+    id: 18,
     name: "FRAGRANCE ESSENCE",
     description: "A sophisticated floral scent with warm vanilla notes.",
     price: "$75.00",
@@ -181,11 +182,15 @@ export default function NewProducts() {
               const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
 
               return (
-                <article 
+                <Link
+                  href={`/product/${product.id}`}
                   key={product.id} 
-                  className="np-card" 
-                  style={{ width: `${cardWidth}px`, flex: `0 0 ${cardWidth}px` }}
+                  style={{ display: 'contents', textDecoration: 'none' }}
                 >
+                  <article 
+                    className="np-card" 
+                    style={{ width: `${cardWidth}px`, flex: `0 0 ${cardWidth}px` }}
+                  >
                   {/* Image wrapper */}
                   <div className="np-card-img-wrap" style={{ position: 'relative', overflow: 'hidden' }}>
                     {/* Left Badges */}
@@ -266,7 +271,8 @@ export default function NewProducts() {
                       <span className="np-price-current">{product.price}</span>
                     </div>
                   </div>
-                </article>
+                  </article>
+                </Link>
               );
             })}
           </div>
