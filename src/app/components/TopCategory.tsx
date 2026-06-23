@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 interface Product {
   id: number;
@@ -126,21 +125,104 @@ const newestProducts: Product[] = [
 
 const products: Record<string, Product[]> = {
   NEWEST: newestProducts,
-  POPULAR: [newestProducts[1], newestProducts[3], newestProducts[5], newestProducts[7], newestProducts[9], newestProducts[11]],
-  CATEGORY: [newestProducts[0], newestProducts[2], newestProducts[4], newestProducts[6], newestProducts[8], newestProducts[10]],
-  BRAND: [newestProducts[1], newestProducts[2], newestProducts[4], newestProducts[7], newestProducts[8], newestProducts[11]],
+  POPULAR: [
+    newestProducts[1], newestProducts[3], newestProducts[5], newestProducts[7], newestProducts[9], 
+    newestProducts[11], newestProducts[0], newestProducts[2], newestProducts[4], newestProducts[6]
+  ],
+  CATEGORY: [
+    newestProducts[0], newestProducts[2], newestProducts[4], newestProducts[6], newestProducts[8], 
+    newestProducts[10], newestProducts[1], newestProducts[3], newestProducts[5], newestProducts[7]
+  ],
+  BRAND: [
+    newestProducts[1], newestProducts[2], newestProducts[4], newestProducts[7], newestProducts[8], 
+    newestProducts[11], newestProducts[0], newestProducts[3], newestProducts[6], newestProducts[9]
+  ],
 };
 
 const tabs = ["NEWEST", "POPULAR", "CATEGORY", "BRAND"];
 
 export default function TopCategory() {
   const [activeTab, setActiveTab] = useState("NEWEST");
-  const currentProducts = products[activeTab] || [];
+  const [animKey, setAnimKey] = useState(0);
+  const currentProducts = (products[activeTab] || []).slice(0, 10);
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    setAnimKey((k) => k + 1);
+  };
 
   return (
     <section className="tp-section">
-      {/* ── Title ── */}
-      <h2 className="tp-title">TOP PRODUCTS</h2>
+      {/* ── Efficient Geometric Background ── */}
+      <div className="tp-bg-layer" aria-hidden="true">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="tp-grid-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(0,0,0,0.03)" strokeWidth="1" />
+            </pattern>
+          </defs>
+
+          {/* Background Grid */}
+          <rect width="100%" height="100%" fill="url(#tp-grid-pattern)" />
+
+          {/* Slow panning mesh network nodes */}
+          <g stroke="rgba(205,174,159,0.15)" strokeWidth="1" fill="none">
+            {/* Node Cluster 1 */}
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0,0; 30,-20; 0,0" dur="20s" repeatCount="indefinite" />
+              <line x1="10%" y1="20%" x2="25%" y2="15%" />
+              <line x1="25%" y1="15%" x2="30%" y2="35%" />
+              <line x1="10%" y1="20%" x2="30%" y2="35%" />
+              <circle cx="10%" cy="20%" r="3" fill="rgba(205,174,159,0.3)" />
+              <circle cx="25%" cy="15%" r="4" fill="rgba(205,174,159,0.3)" />
+              <circle cx="30%" cy="35%" r="3" fill="rgba(205,174,159,0.3)" />
+            </g>
+
+            {/* Node Cluster 2 */}
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="0,0; -40,15; 0,0" dur="25s" repeatCount="indefinite" />
+              <line x1="75%" y1="65%" x2="85%" y2="50%" />
+              <line x1="85%" y1="50%" x2="90%" y2="80%" />
+              <line x1="75%" y1="65%" x2="90%" y2="80%" />
+              <circle cx="75%" cy="65%" r="4" fill="rgba(205,174,159,0.3)" />
+              <circle cx="85%" cy="50%" r="3" fill="rgba(205,174,159,0.3)" />
+              <circle cx="90%" cy="80%" r="4" fill="rgba(205,174,159,0.3)" />
+            </g>
+          </g>
+
+          {/* Rotating Geometric Rings */}
+          <g transform="translate(150, 150)">
+            <circle r="90" fill="none" stroke="rgba(180,210,210,0.15)" strokeWidth="1" strokeDasharray="10 5 2 5">
+              <animateTransform attributeName="transform" type="rotate" values="0; 360" dur="40s" repeatCount="indefinite" />
+            </circle>
+            <circle r="70" fill="none" stroke="rgba(205,174,159,0.1)" strokeWidth="1" strokeDasharray="5 15">
+              <animateTransform attributeName="transform" type="rotate" values="360; 0" dur="30s" repeatCount="indefinite" />
+            </circle>
+          </g>
+
+          <g transform="translate(1200, 600)">
+            <circle r="120" fill="none" stroke="rgba(205,174,159,0.12)" strokeWidth="1" strokeDasharray="1 8">
+              <animateTransform attributeName="transform" type="rotate" values="0; 360" dur="45s" repeatCount="indefinite" />
+            </circle>
+            <rect x="-60" y="-60" width="120" height="120" fill="none" stroke="rgba(180,210,210,0.1)" strokeWidth="1">
+              <animateTransform attributeName="transform" type="rotate" values="0; -360" dur="35s" repeatCount="indefinite" />
+            </rect>
+          </g>
+
+          {/* Data Flow Lines */}
+          <line x1="0" y1="80%" x2="100%" y2="80%" stroke="rgba(205,174,159,0.2)" strokeWidth="1" strokeDasharray="50 300">
+            <animate attributeName="stroke-dashoffset" values="350; 0" dur="15s" repeatCount="indefinite" />
+          </line>
+          
+          <line x1="20%" y1="0" x2="20%" y2="100%" stroke="rgba(180,210,210,0.15)" strokeWidth="1" strokeDasharray="80 400">
+            <animate attributeName="stroke-dashoffset" values="0; 480" dur="20s" repeatCount="indefinite" />
+          </line>
+        </svg>
+      </div>
+
+      <div className="tp-content-wrapper">
+        {/* ── Title ── */}
+        <h2 className="tp-title">TOP PRODUCTS</h2>
 
       {/* ── Tabs ── */}
       <div className="tp-tabs-wrap">
@@ -149,10 +231,11 @@ export default function TopCategory() {
             <button
               key={tab}
               className={`tp-tab${activeTab === tab ? " tp-tab--on" : ""}`}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabChange(tab)}
               type="button"
             >
               {tab}
+              <span className="tp-tab-indicator" />
             </button>
           ))}
         </nav>
@@ -161,16 +244,19 @@ export default function TopCategory() {
 
       {/* ── Grid ── */}
       <div className="tp-container">
-        <div className="tp-grid">
+        <div className="tp-grid" key={animKey}>
           {currentProducts.map((product, idx) => {
             const leftBadges = product.badges.filter((b) => b.text !== "FEATURED");
             const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
 
             return (
               <Link href={`/product/${product.id}`} key={product.id} style={{ display: 'contents', textDecoration: 'none' }}>
-                <article className="tp-card">
+                <article
+                  className="tp-card"
+                  style={{ animationDelay: `${idx * 0.07}s` }}
+                >
                 {/* ▸ Image area (Top box) */}
-                <div className="tp-card-img-wrap" style={{ position: 'relative', aspectRatio: '260/230', overflow: 'hidden' }}>
+                <div className="tp-card-img-wrap">
                   {/* Left Badges */}
                   {leftBadges.length > 0 && (
                     <div className="tp-badges-left">
@@ -269,15 +355,47 @@ export default function TopCategory() {
           </a>
         </div>
       </div>
+      </div>
 
       {/* ═══════════════════ STYLES ═══════════════════ */}
       <style jsx>{`
+        /* ── Keyframes ── */
+        @keyframes cardFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(32px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+
         /* ── Section ── */
         .tp-section {
           width: 100%;
-          background-color: #f3f3f3;
+          background: linear-gradient(180deg, #f7f4f2 0%, #f3f3f3 40%, #f3f3f3 100%);
           padding: 45px 0 55px;
           font-family: var(--font-inter), "Inter", sans-serif;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .tp-bg-layer {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        .tp-content-wrapper {
+          position: relative;
+          z-index: 1;
         }
 
         /* ── Title ── */
@@ -313,7 +431,7 @@ export default function TopCategory() {
           width: 380px;
           max-width: 90%;
           height: 1px;
-          background: rgba(0, 0, 0, 0.12);
+          background: rgba(0, 0, 0, 0.08);
           margin: 10px auto 0;
         }
 
@@ -330,25 +448,40 @@ export default function TopCategory() {
           padding: 6px 0 10px;
           cursor: pointer;
           position: relative;
-          transition: color 0.15s linear;
+          transition: color 0.3s ease;
         }
 
         .tp-tab:hover {
-          color: #000;
+          color: rgba(0, 0, 0, 0.7);
         }
 
         .tp-tab--on {
           color: #000;
         }
 
-        .tp-tab--on::after {
-          content: "";
+        /* Animated underline indicator */
+        .tp-tab-indicator {
           position: absolute;
           left: 0;
           right: 0;
           bottom: 0;
           height: 2px;
-          background: #000;
+          background: rgb(205, 174, 159);
+          transform: scaleX(0);
+          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-origin: center;
+        }
+
+        .tp-tab--on .tp-tab-indicator {
+          transform: scaleX(1);
+        }
+
+        .tp-tab:hover .tp-tab-indicator {
+          transform: scaleX(0.5);
+        }
+
+        .tp-tab--on:hover .tp-tab-indicator {
+          transform: scaleX(1);
         }
 
         /* ── Container ── */
@@ -367,7 +500,7 @@ export default function TopCategory() {
         .tp-view-all-btn {
           display: inline-block;
           outline: none;
-          font-weight: 400;
+          font-weight: 500;
           font-size: 12px;
           line-height: 1.2;
           text-align: center;
@@ -377,20 +510,24 @@ export default function TopCategory() {
           padding: 17px 30px 17px 30px;
           width: 146px;
           height: 50px;
-          border: 1px solid #000;
+          border: 1.5px solid rgba(0, 0, 0, 0.15);
           background-color: transparent;
           color: #000;
           font-family: var(--font-inter), "Inter", sans-serif;
           text-decoration: none;
           cursor: pointer;
-          transition: background-color 0.3s ease, color 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           box-sizing: border-box;
           white-space: nowrap;
+          border-radius: 6px;
         }
 
         .tp-view-all-btn:hover {
           background-color: #000;
           color: #fff;
+          border-color: #000;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         }
 
         /* ── Grid ── */
@@ -409,9 +546,12 @@ export default function TopCategory() {
           display: flex;
           flex-direction: column;
           cursor: pointer;
-          border-radius: 12px;
+          border-radius: 16px;
           overflow: hidden;
-          transition: transform 0.4s ease, box-shadow 0.4s ease;
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          animation: cardFadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+          border: 1px solid rgba(0, 0, 0, 0.04);
 
           /* Dimension Variables */
           --btn-size: 34px;
@@ -428,8 +568,9 @@ export default function TopCategory() {
         }
 
         .tp-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+          transform: translateY(-10px);
+          box-shadow: 0 20px 50px rgba(205, 174, 159, 0.35),
+                      0 8px 16px rgba(205, 174, 159, 0.15);
         }
 
         /* ── Image wrapper ── */
@@ -437,15 +578,14 @@ export default function TopCategory() {
           position: relative;
           width: 100%;
           aspect-ratio: 260 / 230;
-          background: #fff;
+          background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
           overflow: hidden;
-          border-bottom: 1px solid #f2f2f2;
         }
 
         .tp-card-img {
           position: absolute;
           inset: 8px;
-          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .tp-card:hover .tp-card-img {
@@ -481,7 +621,8 @@ export default function TopCategory() {
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #fff;
-          padding: 3px 6px;
+          padding: 4px 8px;
+          border-radius: 4px;
         }
 
         /* ── Out of stock pill ── */
@@ -499,17 +640,18 @@ export default function TopCategory() {
           background: #5bab6d;
           padding: 4px 8px;
           z-index: 6;
+          border-radius: 4px;
         }
 
         /* ── Hover Overlay Bg ── */
         .tp-card-hover-bg {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.2);
           backdrop-filter: blur(4px);
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.4s ease, visibility 0.4s ease;
+          transition: opacity 0.45s ease, visibility 0.45s ease;
           z-index: 4;
         }
 
@@ -523,16 +665,17 @@ export default function TopCategory() {
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%, -50%);
+          transform: translate(-50%, -40%);
           display: flex;
           background: #fff;
           border-radius: 30px;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          box-shadow: 0 6px 24px rgba(0,0,0,0.10);
           overflow: hidden;
           z-index: 5;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: opacity 0.4s ease, visibility 0.4s ease,
+                      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           width: calc(var(--btn-size) * 2 + 1px);
           height: var(--btn-size);
           box-sizing: border-box;
@@ -541,6 +684,7 @@ export default function TopCategory() {
         .tp-card:hover .tp-hover-actions {
           opacity: 1;
           visibility: visible;
+          transform: translate(-50%, -50%);
         }
 
         .tp-action-btn {
@@ -553,7 +697,7 @@ export default function TopCategory() {
           border: none;
           color: #000;
           cursor: pointer;
-          transition: background-color 0.15s, color 0.15s;
+          transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
           padding: 0;
         }
 
@@ -565,12 +709,13 @@ export default function TopCategory() {
         .tp-action-btn:hover {
           background: #000;
           color: #fff;
+          transform: scale(1.05);
         }
 
         .tp-action-divider {
           width: 1px;
           height: calc(var(--btn-size) - 2px);
-          background: #000;
+          background: rgba(0, 0, 0, 0.12);
         }
 
         /* ── Add-to-cart & External buttons ── */
@@ -587,7 +732,7 @@ export default function TopCategory() {
           text-transform: uppercase;
           text-decoration: none;
           color: #fff;
-          background: #000;
+          background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
           border: none;
           box-sizing: border-box;
           cursor: pointer;
@@ -596,8 +741,9 @@ export default function TopCategory() {
           justify-content: center;
           transform: translateY(100%);
           opacity: 0;
-          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease,
-            background-color 0.2s linear, color 0.2s linear;
+          transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                      opacity 0.45s ease,
+                      background 0.2s linear;
           z-index: 5;
           padding: 0 10px;
         }
@@ -608,8 +754,7 @@ export default function TopCategory() {
         }
 
         .tp-atc-btn:hover {
-          background: #333;
-          color: #fff;
+          background: linear-gradient(135deg, rgb(205, 174, 159) 0%, rgb(185, 154, 139) 100%);
         }
 
         .tp-btn-disabled {
@@ -635,9 +780,22 @@ export default function TopCategory() {
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
-          background: #fff;
+          background: linear-gradient(180deg, #ffffff 0%, #fdfcfb 100%);
           text-align: center;
           min-height: 140px;
+          position: relative;
+        }
+
+        .tp-card-info::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 40px;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(205, 174, 159, 0.5), transparent);
+          border-radius: 1px;
         }
 
         .tp-card-name {
@@ -650,12 +808,13 @@ export default function TopCategory() {
           color: #000;
           margin: 0 0 8px;
           padding-left: 0.2em;
-          transition: color 0.15s linear;
+          transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
         /* Hover: name turns peach */
         .tp-card:hover .tp-card-name {
-          color: var(--top-color-hr, rgb(205, 174, 159));
+          color: rgb(205, 174, 159);
+          letter-spacing: 0.25em;
         }
 
         .tp-card-desc {
@@ -663,8 +822,13 @@ export default function TopCategory() {
           font-weight: 400;
           font-size: var(--desc-fs);
           line-height: 1.5;
-          color: rgb(97, 97, 97);
+          color: rgb(130, 130, 130);
           margin: 0;
+          transition: color 0.3s ease;
+        }
+
+        .tp-card:hover .tp-card-desc {
+          color: rgb(97, 97, 97);
         }
 
         .tp-card-price {
@@ -675,6 +839,11 @@ export default function TopCategory() {
           color: #000;
           letter-spacing: 0.02em;
           margin-top: auto;
+          transition: transform 0.35s ease;
+        }
+
+        .tp-card:hover .tp-card-price {
+          transform: scale(1.05);
         }
 
         /* ════════════════ RESPONSIVE ════════════════ */
@@ -833,7 +1002,7 @@ export default function TopCategory() {
           }
         }
 
-        /* ≥ 1190px – Desktop: 6 columns (original spec, max 260px cards) */
+        /* ≥ 1190px – Desktop: flex wrap centered */
         @media (min-width: 1190px) {
           .tp-section {
             padding: 75px 0 85px;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -92,107 +92,28 @@ const productsData: Product[] = [
 ];
 
 export default function NewProducts() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(3);
-  const [cardWidth, setCardWidth] = useState(360);
-  const [gap, setGap] = useState(30);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const w = window.innerWidth;
-      if (w < 400) {
-        setVisibleCount(1);
-        setCardWidth(w - 48);
-        setGap(16);
-      } else if (w < 640) {
-        setVisibleCount(1);
-        setCardWidth(Math.min(360, w - 80));
-        setGap(20);
-      } else if (w < 900) {
-        setVisibleCount(2);
-        setCardWidth(Math.min(320, (w - 120) / 2));
-        setGap(20);
-      } else if (w < 1180) {
-        setVisibleCount(2);
-        setCardWidth(360);
-        setGap(30);
-      } else if (w < 1600) {
-        setVisibleCount(3);
-        setCardWidth(360);
-        setGap(30);
-      } else if (w < 2000) {
-        setVisibleCount(4);
-        setCardWidth(360);
-        setGap(30);
-      } else {
-        setVisibleCount(5);
-        setCardWidth(360);
-        setGap(30);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const maxIndex = Math.max(0, productsData.length - visibleCount);
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
-  };
-
-  const translateX = currentIndex * (cardWidth + gap);
-
-  // Calculates viewport width dynamically based on visible cards
-  const viewportWidth = visibleCount * cardWidth + (visibleCount - 1) * gap;
+  const currentProducts = productsData.slice(0, 4);
 
   return (
     <section className="np-section">
-      {/* <h2 className="np-title">NEW PRODUCTS</h2> */}
-      
-      <div className="np-slider-container">
-        {/* Left Arrow */}
-        <button 
-          onClick={handlePrev} 
-          className="np-arrow np-arrow-left" 
-          type="button" 
-          aria-label="Previous products"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+      <div className="np-container">
+        <div className="np-grid">
+          {currentProducts.map((product, idx) => {
+            const leftBadges = product.badges.filter((b) => b.text !== "FEATURED");
+            const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
 
-        {/* Viewport */}
-        <div className="np-viewport" style={{ maxWidth: `${viewportWidth}px` }}>
-          <div 
-            className="np-track" 
-            style={{ 
-              transform: `translateX(-${translateX}px)`,
-              gap: `${gap}px`
-            }}
-          >
-            {productsData.map((product) => {
-              const leftBadges = product.badges.filter((b) => b.text !== "FEATURED");
-              const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
-
-              return (
-                <Link
-                  href={`/product/${product.id}`}
-                  key={product.id} 
-                  style={{ display: 'contents', textDecoration: 'none' }}
+            return (
+              <Link
+                href={`/product/${product.id}`}
+                key={product.id} 
+                style={{ display: 'contents', textDecoration: 'none' }}
+              >
+                <article
+                  className="np-card"
+                  style={{ animationDelay: `${idx * 0.08}s` }}
                 >
-                  <article 
-                    className="np-card" 
-                    style={{ width: `${cardWidth}px`, flex: `0 0 ${cardWidth}px` }}
-                  >
                   {/* Image wrapper */}
-                  <div className="np-card-img-wrap" style={{ position: 'relative', overflow: 'hidden' }}>
+                  <div className="np-card-img-wrap">
                     {/* Left Badges */}
                     {leftBadges.length > 0 && (
                       <div className="np-badges-left">
@@ -222,7 +143,7 @@ export default function NewProducts() {
                         alt={product.name}
                         fill
                         style={{ objectFit: "contain" }}
-                        sizes="360px"
+                        sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
                       />
                     </div>
 
@@ -271,106 +192,46 @@ export default function NewProducts() {
                       <span className="np-price-current">{product.price}</span>
                     </div>
                   </div>
-                  </article>
-                </Link>
-              );
-            })}
-          </div>
+                </article>
+              </Link>
+            );
+          })}
         </div>
-
-        {/* Right Arrow */}
-        <button 
-          onClick={handleNext} 
-          className="np-arrow np-arrow-right" 
-          type="button" 
-          aria-label="Next products"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
       </div>
 
       <style jsx>{`
+        /* ── Keyframes ── */
+        @keyframes cardFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(32px) scale(0.97);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        /* ── Section ── */
         .np-section {
           width: 100%;
-          background-color: #f3f3f3;
+          background: linear-gradient(180deg, #f3f3f3 0%, #f7f4f2 50%, #f3f3f3 100%);
           padding: 50px 0 60px;
           font-family: var(--font-inter), "Inter", sans-serif;
           overflow: hidden;
         }
 
-        .np-title {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 400;
-          font-size: 24px;
-          line-height: 1.28;
-          letter-spacing: .14em;
-          text-transform: uppercase;
-          color: #000;
-          text-align: center;
-          margin: 0 0 30px;
-          padding-left: 0.25em;
-        }
-
-        .np-slider-container {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .np-container {
           width: 100%;
           margin: 0 auto;
-          padding: 0 24px;
-          box-sizing: border-box;
+          padding: 0 12px;
         }
 
-        /* Viewport */
-        .np-viewport {
-          width: 100%;
-          overflow: hidden;
-        }
-
-        /* Sliding Track */
-        .np-track {
-          display: flex;
-          transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        /* Arrows */
-        .np-arrow {
-          position: absolute;
-          top: 35%;
-          transform: translateY(-50%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background-color: rgba(26, 26, 26, 0.5);
-          color: #ffffff;
-          border: none;
-          cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.2s ease;
-          z-index: 30;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
-
-        .np-arrow:hover {
-          background-color: rgba(26, 26, 26, 0.9);
-          transform: translateY(-50%) scale(1.05);
-        }
-
-        .np-arrow:active {
-          transform: translateY(-50%) scale(0.95);
-        }
-
-        .np-arrow-left {
-          left: 4px;
-        }
-
-        .np-arrow-right {
-          right: 4px;
+        .np-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          justify-items: center;
         }
 
         /* Card */
@@ -380,10 +241,12 @@ export default function NewProducts() {
           flex-direction: column;
           cursor: pointer;
           box-sizing: border-box;
-          border: 1px solid #f0f0f0;
-          border-radius: 12px;
+          border: 1px solid rgba(0, 0, 0, 0.04);
+          border-radius: 16px;
           overflow: hidden;
-          transition: transform 0.4s ease, box-shadow 0.4s ease;
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          animation: cardFadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 
           --btn-size: 42px;
           --btn-icon: 16px;
@@ -392,8 +255,9 @@ export default function NewProducts() {
         }
 
         .np-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+          transform: translateY(-10px);
+          box-shadow: 0 20px 50px rgba(205, 174, 159, 0.35),
+                      0 8px 16px rgba(205, 174, 159, 0.15);
         }
 
         /* Image area */
@@ -401,15 +265,14 @@ export default function NewProducts() {
           position: relative;
           width: 100%;
           aspect-ratio: 360 / 280;
-          background: #ffffff;
+          background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
           overflow: hidden;
-          border-bottom: 1px solid #f2f2f2;
         }
 
         .np-card-img {
           position: absolute;
           inset: 16px;
-          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .np-card:hover .np-card-img {
@@ -446,17 +309,18 @@ export default function NewProducts() {
           text-transform: uppercase;
           color: #ffffff;
           padding: 4px 8px;
+          border-radius: 4px;
         }
 
         /* Hover Overlay Bg */
         .np-card-hover-bg {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.2);
           backdrop-filter: blur(4px);
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.4s ease, visibility 0.4s ease;
+          transition: opacity 0.45s ease, visibility 0.45s ease;
           z-index: 4;
         }
 
@@ -470,16 +334,17 @@ export default function NewProducts() {
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%, -50%);
+          transform: translate(-50%, -40%);
           display: flex;
           background: #ffffff;
           border-radius: 30px;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          box-shadow: 0 6px 24px rgba(0,0,0,0.10);
           overflow: hidden;
           z-index: 5;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: opacity 0.4s ease, visibility 0.4s ease,
+                      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           width: calc(var(--btn-size) * 2 + 1px);
           height: var(--btn-size);
           box-sizing: border-box;
@@ -488,6 +353,7 @@ export default function NewProducts() {
         .np-card:hover .np-hover-actions {
           opacity: 1;
           visibility: visible;
+          transform: translate(-50%, -50%);
         }
 
         .np-action-btn {
@@ -500,7 +366,7 @@ export default function NewProducts() {
           border: none;
           color: #000000;
           cursor: pointer;
-          transition: background-color 0.15s, color 0.15s;
+          transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
           padding: 0;
         }
 
@@ -512,12 +378,13 @@ export default function NewProducts() {
         .np-action-btn:hover {
           background: #000000;
           color: #ffffff;
+          transform: scale(1.05);
         }
 
         .np-action-divider {
           width: 1px;
           height: calc(var(--btn-size) - 2px);
-          background: #000000;
+          background: rgba(0, 0, 0, 0.12);
         }
 
         /* Add to cart button */
@@ -533,7 +400,7 @@ export default function NewProducts() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #ffffff;
-          background: #000000;
+          background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
           border: none;
           box-sizing: border-box;
           cursor: pointer;
@@ -542,8 +409,9 @@ export default function NewProducts() {
           justify-content: center;
           transform: translateY(100%);
           opacity: 0;
-          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease,
-            background-color 0.2s linear, color 0.2s linear;
+          transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                      opacity 0.45s ease,
+                      background 0.2s linear;
           z-index: 5;
           padding: 0 10px;
         }
@@ -554,8 +422,7 @@ export default function NewProducts() {
         }
 
         .np-atc-btn:hover {
-          background: #333333;
-          color: #ffffff;
+          background: linear-gradient(135deg, rgb(205, 174, 159) 0%, rgb(185, 154, 139) 100%);
         }
 
         /* Description Box */
@@ -567,9 +434,22 @@ export default function NewProducts() {
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
-          background: #ffffff;
+          background: linear-gradient(180deg, #ffffff 0%, #fdfcfb 100%);
           text-align: center;
           min-height: 180px;
+          position: relative;
+        }
+
+        .np-card-info::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 40px;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(205, 174, 159, 0.5), transparent);
+          border-radius: 1px;
         }
 
         .np-card-name {
@@ -582,11 +462,12 @@ export default function NewProducts() {
           color: #000000;
           margin: 0 0 8px;
           padding-left: 0.18em;
-          transition: color 0.15s linear;
+          transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
         .np-card:hover .np-card-name {
           color: rgb(205, 174, 159);
+          letter-spacing: 0.24em;
         }
 
         .np-card-desc {
@@ -594,9 +475,14 @@ export default function NewProducts() {
           font-weight: 400;
           font-size: 12px;
           line-height: 1.5;
-          color: rgb(97, 97, 97);
+          color: rgb(130, 130, 130);
           margin: 0 0 12px;
           max-width: 90%;
+          transition: color 0.3s ease;
+        }
+
+        .np-card:hover .np-card-desc {
+          color: rgb(97, 97, 97);
         }
 
         /* Rating Stars */
@@ -609,6 +495,23 @@ export default function NewProducts() {
         .np-star {
           color: #e4c1b1;
           font-size: 14px;
+          transition: transform 0.3s ease;
+        }
+
+        .np-card:hover .np-star {
+          animation: starPop 0.4s ease both;
+        }
+
+        .np-card:hover .np-star:nth-child(1) { animation-delay: 0s; }
+        .np-card:hover .np-star:nth-child(2) { animation-delay: 0.05s; }
+        .np-card:hover .np-star:nth-child(3) { animation-delay: 0.1s; }
+        .np-card:hover .np-star:nth-child(4) { animation-delay: 0.15s; }
+        .np-card:hover .np-star:nth-child(5) { animation-delay: 0.2s; }
+
+        @keyframes starPop {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.3); }
+          100% { transform: scale(1); }
         }
 
         /* Prices */
@@ -617,6 +520,11 @@ export default function NewProducts() {
           display: flex;
           gap: 10px;
           align-items: center;
+          transition: transform 0.35s ease;
+        }
+
+        .np-card:hover .np-card-prices {
+          transform: scale(1.05);
         }
 
         .np-price-old {
@@ -641,26 +549,13 @@ export default function NewProducts() {
             padding: 65px 0 75px;
           }
 
-          .np-title {
-            font-size: 30px;
-            margin-bottom: 38px;
+          .np-container {
+            padding: 0 20px;
           }
 
-          .np-slider-container {
-            padding: 0 60px;
-          }
-
-          .np-arrow {
-            width: 50px;
-            height: 50px;
-          }
-
-          .np-arrow-left {
-            left: 8px;
-          }
-
-          .np-arrow-right {
-            right: 8px;
+          .np-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
           }
 
           .np-card {
@@ -720,27 +615,14 @@ export default function NewProducts() {
             padding: 85px 0 95px;
           }
 
-          .np-title {
-            font-size: 36px;
-            margin-bottom: 48px;
+          .np-container {
+            padding: 0 40px;
+            max-width: 1400px;
           }
 
-          .np-slider-container {
-            padding: 0 80px;
-          }
-
-          .np-arrow {
-            width: 58px;
-            height: 58px;
-            top: calc(318px / 2);
-          }
-
-          .np-arrow-left {
-            left: 10px;
-          }
-
-          .np-arrow-right {
-            right: 10px;
+          .np-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
           }
 
           .np-card {

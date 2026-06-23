@@ -18,7 +18,10 @@ export const mockProducts: Record<string, Product> = {
     name: "HAIR COLORING",
     shortDescription: "A semi-permanent hair color in a deep conditioning.",
     price: 80,
-    images: ["/images/luchiana-3056568558.webp"],
+    images: [
+      "/images/shop/hair-coloring/hair-coloring-01.webp",
+      "/images/shop/hair-coloring/hair-coloring-02.webp"
+    ],
     sku: "SKU-777",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -38,7 +41,11 @@ export const mockProducts: Record<string, Product> = {
     name: "MIDNIGHT MUSK",
     shortDescription: "Earthy & Woody.",
     price: 150,
-    images: ["/images/luchiana-3032395463.webp"],
+    images: [
+      "/images/shop/midnight-musk-amber/midnight-musk-amber-01.webp",
+      "/images/shop/midnight-musk-amber/midnight-musk-amber-02.webp",
+      "/images/shop/midnight-musk-amber/midnight-musk-amber-03.webp"
+    ],
     sku: "SKU-33273",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -58,7 +65,10 @@ export const mockProducts: Record<string, Product> = {
     name: "BRIGHTENING CORRECTOR",
     shortDescription: "A full-coverage color corrector.",
     price: 60,
-    images: ["/images/luchiana-3022718468-520x460.webp"],
+    images: [
+      "/images/shop/eye-brightening-corrector/eye-brightening-corrector-01.webp",
+      "/images/shop/eye-brightening-corrector/eye-brightening-corrector-02.webp"
+    ],
     sku: "SKU-91984",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -79,11 +89,12 @@ export const mockProducts: Record<string, Product> = {
     shortDescription: "A gentle but thorough cleanser that leaves hair.",
     price: 50,
     images: [
-      "/images/luchiana-3015865450-520x460.webp",
-      "/images/luchiana-3002880645-520x460.webp",
-      "/images/luchiana-3025788510-520x460.webp",
-      "/images/luchiana-3050518087-520x460.webp"
-    ],
+      "/images/shop/bodifying-shampoo/bodifying-shampoo-01.webp",
+      "/images/shop/bodifying-shampoo/bodifying-shampoo-02.webp",
+      "/images/shop/bodifying-shampoo/bodifying-shampoo-03.webp"
+    ,
+      "/images/shop/cleansing-oil-shampoo/cleansing-oil-shampoo-01.webp",
+      "/images/shop/cleansing-oil-shampoo/cleansing-oil-shampoo-02.webp"],
     sku: "SKU-56352",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -103,7 +114,14 @@ export const mockProducts: Record<string, Product> = {
     name: "OIL-INFUSED LIP TINT",
     shortDescription: "A hydrating lip oil with a hint of the universally flattering.",
     price: 45,
-    images: ["/images/luchiana-3002880645-520x460.webp"],
+    images: [
+      "/images/shop/oil-infused-lip-tint/oil-infused-lip-tint-01.webp",
+      "/images/shop/oil-infused-lip-tint/oil-infused-lip-tint-02.webp",
+      "/images/shop/oil-infused-lip-tint/oil-infused-lip-tint-03.webp"
+    ,
+      "/images/shop/extra-lip-tint/extra-lip-tint-01.webp",
+      "/images/shop/extra-lip-tint/extra-lip-tint-02.webp",
+      "/images/shop/extra-lip-tint/extra-lip-tint-03.webp"],
     sku: "SKU-24033",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -123,7 +141,11 @@ export const mockProducts: Record<string, Product> = {
     name: "OIL-FREE FOUNDATION",
     shortDescription: "Oil-free foundation that delivers buildable.",
     price: 80,
-    images: ["/images/luchiana-3050518087-520x460.webp"],
+    images: [
+      "/images/shop/oil-free-foundation/oil-free-foundation-01.webp",
+      "/images/shop/oil-free-foundation/oil-free-foundation-02.webp",
+      "/images/shop/oil-free-foundation/oil-free-foundation-03.webp"
+    ],
     sku: "SKU-26758",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -143,7 +165,10 @@ export const mockProducts: Record<string, Product> = {
     name: "LONG LASH SERUM",
     shortDescription: "This is an external product.",
     price: 25,
-    images: ["/images/luchiana-3037998670-520x460.webp"],
+    images: [
+      "/images/shop/long-lash-serum/long-lash-serum-01.webp",
+      "/images/shop/long-lash-serum/long-lash-serum-02.webp"
+    ],
     sku: "SKU-55568",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -163,7 +188,14 @@ export const mockProducts: Record<string, Product> = {
     name: "PURITY MADE CLEANSER",
     shortDescription: "Top-selling facial cleanser.",
     price: 60,
-    images: ["/images/luchiana-3025788510-520x460.webp"],
+    images: [
+      "/images/shop/purity-made-simple-cleanser/purity-made-simple-cleanser-01.webp",
+      "/images/shop/purity-made-simple-cleanser/purity-made-simple-cleanser-02.webp",
+      "/images/shop/purity-made-simple-cleanser/purity-made-simple-cleanser-03.webp",
+      "/images/shop/purity-made-simple-cleanser/purity-made-simple-cleanser-04.webp",
+      "/images/shop/purity-made-simple-cleanser/purity-made-simple-cleanser-05.webp",
+      "/images/shop/purity-made-simple-cleanser/purity-made-simple-cleanser-06.webp"
+    ],
     sku: "SKU-53697",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -183,7 +215,11 @@ export const mockProducts: Record<string, Product> = {
     name: "PRIMING FILTER FACE",
     shortDescription: "A primer that uses backlight technology.",
     price: 50,
-    images: ["/images/luchiana-3016001322-520x460.webp"],
+    images: [
+      "/images/shop/priming-filter-face/priming-filter-face-01.webp",
+      "/images/shop/priming-filter-face/priming-filter-face-02.webp",
+      "/images/shop/priming-filter-face/priming-filter-face-03.webp"
+    ],
     sku: "SKU-49353",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -203,7 +239,10 @@ export const mockProducts: Record<string, Product> = {
     name: "INSTANT RETOUCH PRIMER",
     shortDescription: "Longer wear with an instant retouch effect.",
     price: 45,
-    images: ["/images/luchiana-3006105529-520x460.webp"],
+    images: [
+      "/images/shop/instant-retouch-primer/instant-retouch-primer-01.webp",
+      "/images/shop/instant-retouch-primer/instant-retouch-primer-02.webp"
+    ],
     sku: "SKU-35691",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -223,7 +262,11 @@ export const mockProducts: Record<string, Product> = {
     name: "FLOWERBOMB",
     shortDescription: "Vert de Bergamot, Coco de Mer Accord.",
     price: 200,
-    images: ["/images/flowerbomb.webp"],
+    images: [
+      "/images/shop/extra-illuminating-moisture-balm/extra-illuminating-moisture-balm-01.webp",
+      "/images/shop/extra-illuminating-moisture-balm/extra-illuminating-moisture-balm-02.webp",
+      "/images/shop/extra-illuminating-moisture-balm/extra-illuminating-moisture-balm-03.webp"
+    ],
     sku: "SKU-14357",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -243,7 +286,12 @@ export const mockProducts: Record<string, Product> = {
     name: "VOCE VIVA EAU DE PARFUM",
     shortDescription: "Italian Bergamot, Orange Blossom Absolute.",
     price: 150,
-    images: ["/images/voce-viva.webp"],
+    images: [
+      "/images/shop/voce-viva-eau-de-parfum/voce-viva-eau-de-parfum-01.webp",
+      "/images/shop/voce-viva-eau-de-parfum/voce-viva-eau-de-parfum-02.webp",
+      "/images/shop/voce-viva-eau-de-parfum/voce-viva-eau-de-parfum-03.webp",
+      "/images/shop/voce-viva-eau-de-parfum/voce-viva-eau-de-parfum-04.webp"
+    ],
     sku: "SKU-82846",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -263,7 +311,13 @@ export const mockProducts: Record<string, Product> = {
     name: "AIRBRUSH MATTE",
     shortDescription: "Skin-perfecting bronzed filter for the face.",
     price: 40,
-    images: ["/images/luchiana-3022279061.webp"],
+    images: [
+      "/images/shop/airbrush-matte/airbrush-matte-01.webp",
+      "/images/shop/airbrush-matte/airbrush-matte-02.webp",
+      "/images/shop/airbrush-matte/airbrush-matte-03.webp",
+      "/images/shop/airbrush-matte/airbrush-matte-04.webp",
+      "/images/shop/airbrush-matte/airbrush-matte-05.webp"
+    ],
     sku: "SKU-61328",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -283,7 +337,14 @@ export const mockProducts: Record<string, Product> = {
     name: "EYELINER PACK",
     shortDescription: "A hyper-saturated, water-resistant, liquid eyeliner.",
     price: 40,
-    images: ["/images/new_eyeliner.webp"],
+    images: [
+      "/images/shop/flyliner-longwear-eyeliner/flyliner-longwear-eyeliner-01.webp",
+      "/images/shop/flyliner-longwear-eyeliner/flyliner-longwear-eyeliner-02.webp",
+      "/images/shop/flyliner-longwear-eyeliner/flyliner-longwear-eyeliner-03.webp",
+      "/images/shop/flyliner-longwear-eyeliner/flyliner-longwear-eyeliner-04.webp"
+    ,
+      "/images/shop/perfect-brow-pencil/perfect-brow-pencil-01.webp",
+      "/images/shop/perfect-brow-pencil/perfect-brow-pencil-02.webp"],
     sku: "SKU-43288",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -303,7 +364,11 @@ export const mockProducts: Record<string, Product> = {
     name: "FACE & BODY FOUNDATION",
     shortDescription: "A foundation for the face and body.",
     price: 40,
-    images: ["/images/new_dior_foundation.webp"],
+    images: [
+      "/images/shop/face-body-foundation/face-body-foundation-01.webp",
+      "/images/shop/face-body-foundation/face-body-foundation-02.webp",
+      "/images/shop/face-body-foundation/face-body-foundation-03.webp"
+    ],
     sku: "SKU-74274",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -323,7 +388,11 @@ export const mockProducts: Record<string, Product> = {
     name: "VELVET LIPSTICK",
     shortDescription: "Luxurious velvet matte lipstick with rich pigment.",
     price: 25,
-    images: ["/images/luchiana-0654102558.webp"],
+    images: [
+      "/images/shop/matte-revolution-lipstick/matte-revolution-lipstick-01.webp",
+      "/images/shop/matte-revolution-lipstick/matte-revolution-lipstick-02.webp",
+      "/images/shop/matte-revolution-lipstick/matte-revolution-lipstick-03.webp"
+    ],
     sku: "SKU-12375",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -343,7 +412,11 @@ export const mockProducts: Record<string, Product> = {
     name: "HYDRATING SERUM",
     shortDescription: "Deeply hydrates and replenishes the skin barrier.",
     price: 55,
-    images: ["/images/luchiana-0654733209.webp"],
+    images: [
+      "/images/shop/lactic-acid-treatment/lactic-acid-treatment-01.webp",
+      "/images/shop/lactic-acid-treatment/lactic-acid-treatment-02.webp",
+      "/images/shop/lactic-acid-treatment/lactic-acid-treatment-03.webp"
+    ],
     sku: "SKU-57598",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],
@@ -363,7 +436,12 @@ export const mockProducts: Record<string, Product> = {
     name: "FRAGRANCE ESSENCE",
     shortDescription: "A sophisticated floral scent with warm vanilla notes.",
     price: 75,
-    images: ["/images/luchiana-0654439537.webp"],
+    images: [
+      "/images/shop/eau-de-soleil-blanc-set/eau-de-soleil-blanc-set-01.webp",
+      "/images/shop/eau-de-soleil-blanc-set/eau-de-soleil-blanc-set-02.webp",
+      "/images/shop/eau-de-soleil-blanc-set/eau-de-soleil-blanc-set-03.webp",
+      "/images/shop/eau-de-soleil-blanc-set/eau-de-soleil-blanc-set-04.webp"
+    ],
     sku: "SKU-63459",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],

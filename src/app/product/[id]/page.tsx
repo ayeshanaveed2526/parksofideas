@@ -22,14 +22,18 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
-  // Ensure there are at least 3 images for the gallery
-  const galleryImages = product.images.length > 0 
-    ? product.images 
-    : [
-        'https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=200&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=200&auto=format&fit=crop'
-      ];
+  // Ensure there are at least 4 images for the gallery
+  let galleryImages = [...product.images];
+
+  // If a product doesn't have 4 images, pad it by repeating its own images so the slider is always full without mixing products
+  if (galleryImages.length > 0) {
+    let pIdx = 0;
+    const originalLength = galleryImages.length;
+    while (galleryImages.length < 4) {
+      galleryImages.push(galleryImages[pIdx % originalLength]);
+      pIdx++;
+    }
+  }
 
   return (
     <main className="min-h-screen relative overflow-hidden bg-transparent">

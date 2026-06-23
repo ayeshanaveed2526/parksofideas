@@ -21,18 +21,18 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
   return (
     <div className="flex flex-col w-full">
       {/* Main Image Showcase */}
-      <div className="relative w-full max-w-[520px] mx-auto aspect-square flex items-center justify-center group overflow-hidden bg-transparent">
+      <div className="relative w-full max-w-[520px] mx-auto aspect-square flex items-center justify-center group overflow-hidden bg-white/50 backdrop-blur-md border border-white/80 shadow-[0_20px_40px_-15px_rgba(205,174,159,0.25)] rounded-[2rem] p-8">
         
         {/* Soft elegant glow behind the image */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[80%] h-[80%] bg-gradient-to-tr from-gray-100 to-transparent rounded-full blur-3xl opacity-50" />
         </div>
 
-        <div className="absolute top-2 left-2 z-20">
+        <div className="absolute top-4 left-4 z-20">
           <motion.span 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="inline-block bg-black text-white text-xs px-3 py-1.5 font-bold tracking-widest uppercase"
+            className="inline-block bg-black text-white text-xs px-4 py-2 font-bold tracking-widest uppercase rounded-full"
           >
             NEW
           </motion.span>
@@ -92,7 +92,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
         <motion.div 
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
-          className="absolute bottom-6 right-6 text-xs font-semibold text-gray-400 tracking-widest uppercase z-20 pointer-events-none"
+          className="absolute bottom-6 right-6 text-[10px] font-bold text-gray-400 tracking-[0.2em] uppercase z-20 pointer-events-none bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full"
         >
           Hover to zoom
         </motion.div>
@@ -114,20 +114,20 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
 
       {/* Thumbnail preview bar */}
       {images.length > 1 && (
-        <div className="mt-4 grid grid-cols-4 gap-3 w-full max-w-[520px] mx-auto">
+        <div className="mt-6 grid grid-cols-4 gap-4 w-full max-w-[520px] mx-auto">
           {images.map((img, idx) => (
             <button
               key={idx}
               onClick={() => go(idx)}
               aria-label={`View image ${idx + 1}`}
-              className={`relative aspect-square overflow-hidden border-2 transition-all duration-300 ease-out
-                ${activeIdx === idx ? 'border-black' : 'border-transparent opacity-60 hover:opacity-100'}`}
+              className={`relative aspect-square overflow-hidden rounded-2xl border-2 transition-all duration-300 ease-out shadow-sm
+                ${activeIdx === idx ? 'border-black ring-2 ring-black/5 ring-offset-2 scale-105' : 'border-transparent opacity-60 hover:opacity-100 hover:scale-100 scale-95'}`}
             >
-              <div className="absolute inset-0 bg-[#f5f5f5]" />
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm" />
               <img
                 src={img}
                 alt={`Thumbnail ${idx + 1}`}
-                className="relative w-full h-full object-contain p-2 mix-blend-multiply"
+                className="relative w-full h-full object-contain p-3 mix-blend-multiply"
               />
             </button>
           ))}
