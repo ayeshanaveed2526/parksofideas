@@ -3,6 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 interface Product {
   id: number;
@@ -92,26 +97,38 @@ const productsData: Product[] = [
 ];
 
 export default function NewProducts() {
-  const currentProducts = productsData.slice(0, 4);
+  const currentProducts = productsData; // Use all 6 products
 
   return (
     <section className="np-section">
       <div className="np-container">
-        <div className="np-grid">
+        <Swiper
+          modules={[Navigation, Pagination, A11y, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 4 }
+          }}
+          className="np-swiper"
+        >
           {currentProducts.map((product, idx) => {
             const leftBadges = product.badges.filter((b) => b.text !== "FEATURED");
             const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
 
             return (
-              <Link
-                href={`/product/${product.id}`}
-                key={product.id} 
-                style={{ display: 'contents', textDecoration: 'none' }}
-              >
-                <article
-                  className="np-card"
-                  style={{ animationDelay: `${idx * 0.08}s` }}
+              <SwiperSlide key={product.id}>
+                <Link
+                  href={`/product/${product.id}`}
+                  style={{ display: 'contents', textDecoration: 'none' }}
                 >
+                  <article
+                    className="np-card"
+                    style={{ animationDelay: `${idx * 0.08}s` }}
+                  >
                   {/* Image wrapper */}
                   <div className="np-card-img-wrap">
                     {/* Left Badges */}
@@ -194,9 +211,10 @@ export default function NewProducts() {
                   </div>
                 </article>
               </Link>
+            </SwiperSlide>
             );
           })}
-        </div>
+        </Swiper>
       </div>
 
       <style jsx>{`
@@ -223,15 +241,24 @@ export default function NewProducts() {
 
         .np-container {
           width: 100%;
+          max-width: 1400px;
           margin: 0 auto;
-          padding: 0 12px;
+          padding: 0 40px;
         }
 
-        .np-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
-          justify-items: center;
+        .np-swiper {
+          width: 100%;
+          padding-bottom: 50px;
+        }
+
+        /* Swiper Theme Overrides */
+        :global(.np-swiper .swiper-button-next),
+        :global(.np-swiper .swiper-button-prev) {
+          color: #cdae9f;
+        }
+        
+        :global(.np-swiper .swiper-pagination-bullet-active) {
+          background-color: #cdae9f;
         }
 
         /* Card */
