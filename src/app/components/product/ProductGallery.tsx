@@ -54,8 +54,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
             <PresentationControls 
               global 
-              config={{ mass: 2, tension: 500 }} 
-              snap={{ mass: 4, tension: 1500 }} 
+              snap={true} 
               rotation={[0, 0, 0]} 
               polar={[-Math.PI / 10, Math.PI / 10]} 
               azimuth={[-Math.PI / 4, Math.PI / 4]}
