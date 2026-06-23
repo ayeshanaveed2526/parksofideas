@@ -70,7 +70,7 @@ const RelatedProducts: React.FC = () => (
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-contain p-6 mix-blend-multiply transform group-hover:scale-105 transition-transform duration-500 ease-out"
+              className="w-full h-full object-contain p-6 mix-blend-multiply transform group-hover:scale-90 transition-transform duration-500 ease-out"
             />
 
             {/* Slide-up cart button */}

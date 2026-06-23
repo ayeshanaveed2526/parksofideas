@@ -55,7 +55,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
               animate="center"
               exit="exit"
               transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="w-full h-full object-contain max-h-[600px] mix-blend-multiply"
+              className="w-full h-full object-contain max-h-[600px] mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-90"
             />
           </AnimatePresence>
           
@@ -64,7 +64,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
             src={activeImage}
             alt=""
             aria-hidden
-            className="absolute inset-0 w-full h-full object-contain max-h-[600px] scale-95 translate-y-8 blur-2xl mix-blend-multiply saturate-0 opacity-15 pointer-events-none"
+            className="absolute inset-0 w-full h-full object-contain max-h-[600px] scale-95 translate-y-8 blur-2xl mix-blend-multiply saturate-0 opacity-15 pointer-events-none transition-transform duration-500 ease-out group-hover:scale-[0.85]"
           />
         </div>
 
