@@ -409,6 +409,9 @@ export default function TopCategory() {
           display: flex;
           flex-direction: column;
           cursor: pointer;
+          border-radius: 12px;
+          overflow: hidden;
+          transition: transform 0.4s ease, box-shadow 0.4s ease;
 
           /* Dimension Variables */
           --btn-size: 34px;
@@ -424,6 +427,11 @@ export default function TopCategory() {
           --info-pb: 20px;
         }
 
+        .tp-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
         /* ── Image wrapper ── */
         .tp-card-img-wrap {
           position: relative;
@@ -437,6 +445,11 @@ export default function TopCategory() {
         .tp-card-img {
           position: absolute;
           inset: 8px;
+          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .tp-card:hover .tp-card-img {
+          transform: scale(1.08);
         }
 
         /* ── Badges ── */
@@ -492,10 +505,11 @@ export default function TopCategory() {
         .tp-card-hover-bg {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.4);
+          background: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(4px);
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.3s ease, visibility 0.3s ease;
+          transition: opacity 0.4s ease, visibility 0.4s ease;
           z-index: 4;
         }
 
@@ -512,11 +526,13 @@ export default function TopCategory() {
           transform: translate(-50%, -50%);
           display: flex;
           background: #fff;
-          border: 1px solid #000;
+          border-radius: 30px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          overflow: hidden;
           z-index: 5;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.3s ease, visibility 0.3s ease;
+          transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           width: calc(var(--btn-size) * 2 + 1px);
           height: var(--btn-size);
           box-sizing: border-box;
@@ -570,9 +586,9 @@ export default function TopCategory() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           text-decoration: none;
-          color: #000;
-          background: #fff;
-          border: 1px solid #000;
+          color: #fff;
+          background: #000;
+          border: none;
           box-sizing: border-box;
           cursor: pointer;
           display: flex;
@@ -580,8 +596,8 @@ export default function TopCategory() {
           justify-content: center;
           transform: translateY(100%);
           opacity: 0;
-          transition: transform 0.3s ease, opacity 0.3s ease,
-            background-color 0.15s linear, color 0.15s linear;
+          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease,
+            background-color 0.2s linear, color 0.2s linear;
           z-index: 5;
           padding: 0 10px;
         }
@@ -592,7 +608,7 @@ export default function TopCategory() {
         }
 
         .tp-atc-btn:hover {
-          background: #000;
+          background: #333;
           color: #fff;
         }
 

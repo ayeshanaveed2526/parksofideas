@@ -381,7 +381,9 @@ export default function NewProducts() {
           cursor: pointer;
           box-sizing: border-box;
           border: 1px solid #f0f0f0;
-          transition: box-shadow 0.3s ease;
+          border-radius: 12px;
+          overflow: hidden;
+          transition: transform 0.4s ease, box-shadow 0.4s ease;
 
           --btn-size: 42px;
           --btn-icon: 16px;
@@ -390,7 +392,8 @@ export default function NewProducts() {
         }
 
         .np-card:hover {
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          transform: translateY(-8px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
         }
 
         /* Image area */
@@ -406,6 +409,11 @@ export default function NewProducts() {
         .np-card-img {
           position: absolute;
           inset: 16px;
+          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .np-card:hover .np-card-img {
+          transform: scale(1.08);
         }
 
         /* Badges */
@@ -444,10 +452,11 @@ export default function NewProducts() {
         .np-card-hover-bg {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.4);
+          background: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(4px);
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.3s ease, visibility 0.3s ease;
+          transition: opacity 0.4s ease, visibility 0.4s ease;
           z-index: 4;
         }
 
@@ -464,11 +473,13 @@ export default function NewProducts() {
           transform: translate(-50%, -50%);
           display: flex;
           background: #ffffff;
-          border: 1px solid #000000;
+          border-radius: 30px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          overflow: hidden;
           z-index: 5;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.3s ease, visibility 0.3s ease;
+          transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           width: calc(var(--btn-size) * 2 + 1px);
           height: var(--btn-size);
           box-sizing: border-box;
@@ -521,9 +532,9 @@ export default function NewProducts() {
           font-size: var(--atc-fs);
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #000000;
-          background: #ffffff;
-          border: 1px solid #000000;
+          color: #ffffff;
+          background: #000000;
+          border: none;
           box-sizing: border-box;
           cursor: pointer;
           display: flex;
@@ -531,8 +542,8 @@ export default function NewProducts() {
           justify-content: center;
           transform: translateY(100%);
           opacity: 0;
-          transition: transform 0.3s ease, opacity 0.3s ease,
-            background-color 0.15s linear, color 0.15s linear;
+          transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease,
+            background-color 0.2s linear, color 0.2s linear;
           z-index: 5;
           padding: 0 10px;
         }
@@ -543,7 +554,7 @@ export default function NewProducts() {
         }
 
         .np-atc-btn:hover {
-          background: #000000;
+          background: #333333;
           color: #ffffff;
         }
 
