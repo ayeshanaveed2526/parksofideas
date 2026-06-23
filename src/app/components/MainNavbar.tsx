@@ -44,14 +44,14 @@ export default function MainNavbar() {
   ];
 
   const homeVariants = [
-    { name: "MAIN", image: "/luchiana-assets/products/main.jpg" },
-    { name: "NATURAL", image: "/luchiana-assets/products/natural.jpg" },
-    { name: "COMPACT", image: "/luchiana-assets/products/compact.jpg" },
-    { name: "BOXED", image: "/luchiana-assets/products/boxed.jpg" },
-    { name: "WIDE", image: "/luchiana-assets/products/wide.jpg" },
-    { name: "BRANDED", image: "/luchiana-assets/products/branded.jpg" },
-    { name: "ORGANIC", image: "/luchiana-assets/products/organic.jpg" },
-    { name: "SALON", image: "/luchiana-assets/products/salon.jpg" },
+    { name: "MAIN", image: "/luchiana-assets/products/main.webp" },
+    { name: "NATURAL", image: "/luchiana-assets/products/natural.webp" },
+    { name: "COMPACT", image: "/luchiana-assets/products/compact.webp" },
+    { name: "BOXED", image: "/luchiana-assets/products/boxed.webp" },
+    { name: "WIDE", image: "/luchiana-assets/products/wide.webp" },
+    { name: "BRANDED", image: "/luchiana-assets/products/branded.webp" },
+    { name: "ORGANIC", image: "/luchiana-assets/products/organic.webp" },
+    { name: "SALON", image: "/luchiana-assets/products/salon.webp" },
   ];
 
   const shopMegaMenu = {
@@ -370,7 +370,7 @@ export default function MainNavbar() {
                       {/* Product 1 */}
                       <div className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
                         <div className="relative w-[260px] h-[230px] flex items-center justify-center p-4 overflow-hidden border-b border-[#f2f2f2]">
-                          <img src="/images/flowerbomb.jpg" alt="FLOWERBOMB" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
+                          <img src="/images/flowerbomb.webp" alt="FLOWERBOMB" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
                           <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-[4]" />
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-[5] opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
                             <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Quick View">
@@ -402,7 +402,7 @@ export default function MainNavbar() {
                         <div className="relative w-[260px] h-[230px] flex items-center justify-center p-4 overflow-hidden border-b border-[#f2f2f2]">
                           <span className="absolute top-0 left-0 bg-[#1a1a1a] text-white text-[10px] font-bold px-2 py-1 tracking-wider z-10">NEW</span>
                           <span className="absolute top-0 right-0 bg-[#e4c1b1] text-white text-[10px] font-bold px-2 py-1 tracking-wider uppercase z-10">FEATURED</span>
-                          <img src="/images/luchiana-3015865450-520x460.jpg" alt="MIDNIGHT MUSK" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
+                          <img src="/images/luchiana-3015865450-520x460.webp" alt="MIDNIGHT MUSK" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
                           <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-[4]" />
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-[5] opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
                             <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Quick View">
@@ -433,7 +433,7 @@ export default function MainNavbar() {
                       <div className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
                         <div className="relative w-[260px] h-[230px] flex items-center justify-center p-4 overflow-hidden border-b border-[#f2f2f2]">
                           <span className="absolute top-0 right-0 bg-[#e4c1b1] text-white text-[10px] font-bold px-2 py-1 tracking-wider uppercase z-10">FEATURED</span>
-                          <img src="/images/luchiana-3024294986-520x460.jpg" alt="PURITY MADE CLEANSER" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
+                          <img src="/images/luchiana-3024294986-520x460.webp" alt="PURITY MADE CLEANSER" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
                           <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-[4]" />
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-[5] opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
                             <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Quick View">

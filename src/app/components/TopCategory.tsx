@@ -22,7 +22,7 @@ const newestProducts: Product[] = [
     name: "HAIR COLORING",
     description: "A semi-permanent hair color in a deep conditioning.",
     price: "$80.00",
-    image: "/images/luchiana-3056568558.jpg",
+    image: "/images/luchiana-3056568558.webp",
     badges: [
       { text: "NEW", color: "#000000" },
       { text: "-10%", color: "#000000" },
@@ -33,7 +33,7 @@ const newestProducts: Product[] = [
     name: "MIDNIGHT MUSK",
     description: "Earthy & Woody.",
     price: "$150.00",
-    image: "/images/luchiana-3032395463.jpg",
+    image: "/images/luchiana-3032395463.webp",
     badges: [
       { text: "NEW", color: "#000000" },
       { text: "FEATURED", color: "#e4c1b1" },
@@ -44,7 +44,7 @@ const newestProducts: Product[] = [
     name: "BRIGHTENING CORRECTOR",
     description: "A full-coverage color corrector.",
     price: "$60.00",
-    image: "/images/luchiana-3022718468-520x460.jpg",
+    image: "/images/luchiana-3022718468-520x460.webp",
     badges: [{ text: "NEW", color: "#000000" }],
   },
   {
@@ -52,7 +52,7 @@ const newestProducts: Product[] = [
     name: "BODIFYING SHAMPOO",
     description: "A gentle but thorough cleanser that leaves hair.",
     price: "$50.00",
-    image: "/images/luchiana-3015865450-520x460.jpg",
+    image: "/images/luchiana-3015865450-520x460.webp",
     badges: [{ text: "NEW", color: "#000000" }],
   },
   {
@@ -61,7 +61,7 @@ const newestProducts: Product[] = [
     description:
       "A hydrating lip oil with a hint of the universally flattering.",
     price: "$45.00",
-    image: "/images/luchiana-3002880645-520x460.jpg",
+    image: "/images/luchiana-3002880645-520x460.webp",
     badges: [{ text: "NEW", color: "#000000" }],
   },
   {
@@ -69,7 +69,7 @@ const newestProducts: Product[] = [
     name: "OIL-FREE FOUNDATION",
     description: "Oil-free foundation that delivers buildable.",
     price: "$80.00",
-    image: "/images/luchiana-3050518087-520x460.jpg",
+    image: "/images/luchiana-3050518087-520x460.webp",
     badges: [],
   },
   {
@@ -77,7 +77,7 @@ const newestProducts: Product[] = [
     name: "LONG LASH SERUM",
     description: "This is an external product.",
     price: "$25.00",
-    image: "/images/luchiana-3037998670-520x460.jpg",
+    image: "/images/luchiana-3037998670-520x460.webp",
     badges: [],
     isExternal: true,
   },
@@ -86,7 +86,7 @@ const newestProducts: Product[] = [
     name: "PURITY MADE CLEANSER",
     description: "Top-selling facial cleanser.",
     price: "$60.00",
-    image: "/images/luchiana-3025788510-520x460.jpg",
+    image: "/images/luchiana-3025788510-520x460.webp",
     badges: [{ text: "FEATURED", color: "#e4c1b1" }],
   },
   {
@@ -94,7 +94,7 @@ const newestProducts: Product[] = [
     name: "PRIMING FILTER FACE",
     description: "A primer that uses backlight technology.",
     price: "$50.00",
-    image: "/images/luchiana-3016001322-520x460.jpg",
+    image: "/images/luchiana-3016001322-520x460.webp",
     badges: [],
   },
   {
@@ -102,7 +102,7 @@ const newestProducts: Product[] = [
     name: "INSTANT RETOUCH PRIMER",
     description: "Longer wear with an instant retouch effect.",
     price: "$45.00",
-    image: "/images/luchiana-3006105529-520x460.jpg",
+    image: "/images/luchiana-3006105529-520x460.webp",
     badges: [],
     outOfStock: true,
   },
@@ -111,7 +111,7 @@ const newestProducts: Product[] = [
     name: "FLOWERBOMB",
     description: "Vert de Bergamot, Coco de Mer Accord.",
     price: "$200.00",
-    image: "/images/flowerbomb.jpg",
+    image: "/images/flowerbomb.webp",
     badges: [],
   },
   {
@@ -119,7 +119,7 @@ const newestProducts: Product[] = [
     name: "VOCE VIVA EAU DE PARFUM",
     description: "Italian Bergamot, Orange Blossom Absolute.",
     price: "$150.00",
-    image: "/images/voce-viva.jpg",
+    image: "/images/voce-viva.webp",
     badges: [{ text: "FEATURED", color: "#e4c1b1" }],
   },
 ];

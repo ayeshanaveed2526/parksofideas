@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ProductGalleryProps {
   images: string[];
@@ -9,46 +10,25 @@ interface ProductGalleryProps {
 
 const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [direction, setDirection] = useState(0);
   const activeImage = images[activeIdx] || '';
 
-  return (
-    <div className="flex flex-col md:flex-row gap-8 lg:gap-12 w-full">
-      {/* Thumbnails Sidebar */}
-      <div className="flex md:flex-col gap-4 order-2 md:order-1 shrink-0 z-10">
-        {images.map((img, idx) => (
-          <button
-            key={idx}
-            className={`relative w-20 h-24 overflow-hidden border transition-all duration-500 ease-out 
-              ${activeIdx === idx ? 'border-black scale-105 shadow-md' : 'border-transparent hover:border-gray-200 opacity-60 hover:opacity-100'}`}
-            onClick={() => setActiveIdx(idx)}
-            aria-label={`View image ${idx + 1}`}
-          >
-            <div className="absolute inset-0 bg-[#f9f9f9]" />
-            <img 
-              src={img} 
-              alt={`Thumbnail ${idx + 1}`} 
-              className="relative w-full h-full object-cover mix-blend-multiply" 
-            />
-            {activeIdx === idx && (
-              <motion.div 
-                layoutId="active-thumb-indicator"
-                className="absolute bottom-0 left-0 right-0 h-1 bg-black"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
-            )}
-          </button>
-        ))}
-      </div>
+  const go = (next: number) => {
+    setDirection(next > activeIdx ? 1 : -1);
+    setActiveIdx((next + images.length) % images.length);
+  };
 
+  return (
+    <div className="flex flex-col w-full">
       {/* Main Image Showcase */}
-      <div className="flex-1 relative order-1 md:order-2 flex items-center justify-center min-h-[500px] lg:min-h-[600px] group overflow-hidden bg-transparent">
+      <div className="relative w-full max-w-[520px] mx-auto aspect-square flex items-center justify-center group overflow-hidden bg-transparent">
         
         {/* Soft elegant glow behind the image */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[80%] h-[80%] bg-gradient-to-tr from-gray-100 to-transparent rounded-full blur-3xl opacity-50" />
         </div>
 
-        <div className="absolute top-6 left-6 z-20">
+        <div className="absolute top-2 left-2 z-20">
           <motion.span 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -59,40 +39,54 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
         </div>
 
         {/* The Animated Image */}
-        <div className="relative w-full h-full flex items-center justify-center p-8 z-10 cursor-crosshair">
-          <AnimatePresence mode="wait">
+        <div className="relative w-full h-full flex items-center justify-center z-10 cursor-crosshair">
+          <AnimatePresence mode="popLayout" custom={direction}>
             <motion.img
               key={activeImage}
               src={activeImage}
               alt="Product Showcase"
-              initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-              transition={{ duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
+              custom={direction}
+              variants={{
+                enter: (d: number) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
+                center: { x: 0, opacity: 1 },
+                exit: (d: number) => ({ x: d > 0 ? "-100%" : "100%", opacity: 0 }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.35, ease: "easeInOut" }}
               className="w-full h-full object-contain max-h-[600px] mix-blend-multiply"
             />
           </AnimatePresence>
           
-          {/* Subtle floating continuous animation */}
-          <motion.div 
-            className="absolute inset-0 pointer-events-none"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          >
-            <AnimatePresence mode="wait">
-               <motion.img
-                key={activeImage + "-shadow"}
-                src={activeImage}
-                alt=""
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.15 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6 }}
-                className="w-full h-full object-contain max-h-[600px] scale-95 translate-y-8 blur-2xl mix-blend-multiply saturate-0"
-              />
-            </AnimatePresence>
-          </motion.div>
+          {/* Static soft shadow behind the product */}
+          <img
+            src={activeImage}
+            alt=""
+            aria-hidden
+            className="absolute inset-0 w-full h-full object-contain max-h-[600px] scale-95 translate-y-8 blur-2xl mix-blend-multiply saturate-0 opacity-15 pointer-events-none"
+          />
         </div>
+
+        {/* Slideshow navigation */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={() => go(activeIdx - 1)}
+              aria-label="Previous image"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-white/70 backdrop-blur-sm text-black opacity-0 group-hover:opacity-100 hover:bg-white transition-all duration-300 rounded-full shadow-sm"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => go(activeIdx + 1)}
+              aria-label="Next image"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-white/70 backdrop-blur-sm text-black opacity-0 group-hover:opacity-100 hover:bg-white transition-all duration-300 rounded-full shadow-sm"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
+        )}
 
         {/* Hover zoom instruction */}
         <motion.div 
@@ -103,6 +97,42 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
           Hover to zoom
         </motion.div>
       </div>
+
+      {/* Dot indicators */}
+      {images.length > 1 && (
+        <div className="flex justify-center gap-2 mt-4">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => go(idx)}
+              aria-label={`Go to image ${idx + 1}`}
+              className={`rounded-full transition-all duration-300 ${activeIdx === idx ? 'w-6 h-1.5 bg-black' : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-500'}`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Thumbnail preview bar */}
+      {images.length > 1 && (
+        <div className="mt-4 grid grid-cols-4 gap-3 w-full max-w-[520px] mx-auto">
+          {images.map((img, idx) => (
+            <button
+              key={idx}
+              onClick={() => go(idx)}
+              aria-label={`View image ${idx + 1}`}
+              className={`relative aspect-square overflow-hidden border-2 transition-all duration-300 ease-out
+                ${activeIdx === idx ? 'border-black' : 'border-transparent opacity-60 hover:opacity-100'}`}
+            >
+              <div className="absolute inset-0 bg-[#f5f5f5]" />
+              <img
+                src={img}
+                alt={`Thumbnail ${idx + 1}`}
+                className="relative w-full h-full object-contain p-2 mix-blend-multiply"
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

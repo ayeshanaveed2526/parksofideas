@@ -5,77 +5,92 @@ import { motion } from 'framer-motion';
 
 const relatedProducts = [
   {
-    id: '101',
-    name: 'FLOWERBOMB',
-    desc: 'Vert de Bergamot, Coco de Mer Accord.',
-    price: 200.00,
-    image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=600&auto=format&fit=crop', // Substitute with real image
-    badge: null
+    id: '5',
+    name: 'OIL-INFUSED LIP TINT',
+    desc: 'A hydrating lip oil with a hint of universally flattering colour.',
+    price: 45.00,
+    image: '/images/luchiana-3002880645-520x460.webp',
+    badge: 'NEW',
   },
   {
-    id: '102',
+    id: '6',
+    name: 'OIL-FREE FOUNDATION',
+    desc: 'Oil-free foundation that delivers buildable, skin-like coverage.',
+    price: 80.00,
+    image: '/images/luchiana-3050518087-520x460.webp',
+    badge: 'FEATURED',
+  },
+  {
+    id: '8',
     name: 'PURITY MADE CLEANSER',
-    desc: 'Top-selling facial cleanser.',
+    desc: 'Top-selling facial cleanser for a radiant complexion.',
     price: 60.00,
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop',
-    badge: 'FEATURED'
+    image: '/images/luchiana-3025788510-520x460.webp',
+    badge: null,
   },
-  {
-    id: '103',
-    name: 'VOCE VIVA EAU DE PARFUM',
-    desc: 'Italian Bergamot, Orange Blossom Absolute.',
-    price: 150.00,
-    image: 'https://images.unsplash.com/photo-1523293115678-d2902f520b22?q=80&w=600&auto=format&fit=crop',
-    badge: 'FEATURED'
-  }
 ];
 
-const RelatedProducts: React.FC = () => {
-  return (
-    <div className="w-full max-w-6xl mx-auto my-20 py-10">
-      <h2 className="text-center text-2xl font-serif tracking-widest text-black mb-12 uppercase">
-        Related Products
-      </h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-0">
-        {relatedProducts.map((product, idx) => (
-          <motion.div 
-            key={product.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="bg-white p-6 group cursor-pointer relative shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center h-[450px]"
-          >
+const RelatedProducts: React.FC = () => (
+  <section className="w-full max-w-6xl mx-auto px-4 my-20 py-10 border-t border-gray-100">
+    <motion.h2
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="text-center text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-2"
+    >
+      You May Also Like
+    </motion.h2>
+    <motion.div
+      initial={{ opacity: 0, scaleX: 0 }}
+      whileInView={{ opacity: 1, scaleX: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="w-8 h-0.5 bg-black mx-auto mb-12"
+    />
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {relatedProducts.map((product, idx) => (
+        <motion.div
+          key={product.id}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: idx * 0.1 }}
+          className="group cursor-pointer flex flex-col"
+        >
+          {/* Image container */}
+          <div className="relative overflow-hidden bg-[#f7f7f7] aspect-square mb-4">
             {product.badge && (
-              <div className="absolute top-4 right-4 bg-[#e6c1b3] text-white text-[10px] font-bold px-2 py-1 tracking-wider z-10">
+              <div className="absolute top-3 left-3 z-10 bg-black text-white text-[9px] font-bold px-2.5 py-1 tracking-[0.2em]">
                 {product.badge}
               </div>
             )}
-            
-            <div className="w-full h-64 mb-6 relative overflow-hidden flex items-center justify-center">
-              <img 
-                src={product.image} 
-                alt={product.name} 
-                className="max-h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
-              />
-              
-              {/* Hover Add to Cart Button */}
-              <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <button className="w-full bg-black text-white py-3 text-xs font-bold tracking-widest hover:bg-gray-800 transition-colors">
-                  ADD TO CART
-                </button>
-              </div>
+
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-contain p-6 mix-blend-multiply transform group-hover:scale-105 transition-transform duration-500 ease-out"
+            />
+
+            {/* Slide-up cart button */}
+            <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+              <button className="w-full bg-black text-white py-3.5 text-[10px] font-bold tracking-[0.25em] hover:bg-gray-800 transition-colors">
+                ADD TO CART
+              </button>
             </div>
-            
-            <h3 className="font-serif text-lg tracking-widest uppercase mb-2">{product.name}</h3>
-            <p className="text-gray-400 text-xs mb-4 line-clamp-2 px-4">{product.desc}</p>
-            <div className="mt-auto font-semibold">${product.price.toFixed(2)}</div>
-          </motion.div>
-        ))}
-      </div>
+          </div>
+
+          {/* Info */}
+          <div className="flex flex-col items-center text-center px-2">
+            <h3 className="font-serif text-sm tracking-[0.15em] uppercase mb-1.5 text-gray-900">{product.name}</h3>
+            <p className="text-gray-400 text-xs mb-3 line-clamp-2 leading-relaxed">{product.desc}</p>
+            <span className="text-sm font-semibold text-gray-900">${product.price.toFixed(2)}</span>
+          </div>
+        </motion.div>
+      ))}
     </div>
-  );
-};
+  </section>
+);
 
 export default RelatedProducts;

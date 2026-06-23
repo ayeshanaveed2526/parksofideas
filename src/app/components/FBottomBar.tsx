@@ -23,7 +23,7 @@ export default function FBottomBar() {
   const promotionalBanners = [
     {
       id: 1,
-      image: "/images/luchiana-1246111656.jpg",
+      image: "/images/luchiana-1246111656.webp",
       subtitle: "COLLECTION",
       title: "MY ROSES",
       link: "#",
@@ -32,7 +32,7 @@ export default function FBottomBar() {
 
     {
       id: 2,
-      image: "/images/luchiana-1246799511.jpg",
+      image: "/images/luchiana-1246799511.webp",
       subtitle: "HAIR HEALTH",
       title: "15% OFF",
       link: "#",
@@ -40,7 +40,7 @@ export default function FBottomBar() {
     },
     {
       id: 3,
-      image: "/images/luchiana-1246137549.jpg",
+      image: "/images/luchiana-1246137549.webp",
       subtitle: "BODY SHOWERS",
       title: "20% OFF",
       link: "#",

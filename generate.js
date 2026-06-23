@@ -40,7 +40,7 @@ allProducts.forEach(p => {
     name: "${p.name}",
     shortDescription: "${p.description}",
     price: ${pPrice},
-    images: [` + (p.image ? `"${p.image}"` : `"/images/luchiana-3032395463.jpg"`) + `],
+    images: [` + (p.image ? `"${p.image}"` : `"/images/luchiana-3032395463.webp"`) + `],
     sku: "SKU-${Math.floor(Math.random() * 100000)}",
     category: "BEAUTY",
     tags: ["NEW", "TRENDING"],

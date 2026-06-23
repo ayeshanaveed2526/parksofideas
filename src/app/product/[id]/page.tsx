@@ -7,6 +7,7 @@ import ProductInfo from '../../components/product/ProductInfo';
 import ProductTabs from '../../components/product/ProductTabs';
 import RelatedProducts from '../../components/product/RelatedProducts';
 import AnimatedBackground from '../../components/product/AnimatedBackground';
+import PageTransition from '../../components/product/PageTransition';
 import { mockProducts } from '../../data/mockProducts';
 import { notFound } from 'next/navigation';
 
@@ -33,13 +34,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   return (
     <main className="min-h-screen relative overflow-hidden bg-transparent">
       <AnimatedBackground />
+      <PageTransition>
       <div className="relative z-10">
         <Header />
       
       <ProductHero category={product.category} productName={product.name} />
 
       {/* Main Product Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left Column: Gallery */}
           <div className="w-full">
@@ -59,6 +61,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <RelatedProducts />
         <Footer />
       </div>
+      </PageTransition>
     </main>
   );
 }

@@ -27,7 +27,7 @@ export default function VideoSection() {
       <div
         className="relative w-full h-full bg-[#fae8e2] bg-cover bg-center transition-all duration-700"
         style={{
-          backgroundImage: "url('/images/video_bg.png')",
+          backgroundImage: "url('/images/video_bg.webp')",
         }}
       >
         {/* HTML5 Video element */}

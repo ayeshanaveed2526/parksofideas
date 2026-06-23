@@ -7,21 +7,21 @@ export default function Herosection() {
   const leftSlides = [
     {
       id: 1,
-      image: "/images/Gemini_Generated_Image_9aoqnd9aoqnd9aoq.png",
+      image: "/images/Gemini_Generated_Image_9aoqnd9aoqnd9aoq.webp",
       subtitle: "PACKAGE",
       title: "PREMIUM",
       link: "#",
     },
     {
       id: 2,
-      image: "/images/pink_slide_2_v2.png",
+      image: "/images/pink_slide_2_v2.webp",
       subtitle: "ORGANIC",
       title: "BEAUTY",
       link: "#",
     },
     {
       id: 3,
-      image: "/images/pink_slide_3_v2.png",
+      image: "/images/pink_slide_3_v2.webp",
       subtitle: "BOTANICAL",
       title: "ESSENCE",
       link: "#",
@@ -31,21 +31,21 @@ export default function Herosection() {
   const rightSlides = [
     {
       id: 1,
-      image: "/images/Gemini_Generated_Image_n9mh33n9mh33n9mh.png",
+      image: "/images/Gemini_Generated_Image_n9mh33n9mh33n9mh.webp",
       subtitle: "NEW BRAND",
       title: "TOUCH",
       link: "#",
     },
     {
       id: 2,
-      image: "/images/beige_slide_2_v2.png",
+      image: "/images/beige_slide_2_v2.webp",
       subtitle: "PURE SAND",
       title: "LUXURY",
       link: "#",
     },
     {
       id: 3,
-      image: "/images/beige_slide_3_v2.png",
+      image: "/images/beige_slide_3_v2.webp",
       subtitle: "MINIMALIST",
       title: "SERUM",
       link: "#",

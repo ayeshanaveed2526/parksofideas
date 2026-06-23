@@ -5,37 +5,37 @@ import Link from "next/link";
 const categories = [
   {
     name: "SKINCARE",
-    image: "/images/luchiana-0654733209.jpg",
+    image: "/images/luchiana-0654733209.webp",
     link: "/product/1",
   },
   {
     name: "LIPS",
-    image: "/images/luchiana-0654102558.jpg",
+    image: "/images/luchiana-0654102558.webp",
     link: "/product/1",
   },
   // {
   //   name: "LIPS",
-  //   image: "/images/luchiana-0654132591.jpg",
+  //   image: "/images/luchiana-0654132591.webp",
   //   link: "#",
   // },
   {
     name: "HAIR",
-    image: "/images/luchiana-0654445062.jpg",
+    image: "/images/luchiana-0654445062.webp",
     link: "/product/1",
   },
   {
     name: "EYE",
-    image: "/images/luchiana-0654822752-115x115.jpg",
+    image: "/images/luchiana-0654822752-115x115.webp",
     link: "/product/1",
   },
   {
     name: "MAKEUP",
-    image: "/images/luchiana-0654132591.jpg",
+    image: "/images/luchiana-0654132591.webp",
     link: "/product/1",
   },
   {
     name: "FRAGRANCE",
-    image: "/images/luchiana-0654439537.jpg",
+    image: "/images/luchiana-0654439537.webp",
     link: "/product/1",
   },
 ];

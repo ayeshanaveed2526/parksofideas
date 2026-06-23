@@ -25,7 +25,7 @@ const productsData: Product[] = [
     description: "Skin-perfecting bronzed filter for the face.",
     price: "$40.00",
     oldPrice: "$45.00",
-    image: "/images/luchiana-3022279061.jpg",
+    image: "/images/luchiana-3022279061.webp",
     rating: 5,
     badges: [
       { text: "-11%", color: "#000000" },
@@ -37,7 +37,7 @@ const productsData: Product[] = [
     name: "EYELINER PACK",
     description: "A hyper-saturated, water-resistant, liquid eyeliner.",
     price: "$40.00 – $80.00",
-    image: "/images/new_eyeliner.jpg",
+    image: "/images/new_eyeliner.webp",
     rating: 5,
     badges: [
       { text: "-11%", color: "#000000" },
@@ -50,7 +50,7 @@ const productsData: Product[] = [
     description: "A foundation for the face and body.",
     price: "$40.00",
     oldPrice: "$45.00",
-    image: "/images/new_dior_foundation.jpg",
+    image: "/images/new_dior_foundation.webp",
     rating: 5,
     badges: [
       { text: "-11%", color: "#000000" },
@@ -62,7 +62,7 @@ const productsData: Product[] = [
     description: "Luxurious velvet matte lipstick with rich pigment.",
     price: "$25.00",
     oldPrice: "$30.00",
-    image: "/images/luchiana-0654102558.jpg",
+    image: "/images/luchiana-0654102558.webp",
     rating: 5,
     badges: [
       { text: "-11%", color: "#000000" },
@@ -73,7 +73,7 @@ const productsData: Product[] = [
     name: "HYDRATING SERUM",
     description: "Deeply hydrates and replenishes the skin barrier.",
     price: "$55.00",
-    image: "/images/luchiana-0654733209.jpg",
+    image: "/images/luchiana-0654733209.webp",
     rating: 5,
     badges: [
       { text: "NEW", color: "#000000" },
@@ -84,7 +84,7 @@ const productsData: Product[] = [
     name: "FRAGRANCE ESSENCE",
     description: "A sophisticated floral scent with warm vanilla notes.",
     price: "$75.00",
-    image: "/images/luchiana-0654439537.jpg",
+    image: "/images/luchiana-0654439537.webp",
     rating: 5,
     badges: [
       { text: "FEATURED", color: "#e4c1b1" },
