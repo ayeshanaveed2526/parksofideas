@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, User, Heart, ShoppingBag, Menu, X } from "lucide-react";
+import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
 
 /**
  * MainNavbar — the second bar.
@@ -43,16 +44,12 @@ export default function MainNavbar() {
     { label: "CONTACT", href: "/contact" },
   ];
 
-  const homeVariants = [
-    { name: "MAIN", image: "/luchiana-assets/products/main.webp" },
-    { name: "NATURAL", image: "/luchiana-assets/products/natural.webp" },
-    { name: "COMPACT", image: "/luchiana-assets/products/compact.webp" },
-    { name: "BOXED", image: "/luchiana-assets/products/boxed.webp" },
-    { name: "WIDE", image: "/luchiana-assets/products/wide.webp" },
-    { name: "BRANDED", image: "/luchiana-assets/products/branded.webp" },
-    { name: "ORGANIC", image: "/luchiana-assets/products/organic.webp" },
-    { name: "SALON", image: "/luchiana-assets/products/salon.webp" },
-  ];
+  const homeVariants = PERFUME_CATALOG.slice(0, 8).map((perfume) => ({
+    name: perfume.brand,
+    image: perfume.image,
+  }));
+
+  const megaMenuPerfumes = PERFUME_CATALOG.filter((p) => [2, 16, 23].includes(p.id));
 
   const shopMegaMenu = {
     shopLayout: [
@@ -367,10 +364,12 @@ export default function MainNavbar() {
                     
                     {/* Image section */}
                     <div className="flex-1 pt-[41px] px-[20px] pb-[10px] flex gap-[20px] overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-track]:bg-[#f0f0f0] [&::-webkit-scrollbar-thumb]:bg-[#c0c0c0] [&::-webkit-scrollbar-thumb]:hover:bg-[#a0a0a0]">
-                      {/* Product 1 */}
-                      <div className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
+                      {megaMenuPerfumes.map((perfume, idx) => (
+                      <div key={perfume.id} className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
                         <div className="relative w-[260px] h-[230px] flex items-center justify-center p-4 overflow-hidden border-b border-[#f2f2f2]">
-                          <img src="/images/flowerbomb.webp" alt="FLOWERBOMB" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
+                          {idx === 1 && <span className="absolute top-0 left-0 bg-[#1a1a1a] text-white text-[10px] font-bold px-2 py-1 tracking-wider z-10">NEW</span>}
+                          {(idx === 1 || idx === 2) && <span className="absolute top-0 right-0 bg-[#00089d] text-white text-[10px] font-bold px-2 py-1 tracking-wider uppercase z-10">FEATURED</span>}
+                          <img src={perfume.image} alt={perfume.brand} className="max-h-[190px] max-w-full object-contain" />
                           <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-4" />
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-5 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
                             <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Quick View">
@@ -391,75 +390,12 @@ export default function MainNavbar() {
                           </button>
                         </div>
                         <div className="w-[260px] h-[252px] flex flex-col items-center justify-center px-4">
-                          <h5 className="text-[16px] text-[#1a1a1a] group-hover/card:text-[#cdae9f] transition-colors duration-150 tracking-[0.2em] uppercase mb-2" style={{ fontFamily: "var(--font-marcellus), Marcellus, serif" }}>FLOWERBOMB</h5>
-                          <p className="text-[#888] text-[13px] mb-6">Vert de Bergamot, Coco de<br/>Mer Accord.</p>
-                          <span className="text-[#1a1a1a] text-[15px] font-medium">$200.00</span>
+                          <h5 className="text-[16px] text-[#1a1a1a] group-hover/card:text-[#00089d] transition-colors duration-150 tracking-[0.2em] uppercase mb-2" style={{ fontFamily: "var(--font-marcellus), Marcellus, serif" }}>{perfume.brand}</h5>
+                          <p className="text-[#888] text-[13px] mb-6">{perfume.description}</p>
+                          <span className="text-[#1a1a1a] text-[15px] font-medium">{formatPerfumePrice(perfume.price)}</span>
                         </div>
                       </div>
-                      
-                      {/* Product 2 */}
-                      <div className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
-                        <div className="relative w-[260px] h-[230px] flex items-center justify-center p-4 overflow-hidden border-b border-[#f2f2f2]">
-                          <span className="absolute top-0 left-0 bg-[#1a1a1a] text-white text-[10px] font-bold px-2 py-1 tracking-wider z-10">NEW</span>
-                          <span className="absolute top-0 right-0 bg-[#e4c1b1] text-white text-[10px] font-bold px-2 py-1 tracking-wider uppercase z-10">FEATURED</span>
-                          <img src="/images/luchiana-3015865450-520x460.webp" alt="MIDNIGHT MUSK" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
-                          <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-4" />
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-5 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
-                            <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Quick View">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
-                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                                <circle cx="12" cy="12" r="3" />
-                              </svg>
-                            </button>
-                            <div className="w-px h-[32px] bg-black"></div>
-                            <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Add to Wishlist">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
-                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                              </svg>
-                            </button>
-                          </div>
-                          <button className="absolute bottom-0 left-0 w-full h-[36px] font-semibold text-[10px] tracking-[0.15em] uppercase text-black bg-white border border-black flex items-center justify-center translate-y-full opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 transition-all duration-300 z-5 hover:bg-black hover:text-white" type="button" style={{ fontFamily: "Inter, sans-serif" }}>
-                            + ADD TO CART
-                          </button>
-                        </div>
-                        <div className="w-[260px] h-[252px] flex flex-col items-center justify-center px-4">
-                          <h5 className="text-[16px] text-[#1a1a1a] group-hover/card:text-[#cdae9f] transition-colors duration-150 tracking-[0.2em] uppercase mb-2" style={{ fontFamily: "var(--font-marcellus), Marcellus, serif" }}>MIDNIGHT<br/>MUSK</h5>
-                          <p className="text-[#888] text-[13px] mb-6">Earthy & Woody.</p>
-                          <span className="text-[#1a1a1a] text-[15px] font-medium">$150.00</span>
-                        </div>
-                      </div>
-
-                      {/* Product 3 */}
-                      <div className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
-                        <div className="relative w-[260px] h-[230px] flex items-center justify-center p-4 overflow-hidden border-b border-[#f2f2f2]">
-                          <span className="absolute top-0 right-0 bg-[#e4c1b1] text-white text-[10px] font-bold px-2 py-1 tracking-wider uppercase z-10">FEATURED</span>
-                          <img src="/images/luchiana-3024294986-520x460.webp" alt="PURITY MADE CLEANSER" className="max-h-[190px] max-w-full object-contain mix-blend-multiply" />
-                          <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-4" />
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-5 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
-                            <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Quick View">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
-                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                                <circle cx="12" cy="12" r="3" />
-                              </svg>
-                            </button>
-                            <div className="w-px h-[32px] bg-black"></div>
-                            <button className="w-[34px] h-[32px] flex items-center justify-center bg-white text-black hover:bg-black hover:text-white transition-colors" aria-label="Add to Wishlist">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
-                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                              </svg>
-                            </button>
-                          </div>
-                          <button className="absolute bottom-0 left-0 w-full h-[36px] font-semibold text-[10px] tracking-[0.15em] uppercase text-black bg-white border border-black flex items-center justify-center translate-y-full opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 transition-all duration-300 z-5 hover:bg-black hover:text-white" type="button" style={{ fontFamily: "Inter, sans-serif" }}>
-                            + ADD TO CART
-                          </button>
-                        </div>
-                        <div className="w-[260px] h-[252px] flex flex-col items-center justify-center px-4">
-                          <h5 className="text-[16px] text-[#1a1a1a] group-hover/card:text-[#cdae9f] transition-colors duration-150 tracking-[0.2em] uppercase mb-2" style={{ fontFamily: "var(--font-marcellus), Marcellus, serif" }}>PURITY MADE<br/>CLEANSER</h5>
-                          <p className="text-[#888] text-[13px] mb-6">Top-selling facial cleanser.</p>
-                          <span className="text-[#1a1a1a] text-[15px] font-medium">$60.00</span>
-                        </div>
-                      </div>
-                      
+                      ))}
                     </div>
                   </div>
                 )}

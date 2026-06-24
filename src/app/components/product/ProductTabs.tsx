@@ -79,7 +79,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
                   <div className="w-full h-80 bg-gray-100 flex items-center justify-center relative overflow-hidden group hover-lift rounded-sm">
                      {/* Replace with actual image related to description, simulating Lady Gaga image */}
                      <div className="absolute inset-0 bg-pink-600/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10" />
-                     <img src="/images/description-feature.webp" alt="Feature" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop'; }} />
+                     <img src="/perfumes/elysia.png" alt="Elysia Eau de Parfum" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
                      <h2 className="absolute bottom-10 right-10 text-white font-serif text-4xl font-bold z-20 mix-blend-overlay">VOCE<br/>VIVA</h2>
                   </div>
                 </motion.div>

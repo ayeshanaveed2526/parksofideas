@@ -1,13 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import { Navigation, A11y, Autoplay } from "swiper/modules";
+import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 interface Product {
   id: number;
@@ -22,96 +23,68 @@ interface Product {
   isExternal?: boolean;
 }
 
-const productsData: Product[] = [
-  {
-    id: 13,
-    name: "AIRBRUSH MATTE",
-    description: "Skin-perfecting bronzed filter for the face.",
-    price: "$40.00",
-    oldPrice: "$45.00",
-    image: "/images/luchiana-3022279061.webp",
-    rating: 5,
-    badges: [
-      { text: "-11%", color: "#000000" },
-      { text: "FEATURED", color: "#e4c1b1" },
-    ],
-  },
-  {
-    id: 14,
-    name: "EYELINER PACK",
-    description: "A hyper-saturated, water-resistant, liquid eyeliner.",
-    price: "$40.00 – $80.00",
-    image: "/images/new_eyeliner.webp",
-    rating: 5,
-    badges: [
-      { text: "-11%", color: "#000000" },
-      { text: "FEATURED", color: "#e4c1b1" },
-    ],
-  },
-  {
-    id: 15,
-    name: "FACE & BODY FOUNDATION",
-    description: "A foundation for the face and body.",
-    price: "$40.00",
-    oldPrice: "$45.00",
-    image: "/images/new_dior_foundation.webp",
-    rating: 5,
-    badges: [
-      { text: "-11%", color: "#000000" },
-    ],
-  },
-  {
-    id: 16,
-    name: "VELVET LIPSTICK",
-    description: "Luxurious velvet matte lipstick with rich pigment.",
-    price: "$25.00",
-    oldPrice: "$30.00",
-    image: "/images/luchiana-0654102558.webp",
-    rating: 5,
-    badges: [
-      { text: "-11%", color: "#000000" },
-    ],
-  },
-  {
-    id: 17,
-    name: "HYDRATING SERUM",
-    description: "Deeply hydrates and replenishes the skin barrier.",
-    price: "$55.00",
-    image: "/images/luchiana-0654733209.webp",
-    rating: 5,
-    badges: [
-      { text: "NEW", color: "#000000" },
-    ],
-  },
-  {
-    id: 18,
-    name: "FRAGRANCE ESSENCE",
-    description: "A sophisticated floral scent with warm vanilla notes.",
-    price: "$75.00",
-    image: "/images/luchiana-0654439537.webp",
-    rating: 5,
-    badges: [
-      { text: "FEATURED", color: "#e4c1b1" },
-    ],
-  },
-];
+const productsData: Product[] = PERFUME_CATALOG.slice(12, 18).map((perfume) => ({
+  id: perfume.id,
+  name: perfume.brand,
+  description: perfume.description,
+  price: formatPerfumePrice(perfume.price),
+  oldPrice: perfume.id % 2 === 0 ? formatPerfumePrice(perfume.price + 12) : undefined,
+  image: perfume.image,
+  rating: 5,
+  badges: [
+    ...(perfume.id % 2 === 0 ? [{ text: "-11%", color: "#000000" }] : []),
+    ...(perfume.id % 3 === 0 ? [{ text: "FEATURED", color: "#00089d" }] : []),
+    ...(perfume.id === 17 ? [{ text: "NEW", color: "#00089d" }] : []),
+  ],
+}));
 
 export default function NewProducts() {
-  const currentProducts = productsData; // Use all 6 products
+  const currentProducts = productsData;
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+
+  const bindNavigation = (swiper: SwiperType) => {
+    if (!swiper.params.navigation || typeof swiper.params.navigation === "boolean") return;
+    swiper.params.navigation.prevEl = prevRef.current;
+    swiper.params.navigation.nextEl = nextRef.current;
+    swiper.navigation.init();
+    swiper.navigation.update();
+  };
 
   return (
     <section className="np-section">
       <div className="np-container">
+        <div className="np-carousel">
+          <button
+            ref={prevRef}
+            type="button"
+            className="np-carousel-nav np-carousel-nav--prev"
+            aria-label="Previous slide"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div className="np-carousel-track">
         <Swiper
-          modules={[Navigation, Pagination, A11y, Autoplay]}
-          spaceBetween={20}
+          modules={[Navigation, A11y, Autoplay]}
+          spaceBetween={8}
           slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          slidesPerGroup={1}
+          speed={550}
+          navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+          onBeforeInit={(swiper) => {
+            if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
+              swiper.params.navigation.prevEl = prevRef.current;
+              swiper.params.navigation.nextEl = nextRef.current;
+            }
+          }}
+          onSwiper={bindNavigation}
+          autoplay={{ delay: 2000, disableOnInteraction: false }}
           breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 }
+            640: { slidesPerView: 2, spaceBetween: 8, slidesPerGroup: 1 },
+            1024: { slidesPerView: 4, spaceBetween: 8, slidesPerGroup: 1 },
           }}
           className="np-swiper"
         >
@@ -215,6 +188,19 @@ export default function NewProducts() {
             );
           })}
         </Swiper>
+          </div>
+
+          <button
+            ref={nextRef}
+            type="button"
+            className="np-carousel-nav np-carousel-nav--next"
+            aria-label="Next slide"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <style jsx>{`
@@ -233,7 +219,7 @@ export default function NewProducts() {
         /* ── Section ── */
         .np-section {
           width: 100%;
-          background: linear-gradient(180deg, #f3f3f3 0%, #f7f4f2 50%, #f3f3f3 100%);
+          background: linear-gradient(180deg, #f0f2f8 0%, #f5f7fc 50%, #eef1f8 100%);
           padding: 50px 0 60px;
           font-family: var(--font-inter), "Inter", sans-serif;
           overflow: hidden;
@@ -246,31 +232,61 @@ export default function NewProducts() {
           padding: 0 40px;
         }
 
+        .np-carousel {
+          display: grid;
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .np-carousel-track {
+          min-width: 0;
+          overflow: hidden;
+        }
+
         .np-swiper {
           width: 100%;
-          padding-bottom: 50px;
+          overflow: hidden;
         }
 
-        /* Swiper Theme Overrides */
-        :global(.np-swiper .swiper-button-next),
-        :global(.np-swiper .swiper-button-prev) {
-          color: #cdae9f;
-          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                      box-shadow 0.35s ease,
-                      background-color 0.3s ease;
-          border-radius: 50%;
+        .np-carousel-nav {
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: 44px;
           height: 44px;
+          border: 1px solid rgba(0, 8, 157, 0.12);
+          border-radius: 50%;
+          background: #ffffff;
+          color: #00089d;
+          cursor: pointer;
+          box-shadow: 0 2px 12px rgba(0, 8, 157, 0.08);
+          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                      box-shadow 0.35s ease,
+                      border-color 0.35s ease,
+                      opacity 0.3s ease;
         }
 
-        :global(.np-swiper .swiper-button-next:hover),
-        :global(.np-swiper .swiper-button-prev:hover) {
-          transform: scale(1.15);
-          box-shadow: 0 6px 20px rgba(205, 174, 159, 0.35);
+        .np-carousel-nav:hover:not(:disabled) {
+          transform: scale(1.12);
+          border-color: rgba(0, 8, 157, 0.35);
+          box-shadow: 0 8px 24px rgba(0, 8, 157, 0.28);
         }
-        
-        :global(.np-swiper .swiper-pagination-bullet-active) {
-          background-color: #cdae9f;
+
+        .np-carousel-nav:disabled,
+        .np-carousel-nav.swiper-button-disabled {
+          opacity: 0.35;
+          cursor: default;
+        }
+
+        :global(.np-swiper .swiper-slide) {
+          height: auto;
+          box-sizing: border-box;
+        }
+
+        :global(.np-swiper .swiper-wrapper) {
+          align-items: stretch;
         }
 
         /* Card */
@@ -280,23 +296,29 @@ export default function NewProducts() {
           flex-direction: column;
           cursor: pointer;
           box-sizing: border-box;
-          border: 1px solid rgba(0, 0, 0, 0.04);
-          border-radius: 16px;
+          border: 1px solid rgba(0, 8, 157, 0.08);
+          border-radius: 18px;
           overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0, 8, 157, 0.04);
           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      border-color 0.45s ease;
           animation: cardFadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 
           --btn-size: 42px;
           --btn-icon: 16px;
           --atc-h: 42px;
           --atc-fs: 11px;
+          --np-blue: #00089d;
         }
 
         .np-card:hover {
           transform: translateY(-10px);
-          box-shadow: 0 20px 50px rgba(205, 174, 159, 0.35),
-                      0 8px 16px rgba(205, 174, 159, 0.15);
+          border-color: rgba(0, 8, 157, 0.22);
+          box-shadow:
+            0 24px 48px rgba(0, 8, 157, 0.22),
+            0 12px 24px rgba(0, 8, 157, 0.12),
+            0 0 0 1px rgba(0, 8, 157, 0.06);
         }
 
         /* Image area */
@@ -304,8 +326,17 @@ export default function NewProducts() {
           position: relative;
           width: 100%;
           aspect-ratio: 360 / 280;
-          background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+          background: linear-gradient(165deg, #f8f9fd 0%, #ffffff 55%, #f3f5fb 100%);
           overflow: hidden;
+        }
+
+        .np-card-img-wrap::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 70%, rgba(0, 8, 157, 0.03) 100%);
+          pointer-events: none;
+          z-index: 1;
         }
 
         .np-card-img {
@@ -348,15 +379,15 @@ export default function NewProducts() {
           text-transform: uppercase;
           color: #ffffff;
           padding: 4px 8px;
-          border-radius: 4px;
+          border-radius: 6px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
         }
 
         /* Hover Overlay Bg */
         .np-card-hover-bg {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.2);
-          backdrop-filter: blur(4px);
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 8, 157, 0.06) 100%);
           opacity: 0;
           visibility: hidden;
           transition: opacity 0.45s ease, visibility 0.45s ease;
@@ -377,7 +408,8 @@ export default function NewProducts() {
           display: flex;
           background: #ffffff;
           border-radius: 30px;
-          box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+          border: 1px solid rgba(0, 8, 157, 0.1);
+          box-shadow: 0 8px 28px rgba(0, 8, 157, 0.15);
           overflow: hidden;
           z-index: 5;
           opacity: 0;
@@ -415,7 +447,7 @@ export default function NewProducts() {
         }
 
         .np-action-btn:hover {
-          background: #000000;
+          background: #00089d;
           color: #ffffff;
           transform: scale(1.05);
         }
@@ -423,7 +455,7 @@ export default function NewProducts() {
         .np-action-divider {
           width: 1px;
           height: calc(var(--btn-size) - 2px);
-          background: rgba(0, 0, 0, 0.12);
+          background: rgba(0, 8, 157, 0.12);
         }
 
         /* Add to cart button */
@@ -439,7 +471,7 @@ export default function NewProducts() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #ffffff;
-          background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+          background: linear-gradient(135deg, #00089d 0%, #000672 100%);
           border: none;
           box-sizing: border-box;
           cursor: pointer;
@@ -450,7 +482,7 @@ export default function NewProducts() {
           opacity: 0;
           transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
                       opacity 0.45s ease,
-                      background 0.2s linear;
+                      box-shadow 0.3s ease;
           z-index: 5;
           padding: 0 10px;
         }
@@ -461,7 +493,7 @@ export default function NewProducts() {
         }
 
         .np-atc-btn:hover {
-          background: linear-gradient(135deg, rgb(205, 174, 159) 0%, rgb(185, 154, 139) 100%);
+          box-shadow: 0 -4px 20px rgba(0, 8, 157, 0.35);
         }
 
         /* Description Box */
@@ -473,7 +505,7 @@ export default function NewProducts() {
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
-          background: linear-gradient(180deg, #ffffff 0%, #fdfcfb 100%);
+          background: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%);
           text-align: center;
           min-height: 180px;
           position: relative;
@@ -485,9 +517,9 @@ export default function NewProducts() {
           top: 0;
           left: 50%;
           transform: translateX(-50%);
-          width: 40px;
+          width: 48px;
           height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(205, 174, 159, 0.5), transparent);
+          background: linear-gradient(90deg, transparent, rgba(0, 8, 157, 0.35), transparent);
           border-radius: 1px;
         }
 
@@ -498,15 +530,15 @@ export default function NewProducts() {
           line-height: 1.26;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #000000;
+          color: #111111;
           margin: 0 0 8px;
           padding-left: 0.18em;
           transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
         .np-card:hover .np-card-name {
-          color: rgb(205, 174, 159);
-          letter-spacing: 0.24em;
+          color: #00089d;
+          letter-spacing: 0.22em;
         }
 
         .np-card-desc {
@@ -532,12 +564,13 @@ export default function NewProducts() {
         }
 
         .np-star {
-          color: #e4c1b1;
+          color: #5b7cff;
           font-size: 14px;
-          transition: transform 0.3s ease;
+          transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .np-card:hover .np-star {
+          color: #00089d;
           animation: starPop 0.4s ease both;
         }
 
@@ -578,8 +611,24 @@ export default function NewProducts() {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 600;
           font-size: 15px;
-          color: #000000;
+          color: #00089d;
           letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 639px) {
+          .np-carousel {
+            gap: 12px;
+          }
+
+          .np-carousel-nav {
+            width: 36px;
+            height: 36px;
+          }
+
+          .np-carousel-nav svg {
+            width: 15px;
+            height: 15px;
+          }
         }
 
         /* ── Responsive: sm ── */

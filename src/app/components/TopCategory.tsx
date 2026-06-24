@@ -3,125 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { PERFUME_CATALOG, toCatalogCard, type CatalogCardProduct } from "../data/perfumeCatalog";
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  image: string;
-  badges: { text: string; color: string }[];
-  outOfStock?: boolean;
-  isExternal?: boolean;
-}
+type Product = CatalogCardProduct;
 
-const newestProducts: Product[] = [
-  {
-    id: 1,
-    name: "HAIR COLORING",
-    description: "A semi-permanent hair color in a deep conditioning.",
-    price: "$80.00",
-    image: "/images/luchiana-3056568558.webp",
-    badges: [
-      { text: "NEW", color: "#000000" },
-      { text: "-10%", color: "#000000" },
-    ],
-  },
-  {
-    id: 2,
-    name: "MIDNIGHT MUSK",
-    description: "Earthy & Woody.",
-    price: "$150.00",
-    image: "/images/luchiana-3032395463.webp",
-    badges: [
-      { text: "NEW", color: "#000000" },
-      { text: "FEATURED", color: "#e4c1b1" },
-    ],
-  },
-  {
-    id: 3,
-    name: "BRIGHTENING CORRECTOR",
-    description: "A full-coverage color corrector.",
-    price: "$60.00",
-    image: "/images/luchiana-3022718468-520x460.webp",
-    badges: [{ text: "NEW", color: "#000000" }],
-  },
-  {
-    id: 4,
-    name: "BODIFYING SHAMPOO",
-    description: "A gentle but thorough cleanser that leaves hair.",
-    price: "$50.00",
-    image: "/images/luchiana-3015865450-520x460.webp",
-    badges: [{ text: "NEW", color: "#000000" }],
-  },
-  {
-    id: 5,
-    name: "OIL-INFUSED LIP TINT",
-    description:
-      "A hydrating lip oil with a hint of the universally flattering.",
-    price: "$45.00",
-    image: "/images/luchiana-3002880645-520x460.webp",
-    badges: [{ text: "NEW", color: "#000000" }],
-  },
-  {
-    id: 6,
-    name: "OIL-FREE FOUNDATION",
-    description: "Oil-free foundation that delivers buildable.",
-    price: "$80.00",
-    image: "/images/luchiana-3050518087-520x460.webp",
-    badges: [],
-  },
-  {
-    id: 7,
-    name: "LONG LASH SERUM",
-    description: "This is an external product.",
-    price: "$25.00",
-    image: "/images/luchiana-3037998670-520x460.webp",
-    badges: [],
-    isExternal: true,
-  },
-  {
-    id: 8,
-    name: "PURITY MADE CLEANSER",
-    description: "Top-selling facial cleanser.",
-    price: "$60.00",
-    image: "/images/luchiana-3025788510-520x460.webp",
-    badges: [{ text: "FEATURED", color: "#e4c1b1" }],
-  },
-  {
-    id: 9,
-    name: "PRIMING FILTER FACE",
-    description: "A primer that uses backlight technology.",
-    price: "$50.00",
-    image: "/images/luchiana-3016001322-520x460.webp",
-    badges: [],
-  },
-  {
-    id: 10,
-    name: "INSTANT RETOUCH PRIMER",
-    description: "Longer wear with an instant retouch effect.",
-    price: "$45.00",
-    image: "/images/luchiana-3006105529-520x460.webp",
-    badges: [],
-    outOfStock: true,
-  },
-  {
-    id: 11,
-    name: "FLOWERBOMB",
-    description: "Vert de Bergamot, Coco de Mer Accord.",
-    price: "$200.00",
-    image: "/images/flowerbomb.webp",
-    badges: [],
-  },
-  {
-    id: 12,
-    name: "VOCE VIVA EAU DE PARFUM",
-    description: "Italian Bergamot, Orange Blossom Absolute.",
-    price: "$150.00",
-    image: "/images/voce-viva.webp",
-    badges: [{ text: "FEATURED", color: "#e4c1b1" }],
-  },
-];
+const newestProducts: Product[] = PERFUME_CATALOG.slice(0, 12).map(toCatalogCard);
 
 const products: Record<string, Product[]> = {
   NEWEST: newestProducts,
@@ -158,7 +44,7 @@ export default function TopCategory() {
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="tp-grid-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(0,0,0,0.03)" strokeWidth="1" />
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(0, 8, 157, 0.07)" strokeWidth="1" />
             </pattern>
           </defs>
 
@@ -166,16 +52,16 @@ export default function TopCategory() {
           <rect width="100%" height="100%" fill="url(#tp-grid-pattern)" />
 
           {/* Slow panning mesh network nodes */}
-          <g stroke="rgba(205,174,159,0.15)" strokeWidth="1" fill="none">
+          <g stroke="rgba(0, 8, 157, 0.06)" strokeWidth="1" fill="none">
             {/* Node Cluster 1 */}
             <g>
               <animateTransform attributeName="transform" type="translate" values="0,0; 30,-20; 0,0" dur="20s" repeatCount="indefinite" />
               <line x1="10%" y1="20%" x2="25%" y2="15%" />
               <line x1="25%" y1="15%" x2="30%" y2="35%" />
               <line x1="10%" y1="20%" x2="30%" y2="35%" />
-              <circle cx="10%" cy="20%" r="3" fill="rgba(205,174,159,0.3)" />
-              <circle cx="25%" cy="15%" r="4" fill="rgba(205,174,159,0.3)" />
-              <circle cx="30%" cy="35%" r="3" fill="rgba(205,174,159,0.3)" />
+              <circle cx="10%" cy="20%" r="3" fill="rgba(0, 8, 157, 0.08)" />
+              <circle cx="25%" cy="15%" r="4" fill="rgba(0, 8, 157, 0.08)" />
+              <circle cx="30%" cy="35%" r="3" fill="rgba(0, 8, 157, 0.08)" />
             </g>
 
             {/* Node Cluster 2 */}
@@ -184,37 +70,37 @@ export default function TopCategory() {
               <line x1="75%" y1="65%" x2="85%" y2="50%" />
               <line x1="85%" y1="50%" x2="90%" y2="80%" />
               <line x1="75%" y1="65%" x2="90%" y2="80%" />
-              <circle cx="75%" cy="65%" r="4" fill="rgba(205,174,159,0.3)" />
-              <circle cx="85%" cy="50%" r="3" fill="rgba(205,174,159,0.3)" />
-              <circle cx="90%" cy="80%" r="4" fill="rgba(205,174,159,0.3)" />
+              <circle cx="75%" cy="65%" r="4" fill="rgba(0, 8, 157, 0.08)" />
+              <circle cx="85%" cy="50%" r="3" fill="rgba(0, 8, 157, 0.08)" />
+              <circle cx="90%" cy="80%" r="4" fill="rgba(0, 8, 157, 0.08)" />
             </g>
           </g>
 
           {/* Rotating Geometric Rings */}
           <g transform="translate(150, 150)">
-            <circle r="90" fill="none" stroke="rgba(180,210,210,0.15)" strokeWidth="1" strokeDasharray="10 5 2 5">
+            <circle r="90" fill="none" stroke="rgba(0, 8, 157, 0.05)" strokeWidth="1" strokeDasharray="10 5 2 5">
               <animateTransform attributeName="transform" type="rotate" values="0; 360" dur="40s" repeatCount="indefinite" />
             </circle>
-            <circle r="70" fill="none" stroke="rgba(205,174,159,0.1)" strokeWidth="1" strokeDasharray="5 15">
+            <circle r="70" fill="none" stroke="rgba(0, 8, 157, 0.04)" strokeWidth="1" strokeDasharray="5 15">
               <animateTransform attributeName="transform" type="rotate" values="360; 0" dur="30s" repeatCount="indefinite" />
             </circle>
           </g>
 
           <g transform="translate(1200, 600)">
-            <circle r="120" fill="none" stroke="rgba(205,174,159,0.12)" strokeWidth="1" strokeDasharray="1 8">
+            <circle r="120" fill="none" stroke="rgba(0, 8, 157, 0.05)" strokeWidth="1" strokeDasharray="1 8">
               <animateTransform attributeName="transform" type="rotate" values="0; 360" dur="45s" repeatCount="indefinite" />
             </circle>
-            <rect x="-60" y="-60" width="120" height="120" fill="none" stroke="rgba(180,210,210,0.1)" strokeWidth="1">
+            <rect x="-60" y="-60" width="120" height="120" fill="none" stroke="rgba(0, 8, 157, 0.04)" strokeWidth="1">
               <animateTransform attributeName="transform" type="rotate" values="0; -360" dur="35s" repeatCount="indefinite" />
             </rect>
           </g>
 
           {/* Data Flow Lines */}
-          <line x1="0" y1="80%" x2="100%" y2="80%" stroke="rgba(205,174,159,0.2)" strokeWidth="1" strokeDasharray="50 300">
+          <line x1="0" y1="80%" x2="100%" y2="80%" stroke="rgba(0, 8, 157, 0.06)" strokeWidth="1" strokeDasharray="50 300">
             <animate attributeName="stroke-dashoffset" values="350; 0" dur="15s" repeatCount="indefinite" />
           </line>
           
-          <line x1="20%" y1="0" x2="20%" y2="100%" stroke="rgba(180,210,210,0.15)" strokeWidth="1" strokeDasharray="80 400">
+          <line x1="20%" y1="0" x2="20%" y2="100%" stroke="rgba(0, 8, 157, 0.05)" strokeWidth="1" strokeDasharray="80 400">
             <animate attributeName="stroke-dashoffset" values="0; 480" dur="20s" repeatCount="indefinite" />
           </line>
         </svg>
@@ -379,7 +265,7 @@ export default function TopCategory() {
         /* ── Section ── */
         .tp-section {
           width: 100%;
-          background: linear-gradient(180deg, #f7f4f2 0%, #f3f3f3 40%, #f3f3f3 100%);
+          background: linear-gradient(180deg, #f3f4f6 0%, #eceef1 42%, #f0f1f4 72%, #f6f7f9 100%);
           padding: 45px 0 55px;
           font-family: var(--font-inter), "Inter", sans-serif;
           position: relative;
@@ -431,7 +317,7 @@ export default function TopCategory() {
           width: 380px;
           max-width: 90%;
           height: 1px;
-          background: rgba(0, 0, 0, 0.08);
+          background: rgba(0, 8, 157, 0.12);
           margin: 10px auto 0;
         }
 
@@ -452,12 +338,12 @@ export default function TopCategory() {
         }
 
         .tp-tab:hover {
-          color: rgba(0, 0, 0, 0.7);
+          color: #00089d;
           transform: translateY(-2px);
         }
 
         .tp-tab--on {
-          color: #000;
+          color: #00089d;
         }
 
         /* Animated underline indicator */
@@ -467,7 +353,7 @@ export default function TopCategory() {
           right: 0;
           bottom: 0;
           height: 2px;
-          background: rgb(205, 174, 159);
+          background: #00089d;
           transform: scaleX(0);
           transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
           transform-origin: center;
@@ -524,11 +410,11 @@ export default function TopCategory() {
         }
 
         .tp-view-all-btn:hover {
-          background-color: #000;
+          background-color: #00089d;
           color: #fff;
-          border-color: #000;
+          border-color: #00089d;
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 8px 24px rgba(0, 8, 157, 0.28);
         }
 
         /* ── Grid ── */
@@ -550,9 +436,10 @@ export default function TopCategory() {
           border-radius: 16px;
           overflow: hidden;
           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      border-color 0.4s ease;
           animation: cardFadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
-          border: 1px solid rgba(0, 0, 0, 0.04);
+          border: 1px solid rgba(0, 8, 157, 0.08);
 
           /* Dimension Variables */
           --btn-size: 34px;
@@ -570,8 +457,9 @@ export default function TopCategory() {
 
         .tp-card:hover {
           transform: translateY(-10px);
-          box-shadow: 0 20px 50px rgba(205, 174, 159, 0.35),
-                      0 8px 16px rgba(205, 174, 159, 0.15);
+          border-color: rgba(0, 8, 157, 0.35);
+          box-shadow: 0 20px 50px rgba(0, 8, 157, 0.22),
+                      0 8px 16px rgba(0, 8, 157, 0.1);
         }
 
         /* ── Image wrapper ── */
@@ -652,13 +540,14 @@ export default function TopCategory() {
           backdrop-filter: blur(4px);
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.45s ease, visibility 0.45s ease;
+          transition: opacity 0.45s ease, visibility 0.45s ease, background 0.45s ease;
           z-index: 4;
         }
 
         .tp-card:hover .tp-card-hover-bg {
           opacity: 1;
           visibility: visible;
+          background: rgba(0, 8, 157, 0.06);
         }
 
         /* ── Center Eye / Heart Action buttons ── */
@@ -708,7 +597,7 @@ export default function TopCategory() {
         }
 
         .tp-action-btn:hover {
-          background: #000;
+          background: #00089d;
           color: #fff;
           transform: scale(1.05);
         }
@@ -755,7 +644,7 @@ export default function TopCategory() {
         }
 
         .tp-atc-btn:hover {
-          background: linear-gradient(135deg, rgb(205, 174, 159) 0%, rgb(185, 154, 139) 100%);
+          background: #00089d;
         }
 
         .tp-btn-disabled {
@@ -795,7 +684,7 @@ export default function TopCategory() {
           transform: translateX(-50%);
           width: 40px;
           height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(205, 174, 159, 0.5), transparent);
+          background: linear-gradient(90deg, transparent, rgba(0, 8, 157, 0.35), transparent);
           border-radius: 1px;
         }
 
@@ -812,9 +701,9 @@ export default function TopCategory() {
           transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
-        /* Hover: name turns peach */
+        /* Hover: name turns theme blue */
         .tp-card:hover .tp-card-name {
-          color: rgb(205, 174, 159);
+          color: #00089d;
           letter-spacing: 0.25em;
         }
 

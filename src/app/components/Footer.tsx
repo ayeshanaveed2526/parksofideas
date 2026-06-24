@@ -1,9 +1,56 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLegalModal } from "./legal/LegalModalProvider";
+
+const TESTIMONIALS = [
+  {
+    rating: 4.8,
+    text: "Amazing quality! Love my new products!",
+    author: "Sarah K.",
+  },
+  {
+    rating: 5,
+    text: "The skincare line transformed my routine. Highly recommend!",
+    author: "Emily R.",
+  },
+  {
+    rating: 4.9,
+    text: "Elegant packaging and fast shipping. Will order again.",
+    author: "Mia L.",
+  },
+  {
+    rating: 5,
+    text: "Best beauty finds I've discovered this year. Absolutely worth it.",
+    author: "Olivia T.",
+  },
+  {
+    rating: 4.7,
+    text: "Gentle formulas that actually work. My skin feels incredible.",
+    author: "Hannah P.",
+  },
+];
+
+const AUTO_PLAY_MS = 2000;
 
 export default function Footer() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const { openLegalModal } = useLegalModal();
+
+  const goNext = useCallback(() => {
+    setActiveIdx((prev) => (prev + 1) % TESTIMONIALS.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(goNext, AUTO_PLAY_MS);
+    return () => clearInterval(timer);
+  }, [goNext]);
+
+  const current = TESTIMONIALS[activeIdx];
+
   return (
+    <>
     <footer className="footer-wrapper">
 
       <div className="footer-content">
@@ -12,7 +59,7 @@ export default function Footer() {
           <div className="footer-col footer-left">
             <div className="footer-logo">
               <svg width="205" height="18" xmlns="http://www.w3.org/2000/svg">
-                <g fill="#000" fillRule="evenodd">
+                <g fill="#ffffff" fillRule="evenodd">
                   <path d="M62.01 0c-2.26 0-4.215.872-5.603 2.447-1.388 1.573-2.204 3.84-2.204 6.624 0 2.783.816 5.05 2.204 6.624 1.388 1.574 3.343 2.446 5.604 2.446 3.556 0 6.465-2.144 7.123-5.777l.02-.108h-2.302l-.016.073c-.5 2.372-2.538 3.648-4.825 3.648-1.563 0-2.953-.604-3.955-1.765-1.002-1.161-1.62-2.888-1.62-5.141 0-2.254.618-3.98 1.62-5.142 1.002-1.16 2.392-1.765 3.955-1.765 2.287 0 4.324 1.276 4.825 3.648l.016.073h2.301l-.02-.108C68.478 2.144 65.568 0 62.012 0zM2.3.239H0v17.663h10.426V15.84H2.3zM27.596.239h-2.3v11.665c0 1.816.679 3.395 1.883 4.518 1.204 1.124 2.926 1.787 5.002 1.787 2.077 0 3.799-.663 5.003-1.787 1.204-1.123 1.883-2.702 1.883-4.518V.24h-2.301v11.494c0 1.259-.432 2.335-1.216 3.096-.784.762-1.93 1.216-3.369 1.216-1.44 0-2.584-.454-3.369-1.216-.784-.761-1.216-1.837-1.216-3.096V.24zM117.531.239h-2.301v17.663h2.301z" fillRule="nonzero" />
                   <path d="M140.624.239h-2.313l-6.486 17.663h2.416l1.758-4.95h6.937l1.758 4.95h2.416L140.624.24zM136.73 10.89l2.734-7.702h.007l2.734 7.702h-5.475z" />
                   <path fillRule="nonzero" d="M163.573.239h-2.188v17.663h2.301V4.18h.03l9.525 13.723h2.188V.24h-2.266v13.758h-.031z" />
@@ -27,22 +74,22 @@ export default function Footer() {
 
             <h4 className="footer-heading">Follow Us</h4>
             <div className="footer-socials">
-              <a href="#" className="social-icon" aria-label="Facebook">
+              <a href="#" className="social-icon social-icon--facebook" aria-label="Facebook">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
                 </svg>
               </a>
-              <a href="#" className="social-icon" aria-label="Instagram">
+              <a href="#" className="social-icon social-icon--instagram" aria-label="Instagram">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
                 </svg>
               </a>
-              <a href="#" className="social-icon" aria-label="X">
+              <a href="#" className="social-icon social-icon--x" aria-label="X">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
-              <a href="#" className="social-icon" aria-label="YouTube">
+              <a href="#" className="social-icon social-icon--youtube" aria-label="YouTube">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.498 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.377.55 9.377.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                 </svg>
@@ -127,11 +174,35 @@ export default function Footer() {
             </ul>
 
             <div className="footer-rating">
-              <div className="stars">
-                ⭐⭐⭐⭐⭐ <span style={{ color: '#000' }}>4.8/5</span>
+              <div className="rating-slider">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIdx}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className="rating-slide"
+                  >
+                    <div className="stars">
+                      ⭐⭐⭐⭐⭐ <span>{current.rating}/5</span>
+                    </div>
+                    <p className="rating-text">&ldquo;{current.text}&rdquo;</p>
+                    <p className="rating-author">- {current.author}</p>
+                  </motion.div>
+                </AnimatePresence>
               </div>
-              <p className="rating-text">&ldquo;Amazing quality! Love my new products!&rdquo;</p>
-              <p className="rating-author">- Sarah K.</p>
+              <div className="rating-dots">
+                {TESTIMONIALS.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    aria-label={`Show review ${idx + 1}`}
+                    className={`rating-dot${activeIdx === idx ? " rating-dot--active" : ""}`}
+                    onClick={() => setActiveIdx(idx)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -141,9 +212,15 @@ export default function Footer() {
           <div className="footer-copy">
             <span>© 2024 LUCHIANA Theme. All rights reserved.</span>
             <div className="footer-legal">
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-              <a href="#">Cookies</a>
+              <button type="button" className="footer-legal-btn" onClick={() => openLegalModal("privacy")}>
+                Privacy
+              </button>
+              <button type="button" className="footer-legal-btn" onClick={() => openLegalModal("terms")}>
+                Terms
+              </button>
+              <button type="button" className="footer-legal-btn" onClick={() => openLegalModal("cookies")}>
+                Cookies
+              </button>
             </div>
           </div>
           <div className="footer-payment">
@@ -167,15 +244,16 @@ export default function Footer() {
           </div>
         </div>
       </div>
+    </footer>
 
       <style jsx>{`
         .footer-wrapper {
           position: relative;
           width: 100%;
-          background-color: #ffffff;
-          color: #666666;
+          background-color: #000000;
+          color: #a3a3a3;
           font-family: var(--font-inter), "Inter", sans-serif;
-          border-top: 1px solid rgba(0,0,0,0.05);
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
           overflow: hidden;
         }
         .footer-content {
@@ -202,12 +280,12 @@ export default function Footer() {
           font-size: 13px;
           line-height: 1.6;
           margin-bottom: 30px;
-          color: #888888;
+          color: #9ca3af;
         }
         .footer-heading {
           font-size: 16px;
           font-weight: 600;
-          color: #000000;
+          color: #ffffff;
           margin-bottom: 15px;
           margin-top: 0;
         }
@@ -223,21 +301,38 @@ export default function Footer() {
           width: 38px;
           height: 38px;
           border-radius: 50%;
-          background-color: #dfbeb1;
+          background-color: #00089d;
           color: #ffffff;
           text-decoration: none;
           transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                      background-color 0.3s ease,
-                      box-shadow 0.3s ease;
+                      background 0.35s ease,
+                      background-color 0.35s ease,
+                      color 0.35s ease,
+                      box-shadow 0.35s ease;
         }
         .social-icon:hover {
-          background-color: #d1b8a9;
           transform: translateY(-4px) scale(1.1);
-          box-shadow: 0 8px 20px rgba(223, 190, 177, 0.45);
+          color: #ffffff;
+        }
+        .social-icon--facebook:hover {
+          background-color: #1877f2;
+          box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4);
+        }
+        .social-icon--instagram:hover {
+          background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+          box-shadow: 0 8px 20px rgba(220, 39, 67, 0.35);
+        }
+        .social-icon--x:hover {
+          background-color: #000000;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        }
+        .social-icon--youtube:hover {
+          background-color: #ff0000;
+          box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
         }
         .footer-newsletter-text {
           font-size: 13px;
-          color: #888888;
+          color: #9ca3af;
           margin-bottom: 15px;
         }
         .footer-newsletter-form {
@@ -245,7 +340,7 @@ export default function Footer() {
           height: 44px;
           border-radius: 22px;
           overflow: hidden;
-          border: 1px solid #e0e0e0;
+          border: 1px solid rgba(255, 255, 255, 0.15);
         }
         .footer-newsletter-form input {
           flex: 1;
@@ -253,9 +348,14 @@ export default function Footer() {
           padding: 0 15px;
           font-size: 13px;
           outline: none;
+          background-color: #111111;
+          color: #ffffff;
+        }
+        .footer-newsletter-form input::placeholder {
+          color: #6b7280;
         }
         .footer-newsletter-form button {
-          background-color: #dfbeb1;
+          background-color: #00089d;
           color: #ffffff;
           border: none;
           padding: 0 20px;
@@ -268,9 +368,9 @@ export default function Footer() {
                       box-shadow 0.3s ease;
         }
         .footer-newsletter-form button:hover {
-          background-color: #d1b8a9;
+          background-color: #000672;
           transform: scale(1.05);
-          box-shadow: 0 4px 16px rgba(223, 190, 177, 0.4);
+          box-shadow: 0 4px 16px rgba(0, 8, 157, 0.35);
         }
         .footer-links {
           list-style: none;
@@ -287,13 +387,17 @@ export default function Footer() {
         }
         .footer-links a {
           text-decoration: none;
-          color: #666666;
+          color: #ffffff;
           font-size: 13px;
-          transition: color 0.3s ease, transform 0.3s ease, padding-left 0.3s ease;
+          transition: all 0.3s ease;
           display: inline-block;
+          padding: 6px 10px;
+          border-radius: 4px;
+          margin-left: -10px;
         }
         .footer-links a:hover {
-          color: #dfbeb1;
+          background-color: #00089d;
+          color: #ffffff;
           transform: translateX(4px);
         }
         .badge {
@@ -303,12 +407,12 @@ export default function Footer() {
           font-weight: 600;
         }
         .badge-hot {
-          color: #dfbeb1;
-          background-color: rgba(223, 190, 177, 0.15);
+          color: #7b9fff;
+          background-color: rgba(0, 8, 157, 0.35);
         }
         .badge-sale {
-          color: #d1b8a9;
-          background-color: rgba(209, 184, 169, 0.15);
+          color: #a8bfff;
+          background-color: rgba(0, 8, 157, 0.25);
         }
         .mt-6 {
           margin-top: 35px;
@@ -321,17 +425,17 @@ export default function Footer() {
         .category-pill {
           text-decoration: none;
           font-size: 12px;
-          color: #dfbeb1;
-          background-color: rgba(223, 190, 177, 0.15);
+          color: #ffffff;
+          background-color: rgba(0, 8, 157, 0.25);
           padding: 6px 14px;
           border-radius: 15px;
           transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .category-pill:hover {
-          background-color: #dfbeb1;
+          background-color: #00089d;
           color: #ffffff;
           transform: translateY(-3px) scale(1.05);
-          box-shadow: 0 6px 16px rgba(223, 190, 177, 0.35);
+          box-shadow: 0 6px 16px rgba(0, 8, 157, 0.28);
         }
         .footer-contact-list {
           list-style: none;
@@ -347,8 +451,8 @@ export default function Footer() {
           align-items: flex-start;
         }
         .contact-icon {
-          color: #dfbeb1;
-          background-color: rgba(223, 190, 177, 0.15);
+          color: #7b9fff;
+          background-color: rgba(0, 8, 157, 0.25);
           width: 36px;
           height: 36px;
           border-radius: 50%;
@@ -361,30 +465,39 @@ export default function Footer() {
           display: flex;
           flex-direction: column;
           font-size: 13px;
-          color: #666666;
+          color: #a3a3a3;
           line-height: 1.4;
         }
         .contact-info strong {
-          color: #000000;
+          color: #ffffff;
           font-weight: 600;
           margin-bottom: 4px;
         }
         .contact-sub {
           font-size: 11px;
-          color: #999999;
+          color: #6b7280;
           margin-top: 2px;
         }
         .footer-rating {
           font-size: 13px;
-          color: #666666;
-          background-color: #fafafa;
+          color: #a3a3a3;
+          background-color: #111111;
+          border: 1px solid rgba(255, 255, 255, 0.08);
           padding: 15px;
           border-radius: 8px;
           transition: transform 0.4s ease, box-shadow 0.4s ease;
+          overflow: hidden;
         }
         .footer-rating:hover {
           transform: translateY(-4px);
-          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 12px 28px rgba(0, 8, 157, 0.25);
+        }
+        .rating-slider {
+          position: relative;
+          min-height: 88px;
+        }
+        .rating-slide {
+          width: 100%;
         }
         .stars {
           color: #f5b041;
@@ -392,24 +505,53 @@ export default function Footer() {
           margin-bottom: 8px;
           font-size: 14px;
         }
+        .stars span {
+          color: #ffffff;
+        }
         .rating-text {
           font-style: italic;
           margin: 0 0 8px 0;
-          color: #888888;
+          color: #9ca3af;
+          line-height: 1.5;
         }
         .rating-author {
           font-size: 12px;
-          color: #999999;
+          color: #6b7280;
           margin: 0;
         }
+        .rating-dots {
+          display: flex;
+          justify-content: center;
+          gap: 6px;
+          margin-top: 12px;
+        }
+        .rating-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          background: #4b5563;
+          transition: all 0.35s ease;
+        }
+        .rating-dot--active {
+          width: 18px;
+          border-radius: 3px;
+          background: #00089d;
+        }
+        .rating-dot:hover {
+          background: #00089d;
+          opacity: 0.7;
+        }
         .footer-bottom {
-          border-top: 1px solid rgba(0,0,0,0.05);
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
           padding-top: 24px;
           display: flex;
           justify-content: space-between;
           align-items: center;
           font-size: 12px;
-          color: #888888;
+          color: #9ca3af;
           flex-wrap: wrap;
           gap: 20px;
         }
@@ -421,14 +563,27 @@ export default function Footer() {
         .footer-legal {
           display: flex;
           gap: 20px;
+          position: relative;
+          z-index: 2;
         }
-        .footer-legal a {
-          color: #888888;
+        .footer-legal-btn {
+          color: #ffffff;
           text-decoration: none;
-          transition: color 0.3s;
+          transition: all 0.3s;
+          background: none;
+          border: none;
+          padding: 4px 8px;
+          border-radius: 4px;
+          margin-left: -8px;
+          font: inherit;
+          font-size: inherit;
+          cursor: pointer;
+          position: relative;
+          z-index: 2;
         }
-        .footer-legal a:hover {
-          color: #dfbeb1;
+        .footer-legal-btn:hover {
+          color: #ffffff;
+          background-color: #00089d;
         }
         .footer-payment {
           display: flex;
@@ -440,12 +595,12 @@ export default function Footer() {
           gap: 10px;
         }
         .payment-badge {
-          background-color: #ffffff;
-          border: 1px solid #e0e0e0;
+          background-color: #111111;
+          border: 1px solid rgba(255, 255, 255, 0.12);
           padding: 6px 10px;
           border-radius: 4px;
           font-size: 11px;
-          color: #666666;
+          color: #a3a3a3;
           display: flex;
           align-items: center;
           gap: 6px;
@@ -453,8 +608,8 @@ export default function Footer() {
         }
         .payment-badge:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-          border-color: #dfbeb1;
+          box-shadow: 0 4px 12px rgba(0, 8, 157, 0.3);
+          border-color: #00089d;
         }
 
         @media (max-width: 992px) {
@@ -477,7 +632,7 @@ export default function Footer() {
           }
         }
       `}</style>
-    </footer>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono, Inter, Marcellus } from "next/font/google";
+import { LegalModalProvider } from "./components/legal/LegalModalProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -49,7 +50,7 @@ export default function RootLayout({
             strategy="beforeInteractive"
           />
         )}
-        {children}
+        <LegalModalProvider>{children}</LegalModalProvider>
       </body>
     </html>
   );

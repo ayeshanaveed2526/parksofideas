@@ -1,0 +1,87 @@
+export interface PerfumeProduct {
+  id: number;
+  slug: string;
+  brand: string;
+  description: string;
+  notes: string;
+  price: number;
+  image: string;
+}
+
+export const PERFUME_CATALOG: PerfumeProduct[] = [
+  { id: 1, slug: "lucent", brand: "LUCENT", description: "A luminous aquatic floral with crisp bergamot and soft iris.", notes: "Bergamot, iris, white musk, sea breeze accord.", price: 125, image: "/perfumes/lucent.png" },
+  { id: 2, slug: "mystique", brand: "MYSTIQUE", description: "An opulent ruby-red blend of dark rose and golden amber.", notes: "Damask rose, amber resin, saffron, velvet musk.", price: 195, image: "/perfumes/mystique.png" },
+  { id: 3, slug: "orlune", brand: "ORLUNE", description: "A smoky noir fragrance with depth and midnight elegance.", notes: "Smoked oud, black tea, patchouli, dark vanilla.", price: 210, image: "/perfumes/orlune.png" },
+  { id: 4, slug: "aura-gold", brand: "AURA", description: "Radiant champagne gold with warm floral luminosity.", notes: "Champagne accord, jasmine, golden amber, soft woods.", price: 165, image: "/perfumes/aura-gold.png" },
+  { id: 5, slug: "aura-crystal", brand: "AURA CRYSTAL", description: "Crystalline waves of citrus and luminous white florals.", notes: "Mandarin, neroli, white tea, crystal musk.", price: 155, image: "/perfumes/aura-crystal.png" },
+  { id: 6, slug: "solene", brand: "SOLÈNE", description: "Sunlit golden warmth with refined floral sophistication.", notes: "Solar neroli, honeysuckle, sandalwood, vanilla.", price: 148, image: "/perfumes/solene.png" },
+  { id: 7, slug: "lumiere", brand: "LUMIÈRE", description: "A delicate rose-gold bouquet tied with satin ribbon.", notes: "Pink peony, rose petals, pear blossom, musk.", price: 138, image: "/perfumes/lumiere.png" },
+  { id: 8, slug: "velora", brand: "VELORA", description: "Verdant emerald freshness with botanical grace.", notes: "Green fig, violet leaf, cedar, creamy sandalwood.", price: 142, image: "/perfumes/velora.png" },
+  { id: 9, slug: "noire", brand: "NOIRÉ", description: "Soft lavender dusk wrapped in silver moonlight.", notes: "French lavender, violet, iris, white amber.", price: 132, image: "/perfumes/noire.png" },
+  { id: 10, slug: "serane", brand: "SÉRANE", description: "Faceted amber brilliance with regal golden warmth.", notes: "Amber, benzoin, tonka bean, golden woods.", price: 178, image: "/perfumes/serane.png" },
+  { id: 11, slug: "azure", brand: "AZURE", description: "Cool sky-blue freshness with clean coastal air.", notes: "Marine accord, citrus zest, water lily, musk.", price: 128, image: "/perfumes/azure.png" },
+  { id: 12, slug: "elysia", brand: "ELYSIA", description: "Sculptural gold petals over champagne warmth.", notes: "Champagne, white rose, golden musk, soft leather.", price: 188, image: "/perfumes/elysia.png" },
+  { id: 13, slug: "roselle", brand: "ROSELLE", description: "A jeweled crimson rose crowned in gold filigree.", notes: "Turkish rose, raspberry, oud, honeyed amber.", price: 205, image: "/perfumes/roselle.png" },
+  { id: 14, slug: "celeste", brand: "CELESTE", description: "Celestial white florals with a starlit gold aura.", notes: "Star jasmine, white orchid, cashmere, vanilla.", price: 158, image: "/perfumes/celeste.png" },
+  { id: 15, slug: "opaline", brand: "OPALINE", description: "Sculpted amber opal with warm honeyed radiance.", notes: "Honey, apricot nectar, benzoin, opulent woods.", price: 172, image: "/perfumes/opaline.png" },
+  { id: 16, slug: "vespera", brand: "VESPERA", description: "Evening darkness veiled in silver and gold.", notes: "Blackcurrant, night-blooming jasmine, incense, suede.", price: 198, image: "/perfumes/vespera.png" },
+  { id: 17, slug: "mirabelle", brand: "MIRABELLE", description: "Romantic blush petals with rose-gold charm.", notes: "Mirabelle plum, peony, blush rose, soft musk.", price: 145, image: "/perfumes/mirabelle.png" },
+  { id: 18, slug: "armonia", brand: "ARMONIA", description: "Harmonious amber facets in jewel-cut perfection.", notes: "Amber, cedarwood, saffron, warm resin.", price: 182, image: "/perfumes/armonia.png" },
+  { id: 19, slug: "zephyra", brand: "ZEPHYRA", description: "A gentle lavender breeze with silver grace.", notes: "Lavender, lilac, violet, clean musk.", price: 135, image: "/perfumes/zephyra.png" },
+  { id: 20, slug: "ambrette", brand: "AMBRETTE", description: "Frosted musk serenity with matte gold poise.", notes: "Ambrette seed, iris butter, white cedar, musk.", price: 162, image: "/perfumes/ambrette.png" },
+  { id: 21, slug: "verdelle", brand: "VERDELLE", description: "Deep forest green with brushed gold refinement.", notes: "Vetiver, galbanum, moss, dark woods.", price: 168, image: "/perfumes/verdelle.png" },
+  { id: 22, slug: "aurielle", brand: "AURIELLE", description: "Golden shell curves over sunlit floral nectar.", notes: "Ylang-ylang, tiare flower, coconut milk, amber.", price: 175, image: "/perfumes/aurielle.png" },
+  { id: 23, slug: "elaria", brand: "ÉLARIA", description: "Amber facets crowned with a crystal jewel cap.", notes: "Amber, orange blossom, labdanum, golden woods.", price: 190, image: "/perfumes/elaria.png" },
+  { id: 24, slug: "noctelle", brand: "NOCTELLE", description: "Midnight sapphire depth with velvet allure.", notes: "Blue iris, plum, suede, dark musk.", price: 185, image: "/perfumes/noctelle.png" },
+  { id: 25, slug: "laventia", brand: "LAVENTIA", description: "Golden fluted elegance with sun-warmed radiance.", notes: "Bergamot, magnolia, golden amber, soft vanilla.", price: 152, image: "/perfumes/laventia.png" },
+  { id: 26, slug: "valere", brand: "VALÉRE", description: "Refined golden flutes with timeless luxury.", notes: "Neroli, saffron, ambergris, sandalwood.", price: 160, image: "/perfumes/valere.png" },
+  { id: 27, slug: "seraphine", brand: "SERAPHINE", description: "Pearlescent shield of angelic white-gold florals.", notes: "White lily, angelica, musk, pale woods.", price: 170, image: "/perfumes/seraphine.png" },
+  { id: 28, slug: "azelia", brand: "AZÉLIA", description: "Faceted gold gemstone over warm amber glow.", notes: "Osmanthus, amber, vanilla orchid, resin.", price: 180, image: "/perfumes/azelia.png" },
+  { id: 29, slug: "montrea", brand: "MONTRÉA", description: "Crowned gold regality with amber sophistication.", notes: "Royal oud, rose, leather, spiced amber.", price: 215, image: "/perfumes/montrea.png" },
+  { id: 30, slug: "celeva", brand: "CÉLEVA", description: "Elevated golden florals in fluted crystal glass.", notes: "Freesia, golden pear, musk, soft woods.", price: 149, image: "/perfumes/celeva.png" },
+  { id: 31, slug: "floren", brand: "FLORÉN", description: "Blooming golden petals with Parisian elegance.", notes: "Rose centifolia, peony, honey, white musk.", price: 156, image: "/perfumes/floren.png" },
+];
+
+export function getPerfumeById(id: number | string): PerfumeProduct | undefined {
+  const numericId = typeof id === "string" ? parseInt(id, 10) : id;
+  return PERFUME_CATALOG.find((p) => p.id === numericId);
+}
+
+export function formatPerfumePrice(price: number): string {
+  return `$${price.toFixed(2)}`;
+}
+
+export interface CatalogCardProduct {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+  badges: { text: string; color: string }[];
+  outOfStock?: boolean;
+  isExternal?: boolean;
+}
+
+export function toCatalogCard(perfume: PerfumeProduct): CatalogCardProduct {
+  const badges: { text: string; color: string }[] = [];
+
+  if (perfume.id <= 6) {
+    badges.push({ text: "NEW", color: "#00089d" });
+  }
+  if (perfume.id % 4 === 0) {
+    badges.push({ text: "FEATURED", color: "#00089d" });
+  }
+  if (perfume.id === 5) {
+    badges.push({ text: "-10%", color: "#000000" });
+  }
+
+  return {
+    id: perfume.id,
+    name: perfume.brand,
+    description: perfume.description,
+    price: formatPerfumePrice(perfume.price),
+    image: perfume.image,
+    badges,
+    outOfStock: perfume.id === 10,
+  };
+}

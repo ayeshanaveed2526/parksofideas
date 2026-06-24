@@ -27,7 +27,7 @@ export default function VideoSection() {
       <div
         className="relative w-full h-full bg-[#fae8e2] bg-cover bg-center transition-all duration-700"
         style={{
-          backgroundImage: "url('/images/video_bg.webp')",
+          backgroundImage: "linear-gradient(135deg, #eef1f8 0%, #f5f7fc 50%, #e8ecf6 100%)",
         }}
       >
         {/* HTML5 Video element */}
