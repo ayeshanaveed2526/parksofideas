@@ -57,7 +57,7 @@ const RelatedProducts: React.FC = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: idx * 0.1 }}
-          className="group cursor-pointer flex flex-col"
+          className="group cursor-pointer flex flex-col hover-card-3d rounded-xl overflow-hidden"
         >
           {/* Image container */}
           <div className="relative overflow-hidden bg-[#f7f7f7] aspect-square mb-4">
@@ -75,7 +75,7 @@ const RelatedProducts: React.FC = () => (
 
             {/* Slide-up cart button */}
             <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
-              <button className="w-full bg-black text-white py-3.5 text-[10px] font-bold tracking-[0.25em] hover:bg-gray-800 transition-colors">
+              <button className="w-full bg-black text-white py-3.5 text-[10px] font-bold tracking-[0.25em] hover-btn-shine hover:bg-gray-800 transition-colors">
                 ADD TO CART
               </button>
             </div>
@@ -83,7 +83,7 @@ const RelatedProducts: React.FC = () => (
 
           {/* Info */}
           <div className="flex flex-col items-center text-center px-2">
-            <h3 className="font-serif text-sm tracking-[0.15em] uppercase mb-1.5 text-gray-900">{product.name}</h3>
+            <h3 className="font-serif text-sm tracking-[0.15em] uppercase mb-1.5 text-gray-900 group-hover:text-[#cdae9f] group-hover:tracking-[0.22em] transition-all duration-300">{product.name}</h3>
             <p className="text-gray-400 text-xs mb-3 line-clamp-2 leading-relaxed">{product.desc}</p>
             <span className="text-sm font-semibold text-gray-900">${product.price.toFixed(2)}</span>
           </div>

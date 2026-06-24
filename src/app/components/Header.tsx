@@ -8,7 +8,7 @@ import MainNavbar from "./MainNavbar";
  */
 export default function Header() {
     return (
-        <header className="sticky top-[-46px] z-[100] w-full">
+        <header className="sticky top-[-46px] z-100 w-full">
             <TopBar />
             <MainNavbar />
         </header>

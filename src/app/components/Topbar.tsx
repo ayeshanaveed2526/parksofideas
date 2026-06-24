@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import {
   FaFacebookF,
-  FaYoutube,
-  FaChevronDown
+  FaYoutube
 } from "react-icons/fa";
 import { RiInstagramFill, RiWhatsappFill } from "react-icons/ri";
 import { BsTelephone, BsEnvelope, BsGeoAlt, BsClock } from "react-icons/bs";
@@ -16,19 +14,14 @@ import { BsTelephone, BsEnvelope, BsGeoAlt, BsClock } from "react-icons/bs";
  *  - Size: 1521px x 46px
  */
 export default function TopBar() {
-  const [lang, setLang] = useState("English");
-  const [open, setOpen] = useState(false);
-
-  const languages = ["English", "German"];
-
   return (
     <div
       className="w-full"
       style={{
         height: "46px",
         boxSizing: "border-box",
-        backgroundColor: "#E4C1B1",
-        borderBottom: "1px solid rgb(205, 174, 159)",
+        backgroundColor: "#000000",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >
       <div className="mx-auto flex h-full w-full items-center justify-between px-[15px] md:px-[50px] text-[13px]">
@@ -37,28 +30,28 @@ export default function TopBar() {
           <a
             href="#"
             aria-label="Facebook"
-            className="text-white transition-colors hover:text-black"
+            className="text-white hover-icon-pop hover-scale-sm"
           >
             <FaFacebookF size={15} />
           </a>
           <a
             href="#"
             aria-label="Instagram"
-            className="text-white transition-colors hover:text-black"
+            className="text-white hover-icon-pop hover-scale-sm"
           >
             <RiInstagramFill size={16} />
           </a>
           <a
             href="#"
             aria-label="WhatsApp"
-            className="text-white transition-colors hover:text-black"
+            className="text-white hover-icon-pop hover-scale-sm"
           >
             <RiWhatsappFill size={16} />
           </a>
           <a
             href="#"
             aria-label="YouTube"
-            className="text-white transition-colors hover:text-black"
+            className="text-white hover-icon-pop hover-scale-sm"
           >
             <FaYoutube size={16} />
           </a>
@@ -75,72 +68,43 @@ export default function TopBar() {
             lineHeight: "15px",
             letterSpacing: "0.05em",
             fontFamily: "Inter, sans-serif",
-            color: "#574943"
+            color: "#ffffff"
           }}
         >
           <a
             href="tel:+1234567890"
-            className="flex items-center gap-2 transition-opacity hover:opacity-70"
+            className="flex items-center gap-2 hover-link-slide hover-lift-sm text-white"
           >
-            <BsTelephone size={11} color="black" />
+            <BsTelephone size={11} color="white" />
             <span>+123 456 7890</span>
           </a>
 
           <a
             href="mailto:info@luchiana.com"
-            className="flex items-center gap-2 transition-opacity hover:opacity-70"
+            className="flex items-center gap-2 hover-link-slide hover-lift-sm text-white"
           >
-            <BsEnvelope size={11} color="black" />
+            <BsEnvelope size={11} color="white" />
             <span>info@luchiana.com</span>
           </a>
 
           <a
             href="#"
-            className="flex items-center gap-2 transition-opacity hover:opacity-70"
+            className="flex items-center gap-2 hover-link-slide hover-lift-sm text-white"
           >
-            <BsGeoAlt size={11} color="black" />
+            <BsGeoAlt size={11} color="white" />
             <span>25 West 21th Street, Miami FL, USA</span>
           </a>
 
           <a
             href="#"
-            className="flex items-center gap-2 transition-opacity hover:opacity-70"
+            className="flex items-center gap-2 hover-link-slide hover-lift-sm text-white"
           >
-            <BsClock size={11} color="black" />
+            <BsClock size={11} color="white" />
             <span>Mon-Fri: 10:00 - 18:00</span>
           </a>
-
-          {/* Language dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setOpen((v) => !v)}
-              className="group flex items-center gap-[5px] transition-opacity hover:opacity-70 text-[#574943]"
-            >
-              <span className="font-medium">{lang}</span>
-              <FaChevronDown size={7} color="black" className="mt-[2px]" />
-            </button>
-
-            {open && (
-              <ul className="absolute right-0 top-[26px] z-50 min-w-[110px] rounded-sm bg-[#e4c1b1] py-2 text-[#574943] shadow-lg border border-[#d6b2a1]">
-                {languages.map((l) => (
-                  <li key={l}>
-                    <button
-                      onClick={() => {
-                        setLang(l);
-                        setOpen(false);
-                      }}
-                      className="block w-full px-4 py-1.5 text-left hover:bg-[#d6b2a1] transition-colors"
-                    >
-                      {l}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
         </div>
 
-        {/* Mobile-only: phone + language dropdown */}
+        {/* Mobile-only: phone */}
         <div
           className="flex lg:hidden items-center gap-3 sm:gap-4"
           style={{
@@ -150,45 +114,16 @@ export default function TopBar() {
             lineHeight: "15px",
             letterSpacing: "0.05em",
             fontFamily: "Inter, sans-serif",
-            color: "#574943"
+            color: "#ffffff"
           }}
         >
           <a
             href="tel:+1234567890"
-            className="flex items-center gap-1.5 transition-opacity hover:opacity-70"
+            className="flex items-center gap-1.5 transition-opacity hover:opacity-70 text-white"
           >
-            <BsTelephone size={11} color="black" />
+            <BsTelephone size={11} color="white" />
             <span className="hidden sm:inline">+123 456 7890</span>
           </a>
-
-          {/* Language dropdown (mobile) */}
-          <div className="relative">
-            <button
-              onClick={() => setOpen((v) => !v)}
-              className="group flex items-center gap-[5px] transition-opacity hover:opacity-70 text-white"
-            >
-              <span className="font-medium">{lang}</span>
-              <FaChevronDown size={7} color="white" className="mt-[2px]" />
-            </button>
-
-            {open && (
-              <ul className="absolute right-0 top-[26px] z-50 min-w-[110px] rounded-sm bg-[#e4c1b1] py-2 text-[#574943] shadow-lg border border-[#d6b2a1]">
-                {languages.map((l) => (
-                  <li key={l}>
-                    <button
-                      onClick={() => {
-                        setLang(l);
-                        setOpen(false);
-                      }}
-                      className="block w-full px-4 py-1.5 text-left hover:bg-[#d6b2a1] transition-colors"
-                    >
-                      {l}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
         </div>
       </div>
     </div>

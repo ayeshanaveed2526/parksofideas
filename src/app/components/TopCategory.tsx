@@ -448,11 +448,12 @@ export default function TopCategory() {
           padding: 6px 0 10px;
           cursor: pointer;
           position: relative;
-          transition: color 0.3s ease;
+          transition: color 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .tp-tab:hover {
           color: rgba(0, 0, 0, 0.7);
+          transform: translateY(-2px);
         }
 
         .tp-tab--on {

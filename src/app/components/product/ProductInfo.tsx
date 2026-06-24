@@ -21,114 +21,140 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.2 } }
+    visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } }
+    hidden: { opacity: 0, y: 14 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' } },
   };
 
   return (
-    <div className="flex flex-col h-full justify-center md:pl-10">
-      <motion.div variants={containerVariants} initial="hidden" animate="visible">
-
-        {/* Category pill */}
-        <motion.div variants={itemVariants} className="mb-4">
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[#8cbcc9] uppercase border border-[#8cbcc9]/40 px-3 py-1">
-            {product.category}
-          </span>
-        </motion.div>
-
-        {/* Product name */}
-        <motion.h1 variants={itemVariants} className="text-3xl md:text-4xl font-serif tracking-widest text-gray-900 mb-3 uppercase leading-tight">
+    <div className="flex h-full w-full flex-col justify-center">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto w-full max-w-md lg:max-w-none lg:mx-0 text-left"
+      >
+        <motion.h1
+          variants={itemVariants}
+          className="mb-3 text-2xl font-serif uppercase leading-tight tracking-widest text-[#1a1a1a] sm:text-3xl lg:text-[2rem]"
+          style={{ fontFamily: 'var(--font-marcellus), Marcellus, serif' }}
+        >
           {product.name}
         </motion.h1>
 
-        {/* Stars + review count */}
         {product.reviews.length > 0 && (
-          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-4">
+          <motion.div variants={itemVariants} className="mb-5 flex items-center gap-2">
             <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
-                <svg key={i} className={`w-3.5 h-3.5 ${i < Math.round(rating) ? 'fill-amber-400 text-amber-400' : 'fill-gray-200 text-gray-200'}`} viewBox="0 0 20 20">
+                <svg
+                  key={i}
+                  className={`h-3.5 w-3.5 ${i < Math.round(rating) ? 'fill-amber-400 text-amber-400' : 'fill-gray-200 text-gray-200'}`}
+                  viewBox="0 0 20 20"
+                >
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               ))}
             </div>
-            <span className="text-xs text-gray-400 tracking-wide">({product.reviews.length} {product.reviews.length === 1 ? 'review' : 'reviews'})</span>
+            <span className="text-xs tracking-wide text-gray-400">
+              ({product.reviews.length} {product.reviews.length === 1 ? 'review' : 'reviews'})
+            </span>
           </motion.div>
         )}
 
-        {/* Short description */}
-        <motion.p variants={itemVariants} className="text-gray-500 mb-5 text-sm leading-relaxed">
+        <motion.p variants={itemVariants} className="mb-6 text-sm leading-relaxed text-gray-500">
           {product.shortDescription}
         </motion.p>
 
-        {/* Price + in stock */}
-        <motion.div variants={itemVariants} className="flex items-baseline gap-4 mb-8">
-          <span className="text-2xl font-semibold text-gray-900">${product.price.toFixed(2)}</span>
-          <span className="text-xs font-semibold tracking-wider text-emerald-600 flex items-center gap-1">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" />
+        <motion.div variants={itemVariants} className="mb-8 flex items-baseline gap-4">
+          <span className="text-2xl font-semibold text-[#1a1a1a]">${product.price.toFixed(2)}</span>
+          <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-emerald-600">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
             IN STOCK
           </span>
         </motion.div>
 
-        {/* Divider */}
-        <motion.div variants={itemVariants} className="w-full h-px bg-gray-100 mb-8" />
+        <motion.div variants={itemVariants} className="mb-8 h-px w-full bg-[#dfe3eb]" />
 
-        {/* Add to Cart */}
-        <motion.div variants={itemVariants} className="flex items-center gap-4 mb-6">
-          <div className="flex items-center border border-gray-300 h-12 w-32">
-            <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="w-10 h-full flex items-center justify-center hover:bg-gray-50 transition-colors text-lg text-gray-600">−</button>
-            <div className="flex-1 h-full flex items-center justify-center text-sm font-medium">{quantity}</div>
-            <button onClick={() => setQuantity(q => q + 1)} className="w-10 h-full flex items-center justify-center hover:bg-gray-50 transition-colors text-lg text-gray-600">+</button>
+        <motion.div variants={itemVariants} className="mb-6 flex items-stretch gap-3 sm:gap-4">
+          <div className="flex h-12 w-[120px] shrink-0 items-center border border-[#dfe3eb] bg-white sm:w-32">
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+              className="flex h-full w-10 items-center justify-center text-lg text-gray-600 transition-all hover:bg-[#f4f6fa]"
+            >
+              −
+            </button>
+            <div className="flex flex-1 items-center justify-center text-sm font-medium">{quantity}</div>
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => q + 1)}
+              className="flex h-full w-10 items-center justify-center text-lg text-gray-600 transition-all hover:bg-[#f4f6fa]"
+            >
+              +
+            </button>
           </div>
 
-          <button className="h-12 flex-1 bg-black text-white text-xs font-bold tracking-widest border border-black relative overflow-hidden group transition-all duration-300">
-            <span className="relative z-10 group-hover:text-black transition-colors duration-300">ADD TO CART</span>
-            <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+          <button
+            type="button"
+            className="group relative h-12 flex-1 overflow-hidden border border-[#1a1a1a] bg-[#1a1a1a] text-xs font-bold tracking-widest text-white transition-all duration-300 hover-btn-shine"
+          >
+            <span className="relative z-10 transition-colors duration-300 group-hover:text-[#1a1a1a]">
+              ADD TO CART
+            </span>
+            <div className="absolute inset-0 -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0" />
           </button>
         </motion.div>
 
-        {/* Wishlist */}
-        <motion.button variants={itemVariants} className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-black mb-8 transition-colors group w-fit">
-          <Heart className="w-4 h-4 group-hover:fill-black transition-all duration-200" />
-          <span className="tracking-wider">ADD TO WISHLIST</span>
+        <motion.button
+          variants={itemVariants}
+          type="button"
+          className="group mb-8 flex w-fit items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 transition-all hover:text-[#1a1a1a]"
+        >
+          <Heart className="h-4 w-4 transition-all duration-300 group-hover:scale-110 group-hover:fill-[#1a1a1a]" />
+          ADD TO WISHLIST
         </motion.button>
 
-        {/* Trust badges */}
-        <motion.div variants={itemVariants} className="grid grid-cols-3 gap-3 mb-8 py-5 border-t border-b border-gray-100">
+        <motion.div
+          variants={itemVariants}
+          className="mb-8 grid grid-cols-3 gap-2 border-y border-[#e8ecf2] py-6 sm:gap-3"
+        >
           {[
             { icon: Truck, label: 'Free Shipping', sub: 'Orders over $75' },
             { icon: RefreshCw, label: 'Easy Returns', sub: '30-day policy' },
             { icon: ShieldCheck, label: 'Secure Pay', sub: '100% protected' },
           ].map(({ icon: Icon, label, sub }) => (
-            <div key={label} className="flex flex-col items-center text-center gap-1">
-              <Icon className="w-4 h-4 text-gray-400 mb-0.5" />
-              <span className="text-[10px] font-semibold tracking-wide text-gray-700 uppercase">{label}</span>
+            <div key={label} className="flex flex-col items-center gap-1 text-center">
+              <Icon className="mb-0.5 h-4 w-4 text-[#8b93a5]" />
+              <span className="text-[10px] font-semibold uppercase tracking-wide text-[#1a1a1a]">{label}</span>
               <span className="text-[10px] text-gray-400">{sub}</span>
             </div>
           ))}
         </motion.div>
 
-        {/* Meta info */}
-        <motion.div variants={itemVariants} className="flex flex-col gap-2 text-xs text-gray-500 mb-8">
-          <p><span className="font-semibold text-gray-700 uppercase tracking-wider">SKU</span> <span className="ml-2">{product.sku}</span></p>
-          <p><span className="font-semibold text-gray-700 uppercase tracking-wider">Tags</span> <span className="ml-2">{product.tags.join(', ')}</span></p>
+        <motion.div variants={itemVariants} className="mb-8 flex flex-col gap-2.5 text-xs text-gray-500">
+          <p className="flex flex-wrap items-baseline gap-x-2">
+            <span className="font-semibold uppercase tracking-wider text-[#1a1a1a]">SKU</span>
+            <span>{product.sku}</span>
+          </p>
+          <p className="flex flex-wrap items-baseline gap-x-2">
+            <span className="font-semibold uppercase tracking-wider text-[#1a1a1a]">Tags</span>
+            <span>{product.tags.join(', ')}</span>
+          </p>
         </motion.div>
 
-        {/* Social Share */}
         <motion.div variants={itemVariants} className="flex items-center gap-4 text-xs font-semibold text-gray-500">
-          <span className="tracking-wider uppercase">Share</span>
-          <div className="w-px h-4 bg-gray-200" />
-          <div className="flex gap-3 text-gray-400">
-            <FaFacebookF className="w-3.5 h-3.5 hover:text-black cursor-pointer transition-colors" />
-            <FaTwitter className="w-3.5 h-3.5 hover:text-black cursor-pointer transition-colors" />
-            <FaInstagram className="w-3.5 h-3.5 hover:text-black cursor-pointer transition-colors" />
-            <Share2 className="w-3.5 h-3.5 hover:text-black cursor-pointer transition-colors" />
+          <span className="uppercase tracking-wider">Share</span>
+          <div className="h-4 w-px bg-[#dfe3eb]" />
+          <div className="flex gap-3 text-[#8b93a5]">
+            <FaFacebookF className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
+            <FaTwitter className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
+            <FaInstagram className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
+            <Share2 className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
           </div>
         </motion.div>
-
       </motion.div>
     </div>
   );

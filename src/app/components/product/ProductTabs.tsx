@@ -31,7 +31,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-8 py-4 text-xs font-semibold tracking-widest transition-colors relative ${
+            className={`px-8 py-4 text-xs font-semibold tracking-widest transition-all relative hover-lift-sm ${
               activeTab === tab.id ? 'text-black' : 'text-gray-400 hover:text-gray-600'
             }`}
           >
@@ -76,7 +76,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="flex-1"
                 >
-                  <div className="w-full h-80 bg-gray-100 flex items-center justify-center relative overflow-hidden group">
+                  <div className="w-full h-80 bg-gray-100 flex items-center justify-center relative overflow-hidden group hover-lift rounded-sm">
                      {/* Replace with actual image related to description, simulating Lady Gaga image */}
                      <div className="absolute inset-0 bg-pink-600/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10" />
                      <img src="/images/description-feature.webp" alt="Feature" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop'; }} />
@@ -110,7 +110,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
             {activeTab === 'reviews' && (
               <div className="w-full space-y-6">
                 {product.reviews.map((review, idx) => (
-                  <div key={idx} className="border-b pb-6">
+                  <div key={idx} className="border-b pb-6 hover-lift-sm transition-all duration-300 rounded-lg px-2 -mx-2 hover:bg-gray-50/50">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="font-semibold text-black">{review.author}</div>
                       <div className="flex text-yellow-400 text-xs">

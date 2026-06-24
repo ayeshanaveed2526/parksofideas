@@ -130,7 +130,7 @@ export default function Footer() {
               <div className="stars">
                 ⭐⭐⭐⭐⭐ <span style={{ color: '#000' }}>4.8/5</span>
               </div>
-              <p className="rating-text">"Amazing quality! Love my new products!"</p>
+              <p className="rating-text">&ldquo;Amazing quality! Love my new products!&rdquo;</p>
               <p className="rating-author">- Sarah K.</p>
             </div>
           </div>
@@ -226,10 +226,14 @@ export default function Footer() {
           background-color: #dfbeb1;
           color: #ffffff;
           text-decoration: none;
-          transition: background-color 0.3s;
+          transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                      background-color 0.3s ease,
+                      box-shadow 0.3s ease;
         }
         .social-icon:hover {
           background-color: #d1b8a9;
+          transform: translateY(-4px) scale(1.1);
+          box-shadow: 0 8px 20px rgba(223, 190, 177, 0.45);
         }
         .footer-newsletter-text {
           font-size: 13px;
@@ -259,10 +263,14 @@ export default function Footer() {
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: background-color 0.3s;
+          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                      background-color 0.3s ease,
+                      box-shadow 0.3s ease;
         }
         .footer-newsletter-form button:hover {
           background-color: #d1b8a9;
+          transform: scale(1.05);
+          box-shadow: 0 4px 16px rgba(223, 190, 177, 0.4);
         }
         .footer-links {
           list-style: none;
@@ -281,10 +289,12 @@ export default function Footer() {
           text-decoration: none;
           color: #666666;
           font-size: 13px;
-          transition: color 0.3s;
+          transition: color 0.3s ease, transform 0.3s ease, padding-left 0.3s ease;
+          display: inline-block;
         }
         .footer-links a:hover {
           color: #dfbeb1;
+          transform: translateX(4px);
         }
         .badge {
           font-size: 10px;
@@ -315,11 +325,13 @@ export default function Footer() {
           background-color: rgba(223, 190, 177, 0.15);
           padding: 6px 14px;
           border-radius: 15px;
-          transition: all 0.3s;
+          transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .category-pill:hover {
           background-color: #dfbeb1;
           color: #ffffff;
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 6px 16px rgba(223, 190, 177, 0.35);
         }
         .footer-contact-list {
           list-style: none;
@@ -368,6 +380,11 @@ export default function Footer() {
           background-color: #fafafa;
           padding: 15px;
           border-radius: 8px;
+          transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .footer-rating:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
         }
         .stars {
           color: #f5b041;
@@ -432,6 +449,12 @@ export default function Footer() {
           display: flex;
           align-items: center;
           gap: 6px;
+          transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease;
+        }
+        .payment-badge:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          border-color: #dfbeb1;
         }
 
         @media (max-width: 992px) {

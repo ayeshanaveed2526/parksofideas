@@ -43,14 +43,14 @@ export default function VideoSection() {
 
         {/* Overlay (Visible when paused or hovered during play) */}
         <div
-          className={`absolute inset-0 flex flex-col items-center justify-center z-20 transition-all duration-500 cursor-pointer ${isPlaying ? "opacity-0 hover:opacity-100 bg-black/45" : "bg-black/[0.03]"
+          className={`absolute inset-0 flex flex-col items-center justify-center z-20 transition-all duration-500 cursor-pointer ${isPlaying ? "opacity-0 hover:opacity-100 bg-black/45" : "bg-black/3"
             }`}
           onClick={handlePlayToggle}
         >
           {/* Play/Pause Button */}
           <button
             type="button"
-            className="group flex h-[50px] w-[50px] sm:h-[58px] sm:w-[58px] md:h-[66px] md:w-[66px] items-center justify-center rounded-full bg-black text-white hover:bg-white hover:text-black transition-all duration-300 shadow-xl cursor-pointer transform hover:scale-105 active:scale-95"
+            className="group flex h-[50px] w-[50px] sm:h-[58px] sm:w-[58px] md:h-[66px] md:w-[66px] items-center justify-center rounded-full bg-black text-white hover:bg-white hover:text-black hover-btn-shine hover-ring-pulse shadow-xl cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300"
             aria-label={isPlaying ? "Pause video" : "Play video"}
           >
             {isPlaying ? (

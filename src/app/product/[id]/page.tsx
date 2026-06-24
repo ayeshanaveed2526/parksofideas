@@ -23,7 +23,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   }
 
   // Ensure there are at least 4 images for the gallery
-  let galleryImages = [...product.images];
+  const galleryImages = [...product.images];
 
   // If a product doesn't have 4 images, pad it by repeating its own images so the slider is always full without mixing products
   if (galleryImages.length > 0) {
@@ -45,19 +45,17 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <ProductHero category={product.category} productName={product.name} />
 
       {/* Main Product Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column: Gallery */}
-          <div className="w-full">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-12 lg:pt-14 pb-16 lg:pb-20">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
+          <div className="w-full lg:sticky lg:top-[136px] lg:self-center">
             <ProductGallery images={galleryImages} />
           </div>
 
-          {/* Right Column: Info */}
-          <div className="w-full">
+          <div className="flex w-full items-center lg:min-h-[520px]">
             <ProductInfo product={product} />
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Product Tabs */}
       <ProductTabs product={product} />

@@ -255,6 +255,18 @@ export default function NewProducts() {
         :global(.np-swiper .swiper-button-next),
         :global(.np-swiper .swiper-button-prev) {
           color: #cdae9f;
+          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                      box-shadow 0.35s ease,
+                      background-color 0.3s ease;
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+        }
+
+        :global(.np-swiper .swiper-button-next:hover),
+        :global(.np-swiper .swiper-button-prev:hover) {
+          transform: scale(1.15);
+          box-shadow: 0 6px 20px rgba(205, 174, 159, 0.35);
         }
         
         :global(.np-swiper .swiper-pagination-bullet-active) {

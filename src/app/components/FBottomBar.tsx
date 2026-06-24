@@ -141,6 +141,12 @@ export default function FBottomBar() {
           line-height: 60px;
           color: #1a1a1a;
           text-transform: uppercase;
+          transition: color 0.3s ease, letter-spacing 0.3s ease;
+        }
+
+        .fb-ticker-item:hover {
+          color: #cdae9f;
+          letter-spacing: 0.05em;
         }
 
         .fb-ticker-separator {
@@ -178,6 +184,27 @@ export default function FBottomBar() {
           justify-content: flex-start;
           overflow: hidden;
           box-sizing: border-box;
+          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fb-banner-box:hover {
+          transform: scale(1.02);
+        }
+
+        .fb-banner-box::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+          background-size: 200% 100%;
+          background-position: -200% center;
+          z-index: 3;
+          pointer-events: none;
+          transition: background-position 0.8s ease;
+        }
+
+        .fb-banner-box:hover::after {
+          background-position: 200% center;
         }
 
         .fb-banner-overlay {
@@ -247,11 +274,18 @@ export default function FBottomBar() {
           font-weight: 400;
           font-size: 12px;
           letter-spacing: 0.22em;
-          text-indent: 0.22em; /* shifts text slightly to align properly with letter-spacing */
+          text-indent: 0.22em;
           text-transform: uppercase;
           text-decoration: none;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
           box-sizing: border-box;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .fb-banner-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
         }
 
         /* ── Dark Theme Content (Roses, Body Showers) ── */

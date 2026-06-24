@@ -70,7 +70,7 @@ export default function Herosection() {
       <div className="relative mx-auto flex w-full flex-col md:flex-row">
         
         {/* Left Column (Pink Slider) */}
-        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 flex-shrink-0 items-center overflow-hidden group">
+        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
           {leftSlides.map((slide, idx) => (
             <div
               key={slide.id}
@@ -79,7 +79,7 @@ export default function Herosection() {
               }`}
             >
               {/* Background Image */}
-              <div className={`absolute inset-0 h-full w-full transition-transform duration-[1200ms] ease-out ${
+              <div className={`absolute inset-0 h-full w-full transition-transform duration-1200 ease-out ${
                 idx === currentLeft ? "scale-100" : "scale-105"
               }`}>
                 <Image 
@@ -139,7 +139,7 @@ export default function Herosection() {
                 >
                   <Link 
                     href={slide.link} 
-                    className="w-fit border border-[#1a1a1a] text-[#1a1a1a] transition-all duration-300 hover:bg-[#1a1a1a] hover:text-white"
+                    className="w-fit border border-[#1a1a1a] text-[#1a1a1a] hover-btn-shine hover:bg-[#1a1a1a] hover:text-white"
                     style={{
                       display: "inline-block",
                       outline: "none",
@@ -193,7 +193,7 @@ export default function Herosection() {
           {/* Navigation Arrows */}
           <button
             onClick={() => setCurrentLeft((prev) => (prev - 1 + leftSlides.length) % leftSlides.length)}
-            className="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 hover-scale-sm hover-glow transition-all duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Previous Slide"
           >
@@ -203,7 +203,7 @@ export default function Herosection() {
           </button>
           <button
             onClick={() => setCurrentLeft((prev) => (prev + 1) % leftSlides.length)}
-            className="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 hover-scale-sm hover-glow transition-all duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Next Slide"
           >
@@ -214,7 +214,7 @@ export default function Herosection() {
         </div>
 
         {/* Right Column (Beige Slider) */}
-        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 flex-shrink-0 items-center overflow-hidden group">
+        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
           {rightSlides.map((slide, idx) => (
             <div
               key={slide.id}
@@ -223,7 +223,7 @@ export default function Herosection() {
               }`}
             >
               {/* Background Image */}
-              <div className={`absolute inset-0 h-full w-full transition-transform duration-[1200ms] ease-out ${
+              <div className={`absolute inset-0 h-full w-full transition-transform duration-1200 ease-out ${
                 idx === currentRight ? "scale-100" : "scale-105"
               }`}>
                 <Image 
@@ -283,7 +283,7 @@ export default function Herosection() {
                 >
                   <Link 
                     href={slide.link} 
-                    className="w-fit border border-[#1a1a1a] text-[#1a1a1a] transition-all duration-300 hover:bg-[#1a1a1a] hover:text-white"
+                    className="w-fit border border-[#1a1a1a] text-[#1a1a1a] hover-btn-shine hover:bg-[#1a1a1a] hover:text-white"
                     style={{
                       display: "inline-block",
                       outline: "none",
@@ -323,7 +323,7 @@ export default function Herosection() {
           {/* Navigation Arrows */}
           <button
             onClick={() => setCurrentRight((prev) => (prev - 1 + rightSlides.length) % rightSlides.length)}
-            className="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 hover-scale-sm hover-glow transition-all duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Previous Slide"
           >
@@ -333,7 +333,7 @@ export default function Herosection() {
           </button>
           <button
             onClick={() => setCurrentRight((prev) => (prev + 1) % rightSlides.length)}
-            className="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm cursor-pointer"
+            className="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/80 hover:bg-white text-black opacity-0 group-hover:opacity-100 hover-scale-sm hover-glow transition-all duration-300 shadow-sm cursor-pointer"
             type="button"
             aria-label="Next Slide"
           >
