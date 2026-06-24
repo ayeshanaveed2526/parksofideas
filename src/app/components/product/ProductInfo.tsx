@@ -99,9 +99,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
           <button
             type="button"
-            className="group relative h-12 flex-1 overflow-hidden border border-[#1a1a1a] bg-[#1a1a1a] text-xs font-bold tracking-widest text-white transition-all duration-300 hover-btn-shine"
+            className="group relative h-12 w-[220px] overflow-hidden border border-[#00089d] bg-[#00089d] text-xs font-bold tracking-widest text-white transition-all duration-300 hover-btn-shine"
           >
-            <span className="relative z-10 transition-colors duration-300 group-hover:text-[#1a1a1a]">
+            <span className="relative z-10 transition-colors duration-300 group-hover:text-[#00089d]">
               ADD TO CART
             </span>
             <div className="absolute inset-0 -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0" />
