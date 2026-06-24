@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import Herosection from "./components/Herosection";
+import TickerBar from "./components/TickerBar";
 import ShopByCategory from "./components/ShopByCategory";
 import TopCategory from "./components/TopCategory";
 import VideoSection from "./components/VideoSection";
@@ -12,6 +13,7 @@ export default function Home() {
     <main className="min-h-screen bg-background relative">
       <Header />
       <Herosection />
+      <TickerBar />
       <ShopByCategory />
       <TopCategory />
       <VideoSection />

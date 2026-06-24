@@ -7,48 +7,54 @@ export default function Herosection() {
   const leftSlides = [
     {
       id: 1,
-      image: "/images/Gemini_Generated_Image_9aoqnd9aoqnd9aoq.webp",
+      image: "/images/primary_1.png",
       subtitle: "PACKAGE",
       title: "PREMIUM",
       link: "#",
+      theme: "dark",
     },
     {
       id: 2,
-      image: "/images/pink_slide_2_v2.webp",
+      image: "/images/primary_2.png",
       subtitle: "ORGANIC",
       title: "BEAUTY",
       link: "#",
+      theme: "light",
     },
     {
       id: 3,
-      image: "/images/pink_slide_3_v2.webp",
+      image: "/images/primary_3.png",
       subtitle: "BOTANICAL",
       title: "ESSENCE",
       link: "#",
+      theme: "dark",
     },
   ];
 
   const rightSlides = [
     {
       id: 1,
-      image: "/images/Gemini_Generated_Image_n9mh33n9mh33n9mh.webp",
+      image: "/images/primary_4.png",
       subtitle: "NEW BRAND",
       title: "TOUCH",
       link: "#",
+      theme: "light",
     },
     {
       id: 2,
-      image: "/images/beige_slide_2_v2.webp",
+      image: "/images/primary_5.png",
       subtitle: "PURE SAND",
       title: "LUXURY",
       link: "#",
+      theme: "dark",
     },
     {
       id: 3,
-      image: "/images/beige_slide_3_v2.webp",
+      image: "/images/primary_6.png",
       subtitle: "MINIMALIST",
       title: "SERUM",
       link: "#",
+      theme: "light",
     },
   ];
 
@@ -70,7 +76,7 @@ export default function Herosection() {
       <div className="relative mx-auto flex w-full flex-col md:flex-row">
         
         {/* Left Column (Pink Slider) */}
-        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
+        <div className="relative flex h-[400px] sm:h-[500px] md:h-[650px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
           {leftSlides.map((slide, idx) => (
             <div
               key={slide.id}
@@ -94,7 +100,9 @@ export default function Herosection() {
               {/* Content */}
               <div className="relative z-10 flex w-full flex-col px-6 sm:px-[40px] md:px-[80px]">
                 <span 
-                  className={`mb-3 sm:mb-4 text-[#1a1a1a] text-[12px] sm:text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
+                  className={`mb-3 sm:mb-4 text-[12px] sm:text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
+                    slide.theme === "dark" ? "text-white" : "text-[#1a1a1a]"
+                  } ${
                     idx === currentLeft ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                   style={{
@@ -109,7 +117,9 @@ export default function Herosection() {
                   {slide.subtitle}
                 </span>
                 <div
-                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[24px] min-[380px]:text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                  className={`mb-6 sm:mb-10 text-[24px] min-[380px]:text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                    slide.theme === "dark" ? "text-white" : "text-[#1a1a1a]"
+                  } ${
                     idx === currentLeft ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   }`}
                   style={{
@@ -139,7 +149,11 @@ export default function Herosection() {
                 >
                   <Link 
                     href={slide.link} 
-                    className="w-fit border border-[#1a1a1a] text-[#1a1a1a] hover-btn-shine hover:bg-[#1a1a1a] hover:text-white"
+                    className={`w-fit border hover-btn-shine ${
+                      slide.theme === "dark" 
+                        ? "border-white text-white hover:bg-white hover:text-black" 
+                        : "border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white"
+                    }`}
                     style={{
                       display: "inline-block",
                       outline: "none",
@@ -182,7 +196,9 @@ export default function Herosection() {
                 key={idx}
                 onClick={() => setCurrentLeft(idx)}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
-                  idx === currentLeft ? "bg-[#1a1a1a] w-8" : "bg-[#1a1a1a]/30 hover:bg-[#1a1a1a]/60 w-4"
+                  idx === currentLeft 
+                    ? (leftSlides[currentLeft].theme === "dark" ? "bg-white w-8" : "bg-[#1a1a1a] w-8") 
+                    : (leftSlides[currentLeft].theme === "dark" ? "bg-white/30 hover:bg-white/60 w-4" : "bg-[#1a1a1a]/30 hover:bg-[#1a1a1a]/60 w-4")
                 }`}
                 type="button"
                 aria-label={`Go to slide ${idx + 1}`}
@@ -214,7 +230,7 @@ export default function Herosection() {
         </div>
 
         {/* Right Column (Beige Slider) */}
-        <div className="relative flex h-[320px] sm:h-[400px] md:h-[478px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
+        <div className="relative flex h-[400px] sm:h-[500px] md:h-[650px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
           {rightSlides.map((slide, idx) => (
             <div
               key={slide.id}
@@ -238,7 +254,9 @@ export default function Herosection() {
               {/* Content */}
               <div className="relative z-10 flex w-full flex-col px-6 sm:px-[40px] md:px-[80px]">
                 <span 
-                  className={`mb-3 sm:mb-4 text-[#1a1a1a] text-[12px] sm:text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
+                  className={`mb-3 sm:mb-4 text-[12px] sm:text-[14px] md:text-[17px] transition-all duration-700 ease-out transform ${
+                    slide.theme === "dark" ? "text-white" : "text-[#1a1a1a]"
+                  } ${
                     idx === currentRight ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
                   }`}
                   style={{
@@ -253,7 +271,9 @@ export default function Herosection() {
                   {slide.subtitle}
                 </span>
                 <h1 
-                  className={`mb-6 sm:mb-10 text-[#1a1a1a] text-[24px] min-[380px]:text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                  className={`mb-6 sm:mb-10 text-[24px] min-[380px]:text-[28px] sm:text-[38px] md:text-[58px] transition-all duration-700 ease-out transform ${
+                    slide.theme === "dark" ? "text-white" : "text-[#1a1a1a]"
+                  } ${
                     idx === currentRight ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   }`}
                   style={{
@@ -283,7 +303,11 @@ export default function Herosection() {
                 >
                   <Link 
                     href={slide.link} 
-                    className="w-fit border border-[#1a1a1a] text-[#1a1a1a] hover-btn-shine hover:bg-[#1a1a1a] hover:text-white"
+                    className={`w-fit border hover-btn-shine ${
+                      slide.theme === "dark" 
+                        ? "border-white text-white hover:bg-white hover:text-black" 
+                        : "border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white"
+                    }`}
                     style={{
                       display: "inline-block",
                       outline: "none",
@@ -312,7 +336,9 @@ export default function Herosection() {
                 key={idx}
                 onClick={() => setCurrentRight(idx)}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
-                  idx === currentRight ? "bg-[#1a1a1a] w-8" : "bg-[#1a1a1a]/30 hover:bg-[#1a1a1a]/60 w-4"
+                  idx === currentRight 
+                    ? (rightSlides[currentRight].theme === "dark" ? "bg-white w-8" : "bg-[#1a1a1a] w-8") 
+                    : (rightSlides[currentRight].theme === "dark" ? "bg-white/30 hover:bg-white/60 w-4" : "bg-[#1a1a1a]/30 hover:bg-[#1a1a1a]/60 w-4")
                 }`}
                 type="button"
                 aria-label={`Go to slide ${idx + 1}`}

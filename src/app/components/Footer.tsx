@@ -167,7 +167,7 @@ export default function Footer() {
                 </div>
                 <div className="contact-info">
                   <strong>Email Us</strong>
-                  <span>info@luchiana.com</span>
+                  <span>info@elixbyir.com</span>
                   <span className="contact-sub">We reply within 24 hours</span>
                 </div>
               </li>
@@ -210,7 +210,7 @@ export default function Footer() {
         {/* Bottom Row */}
         <div className="footer-bottom">
           <div className="footer-copy">
-            <span>© 2024 LUCHIANA Theme. All rights reserved.</span>
+            <span>© 2024 ELIX BY IR. All rights reserved.</span>
             <div className="footer-legal">
               <button type="button" className="footer-legal-btn" onClick={() => openLegalModal("privacy")}>
                 Privacy
@@ -261,13 +261,13 @@ export default function Footer() {
           z-index: 1;
           max-width: 1536px;
           margin: 0 auto;
-          padding: 60px 40px 20px;
+          padding: 40px 40px 15px;
         }
         .footer-main {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
-          gap: 60px;
-          margin-bottom: 50px;
+          gap: 40px;
+          margin-bottom: 30px;
         }
         .footer-col {
           display: flex;
@@ -277,22 +277,25 @@ export default function Footer() {
           margin-bottom: 24px;
         }
         .footer-desc {
-          font-size: 13px;
-          line-height: 1.6;
-          margin-bottom: 30px;
+          font-size: 12px;
+          line-height: 1.8;
+          margin-bottom: 20px;
           color: #9ca3af;
+          letter-spacing: 0.01em;
         }
         .footer-heading {
-          font-size: 16px;
+          font-size: 13px;
           font-weight: 600;
           color: #ffffff;
-          margin-bottom: 15px;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-bottom: 12px;
           margin-top: 0;
         }
         .footer-socials {
           display: flex;
-          gap: 12px;
-          margin-bottom: 35px;
+          gap: 10px;
+          margin-bottom: 20px;
         }
         .social-icon {
           display: flex;
@@ -301,7 +304,7 @@ export default function Footer() {
           width: 38px;
           height: 38px;
           border-radius: 50%;
-          background-color: #00089d;
+          background-color: transparent;
           color: #ffffff;
           text-decoration: none;
           transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -331,14 +334,15 @@ export default function Footer() {
           box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
         }
         .footer-newsletter-text {
-          font-size: 13px;
+          font-size: 12px;
           color: #9ca3af;
           margin-bottom: 15px;
+          letter-spacing: 0.01em;
         }
         .footer-newsletter-form {
           display: flex;
-          height: 44px;
-          border-radius: 22px;
+          height: 40px;
+          border-radius: 20px;
           overflow: hidden;
           border: 1px solid rgba(255, 255, 255, 0.15);
         }
@@ -346,7 +350,7 @@ export default function Footer() {
           flex: 1;
           border: none;
           padding: 0 15px;
-          font-size: 13px;
+          font-size: 12px;
           outline: none;
           background-color: #111111;
           color: #ffffff;
@@ -378,7 +382,7 @@ export default function Footer() {
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 8px;
         }
         .footer-links li {
           display: flex;
@@ -388,7 +392,8 @@ export default function Footer() {
         .footer-links a {
           text-decoration: none;
           color: #ffffff;
-          font-size: 13px;
+          font-size: 12px;
+          letter-spacing: 0.01em;
           transition: all 0.3s ease;
           display: inline-block;
           padding: 6px 10px;
@@ -401,10 +406,11 @@ export default function Footer() {
           transform: translateX(4px);
         }
         .badge {
-          font-size: 10px;
-          padding: 2px 8px;
+          font-size: 9px;
+          padding: 2px 6px;
           border-radius: 10px;
           font-weight: 600;
+          letter-spacing: 0.03em;
         }
         .badge-hot {
           color: #7b9fff;
@@ -415,7 +421,7 @@ export default function Footer() {
           background-color: rgba(0, 8, 157, 0.25);
         }
         .mt-6 {
-          margin-top: 35px;
+          margin-top: 20px;
         }
         .footer-categories {
           display: flex;
@@ -424,11 +430,12 @@ export default function Footer() {
         }
         .category-pill {
           text-decoration: none;
-          font-size: 12px;
+          font-size: 11px;
           color: #ffffff;
           background-color: rgba(0, 8, 157, 0.25);
           padding: 6px 14px;
           border-radius: 15px;
+          letter-spacing: 0.02em;
           transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .category-pill:hover {
@@ -440,10 +447,10 @@ export default function Footer() {
         .footer-contact-list {
           list-style: none;
           padding: 0;
-          margin: 0 0 35px 0;
+          margin: 0 0 20px 0;
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 12px;
         }
         .footer-contact-list li {
           display: flex;
@@ -464,14 +471,16 @@ export default function Footer() {
         .contact-info {
           display: flex;
           flex-direction: column;
-          font-size: 13px;
+          font-size: 12px;
           color: #a3a3a3;
-          line-height: 1.4;
+          line-height: 1.5;
+          letter-spacing: 0.01em;
         }
         .contact-info strong {
           color: #ffffff;
           font-weight: 600;
           margin-bottom: 4px;
+          font-size: 12px;
         }
         .contact-sub {
           font-size: 11px;
@@ -479,7 +488,7 @@ export default function Footer() {
           margin-top: 2px;
         }
         .footer-rating {
-          font-size: 13px;
+          font-size: 12px;
           color: #a3a3a3;
           background-color: #111111;
           border: 1px solid rgba(255, 255, 255, 0.08);
@@ -487,6 +496,7 @@ export default function Footer() {
           border-radius: 8px;
           transition: transform 0.4s ease, box-shadow 0.4s ease;
           overflow: hidden;
+          line-height: 1.6;
         }
         .footer-rating:hover {
           transform: translateY(-4px);
@@ -503,7 +513,7 @@ export default function Footer() {
           color: #f5b041;
           font-weight: 600;
           margin-bottom: 8px;
-          font-size: 14px;
+          font-size: 12px;
         }
         .stars span {
           color: #ffffff;
@@ -512,12 +522,15 @@ export default function Footer() {
           font-style: italic;
           margin: 0 0 8px 0;
           color: #9ca3af;
-          line-height: 1.5;
+          line-height: 1.6;
+          letter-spacing: 0.01em;
         }
         .rating-author {
-          font-size: 12px;
+          font-size: 11px;
           color: #6b7280;
           margin: 0;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
         }
         .rating-dots {
           display: flex;
@@ -546,14 +559,15 @@ export default function Footer() {
         }
         .footer-bottom {
           border-top: 1px solid rgba(255, 255, 255, 0.08);
-          padding-top: 24px;
+          padding-top: 15px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 12px;
+          font-size: 11px;
           color: #9ca3af;
           flex-wrap: wrap;
           gap: 20px;
+          letter-spacing: 0.01em;
         }
         .footer-copy {
           display: flex;
@@ -580,6 +594,7 @@ export default function Footer() {
           cursor: pointer;
           position: relative;
           z-index: 2;
+          letter-spacing: 0.01em;
         }
         .footer-legal-btn:hover {
           color: #ffffff;
@@ -597,14 +612,15 @@ export default function Footer() {
         .payment-badge {
           background-color: #111111;
           border: 1px solid rgba(255, 255, 255, 0.12);
-          padding: 6px 10px;
+          padding: 5px 8px;
           border-radius: 4px;
-          font-size: 11px;
+          font-size: 10px;
           color: #a3a3a3;
           display: flex;
           align-items: center;
           gap: 6px;
           transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease;
+          letter-spacing: 0.02em;
         }
         .payment-badge:hover {
           transform: translateY(-2px);

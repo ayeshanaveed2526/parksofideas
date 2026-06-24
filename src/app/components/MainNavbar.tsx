@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search, User, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
+import { motion } from "framer-motion";
 
 /**
  * MainNavbar — the second bar.
@@ -105,7 +106,8 @@ export default function MainNavbar() {
       <div className={`w-full bg-white transition-all duration-300 ${isSticky ? "shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b border-gray-100" : ""}`}>
         <div className="relative mx-auto flex h-[70px] md:h-[90px] w-full items-center justify-between px-[15px] md:px-[50px]">
           {/* Logo */}
-          <Link href="/" aria-label="Luchiana Home" className="shrink-0 hover-scale-sm transition-transform duration-300">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+            <Link href="/" aria-label="Luchiana Home" className="shrink-0 hover-scale-sm transition-transform duration-300">
             <svg className="w-[140px] sm:w-[170px] md:w-[205px] h-auto" viewBox="0 0 205 18" xmlns="http://www.w3.org/2000/svg">
               <g fill="#000" fillRule="evenodd">
                 <path d="M62.01 0c-2.26 0-4.215.872-5.603 2.447-1.388 1.573-2.204 3.84-2.204 6.624 0 2.783.816 5.05 2.204 6.624 1.388 1.574 3.343 2.446 5.604 2.446 3.556 0 6.465-2.144 7.123-5.777l.02-.108h-2.302l-.016.073c-.5 2.372-2.538 3.648-4.825 3.648-1.563 0-2.953-.604-3.955-1.765-1.002-1.161-1.62-2.888-1.62-5.141 0-2.254.618-3.98 1.62-5.142 1.002-1.16 2.392-1.765 3.955-1.765 2.287 0 4.324 1.276 4.825 3.648l.016.073h2.301l-.02-.108C68.478 2.144 65.568 0 62.012 0zM2.3.239H0v17.663h10.426V15.84H2.3zM27.596.239h-2.3v11.665c0 1.816.679 3.395 1.883 4.518 1.204 1.124 2.926 1.787 5.002 1.787 2.077 0 3.799-.663 5.003-1.787 1.204-1.123 1.883-2.702 1.883-4.518V.24h-2.301v11.494c0 1.259-.432 2.335-1.216 3.096-.784.762-1.93 1.216-3.369 1.216-1.44 0-2.584-.454-3.369-1.216-.784-.761-1.216-1.837-1.216-3.096V.24zM117.531.239h-2.301v17.663h2.301z" fillRule="nonzero" />
@@ -115,12 +117,18 @@ export default function MainNavbar() {
                 <path fillRule="nonzero" d="M87.376.241h-2.3v17.663h2.3v-7.8h9.443v7.8h2.301V.241h-2.3v7.8h-9.444z" />
               </g>
             </svg>
-          </Link>
+            </Link>
+          </motion.div>
 
           {/* Nav links — desktop */}
-          <ul className="hidden lg:flex items-center h-full text-[#1a1a1a] mr-[30px]">
+          <motion.ul 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 }}
+            className="hidden lg:flex items-center h-full text-[#1a1a1a] mr-[30px]"
+          >
             {navLinks.map((link) => (
-              <li
+              <motion.li
                 key={link.label}
                 className={`group flex items-center h-full ${["HOME", "SHOP", "MEGA"].includes(link.label) ? "" : "relative"}`}
                 style={{
@@ -133,14 +141,14 @@ export default function MainNavbar() {
                   fontFamily: "Inter, sans-serif",
                 }}
               >
-                <Link href={link.href} className="hover:text-[#8c6f63] hover-link-slide transition-colors flex items-center h-full">
+                <Link href={link.href} className="hover:text-[#00089d] hover-link-slide transition-colors flex items-center h-full">
                   {link.label}
                 </Link>
 
                 {/* Mega Menu for HOME */}
                 {link.label === "HOME" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-[229px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-200 border-t border-gray-100 cursor-default overflow-x-auto"
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-[229px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center justify-center opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default overflow-x-auto"
                   >
                     <div className="flex items-center justify-center gap-[15px] xl:gap-[30px] w-max xl:w-full h-full px-4 xl:px-10 min-w-min mx-auto">
                       {homeVariants.map((v) => (
@@ -149,7 +157,7 @@ export default function MainNavbar() {
                             <Image src={v.image} alt={v.name} fill style={{ objectFit: "cover" }} />
                           </div>
                           <span
-                            className="text-[12px] text-[#1a1a1a] hover:text-[#8c6f63] transition-colors"
+                            className="text-[12px] text-[#1a1a1a] hover:text-[#00089d] transition-colors"
                             style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, letterSpacing: "0.15em" }}
                           >
                             {v.name}
@@ -163,7 +171,7 @@ export default function MainNavbar() {
                 {/* Mega Menu for SHOP */}
                 {link.label === "SHOP" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-[535px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-200 border-t border-gray-100 cursor-default px-[20px] xl:px-[60px] py-[50px] grid grid-cols-4 gap-[20px] xl:gap-[40px] text-left overflow-x-auto"
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-[535px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default px-[20px] xl:px-[60px] py-[50px] grid grid-cols-4 gap-[20px] xl:gap-[40px] text-left overflow-x-auto"
                   >
                     {/* Col 1 */}
                     <div className="flex flex-col">
@@ -171,7 +179,7 @@ export default function MainNavbar() {
                       <ul className="flex flex-col gap-[18px]">
                         {shopMegaMenu.shopLayout.map((item) => (
                           <li key={item.name} className="flex items-center gap-2">
-                            <Link href="#" className="text-[12px] text-[#555] hover:text-[#8c6f63] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
+                            <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
                             {item.isHot && <span className="bg-[#e63946] text-white text-[9px] px-1.5 py-0.5 rounded-sm font-bold tracking-wider leading-none">HOT</span>}
                             {item.isNew && <span className="bg-[#60b07a] text-white text-[9px] px-1.5 py-0.5 rounded-sm font-bold tracking-wider leading-none">NEW</span>}
                           </li>
@@ -184,7 +192,7 @@ export default function MainNavbar() {
                       <ul className="flex flex-col gap-[18px]">
                         {shopMegaMenu.productLayout.map((item) => (
                           <li key={item.name} className="flex items-center gap-2">
-                            <Link href="#" className="text-[12px] text-[#555] hover:text-[#8c6f63] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
+                            <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
                           </li>
                         ))}
                       </ul>
@@ -196,7 +204,7 @@ export default function MainNavbar() {
                         <ul className="flex flex-col gap-[18px]">
                           {shopMegaMenu.productType.map((item) => (
                             <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#8c6f63] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
+                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
                             </li>
                           ))}
                         </ul>
@@ -206,7 +214,7 @@ export default function MainNavbar() {
                         <ul className="flex flex-col gap-[18px]">
                           {shopMegaMenu.pagination.map((item) => (
                             <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#8c6f63] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
+                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
                             </li>
                           ))}
                         </ul>
@@ -219,7 +227,7 @@ export default function MainNavbar() {
                         <ul className="flex flex-col gap-[18px]">
                           {shopMegaMenu.brands.map((item) => (
                             <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#8c6f63] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
+                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
                             </li>
                           ))}
                         </ul>
@@ -229,7 +237,7 @@ export default function MainNavbar() {
                         <ul className="flex flex-col gap-[18px]">
                           {shopMegaMenu.categories.map((item) => (
                             <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#8c6f63] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
+                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
                             </li>
                           ))}
                         </ul>
@@ -241,20 +249,20 @@ export default function MainNavbar() {
                 {/* Dropdown for HEADERS */}
                 {link.label === "HEADERS" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-0 w-[290px] h-[165px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-200 border-t border-gray-100 cursor-default px-[40px] py-[35px] text-left"
+                    className="absolute top-[70px] md:top-[90px] left-0 w-[290px] h-[165px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default px-[40px] py-[35px] text-left"
                   >
                     <ul className="flex flex-col gap-[22px]">
                       <li className="relative flex items-center justify-between group/subitem">
-                        <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] group-hover/subitem:text-[#e4c1b1] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif", width: "100%" }}>DESKTOP</Link>
-                        <svg className="w-3.5 h-3.5 text-[#1a1a1a] opacity-70 group-hover/subitem:text-[#e4c1b1] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7"></path></svg>
+                        <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] group-hover/subitem:text-[#00089d] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif", width: "100%" }}>DESKTOP</Link>
+                        <svg className="w-3.5 h-3.5 text-[#1a1a1a] opacity-70 group-hover/subitem:text-[#00089d] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7"></path></svg>
 
                         {/* Submenu for DESKTOP */}
-                        <div className="absolute top-[-35px] left-full pl-[40px] opacity-0 invisible group-hover/subitem:opacity-100 group-hover/subitem:visible transition-all duration-300 z-201">
+                        <div className="absolute top-[-35px] left-full pl-[40px] opacity-0 invisible translate-x-[-10px] group-hover/subitem:translate-x-0 group-hover/subitem:opacity-100 group-hover/subitem:visible transition-all duration-400 ease-out z-201">
                           <div className="w-[290px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] px-[40px] py-[35px] text-left">
                             <ul className="flex flex-col gap-[22px]">
                               {["TYPE 1", "TYPE 2", "TYPE 3", "TYPE 4", "TYPE 5"].map((type) => (
                                 <li key={type}>
-                                  <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#e4c1b1] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{type}</Link>
+                                  <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{type}</Link>
                                 </li>
                               ))}
                             </ul>
@@ -262,16 +270,16 @@ export default function MainNavbar() {
                         </div>
                       </li>
                       <li className="relative flex items-center justify-between group/subitem">
-                        <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] group-hover/subitem:text-[#e4c1b1] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif", width: "100%" }}>MOBILE</Link>
-                        <svg className="w-3.5 h-3.5 text-[#1a1a1a] opacity-70 group-hover/subitem:text-[#e4c1b1] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7"></path></svg>
+                        <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] group-hover/subitem:text-[#00089d] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif", width: "100%" }}>MOBILE</Link>
+                        <svg className="w-3.5 h-3.5 text-[#1a1a1a] opacity-70 group-hover/subitem:text-[#00089d] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5l7 7-7 7"></path></svg>
 
                         {/* Submenu for MOBILE */}
-                        <div className="absolute top-[-35px] left-full pl-[40px] opacity-0 invisible group-hover/subitem:opacity-100 group-hover/subitem:visible transition-all duration-300 z-201">
+                        <div className="absolute top-[-35px] left-full pl-[40px] opacity-0 invisible translate-x-[-10px] group-hover/subitem:translate-x-0 group-hover/subitem:opacity-100 group-hover/subitem:visible transition-all duration-400 ease-out z-201">
                           <div className="w-[290px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] px-[40px] py-[35px] text-left">
                             <ul className="flex flex-col gap-[22px]">
                               {["TYPE 1", "TYPE 2", "TYPE 3", "TYPE 4"].map((type) => (
                                 <li key={type} className="flex items-center gap-2">
-                                  <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#e4c1b1] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{type}</Link>
+                                  <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{type}</Link>
                                   {type === "TYPE 4" && (
                                     <span className="bg-[#60b07a] text-white text-[9px] px-1.5 py-0.5 rounded-sm font-bold tracking-wider leading-none">NEW</span>
                                   )}
@@ -282,7 +290,7 @@ export default function MainNavbar() {
                         </div>
                       </li>
                       <li className="flex items-center justify-between group/item">
-                        <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#8c6f63] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>SPECIAL OFFERS</Link>
+                        <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>SPECIAL OFFERS</Link>
                       </li>
                     </ul>
                   </div>
@@ -291,7 +299,7 @@ export default function MainNavbar() {
                 {/* Dropdown for BLOG */}
                 {link.label === "BLOG" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[580px] h-[245px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-200 border-t border-gray-100 cursor-default px-[60px] grid grid-cols-2 gap-[40px] content-center text-left"
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[580px] h-[245px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default px-[60px] grid grid-cols-2 gap-[40px] content-center text-left"
                   >
                     {/* Col 1 */}
                     <div className="flex flex-col">
@@ -299,7 +307,7 @@ export default function MainNavbar() {
                       <ul className="flex flex-col gap-[22px]">
                         {["GRID", "LIST", "GRID (SIDEBAR)", "LIST (SIDEBAR)"].map((item) => (
                           <li key={item} className="w-full">
-                            <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#e4c1b1] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
+                            <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
                           </li>
                         ))}
                       </ul>
@@ -310,7 +318,7 @@ export default function MainNavbar() {
                       <ul className="flex flex-col gap-[22px]">
                         {["POST FORMAT GALLERY", "POST FORMAT VIDEO"].map((item) => (
                           <li key={item} className="w-full">
-                            <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#8c6f63] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
+                            <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
                           </li>
                         ))}
                       </ul>
@@ -321,12 +329,12 @@ export default function MainNavbar() {
                 {/* Dropdown for PAGES */}
                 {link.label === "PAGES" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-0 w-[290px] h-[305px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-200 border-t border-gray-100 cursor-default py-[30px] text-left"
+                    className="absolute top-[70px] md:top-[90px] left-0 w-[290px] h-[305px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default py-[30px] text-left"
                   >
                     <ul className="flex flex-col w-full">
                       {["ABOUT US", "SERVICE", "OUR TEAM", "FAQ", "MAINTENANCE MODE", "404 ERROR", "CONTACT"].map((item) => (
                         <li key={item} className="w-full">
-                          <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#e4c1b1] transition-colors tracking-widest uppercase w-full h-[35px] flex items-center px-[40px]" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
+                          <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase w-full h-[35px] flex items-center px-[40px]" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
                         </li>
                       ))}
                     </ul>
@@ -336,7 +344,7 @@ export default function MainNavbar() {
                 {/* Mega Menu for MEGA */}
                 {link.label === "MEGA" && (
                   <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-auto min-h-[538px] bg-[#f9f9f9] shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-200 border-t border-gray-100 cursor-default flex text-left"
+                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-auto min-h-[538px] bg-[#f9f9f9] shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default flex text-left"
                   >
                     {/* Sidebar section */}
                     <div className="w-[250px] xl:w-[300px] shrink-0 min-h-[523px] bg-white pt-[50px] pl-[30px] xl:pl-[50px] flex flex-col gap-[40px]">
@@ -345,7 +353,7 @@ export default function MainNavbar() {
                         <ul className="flex flex-col gap-[18px]">
                           {["AERIN", "FABLE&MANE", "LOREAL", "MAC", "SCHWARZKOPF"].map((item) => (
                             <li key={item} className="w-full">
-                              <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#e4c1b1] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
+                              <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
                             </li>
                           ))}
                         </ul>
@@ -355,7 +363,7 @@ export default function MainNavbar() {
                         <ul className="flex flex-col gap-[18px]">
                           {["30 ML", "40 ML", "50 ML"].map((item) => (
                             <li key={item} className="w-full">
-                              <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#e4c1b1] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
+                              <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
                             </li>
                           ))}
                         </ul>
@@ -399,12 +407,17 @@ export default function MainNavbar() {
                     </div>
                   </div>
                 )}
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
 
           {/* Right icons */}
-          <div className="flex items-center gap-3 sm:gap-6 text-black">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-3 sm:gap-6 text-black"
+          >
             <button aria-label="Search" className="hover-icon-pop hover-scale-sm">
               <Search size={20} strokeWidth={1.5} />
             </button>
@@ -424,7 +437,7 @@ export default function MainNavbar() {
             >
               <Menu size={24} strokeWidth={1.5} />
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -466,7 +479,7 @@ export default function MainNavbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block py-3 text-[14px] font-medium tracking-[0.13em] uppercase text-[#1a1a1a] hover:text-[#8c6f63] hover-link-slide transition-colors border-b border-gray-50"
+                  className="block py-3 text-[14px] font-medium tracking-[0.13em] uppercase text-[#1a1a1a] hover:text-[#00089d] hover-link-slide transition-colors border-b border-gray-50"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {link.label}
@@ -478,11 +491,11 @@ export default function MainNavbar() {
 
         {/* Mobile-only icons (Account, Wishlist) */}
         <div className="sm:hidden px-6 pt-2 flex items-center gap-6 border-t border-gray-100 py-4">
-          <button aria-label="Account" className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#8c6f63] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+          <button aria-label="Account" className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#00089d] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
             <User size={18} strokeWidth={1.5} />
             <span>Account</span>
           </button>
-          <button aria-label="Wishlist" className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#8c6f63] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+          <button aria-label="Wishlist" className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#00089d] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
             <Heart size={18} strokeWidth={1.5} />
             <span>Wishlist</span>
           </button>

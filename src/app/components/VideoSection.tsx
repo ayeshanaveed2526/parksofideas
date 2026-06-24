@@ -1,70 +1,51 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 
 export default function VideoSection() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handlePlayToggle = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        videoRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch((err) => {
-          console.error("Error playing video: ", err);
-        });
-      }
-    }
-  };
 
   return (
     <section className="relative mx-auto w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden bg-white">
-      {/* Background/Video Container */}
+      {/* Background Container */}
       <div
         className="relative w-full h-full bg-[#fae8e2] bg-cover bg-center transition-all duration-700"
         style={{
-          backgroundImage: "linear-gradient(135deg, #eef1f8 0%, #f5f7fc 50%, #e8ecf6 100%)",
+          backgroundImage: "url('/images/video-bg.png')",
         }}
       >
-        {/* HTML5 Video element */}
-        <video
-          ref={videoRef}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isPlaying ? "opacity-100 z-10" : "opacity-0 -z-10 pointer-events-none"
-            }`}
-          src="https://assets.mixkit.co/videos/preview/mixkit-beauty-treatment-in-a-salon-43093-large.mp4"
-          loop
-          playsInline
-          onClick={handlePlayToggle}
-        />
-
-        {/* Overlay (Visible when paused or hovered during play) */}
-        <div
-          className={`absolute inset-0 flex flex-col items-center justify-center z-20 transition-all duration-500 cursor-pointer ${isPlaying ? "opacity-0 hover:opacity-100 bg-black/45" : "bg-black/3"
-            }`}
-          onClick={handlePlayToggle}
-        >
-          {/* Play/Pause Button */}
-          <button
-            type="button"
-            className="group flex h-[50px] w-[50px] sm:h-[58px] sm:w-[58px] md:h-[66px] md:w-[66px] items-center justify-center rounded-full bg-black text-white hover:bg-white hover:text-black hover-btn-shine hover-ring-pulse shadow-xl cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300"
-            aria-label={isPlaying ? "Pause video" : "Play video"}
-          >
-            {isPlaying ? (
-              // Pause Icon (Hover White effect: text-white -> text-black on hover)
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 transition-colors duration-300"
-              >
-                <path fillRule="evenodd" d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z" clipRule="evenodd" />
+        {isPlaying ? (
+          <div className="absolute inset-0 z-30 w-full h-full bg-black animate-in fade-in duration-500">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/2Hj4T9MCKl4?autoplay=1&rel=0"
+              title="YouTube video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+            <button
+              onClick={() => setIsPlaying(false)}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-40 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-black/60 hover:bg-black text-white hover-scale-sm transition-all shadow-lg backdrop-blur-sm"
+              aria-label="Close video"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
-            ) : (
-              // Play Icon (Hover White effect: text-white -> text-black on hover)
+            </button>
+          </div>
+        ) : (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center z-20 cursor-pointer bg-black/5 hover:bg-black/10 transition-colors duration-500"
+            onClick={() => setIsPlaying(true)}
+          >
+            {/* Play Button */}
+            <button
+              type="button"
+              className="group flex h-[50px] w-[50px] sm:h-[58px] sm:w-[58px] md:h-[66px] md:w-[66px] items-center justify-center rounded-full bg-black text-white hover:bg-white hover:text-black hover-btn-shine hover-ring-pulse shadow-xl cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300"
+              aria-label="Play video"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -73,25 +54,24 @@ export default function VideoSection() {
               >
                 <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
               </svg>
-            )}
-          </button>
+            </button>
 
-          {/* Centered Text (Two lines) */}
-          <div
-            className={`mt-4 sm:mt-5 md:mt-[28px] flex flex-col items-center text-[16px] sm:text-[22px] md:text-[28px] lg:text-[34px] font-light uppercase select-none transition-all duration-300 ${isPlaying ? "text-white drop-shadow-md" : "text-[#1a1a1a]"
-              }`}
-            style={{
-              fontFamily: "var(--font-inter), sans-serif",
-              lineHeight: "1.4",
-              textAlign: "center",
-              fontWeight: 200,
-              letterSpacing: "clamp(3px, 1.5vw, 10px)"
-            }}
-          >
-            <span style={{ paddingLeft: "clamp(3px, 1.5vw, 10px)" }}>WATCH THE BRAND</span>
-            <span style={{ paddingLeft: "clamp(3px, 1.5vw, 10px)" }}>PRESENTATION</span>
+            {/* Centered Text */}
+            <div
+              className="mt-4 sm:mt-5 md:mt-[28px] flex flex-col items-center text-[16px] sm:text-[22px] md:text-[28px] lg:text-[34px] font-light uppercase select-none text-[#1a1a1a] transition-all duration-300"
+              style={{
+                fontFamily: "var(--font-inter), sans-serif",
+                lineHeight: "1.4",
+                textAlign: "center",
+                fontWeight: 200,
+                letterSpacing: "clamp(3px, 1.5vw, 10px)"
+              }}
+            >
+              <span style={{ paddingLeft: "clamp(3px, 1.5vw, 10px)" }}>WATCH THE BRAND</span>
+              <span style={{ paddingLeft: "clamp(3px, 1.5vw, 10px)" }}>PRESENTATION</span>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
