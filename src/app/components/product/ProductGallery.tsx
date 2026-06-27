@@ -129,7 +129,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
                   animate={{ y: [0, -12, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   whileHover={{ scale: 1.08, rotateZ: 3, transition: { duration: 0.4 } }}
-                  className="max-h-[85%] max-w-[90%] object-contain mix-blend-multiply drop-shadow-[0_20px_30px_rgba(0,0,0,0.15)] cursor-crosshair"
+                  className="max-h-[85%] max-w-[90%] object-contain mix-blend-multiply drop-shadow-[0_20px_30px_rgba(0,0,0,0.15)] cursor-pointer"
                 />
               </motion.div>
             </AnimatePresence>
