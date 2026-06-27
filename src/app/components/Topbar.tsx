@@ -30,28 +30,28 @@ export default function TopBar() {
           <a
             href="#"
             aria-label="Facebook"
-            className="text-white hover-icon-pop hover-scale-sm"
+            className="text-white hover:text-[#1877f2] hover-scale-sm transition-colors"
           >
             <FaFacebookF size={15} />
           </a>
           <a
             href="#"
             aria-label="Instagram"
-            className="text-white hover-icon-pop hover-scale-sm"
+            className="text-white hover:text-[#e1306c] hover-scale-sm transition-colors"
           >
             <RiInstagramFill size={16} />
           </a>
           <a
             href="#"
             aria-label="WhatsApp"
-            className="text-white hover-icon-pop hover-scale-sm"
+            className="text-white hover:text-[#25D366] hover-scale-sm transition-colors"
           >
             <RiWhatsappFill size={16} />
           </a>
           <a
             href="#"
             aria-label="YouTube"
-            className="text-white hover-icon-pop hover-scale-sm"
+            className="text-white hover:text-[#ff0000] hover-scale-sm transition-colors"
           >
             <FaYoutube size={16} />
           </a>

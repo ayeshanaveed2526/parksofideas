@@ -45,13 +45,20 @@ export default function RelatedProducts() {
                     <span className="rp-badge">{product.badge}</span>
                   )}
                   <div className="rp-img-inner">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      style={{ objectFit: 'contain' }}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
+                    <motion.div
+                      animate={{ y: [0, -10, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
+                      style={{ width: '100%', height: '100%', position: 'relative' }}
+                    >
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        style={{ objectFit: 'contain' }}
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
+                      />
+                    </motion.div>
                   </div>
                   <div className="rp-hover-bg"></div>
                   

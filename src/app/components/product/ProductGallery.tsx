@@ -107,24 +107,31 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
             </motion.span>
           </div>
 
-          <div className="relative z-10 flex h-full w-full items-center justify-center px-8 py-10 sm:px-12">
+          <div className="relative z-10 flex h-full w-full items-center justify-center px-8 py-10 sm:px-12" style={{ perspective: "1000px" }}>
             <AnimatePresence mode="wait" custom={direction}>
-              <motion.img
+              <motion.div
                 key={activeImage}
-                src={activeImage}
-                alt="Product showcase"
                 custom={direction}
                 variants={{
-                  enter: (d: number) => ({ opacity: 0, scale: 0.98, x: d > 0 ? 20 : -20 }),
-                  center: { opacity: 1, scale: 1, x: 0 },
-                  exit: (d: number) => ({ opacity: 0, scale: 0.98, x: d > 0 ? -20 : 20 }),
+                  enter: (d: number) => ({ opacity: 0, scale: 0.85, x: d > 0 ? 40 : -40, rotateY: d > 0 ? 30 : -30, filter: "blur(10px)" }),
+                  center: { opacity: 1, scale: 1, x: 0, rotateY: 0, filter: "blur(0px)" },
+                  exit: (d: number) => ({ opacity: 0, scale: 0.85, x: d > 0 ? -40 : 40, rotateY: d > 0 ? -30 : 30, filter: "blur(10px)" }),
                 }}
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="max-h-[85%] max-w-[90%] object-contain mix-blend-multiply"
-              />
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="flex items-center justify-center w-full h-full"
+              >
+                <motion.img
+                  src={activeImage}
+                  alt="Product showcase"
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  whileHover={{ scale: 1.08, rotateZ: 3, transition: { duration: 0.4 } }}
+                  className="max-h-[85%] max-w-[90%] object-contain mix-blend-multiply drop-shadow-[0_20px_30px_rgba(0,0,0,0.15)] cursor-crosshair"
+                />
+              </motion.div>
             </AnimatePresence>
           </div>
 

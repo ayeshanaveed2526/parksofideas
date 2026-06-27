@@ -1,10 +1,32 @@
-import React from 'react';
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ShopBackground from "../components/shop/ShopBackground";
+import ShopHero from "../components/shop/ShopHero";
+import ShopGrid from "../components/shop/ShopGrid";
+
+export const metadata = {
+  title: "Shop — Parks of Ideas | Premium Fragrance Collection",
+  description:
+    "Explore our curated collection of premium eau de parfum fragrances. Shop by price, name, and discover your signature scent.",
+};
 
 export default function ShopPage() {
   return (
-    <div className="min-h-screen pt-[120px] pb-20 px-4 sm:px-6 md:px-[50px] 2xl:px-[100px]">
-      <h1 className="text-4xl font-semibold mb-8" style={{ fontFamily: "Inter, sans-serif" }}>Shop</h1>
-      <p className="text-gray-600 mb-8">Welcome to the shop! Our products will be displayed here soon.</p>
-    </div>
+    <main className="min-h-screen relative" style={{ background: "linear-gradient(180deg, #f0f2f8 0%, #f5f7fc 30%, #eef1f8 60%, #f3f5fb 100%)" }}>
+      {/* Animated geometric background */}
+      <ShopBackground />
+
+      {/* Header */}
+      <Header />
+
+      {/* Hero section */}
+      <ShopHero />
+
+      {/* Product grid with toolbar */}
+      <ShopGrid />
+
+      {/* Footer */}
+      <Footer />
+    </main>
   );
 }

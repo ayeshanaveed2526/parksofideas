@@ -243,7 +243,7 @@ export default function Footer() {
           position: relative;
           width: 100%;
           background-color: #000000;
-          color: #a3a3a3;
+          color: #ffffff;
           font-family: var(--font-inter), "Inter", sans-serif;
           border-top: 1px solid rgba(255, 255, 255, 0.08);
           overflow: hidden;
@@ -279,7 +279,7 @@ export default function Footer() {
           font-size: 12px;
           line-height: 1.8;
           margin-bottom: 20px;
-          color: #9ca3af;
+          color: #ffffff;
           letter-spacing: 0.01em;
         }
         .footer-heading {
@@ -334,7 +334,7 @@ export default function Footer() {
         }
         .footer-newsletter-text {
           font-size: 12px;
-          color: #9ca3af;
+          color: #ffffff;
           margin-bottom: 15px;
           letter-spacing: 0.01em;
         }
@@ -358,8 +358,8 @@ export default function Footer() {
           color: #6b7280;
         }
         .footer-newsletter-form button {
-          background-color: #00089d;
-          color: #ffffff;
+          background-color: #ffffff;
+          color: #000000;
           border: none;
           padding: 0 20px;
           cursor: pointer;
@@ -368,10 +368,12 @@ export default function Footer() {
           justify-content: center;
           transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                       background-color 0.3s ease,
+                      color 0.3s ease,
                       box-shadow 0.3s ease;
         }
         .footer-newsletter-form button:hover {
-          background-color: #000672;
+          background-color: #00089d;
+          color: #ffffff;
           transform: scale(1.05);
           box-shadow: 0 4px 16px rgba(0, 8, 157, 0.35);
         }
@@ -412,12 +414,12 @@ export default function Footer() {
           letter-spacing: 0.03em;
         }
         .badge-hot {
-          color: #7b9fff;
-          background-color: rgba(0, 8, 157, 0.35);
+          color: #ffffff;
+          background-color: rgba(255, 255, 255, 0.2);
         }
         .badge-sale {
-          color: #a8bfff;
-          background-color: rgba(0, 8, 157, 0.25);
+          color: #ffffff;
+          background-color: rgba(255, 255, 255, 0.15);
         }
         .mt-6 {
           margin-top: 20px;
@@ -431,7 +433,7 @@ export default function Footer() {
           text-decoration: none;
           font-size: 11px;
           color: #ffffff;
-          background-color: rgba(0, 8, 157, 0.25);
+          background-color: rgba(255, 255, 255, 0.15);
           padding: 6px 14px;
           border-radius: 15px;
           letter-spacing: 0.02em;
@@ -457,8 +459,8 @@ export default function Footer() {
           align-items: flex-start;
         }
         .contact-icon {
-          color: #7b9fff;
-          background-color: rgba(0, 8, 157, 0.25);
+          color: #ffffff;
+          background-color: rgba(255, 255, 255, 0.15);
           width: 36px;
           height: 36px;
           border-radius: 50%;
@@ -466,12 +468,16 @@ export default function Footer() {
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+          transition: background-color 0.3s ease;
+        }
+        .footer-contact-list li:hover .contact-icon {
+          background-color: #00089d;
         }
         .contact-info {
           display: flex;
           flex-direction: column;
           font-size: 12px;
-          color: #a3a3a3;
+          color: #ffffff;
           line-height: 1.5;
           letter-spacing: 0.01em;
         }
@@ -483,12 +489,12 @@ export default function Footer() {
         }
         .contact-sub {
           font-size: 11px;
-          color: #6b7280;
+          color: #ffffff;
           margin-top: 2px;
         }
         .footer-rating {
           font-size: 12px;
-          color: #a3a3a3;
+          color: #ffffff;
           background-color: #111111;
           border: 1px solid rgba(255, 255, 255, 0.08);
           padding: 15px;
@@ -520,13 +526,13 @@ export default function Footer() {
         .rating-text {
           font-style: italic;
           margin: 0 0 8px 0;
-          color: #9ca3af;
+          color: #ffffff;
           line-height: 1.6;
           letter-spacing: 0.01em;
         }
         .rating-author {
           font-size: 11px;
-          color: #6b7280;
+          color: #ffffff;
           margin: 0;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -544,17 +550,17 @@ export default function Footer() {
           border: none;
           padding: 0;
           cursor: pointer;
-          background: #4b5563;
+          background: #ffffff;
           transition: all 0.35s ease;
         }
         .rating-dot--active {
           width: 18px;
           border-radius: 3px;
-          background: #00089d;
+          background: #ffffff;
         }
         .rating-dot:hover {
           background: #00089d;
-          opacity: 0.7;
+          opacity: 1;
         }
         .footer-bottom {
           border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -563,7 +569,7 @@ export default function Footer() {
           justify-content: space-between;
           align-items: center;
           font-size: 11px;
-          color: #9ca3af;
+          color: #ffffff;
           flex-wrap: wrap;
           gap: 20px;
           letter-spacing: 0.01em;
@@ -614,7 +620,7 @@ export default function Footer() {
           padding: 5px 8px;
           border-radius: 4px;
           font-size: 10px;
-          color: #a3a3a3;
+          color: #ffffff;
           display: flex;
           align-items: center;
           gap: 6px;
