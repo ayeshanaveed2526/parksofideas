@@ -117,7 +117,7 @@ export default function MainNavbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 }}
-            className="hidden lg:flex items-center h-full text-[#1a1a1a] mr-[30px]"
+            className="hidden md:flex items-center h-full text-[#1a1a1a] mr-[30px]"
           >
             {navLinks.map((link) => (
               <motion.li
@@ -424,7 +424,7 @@ export default function MainNavbar() {
             </button>
             <button
               aria-label="Menu"
-              className="lg:hidden hover-icon-pop hover-scale-sm"
+              className="md:hidden hover-icon-pop hover-scale-sm"
               onClick={() => setMobileMenuOpen(true)}
             >
               <Menu size={24} strokeWidth={1.5} />
@@ -436,14 +436,14 @@ export default function MainNavbar() {
       {/* ── Mobile Menu Drawer ── */}
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-200 bg-black/50 transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-200 bg-black/50 transition-opacity duration-300 md:hidden ${mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
         onClick={() => setMobileMenuOpen(false)}
       />
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-201 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 right-0 z-201 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
       >
         {/* Close button */}

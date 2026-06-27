@@ -60,7 +60,7 @@ export default function ShopHero() {
       <div className="sh-content">
         {/* Breadcrumb */}
         <nav className="flex items-center justify-center gap-2.5 mb-6 text-white" aria-label="Breadcrumb" style={{ fontFamily: 'var(--font-inter), "Inter", sans-serif' }}>
-          <Link href="/" className="text-white text-[11px] font-semibold tracking-[0.18em] uppercase no-underline transition-opacity duration-300 opacity-100 hover:opacity-80 relative">
+          <Link href="/" className="text-white text-[11px] font-semibold tracking-[0.18em] uppercase no-underline transition-opacity duration-300 hover:opacity-80 relative" style={{ color: '#ffffff', fontSize: '11px', fontWeight: 600, opacity: 1, letterSpacing: '0.18em' }}>
             HOME
           </Link>
           <span className="opacity-50 flex items-center">
