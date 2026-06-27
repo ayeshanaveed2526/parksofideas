@@ -43,13 +43,7 @@ export default function RootLayout({
       className={`${inter.variable} ${marcellus.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {process.env.NODE_ENV === "development" && (
-          <Script
-            src="//unpkg.com/react-grab/dist/index.global.js"
-            crossOrigin="anonymous"
-            strategy="beforeInteractive"
-          />
-        )}
+        {/* Removed unpkg.com react-grab script to prevent blocking initial rendering and speed up component loading */}
         <LegalModalProvider>{children}</LegalModalProvider>
       </body>
     </html>

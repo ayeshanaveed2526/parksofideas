@@ -59,11 +59,11 @@ export default function ShopHero() {
       {/* Content Area */}
       <div className="sh-content">
         {/* Breadcrumb */}
-        <nav className="sh-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/" className="sh-crumb-link">
+        <nav className="flex items-center justify-center gap-2.5 mb-6 text-white" aria-label="Breadcrumb" style={{ fontFamily: 'var(--font-inter), "Inter", sans-serif' }}>
+          <Link href="/" className="text-white text-[11px] font-semibold tracking-[0.18em] uppercase no-underline transition-opacity duration-300 opacity-100 hover:opacity-80 relative">
             HOME
           </Link>
-          <span className="sh-crumb-sep">
+          <span className="opacity-50 flex items-center">
             <svg width="7" height="10" viewBox="0 0 7 10" fill="none">
               <path
                 d="M1 1l4 4-4 4"
@@ -74,7 +74,9 @@ export default function ShopHero() {
               />
             </svg>
           </span>
-          <span className="sh-crumb-current">SHOP</span>
+          <span className="text-white text-[11px] font-semibold tracking-[0.18em] uppercase">
+            SHOP
+          </span>
         </nav>
 
         {/* Title */}
@@ -247,14 +249,14 @@ export default function ShopHero() {
 
         .sh-crumb-link {
           font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 500;
+          font-weight: 600;
           font-size: 11px;
           letter-spacing: 0.18em;
           color: #ffffff;
           text-decoration: none;
           transition: opacity 0.3s ease;
           position: relative;
-          opacity: 0.85;
+          opacity: 1;
         }
 
         .sh-crumb-link::after {
