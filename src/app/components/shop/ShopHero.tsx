@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 export default function ShopHero() {
   const [isMuted, setIsMuted] = useState(true);
@@ -37,30 +36,6 @@ export default function ShopHero() {
   }, []);
 
   const titleText = "THE COLLECTION";
-
-  const titleContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.25,
-      },
-    },
-  };
-
-  const letterVariants = {
-    hidden: { opacity: 0, y: 24, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
 
   return (
     <section className="sh-hero">
@@ -103,22 +78,29 @@ export default function ShopHero() {
         </nav>
 
         {/* Title */}
-        <motion.h1
-          className="sh-title"
-          variants={titleContainerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {titleText.split("").map((char, idx) => (
-            <motion.span
-              key={idx}
-              variants={letterVariants}
-              style={{ display: "inline-block", whiteSpace: char === " " ? "pre" : "normal" }}
-            >
-              {char}
-            </motion.span>
+        <h1 className="sh-title">
+          {titleText.split(" ").map((word, wIdx, wordsArr) => (
+            <span key={wIdx} className="sh-word-unit">
+              {word.split("").map((char, cIdx) => {
+                // Calculate absolute letter index for delay staggering
+                const charIndex = titleText.indexOf(word) + cIdx;
+                const delay = 0.2 + charIndex * 0.05;
+                return (
+                  <span
+                    key={cIdx}
+                    className="sh-animated-letter"
+                    style={{ animationDelay: `${delay}s` }}
+                  >
+                    {char}
+                  </span>
+                );
+              })}
+              {wIdx < wordsArr.length - 1 && (
+                <span className="sh-space">&nbsp;</span>
+              )}
+            </span>
           ))}
-        </motion.h1>
+        </h1>
 
         {/* Decorative accent lines */}
         <div className="sh-accent">
@@ -314,17 +296,45 @@ export default function ShopHero() {
         /* ── Title ── */
         .sh-title {
           font-family: var(--font-marcellus), "Marcellus", serif;
-          font-weight: 400;
-          font-size: 42px;
-          line-height: 1.15;
+          font-weight: 300;
+          font-size: 52px;
+          line-height: 1.1;
           color: #ffffff;
-          margin: 0 0 20px;
-          padding-left: 0.15em;
-          text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-          letter-spacing: 0.22em;
+          margin: 0 0 24px;
+          padding-left: 0.12em;
+          text-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
+          letter-spacing: 0.28em;
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
+        }
+
+        .sh-title span {
+          color: #ffffff !important;
+        }
+
+        .sh-word-unit {
+          display: inline-block;
+          white-space: nowrap;
+        }
+
+        .sh-space {
+          display: inline-block;
+          width: 0.22em;
+        }
+
+        .sh-animated-letter {
+          display: inline-block;
+          opacity: 0;
+          transform: translateY(24px) scale(0.95);
+          animation: shLetterReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes shLetterReveal {
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
         }
 
         /* ── Accent lines ── */
@@ -504,7 +514,8 @@ export default function ShopHero() {
           }
 
           .sh-title {
-            font-size: 30px;
+            font-size: 36px;
+            letter-spacing: 0.18em;
           }
 
           .sh-accent-line {
@@ -529,7 +540,8 @@ export default function ShopHero() {
           }
 
           .sh-title {
-            font-size: 52px;
+            font-size: 80px;
+            letter-spacing: 0.32em;
           }
 
           .sh-accent-line {
