@@ -1,55 +1,152 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PERFUME_CATALOG } from "../data/perfumeCatalog";
 
 const bySlug = (slug: string) => PERFUME_CATALOG.find((p) => p.slug === slug)!;
 
-const categories = [
-  { name: "FLORAL", image: bySlug("roselle").image, link: `/product/${bySlug("roselle").id}` },
-  { name: "WOODY", image: bySlug("noctelle").image, link: `/product/${bySlug("noctelle").id}` },
-  { name: "FRESH", image: bySlug("lucent").image, link: `/product/${bySlug("lucent").id}` },
-  { name: "ORIENTAL", image: bySlug("armonia").image, link: `/product/${bySlug("armonia").id}` },
-  { name: "CITRUS", image: bySlug("solene").image, link: `/product/${bySlug("solene").id}` },
-  { name: "SIGNATURE", image: bySlug("mystique").image, link: `/product/${bySlug("mystique").id}` },
+type Collection = {
+  key: string;
+  label: string;
+  perfumes: ReturnType<typeof bySlug>[];
+};
+
+const collections: Collection[] = [
+  {
+    key: "her",
+    label: "For Her",
+    perfumes: [
+      bySlug("roselle"),
+      bySlug("lumiere"),
+      bySlug("mirabelle"),
+      bySlug("celeste"),
+      bySlug("floren"),
+    ],
+  },
+  {
+    key: "him",
+    label: "For Him",
+    perfumes: [
+      bySlug("orlune"),
+      bySlug("noctelle"),
+      bySlug("vespera"),
+      bySlug("verdelle"),
+      bySlug("montrea"),
+    ],
+  },
+  {
+    key: "unisex",
+    label: "Unisex",
+    perfumes: [
+      bySlug("lucent"),
+      bySlug("azure"),
+      bySlug("aura-crystal"),
+      bySlug("ambrette"),
+      bySlug("elaria"),
+    ],
+  },
 ];
 
 export default function ShopByCategory() {
+  const [active, setActive] = useState(collections[1].key);
+  const activeCollection =
+    collections.find((c) => c.key === active) ?? collections[0];
+
   return (
-    <div className="w-full bg-[#f0f2f8] py-[80px]">
-      <div className="mx-auto flex w-full items-center justify-center px-4 xl:px-[120px]">
-        <div
-          className="flex w-full flex-wrap lg:flex-nowrap items-start justify-center gap-[15px] sm:gap-[30px] md:gap-[40px] lg:gap-0 lg:mt-[-20px] lg:mr-[-40px]"
-          style={{ listStyle: "none" }}
-        >
-          {categories.map((category, index) => (
+    <section className="relative w-full overflow-hidden py-[70px] md:py-[90px]">
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: "url('/images/marble-bg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.7) 55%, rgba(255,255,255,0.75) 100%)",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1320px] px-4 xl:px-[60px]">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <span
+            className="mb-3 text-[12px] uppercase tracking-[0.35em] text-[#00089d]/70"
+            style={{ fontFamily: "var(--font-marcellus), serif" }}
+          >
+            Curated Collections
+          </span>
+          <h2
+            className="text-[28px] font-bold leading-tight text-[#1a1a1a] md:text-[40px]"
+            style={{ fontFamily: "var(--font-marcellus), serif" }}
+          >
+            Shop By Collection
+          </h2>
+        </div>
+
+        <div className="mb-9 flex items-center justify-center">
+          <div className="flex items-center gap-2 rounded-full border border-white/60 bg-white/40 p-1.5 shadow-[0_8px_30px_rgba(0,8,157,0.08)] backdrop-blur-md">
+            {collections.map((c) => {
+              const isActive = c.key === active;
+              return (
+                <button
+                  key={c.key}
+                  type="button"
+                  onClick={() => setActive(c.key)}
+                  className={`rounded-full px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] transition-all duration-300 ease-out md:px-8 ${
+                    isActive
+                      ? "bg-[#00089d] text-white shadow-[0_6px_18px_rgba(0,8,157,0.35)] hover:-translate-y-0.5 hover:shadow-[0_10px_26px_rgba(0,8,157,0.45)]"
+                      : "text-[#3a3a4a] hover:-translate-y-0.5 hover:bg-[#00089d]/10 hover:tracking-[0.22em] hover:text-[#00089d] hover:shadow-[0_6px_18px_rgba(0,8,157,0.18)]"
+                  }`}
+                  style={{ fontFamily: "var(--font-marcellus), serif" }}
+                >
+                  {c.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
+          {activeCollection.perfumes.map((perfume) => (
             <Link
-              key={index}
-              href={category.link}
-              className="group flex shrink-0 flex-col items-center justify-start hover-lift hover-card-3d w-[100px] sm:w-[130px] md:w-[140px] lg:w-[160px] lg:h-[158.9375px] lg:mt-[20px] lg:mr-[40px]"
-              style={{ boxSizing: "border-box" }}
+              key={perfume.id}
+              href={`/product/${perfume.id}`}
+              className="group relative block aspect-[3/4.4] overflow-hidden rounded-[18px] border border-[#d6d8df] shadow-[0_10px_30px_rgba(0,8,157,0.08)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[rgba(0,8,157,0.25)] hover:shadow-[0_22px_55px_rgba(0,8,157,0.22)]"
+              style={{
+                background:
+                  "linear-gradient(150deg, #eceef2 0%, #dcdee4 55%, #cfd2da 100%)",
+              }}
             >
-              <div className="flex h-[75px] w-[75px] sm:h-[80px] sm:w-[80px] md:h-[90px] md:w-[90px] lg:h-[104px] lg:w-[104px] shrink-0 items-center justify-center rounded-full bg-white overflow-hidden hover-ring-pulse hover-glow transition-all duration-300 border border-[rgba(0,8,157,0.08)]">
-                <div className="relative h-full w-full">
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    fill
-                    style={{ objectFit: "contain" }}
-                    sizes="(max-width: 640px) 75px, (max-width: 768px) 80px, (max-width: 1024px) 90px, 104px"
-                  />
-                </div>
+              <div className="relative h-full w-full">
+                <Image
+                  src={perfume.image}
+                  alt={perfume.brand}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
+                />
               </div>
-              <span
-                className="flex w-full lg:w-[160px] items-center justify-center text-[#1a1a1a] transition-all duration-300 group-hover:text-[#00089d] group-hover:tracking-[0.28em] relative text-center uppercase font-normal tracking-[0.2em] leading-[1.26] pl-[0.2em] mt-[15px] lg:mt-[25px] text-[12px] lg:text-[14px]"
-                style={{ fontFamily: "var(--font-marcellus), serif" }}
-              >
-                {category.name}
-              </span>
+
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-full bg-linear-to-t from-black/85 via-black/55 to-transparent px-4 pb-5 pt-12 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+                <p
+                  className="text-center text-[15px] uppercase tracking-[0.22em] text-white md:text-[16px]"
+                  style={{ fontFamily: "var(--font-marcellus), serif" }}
+                >
+                  {perfume.brand}
+                </p>
+                <p className="mt-1 text-center text-[11px] uppercase tracking-[0.25em] text-white/70">
+                  Discover
+                </p>
+              </div>
             </Link>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

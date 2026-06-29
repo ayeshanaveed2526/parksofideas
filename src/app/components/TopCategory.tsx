@@ -227,6 +227,13 @@ export default function TopCategory() {
                 {/* ▸ Info area (Bottom box) */}
                 <div className="tp-card-info">
                   <h3 className="tp-card-name">{product.name}</h3>
+                  <div className="tp-card-stars" aria-label="Rated 5 out of 5">
+                    {[0, 1, 2, 3, 4].map((s) => (
+                      <svg key={s} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
                   <p className="tp-card-desc">{product.description}</p>
                   <span className="tp-card-price">{product.price}</span>
                 </div>
@@ -286,8 +293,8 @@ export default function TopCategory() {
 
         /* ── Title ── */
         .tp-title {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 400;
+          font-family: var(--font-marcellus), "Marcellus", serif;
+          font-weight: 700;
           font-size: 24px;
           line-height: 1.28;
           letter-spacing: .14em;
@@ -395,11 +402,11 @@ export default function TopCategory() {
           text-indent: 0.265em;
           text-transform: uppercase;
           padding: 17px 30px 17px 30px;
-          width: 146px;
+          width: 160px;
           height: 50px;
-          border: 1.5px solid rgba(0, 0, 0, 0.15);
-          background-color: transparent;
-          color: #000;
+          border: 1.5px solid #000;
+          background-color: #000;
+          color: #fff;
           font-family: var(--font-inter), "Inter", sans-serif;
           text-decoration: none;
           cursor: pointer;
@@ -410,11 +417,11 @@ export default function TopCategory() {
         }
 
         .tp-view-all-btn:hover {
-          background-color: #00089d;
-          color: #fff;
-          border-color: #00089d;
+          background-color: #fff;
+          color: #000;
+          border-color: #000;
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 8, 157, 0.28);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
         }
 
         /* ── Grid ── */
@@ -451,8 +458,8 @@ export default function TopCategory() {
           --desc-fs: 11px;
           --price-fs: 13px;
           
-          --info-pt: 24px;
-          --info-pb: 20px;
+          --info-pt: 16px;
+          --info-pb: 16px;
         }
 
         .tp-card:hover {
@@ -466,7 +473,7 @@ export default function TopCategory() {
         .tp-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 260 / 230;
+          aspect-ratio: 260 / 300;
           background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
           overflow: hidden;
         }
@@ -665,14 +672,14 @@ export default function TopCategory() {
         .tp-card-info {
           width: 100%;
           box-sizing: border-box;
-          padding: var(--info-pt) 12px var(--info-pb);
+          padding: var(--info-pt) 16px var(--info-pb);
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: stretch;
           justify-content: flex-start;
           background: linear-gradient(180deg, #ffffff 0%, #fdfcfb 100%);
-          text-align: center;
-          min-height: 140px;
+          text-align: left;
+          min-height: auto;
           position: relative;
         }
 
@@ -680,11 +687,10 @@ export default function TopCategory() {
           content: "";
           position: absolute;
           top: 0;
-          left: 50%;
-          transform: translateX(-50%);
+          left: 16px;
           width: 40px;
           height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(0, 8, 157, 0.35), transparent);
+          background: linear-gradient(90deg, rgba(0, 8, 157, 0.35), transparent);
           border-radius: 1px;
         }
 
@@ -698,6 +704,7 @@ export default function TopCategory() {
           color: #000;
           margin: 0 0 8px;
           padding-left: 0.2em;
+          text-align: center;
           transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
@@ -705,6 +712,27 @@ export default function TopCategory() {
         .tp-card:hover .tp-card-name {
           color: #00089d;
           letter-spacing: 0.25em;
+        }
+
+        /* ── Rating stars ── */
+        .tp-card-stars {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 3px;
+          margin: 0 0 10px;
+        }
+
+        .tp-card-stars svg {
+          width: 14px;
+          height: 14px;
+          color: #e6b400;
+          filter: drop-shadow(0 1px 1px rgba(230, 180, 0, 0.25));
+          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .tp-card:hover .tp-card-stars svg {
+          transform: scale(1.12);
         }
 
         .tp-card-desc {
@@ -728,7 +756,9 @@ export default function TopCategory() {
           line-height: 1;
           color: #000;
           letter-spacing: 0.02em;
-          margin-top: auto;
+          margin-top: 10px;
+          align-self: flex-end;
+          text-align: right;
           transition: transform 0.35s ease;
         }
 
@@ -754,11 +784,15 @@ export default function TopCategory() {
             --name-fs: 11px;
             --desc-fs: 10px;
             --price-fs: 12px;
-            --info-pt: 16px;
+            --info-pt: 14px;
             --info-pb: 12px;
           }
           .tp-card-info {
-            min-height: 120px;
+            min-height: auto;
+          }
+          .tp-card-stars svg {
+            width: 12px;
+            height: 12px;
           }
         }
 
@@ -803,12 +837,12 @@ export default function TopCategory() {
             --name-fs: 16px;
             --desc-fs: 12px;
             --price-fs: 14px;
-            --info-pt: 30px;
-            --info-pb: 25px;
+            --info-pt: 18px;
+            --info-pb: 18px;
           }
 
           .tp-card-info {
-            min-height: 170px;
+            min-height: auto;
             padding: var(--info-pt) 14px var(--info-pb);
           }
 
@@ -882,13 +916,18 @@ export default function TopCategory() {
             --name-fs: 17px;
             --desc-fs: 12px;
             --price-fs: 15px;
-            --info-pt: 36px;
-            --info-pb: 30px;
+            --info-pt: 20px;
+            --info-pb: 20px;
           }
 
           .tp-card-info {
-            min-height: 200px;
+            min-height: auto;
             padding: var(--info-pt) 16px var(--info-pb);
+          }
+
+          .tp-card-stars svg {
+            width: 15px;
+            height: 15px;
           }
         }
 
@@ -939,13 +978,12 @@ export default function TopCategory() {
             --name-fs: 20px;
             --desc-fs: 13px;
             --price-fs: 16px;
-            --info-pt: 50px;
-            --info-pb: 45px;
+            --info-pt: 26px;
+            --info-pb: 26px;
           }
 
           .tp-card-info {
             min-height: auto;
-            aspect-ratio: 260 / 312;
             padding: var(--info-pt) 20px var(--info-pb);
           }
 

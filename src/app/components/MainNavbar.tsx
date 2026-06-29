@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, User, Heart, ShoppingBag, Menu, X } from "lucide-react";
+import { User, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
 import { motion } from "framer-motion";
 
@@ -38,10 +38,7 @@ export default function MainNavbar() {
   const navLinks = [
     { label: "HOME", href: "/" },
     { label: "SHOP", href: "/shop" },
-    { label: "HEADERS", href: "/headers" },
     { label: "BLOG", href: "/blog" },
-    { label: "PAGES", href: "/pages" },
-    { label: "MEGA", href: "/mega" },
     { label: "CONTACT", href: "/contact" },
   ];
 
@@ -410,9 +407,6 @@ export default function MainNavbar() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-3 sm:gap-6 text-black"
           >
-            <button aria-label="Search" className="hover-icon-pop hover-scale-sm">
-              <Search size={20} strokeWidth={1.5} />
-            </button>
             <button aria-label="Account" className="hidden sm:block hover-icon-pop hover-scale-sm">
               <User size={20} strokeWidth={1.5} />
             </button>
@@ -424,7 +418,7 @@ export default function MainNavbar() {
             </button>
             <button
               aria-label="Menu"
-              className="md:hidden hover-icon-pop hover-scale-sm"
+              className="md:hidden! hover-icon-pop hover-scale-sm"
               onClick={() => setMobileMenuOpen(true)}
             >
               <Menu size={24} strokeWidth={1.5} />

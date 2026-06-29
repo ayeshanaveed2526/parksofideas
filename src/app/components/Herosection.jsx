@@ -19,7 +19,7 @@ export default function Herosection() {
       subtitle: "ORGANIC",
       title: "BEAUTY",
       link: "#",
-      theme: "light",
+      theme: "dark",
     },
     {
       id: 3,
@@ -27,7 +27,7 @@ export default function Herosection() {
       subtitle: "BOTANICAL",
       title: "ESSENCE",
       link: "#",
-      theme: "dark",
+      theme: "light",
     },
   ];
 
@@ -60,15 +60,26 @@ export default function Herosection() {
 
   const [currentLeft, setCurrentLeft] = useState(0);
   const [currentRight, setCurrentRight] = useState(0);
+  const [pauseLeft, setPauseLeft] = useState(false);
+  const [pauseRight, setPauseRight] = useState(false);
 
-  // Automatic sliding every 5 seconds
+  // Auto-slide the left column (paused while hovered)
   useEffect(() => {
+    if (pauseLeft) return;
     const timer = setInterval(() => {
       setCurrentLeft((prev) => (prev + 1) % leftSlides.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [leftSlides.length, pauseLeft]);
+
+  // Auto-slide the right column (paused while hovered)
+  useEffect(() => {
+    if (pauseRight) return;
+    const timer = setInterval(() => {
       setCurrentRight((prev) => (prev + 1) % rightSlides.length);
     }, 3000);
     return () => clearInterval(timer);
-  }, [leftSlides.length, rightSlides.length]);
+  }, [rightSlides.length, pauseRight]);
 
   return (
     <div className="relative w-full overflow-hidden bg-white">
@@ -76,7 +87,11 @@ export default function Herosection() {
       <div className="relative mx-auto flex w-full flex-col md:flex-row">
         
         {/* Left Column (Pink Slider) */}
-        <div className="relative flex h-[400px] sm:h-[500px] md:h-[650px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
+        <div
+          className="relative flex h-[400px] sm:h-[500px] md:h-[550px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group"
+          onMouseEnter={() => setPauseLeft(true)}
+          onMouseLeave={() => setPauseLeft(false)}
+        >
           {leftSlides.map((slide, idx) => (
             <div
               key={slide.id}
@@ -230,7 +245,11 @@ export default function Herosection() {
         </div>
 
         {/* Right Column (Beige Slider) */}
-        <div className="relative flex h-[400px] sm:h-[500px] md:h-[650px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group">
+        <div
+          className="relative flex h-[400px] sm:h-[500px] md:h-[550px] w-full md:w-1/2 shrink-0 items-center overflow-hidden group"
+          onMouseEnter={() => setPauseRight(true)}
+          onMouseLeave={() => setPauseRight(false)}
+        >
           {rightSlides.map((slide, idx) => (
             <div
               key={slide.id}
