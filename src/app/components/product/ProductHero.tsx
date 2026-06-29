@@ -44,7 +44,7 @@ const ProductHero: React.FC<ProductHeroProps> = ({ category, productName }) => {
             WebkitBackdropFilter: "blur(8px)",
           }}
         >
-          <Link href="/" className="hover:text-white hover-link-slide transition-colors duration-300">HME</Link>
+          <Link href="/" className="hover:text-white hover-link-slide transition-colors duration-300">HOME</Link>
           <span className="opacity-40">/</span>
           <span className="text-white">{category || 'SHOP'}</span>
         </motion.div>
