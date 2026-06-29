@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-
 export default function ShopHero() {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -58,27 +56,6 @@ export default function ShopHero() {
 
       {/* Content Area */}
       <div className="sh-content">
-        {/* Breadcrumb */}
-        <nav className="flex items-center justify-center gap-2.5 mb-6 text-white" aria-label="Breadcrumb" style={{ fontFamily: 'var(--font-inter), "Inter", sans-serif' }}>
-          <Link href="/" className="text-white text-[11px] font-semibold tracking-[0.18em] uppercase no-underline transition-opacity duration-300 hover:opacity-80 relative" style={{ color: '#ffffff', fontSize: '11px', fontWeight: 600, opacity: 1, letterSpacing: '0.18em' }}>
-            HOME
-          </Link>
-          <span className="opacity-50 flex items-center">
-            <svg width="7" height="10" viewBox="0 0 7 10" fill="none">
-              <path
-                d="M1 1l4 4-4 4"
-                stroke="currentColor"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-          <span className="text-white text-[11px] font-semibold tracking-[0.18em] uppercase">
-            SHOP
-          </span>
-        </nav>
-
         {/* Title */}
         <h1 className="sh-title">
           {titleText.split(" ").map((word, wIdx, wordsArr) => (
@@ -237,63 +214,6 @@ export default function ShopHero() {
           align-items: center;
           padding: 20px;
           margin-bottom: 15px;
-        }
-
-        /* ── Breadcrumb ── */
-        .sh-breadcrumb {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 24px;
-          animation: shFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
-        }
-
-        .sh-crumb-link {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 600;
-          font-size: 11px;
-          letter-spacing: 0.18em;
-          color: #ffffff;
-          text-decoration: none;
-          transition: opacity 0.3s ease;
-          position: relative;
-          opacity: 1;
-        }
-
-        .sh-crumb-link::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: -2px;
-          width: 100%;
-          height: 1px;
-          background: #ffffff;
-          transform: scaleX(0);
-          transform-origin: right;
-          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .sh-crumb-link:hover {
-          opacity: 1;
-        }
-
-        .sh-crumb-link:hover::after {
-          transform: scaleX(1);
-          transform-origin: left;
-        }
-
-        .sh-crumb-sep {
-          color: rgba(255, 255, 255, 0.5);
-          display: flex;
-          align-items: center;
-        }
-
-        .sh-crumb-current {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 600;
-          font-size: 11px;
-          letter-spacing: 0.18em;
-          color: #ffffff;
         }
 
         /* ── Title ── */

@@ -36,6 +36,8 @@ interface ShopToolbarProps {
   productCount: number;
   layoutMode: LayoutMode;
   onLayoutModeChange: (mode: LayoutMode) => void;
+  search: string;
+  onSearchChange: (value: string) => void;
 }
 
 export default function ShopToolbar({
@@ -44,6 +46,8 @@ export default function ShopToolbar({
   productCount,
   layoutMode,
   onLayoutModeChange,
+  search,
+  onSearchChange,
 }: ShopToolbarProps) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -70,6 +74,45 @@ export default function ShopToolbar({
       <span className="st-count">
         Showing&nbsp;<strong>{productCount}</strong>&nbsp;fragrances
       </span>
+
+      {/* Middle: search */}
+      <div className="st-search">
+        <svg
+          className="st-search-icon"
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <input
+          type="text"
+          className="st-search-input"
+          placeholder="Search perfumes by name, notes or scent…"
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+          aria-label="Search perfumes"
+        />
+        {search && (
+          <button
+            type="button"
+            className="st-search-clear"
+            onClick={() => onSearchChange("")}
+            aria-label="Clear search"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
 
       {/* Right: controls group */}
       <div className="st-controls-group">
@@ -199,11 +242,83 @@ export default function ShopToolbar({
           font-size: 13px;
           color: rgba(0, 0, 0, 0.4);
           letter-spacing: 0.02em;
+          flex-shrink: 0;
         }
 
         .st-count strong {
           color: #0a0a0a;
           font-weight: 600;
+        }
+
+        /* ── Inline search ── */
+        .st-search {
+          position: relative;
+          display: flex;
+          align-items: center;
+          flex: 1 1 220px;
+          min-width: 200px;
+          max-width: 520px;
+          margin: 0 4px;
+        }
+
+        .st-search-icon {
+          position: absolute;
+          left: 15px;
+          color: #8b93a5;
+          pointer-events: none;
+          transition: color 0.3s ease;
+        }
+
+        .st-search:focus-within .st-search-icon {
+          color: #00089d;
+        }
+
+        .st-search-input {
+          width: 100%;
+          height: 44px;
+          padding: 0 40px 0 42px;
+          border: 1px solid rgba(0, 8, 157, 0.12);
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(12px);
+          font-family: var(--font-inter), "Inter", sans-serif;
+          font-size: 13px;
+          color: #0a0a0a;
+          letter-spacing: 0.01em;
+          outline: none;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .st-search-input::placeholder {
+          color: #9aa1b2;
+        }
+
+        .st-search-input:focus {
+          border-color: rgba(0, 8, 157, 0.4);
+          box-shadow: 0 4px 16px rgba(0, 8, 157, 0.12);
+          background: #ffffff;
+        }
+
+        .st-search-clear {
+          position: absolute;
+          right: 12px;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          border-radius: 50%;
+          background: rgba(0, 8, 157, 0.06);
+          color: #5a6378;
+          cursor: pointer;
+          transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        .st-search-clear:hover {
+          background: #00089d;
+          color: #ffffff;
+          transform: scale(1.08);
         }
 
         /* ── Sort dropdown wrapper ── */
@@ -339,6 +454,7 @@ export default function ShopToolbar({
           display: flex;
           align-items: center;
           gap: 14px;
+          flex-shrink: 0;
         }
 
         /* ── Layout Switcher ── */
@@ -382,6 +498,15 @@ export default function ShopToolbar({
         }
 
         /* ── Responsive ── */
+        @media (max-width: 767px) {
+          .st-search {
+            order: 3;
+            flex-basis: 100%;
+            max-width: none;
+            margin: 0;
+          }
+        }
+
         @media (max-width: 479px) {
           .st-bar {
             flex-direction: column;
