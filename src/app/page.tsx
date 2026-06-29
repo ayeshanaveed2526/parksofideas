@@ -5,6 +5,7 @@ import ShopByCategory from "./components/ShopByCategory";
 import TopCategory from "./components/TopCategory";
 import VideoSection from "./components/VideoSection";
 import NewProducts from "./components/NewProducts";
+import TrustBadges from "./components/TrustBadges";
 import FBottomBar from "./components/FBottomBar";
 import Footer from "./components/Footer";
 
@@ -18,6 +19,7 @@ export default function Home() {
       <TopCategory />
       <VideoSection />
       <NewProducts />
+      <TrustBadges />
       <FBottomBar />
       <Footer />
     </main>

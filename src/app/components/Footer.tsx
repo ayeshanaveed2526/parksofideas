@@ -184,17 +184,6 @@ export default function Footer() {
                   </motion.div>
                 </AnimatePresence>
               </div>
-              <div className="rating-dots">
-                {TESTIMONIALS.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    aria-label={`Show review ${idx + 1}`}
-                    className={`rating-dot${activeIdx === idx ? " rating-dot--active" : ""}`}
-                    onClick={() => setActiveIdx(idx)}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>

@@ -49,55 +49,6 @@ export default function MainNavbar() {
 
   const megaMenuPerfumes = PERFUME_CATALOG.filter((p) => [2, 16, 23].includes(p.id));
 
-  const shopMegaMenu = {
-    shopLayout: [
-      { name: "3 PER ROW", isNew: false, isHot: false },
-      { name: "4 PER ROW", isNew: false, isHot: false },
-      { name: "COMPACT", isNew: false, isHot: false },
-      { name: "3 PER ROW (SIDEBAR)", isNew: false, isHot: false },
-      { name: "COMPACT (SIDEBAR)", isNew: false, isHot: false },
-      { name: "2 PER ROW (ON MOBILE) L1", isNew: false, isHot: false },
-      { name: "2 PER ROW (ON MOBILE) L2", isNew: false, isHot: true },
-      { name: "CUSTOM SHOP PAGE", isNew: false, isHot: false },
-      { name: "SWITCH IMAGES ON HOVER", isNew: false, isHot: false },
-      { name: "SIDEBAR CART", isNew: true, isHot: false }
-    ],
-    productLayout: [
-      { name: "LAYOUT 1", isNew: false, isHot: false },
-      { name: "LAYOUT 2", isNew: false, isHot: false },
-      { name: "LAYOUT 3", isNew: false, isHot: false },
-      { name: "LAYOUT 4", isNew: false, isHot: false },
-      { name: "PRODUCT IMAGE ZOOM", isNew: false, isHot: false },
-      { name: "PRODUCT VIDEO AND WIDE TABS AREA", isNew: false, isHot: false },
-      { name: "RECENTLY VIEWED PRODUCTS", isNew: false, isHot: false },
-      { name: "WITH FEATURES", isNew: false, isHot: false },
-      { name: "BOUGHT TOGETHER 1", isNew: false, isHot: false },
-      { name: "BOUGHT TOGETHER 2", isNew: false, isHot: false },
-      { name: "STICKY ADD TO CART (ON MOBILE)", isNew: false, isHot: false }
-    ],
-    productType: [
-      { name: "SIMPLE PRODUCT", isNew: false, isHot: false },
-      { name: "GROUPED PRODUCT", isNew: false, isHot: false },
-      { name: "VARIABLE PRODUCT", isNew: false, isHot: false },
-      { name: "EXTERNAL & AFFILIATE PRODUCT", isNew: false, isHot: false }
-    ],
-    pagination: [
-      { name: "LOAD MORE", isNew: false, isHot: false },
-      { name: "INFINITY", isNew: false, isHot: false }
-    ],
-    brands: [
-      { name: "BRAND LIST 1", isNew: false, isHot: false },
-      { name: "BRAND LIST 2", isNew: false, isHot: false },
-      { name: "BRAND (PRODUCT PAGE)", isNew: false, isHot: false },
-      { name: "BRANDS (PRODUCT GRID)", isNew: false, isHot: false }
-    ],
-    categories: [
-      { name: "CATEGORIES IN HEADER", isNew: false, isHot: false },
-      { name: "CATEGORIES IN CONTENT", isNew: false, isHot: false },
-      { name: "WITH DESCRIPTION", isNew: false, isHot: false }
-    ]
-  };
-
   return (
     <>
       <div className={`w-full bg-white transition-all duration-300 ${isSticky ? "shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b border-gray-100" : ""}`}>
@@ -157,84 +108,6 @@ export default function MainNavbar() {
                   </div>
                 )}
 
-                {/* Mega Menu for SHOP */}
-                {link.label === "SHOP" && (
-                  <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-[535px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default px-[20px] xl:px-[60px] py-[50px] grid grid-cols-4 gap-[20px] xl:gap-[40px] text-left overflow-x-auto"
-                  >
-                    {/* Col 1 */}
-                    <div className="flex flex-col">
-                      <h4 className="text-[17px] font-medium text-[#000000] mb-[25px]  pr-[50px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>SHOP LAYOUT</h4>
-                      <ul className="flex flex-col gap-[18px]">
-                        {shopMegaMenu.shopLayout.map((item) => (
-                          <li key={item.name} className="flex items-center gap-2">
-                            <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
-                            {item.isHot && <span className="bg-[#e63946] text-white text-[9px] px-1.5 py-0.5 rounded-sm font-bold tracking-wider leading-none">HOT</span>}
-                            {item.isNew && <span className="bg-[#60b07a] text-white text-[9px] px-1.5 py-0.5 rounded-sm font-bold tracking-wider leading-none">NEW</span>}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    {/* Col 2 */}
-                    <div className="flex flex-col">
-                      <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>PRODUCT LAYOUT</h4>
-                      <ul className="flex flex-col gap-[18px]">
-                        {shopMegaMenu.productLayout.map((item) => (
-                          <li key={item.name} className="flex items-center gap-2">
-                            <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    {/* Col 3 */}
-                    <div className="flex flex-col gap-[40px]">
-                      <div>
-                        <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>PRODUCT TYPE</h4>
-                        <ul className="flex flex-col gap-[18px]">
-                          {shopMegaMenu.productType.map((item) => (
-                            <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>PAGINATION</h4>
-                        <ul className="flex flex-col gap-[18px]">
-                          {shopMegaMenu.pagination.map((item) => (
-                            <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                    {/* Col 4 */}
-                    <div className="flex flex-col gap-[40px]">
-                      <div>
-                        <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>BRANDS</h4>
-                        <ul className="flex flex-col gap-[18px]">
-                          {shopMegaMenu.brands.map((item) => (
-                            <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>CATEGORIES</h4>
-                        <ul className="flex flex-col gap-[18px]">
-                          {shopMegaMenu.categories.map((item) => (
-                            <li key={item.name} className="flex items-center gap-2">
-                              <Link href="#" className="text-[12px] text-[#555] hover:text-[#00089d] transition-colors tracking-wider uppercase" style={{ fontFamily: "Inter, sans-serif" }}>{item.name}</Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
                 {/* Dropdown for HEADERS */}
                 {link.label === "HEADERS" && (
                   <div
@@ -285,36 +158,7 @@ export default function MainNavbar() {
                   </div>
                 )}
 
-                {/* Dropdown for BLOG */}
-                {link.label === "BLOG" && (
-                  <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-[580px] h-[245px] bg-white shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default px-[60px] grid grid-cols-2 gap-[40px] content-center text-left"
-                  >
-                    {/* Col 1 */}
-                    <div className="flex flex-col">
-                      <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>BLOG STYLE</h4>
-                      <ul className="flex flex-col gap-[22px]">
-                        {["GRID", "LIST", "GRID (SIDEBAR)", "LIST (SIDEBAR)"].map((item) => (
-                          <li key={item} className="w-full">
-                            <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    {/* Col 2 */}
-                    <div className="flex flex-col">
-                      <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>POST FORMAT</h4>
-                      <ul className="flex flex-col gap-[22px]">
-                        {["POST FORMAT GALLERY", "POST FORMAT VIDEO"].map((item) => (
-                          <li key={item} className="w-full">
-                            <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-
+          
                 {/* Dropdown for PAGES */}
                 {link.label === "PAGES" && (
                   <div
@@ -330,8 +174,8 @@ export default function MainNavbar() {
                   </div>
                 )}
 
-                {/* Mega Menu for MEGA */}
-                {link.label === "MEGA" && (
+                {/* Mega Menu for SHOP */}
+                {link.label === "SHOP" && (
                   <div
                     className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-auto min-h-[538px] bg-[#f9f9f9] shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default flex text-left"
                   >

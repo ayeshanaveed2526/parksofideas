@@ -190,20 +190,6 @@ export default function Herosection() {
             </div>
           ))}
 
-          {/* Circular Stamp — hidden on small mobile */}
-          <div className="absolute right-4 sm:right-8 md:right-[230px] top-4 sm:top-[40px] z-20 hidden sm:flex h-[90px] w-[90px] md:h-[130px] md:w-[130px] items-center justify-center rounded-full bg-[#fcecf0]">
-             <svg viewBox="0 0 100 100" className="h-[90%] w-[90%] animate-[spin_20s_linear_infinite]">
-               <defs>
-                 <path id="circlePath" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" />
-               </defs>
-               <text fontSize="8.5" fontWeight="500" fill="#1a1a1a" letterSpacing="1.2">
-                 <textPath href="#circlePath" startOffset="0%">
-                   • ALL PRODUCTS IS NATURAL • 2000+ CUSTOMERS 
-                 </textPath>
-               </text>
-             </svg>
-          </div>
-
           {/* Navigation Dots */}
           <div className="absolute bottom-4 sm:bottom-6 left-6 sm:left-[40px] md:left-[80px] z-20 flex gap-2">
             {leftSlides.map((_, idx) => (

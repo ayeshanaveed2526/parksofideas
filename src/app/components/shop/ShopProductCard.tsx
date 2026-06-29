@@ -103,7 +103,7 @@ export default function ShopProductCard({
                   ? "(max-width: 559px) 90vw, 220px"
                   : layoutMode === "cinematic"
                   ? "(max-width: 559px) 45vw, 320px"
-                  : "(max-width: 559px) 45vw, (max-width: 1023px) 25vw, 160px"
+                  : "(max-width: 559px) 50vw, (max-width: 1023px) 25vw, 280px"
               }
               priority={index < 8}
             />
@@ -120,7 +120,7 @@ export default function ShopProductCard({
                   ? "(max-width: 559px) 90vw, 220px"
                   : layoutMode === "cinematic"
                   ? "(max-width: 559px) 45vw, 320px"
-                  : "(max-width: 559px) 45vw, (max-width: 1023px) 25vw, 160px"
+                  : "(max-width: 559px) 50vw, (max-width: 1023px) 25vw, 280px"
               }
             />
           </div>
@@ -329,6 +329,12 @@ export default function ShopProductCard({
             #f5f7fc 100%
           );
           overflow: hidden;
+          cursor: pointer;
+        }
+
+        .sp-card-img,
+        .sp-img-layer {
+          cursor: pointer;
         }
 
         .sp-card-img-wrap::after {
@@ -347,7 +353,7 @@ export default function ShopProductCard({
         /* ── Double-image hover swap structure ── */
         .sp-card-img {
           position: absolute;
-          inset: 28px; /* High padding shrivels the bottle image, making it small and elegant */
+          inset: 14px; /* Lower padding makes the bottle image larger and bolder */
           transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -842,7 +848,7 @@ export default function ShopProductCard({
         /* ── Responsive Styling ── */
         @media (max-width: 639px) {
           .sp-card-img {
-            inset: 22px;
+            inset: 14px;
           }
           
           .sp-card--list {
@@ -885,7 +891,7 @@ export default function ShopProductCard({
 
         @media (min-width: 640px) {
           .sp-card-img {
-            inset: 38px;
+            inset: 18px;
           }
 
           .sp-card-info {
@@ -907,7 +913,7 @@ export default function ShopProductCard({
 
         @media (min-width: 1024px) {
           .sp-card-img {
-            inset: 44px;
+            inset: 22px;
           }
 
           .sp-card-info {

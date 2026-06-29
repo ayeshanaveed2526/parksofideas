@@ -37,7 +37,7 @@ export default function TickerBar() {
         /* ── Ticker Bar ── */
         .fb-ticker-bar {
           width: 100%;
-          height: 60px;
+          height: 50px;
           margin: 0 auto;
           background-color: #ffffff;
           border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -71,7 +71,7 @@ export default function TickerBar() {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 500;
           font-size: 12px;
-          line-height: 60px;
+          line-height: 50px;
           color: #FCD8A5;
           text-transform: uppercase;
           transition: color 0.3s ease, letter-spacing 0.3s ease;
@@ -86,7 +86,7 @@ export default function TickerBar() {
           margin: 0 14px;
           color: #c8a14b;
           font-size: 9px;
-          line-height: 60px;
+          line-height: 50px;
         }
 
         @keyframes marquee {
@@ -101,32 +101,32 @@ export default function TickerBar() {
         /* ── Responsive: tablet ── */
         @media (min-width: 640px) {
           .fb-ticker-bar {
-            height: 70px;
+            height: 50px;
           }
           .fb-ticker-item {
             font-size: 14px;
-            line-height: 70px;
+            line-height: 50px;
           }
           .fb-ticker-separator {
             margin: 0 18px;
             font-size: 10px;
-            line-height: 70px;
+            line-height: 50px;
           }
         }
 
         /* ── Responsive: desktop ── */
         @media (min-width: 992px) {
           .fb-ticker-bar {
-            height: 80px;
+            height: 50px;
           }
           .fb-ticker-item {
             font-size: 16px;
-            line-height: 80px;
+            line-height: 50px;
           }
           .fb-ticker-separator {
             margin: 0 20px;
             font-size: 12px;
-            line-height: 80px;
+            line-height: 50px;
           }
         }
       `}</style>

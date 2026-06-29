@@ -167,13 +167,14 @@ export default function ShopHero() {
         .sh-hero {
           position: relative;
           width: 100%;
-          min-height: 480px;
+          height: 530px;
+          min-height: 530px;
           display: flex;
           justify-content: center;
           align-items: center;
           text-align: center;
           overflow: hidden;
-          padding: 180px 20px 80px;
+          padding: 140px 20px 70px;
           box-sizing: border-box;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -511,7 +512,8 @@ export default function ShopHero() {
         /* ── Responsive ── */
         @media (max-width: 639px) {
           .sh-hero {
-            min-height: 400px;
+            height: 530px;
+            min-height: 530px;
             padding: 130px 16px 60px;
           }
 
@@ -537,8 +539,9 @@ export default function ShopHero() {
 
         @media (min-width: 1024px) {
           .sh-hero {
-            min-height: 520px;
-            padding: 200px 40px 100px;
+            height: 530px;
+            min-height: 530px;
+            padding: 150px 40px 80px;
           }
 
           .sh-title {

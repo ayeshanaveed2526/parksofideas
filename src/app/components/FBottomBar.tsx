@@ -3,65 +3,59 @@
 import React from "react";
 
 export default function FBottomBar() {
-
   const promotionalBanners = [
     {
       id: 1,
-      image: "/images/luchiana-1246111656.webp",
-      subtitle: "COLLECTION",
-      title: "MY ROSES",
+      image: "/images/banner-golden.png",
+      subtitle: "SIGNATURE",
+      title: "GOLDEN OUD",
       link: "#",
-      lightTheme: false,
+      theme: "light", // dark text on golden bg
     },
-
     {
       id: 2,
-      image: "/images/luchiana-1246799511.webp",
-      subtitle: "HAIR HEALTH",
-      title: "15% OFF",
+      image: "/images/banner-blue.png",
+      subtitle: "FRESH AQUATIC",
+      title: "AZURE BLUE",
       link: "#",
-      lightTheme: true,
+      theme: "dark", // white text on deep blue bg
     },
     {
       id: 3,
-      image: "/images/luchiana-1246137549.webp",
-      subtitle: "BODY SHOWERS",
-      title: "20% OFF",
+      image: "/images/banner-gray.png",
+      subtitle: "NEW ARRIVAL",
+      title: "SILVER MUSK",
       link: "#",
-      lightTheme: false,
+      theme: "light", // dark text on light gray bg
     },
   ];
 
+  // Duplicate the set so the marquee can loop seamlessly (-50%).
+  const loopBanners = [...promotionalBanners, ...promotionalBanners];
+
   return (
     <section className="fb-section">
+      <div className="fb-marquee">
+        <div className="fb-track">
+          {loopBanners.map((banner, index) => (
+            <div key={`${banner.id}-${index}`} className="fb-banner-box">
+              <img
+                src={banner.image}
+                alt={banner.title}
+                className="fb-banner-img"
+              />
+              <div className={`fb-banner-overlay ${banner.theme === "dark" ? "fb-overlay-dark" : "fb-overlay-light"}`} />
 
-      {/* ── Lower Promotional Bar (3 Banners) ── */}
-      <div className="fb-banners-grid">
-        {promotionalBanners.map((banner) => (
-          <div
-            key={banner.id}
-            className="fb-banner-box"
-            style={{
-              backgroundImage: `url('${banner.image}')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              overflow: 'hidden',
-            }}
-          >
-            {/* Overlay to ensure readability */}
-            <div className={`fb-banner-overlay ${banner.lightTheme ? "fb-overlay-dark" : "fb-overlay-light"}`} />
-
-            {/* Content */}
-            <div className={`fb-banner-content ${banner.lightTheme ? "fb-content-light" : "fb-content-dark"}`}>
-              <span className="fb-banner-subtitle">{banner.subtitle}</span>
-              <h3 className="fb-banner-title">{banner.title}</h3>
-
-              <a href={banner.link} className="fb-banner-btn">
-                EXPLORE
-              </a>
+              <div className={`fb-banner-content ${banner.theme === "dark" ? "fb-content-light" : "fb-content-dark"}`}>
+                <span className="fb-banner-subtitle">{banner.subtitle}</span>
+                <h3 className="fb-banner-title">{banner.title}</h3>
+                <a href={banner.link} className="fb-banner-btn">
+                  EXPLORE
+                </a>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <style jsx>{`
@@ -72,69 +66,71 @@ export default function FBottomBar() {
           box-sizing: border-box;
         }
 
-
-        /* ── Banners Grid ── */
-        .fb-banners-grid {
+        .fb-marquee {
           width: 100%;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1fr;
-          box-sizing: border-box;
+          overflow: hidden;
         }
 
+        .fb-track {
+          display: flex;
+          width: max-content;
+          animation: fbScroll 28s linear infinite;
+          will-change: transform;
+        }
+
+        .fb-track:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes fbScroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        /* ── Banner box (3 per frame on desktop) ── */
         .fb-banner-box {
           position: relative;
-          height: 220px;
-          background-size: cover;
-          background-position: center;
+          flex: 0 0 80vw;
+          width: 80vw;
+          height: 240px;
+          overflow: hidden;
+          box-sizing: border-box;
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          overflow: hidden;
-          box-sizing: border-box;
-          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .fb-banner-box:hover {
-          transform: scale(1.02);
-        }
-
-        .fb-banner-box::after {
-          content: "";
+        .fb-banner-img {
           position: absolute;
           inset: 0;
-          background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
-          background-size: 200% 100%;
-          background-position: -200% center;
-          z-index: 3;
-          pointer-events: none;
-          transition: background-position 0.8s ease;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          z-index: 0;
+          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .fb-banner-box:hover::after {
-          background-position: 200% center;
+        .fb-banner-box:hover .fb-banner-img {
+          transform: scale(1.05);
         }
 
         .fb-banner-overlay {
           position: absolute;
           inset: 0;
           z-index: 1;
-          transition: opacity 0.3s ease;
-          opacity: 0.05;
         }
 
         .fb-overlay-dark {
-          background-color: #000000;
-          opacity: 0.15; /* slightly darker to make white text pop on blonde background */
+          background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.12) 45%, transparent 70%);
         }
 
         .fb-overlay-light {
-          background-color: #ffffff;
-          opacity: 0.05;
-        }
-
-        .fb-banner-box:hover .fb-banner-overlay {
-          opacity: 0.25;
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 70%);
         }
 
         .fb-banner-content {
@@ -144,7 +140,7 @@ export default function FBottomBar() {
           flex-direction: column;
           align-items: flex-start;
           text-align: left;
-          padding: 20px 24px;
+          padding: 20px 28px;
           max-width: 80%;
         }
 
@@ -155,7 +151,7 @@ export default function FBottomBar() {
           line-height: 1;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          margin: 0 0 8px;
+          margin: 0 0 10px;
         }
 
         .fb-banner-title {
@@ -163,7 +159,7 @@ export default function FBottomBar() {
           font-weight: 200 !important;
           font-size: 26px !important;
           line-height: 1.185 !important;
-          letter-spacing: .14em !important;
+          letter-spacing: 0.14em !important;
           text-transform: uppercase !important;
           margin: 0 0 18px;
           white-space: nowrap;
@@ -187,8 +183,6 @@ export default function FBottomBar() {
           text-decoration: none;
           transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
           box-sizing: border-box;
-          position: relative;
-          overflow: hidden;
         }
 
         .fb-banner-btn:hover {
@@ -196,109 +190,80 @@ export default function FBottomBar() {
           box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
         }
 
-        /* ── Dark Theme Content (Roses, Body Showers) ── */
+        /* ── Dark theme (white text) ── */
+        .fb-content-light .fb-banner-subtitle {
+          color: #ffffff;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        .fb-content-light .fb-banner-title {
+          color: #ffffff;
+          text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+        }
+        .fb-content-light .fb-banner-btn {
+          border: 1px solid #ffffff;
+          color: #ffffff;
+        }
+        .fb-content-light .fb-banner-btn:hover {
+          background-color: #ffffff;
+          color: #1a1a1a;
+          border-color: #ffffff;
+        }
+
+        /* ── Light theme (dark text) ── */
         .fb-content-dark .fb-banner-subtitle {
           color: #1a1a1a;
         }
-
         .fb-content-dark .fb-banner-title {
           color: #1a1a1a;
         }
-
         .fb-content-dark .fb-banner-btn {
           border: 1px solid #1a1a1a;
           color: #1a1a1a;
         }
-
         .fb-content-dark .fb-banner-btn:hover {
           background-color: #1a1a1a;
           color: #ffffff;
           border-color: #1a1a1a;
         }
 
-        /* ── Light Theme Content (Blonde Hair Health) ── */
-        .fb-content-light .fb-banner-subtitle {
-          color: #ffffff;
-          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .fb-content-light .fb-banner-title {
-          color: #ffffff;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .fb-content-light .fb-banner-btn {
-          border: 1px solid #ffffff;
-          color: #ffffff;
-          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-          box-shadow: inset 0 0 0 0 #ffffff;
-        }
-
-        .fb-content-light .fb-banner-btn:hover {
-          background-color: #ffffff;
-          color: #1a1a1a;
-          border-color: #ffffff;
-          text-shadow: none;
-        }
-
-        /* ── Responsive: tablet ── */
+        /* ── Responsive: tablet (2 per frame) ── */
         @media (min-width: 640px) {
-
           .fb-banner-box {
-            height: 250px;
+            flex-basis: 50vw;
+            width: 50vw;
+            height: 280px;
           }
-
           .fb-banner-content {
-            padding: 20px 30px;
+            padding: 20px 36px;
           }
-
           .fb-banner-subtitle {
             font-size: 14px;
           }
-
           .fb-banner-title {
             font-size: 30px !important;
           }
         }
 
-        /* ── Responsive: medium ── */
-        @media (min-width: 768px) {
-          .fb-banners-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          .fb-banner-box {
-            height: 260px;
-          }
-        }
-
-        /* ── Responsive: desktop ── */
+        /* ── Responsive: desktop (3 per frame) ── */
         @media (min-width: 992px) {
-
-          .fb-banners-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-
           .fb-banner-box {
-            height: 290px;
+            flex-basis: 33.3333vw;
+            width: 33.3333vw;
+            height: 300px;
           }
-
           .fb-banner-content {
-            padding: 20px 45px;
-            max-width: 60%;
+            padding: 20px 50px;
+            max-width: 70%;
           }
-
           .fb-banner-subtitle {
             font-size: 16px;
             letter-spacing: 0.35em;
-            margin: 0 0 11px;
+            margin: 0 0 12px;
           }
-
           .fb-banner-title {
             font-size: 38px !important;
-            margin: 0 0 25px;
+            margin: 0 0 24px;
           }
-
           .fb-banner-btn {
             width: 141px;
             height: 50px;

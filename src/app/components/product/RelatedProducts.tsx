@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PERFUME_CATALOG, formatPerfumePrice } from '../../data/perfumeCatalog';
 
-const relatedProducts = PERFUME_CATALOG.filter((p) => [19, 22, 29].includes(p.id)).map((p) => ({
+const relatedProducts = PERFUME_CATALOG.slice(0, 8).map((p) => ({
   id: String(p.id),
   name: p.brand,
   desc: p.description,
@@ -16,6 +16,48 @@ const relatedProducts = PERFUME_CATALOG.filter((p) => [19, 22, 29].includes(p.id
 }));
 
 export default function RelatedProducts() {
+  const [perView, setPerView] = useState(3);
+  const [index, setIndex] = useState(0);
+  const hoverRef = useRef(false);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setPerView(w < 640 ? 1 : w < 1024 ? 2 : 3);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const maxIndex = Math.max(0, relatedProducts.length - perView);
+
+  useEffect(() => {
+    setIndex((i) => Math.min(i, maxIndex));
+  }, [maxIndex]);
+
+  const goTo = useCallback(
+    (next: number) => {
+      setIndex(() => {
+        if (next < 0) return maxIndex;
+        if (next > maxIndex) return 0;
+        return next;
+      });
+    },
+    [maxIndex]
+  );
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!hoverRef.current) {
+        setIndex((i) => (i >= maxIndex ? 0 : i + 1));
+      }
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [maxIndex]);
+
+  const cardBasis = 100 / relatedProducts.length;
+
   return (
     <section className="rp-section">
       <div className="rp-container">
@@ -30,67 +72,112 @@ export default function RelatedProducts() {
           <div className="rp-divider"></div>
         </motion.div>
 
-        <div className="rp-grid">
-          {relatedProducts.map((product, idx) => (
-            <Link key={product.id} href={`/product/${product.id}`} className="rp-card-link">
-              <motion.article
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="rp-card"
-              >
-                <div className="rp-img-wrap">
-                  {product.badge && (
-                    <span className="rp-badge">{product.badge}</span>
-                  )}
-                  <div className="rp-img-inner">
-                    <motion.div
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
-                      style={{ width: '100%', height: '100%', position: 'relative' }}
-                    >
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        style={{ objectFit: 'contain' }}
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
-                      />
-                    </motion.div>
-                  </div>
-                  <div className="rp-hover-bg"></div>
-                  
-                  {/* Action buttons */}
-                  <div className="rp-actions">
-                    <button className="rp-action-btn" aria-label="Quick View">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <div className="rp-action-div"></div>
-                    <button className="rp-action-btn" aria-label="Add to Wishlist">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                      </svg>
-                    </button>
-                  </div>
-                  
-                  {/* ATC Button */}
-                  <button className="rp-atc">
-                    + ADD TO CART
-                  </button>
-                </div>
+        <div
+          className="rp-slider"
+          onMouseEnter={() => (hoverRef.current = true)}
+          onMouseLeave={() => (hoverRef.current = false)}
+        >
+          <button
+            type="button"
+            className="rp-arrow rp-arrow-prev"
+            aria-label="Previous"
+            onClick={() => goTo(index - 1)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
 
-                <div className="rp-info">
-                  <h3 className="rp-name">{product.name}</h3>
-                  <p className="rp-desc">{product.desc}</p>
-                  <p className="rp-price">{formatPerfumePrice(product.price)}</p>
+          <div className="rp-viewport">
+            <div
+              className="rp-track"
+              style={{
+                width: `${(relatedProducts.length / perView) * 100}%`,
+                transform: `translateX(-${index * cardBasis}%)`,
+              }}
+            >
+              {relatedProducts.map((product, idx) => (
+                <div key={product.id} className="rp-slide" style={{ flex: `0 0 ${cardBasis}%` }}>
+                  <Link href={`/product/${product.id}`} className="rp-card-link">
+                    <article className="rp-card">
+                      <div className="rp-img-wrap">
+                        {product.badge && (
+                          <span className="rp-badge">{product.badge}</span>
+                        )}
+                        <div className="rp-img-inner">
+                          <motion.div
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
+                            style={{ width: '100%', height: '100%', position: 'relative' }}
+                          >
+                            <Image
+                              src={product.image}
+                              alt={product.name}
+                              fill
+                              style={{ objectFit: 'contain' }}
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
+                            />
+                          </motion.div>
+                        </div>
+                        <div className="rp-hover-bg"></div>
+
+                        {/* Action buttons */}
+                        <div className="rp-actions">
+                          <button className="rp-action-btn" aria-label="Quick View">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                              <circle cx="12" cy="12" r="3" />
+                            </svg>
+                          </button>
+                          <div className="rp-action-div"></div>
+                          <button className="rp-action-btn" aria-label="Add to Wishlist">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                            </svg>
+                          </button>
+                        </div>
+
+                        {/* ATC Button */}
+                        <button className="rp-atc">
+                          + ADD TO CART
+                        </button>
+                      </div>
+
+                      <div className="rp-info">
+                        <h3 className="rp-name">{product.name}</h3>
+                        <p className="rp-desc">{product.desc}</p>
+                        <p className="rp-price">{formatPerfumePrice(product.price)}</p>
+                      </div>
+                    </article>
+                  </Link>
                 </div>
-              </motion.article>
-            </Link>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="rp-arrow rp-arrow-next"
+            aria-label="Next"
+            onClick={() => goTo(index + 1)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Dots */}
+        <div className="rp-dots">
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Go to slide ${i + 1}`}
+              className={`rp-dot ${i === index ? 'rp-dot-active' : ''}`}
+              onClick={() => goTo(i)}
+            />
           ))}
         </div>
       </div>
@@ -126,18 +213,84 @@ export default function RelatedProducts() {
           margin: 0 auto;
         }
         
-        .rp-grid {
-          display: grid;
-          grid-template-columns: repeat(1, 1fr);
-          gap: 30px;
+        /* ── Slider ── */
+        .rp-slider {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 8px;
         }
-        @media (min-width: 768px) {
-          .rp-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
+        .rp-viewport {
+          overflow: hidden;
+          width: 100%;
+          padding: 10px 0;
+        }
+        .rp-track {
+          display: flex;
+          transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .rp-slide {
+          padding: 0 15px;
+          box-sizing: border-box;
+        }
+
+        .rp-arrow {
+          flex-shrink: 0;
+          width: 46px;
+          height: 46px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          border: 1px solid rgba(0, 8, 157, 0.12);
+          background: #ffffff;
+          color: #00089d;
+          cursor: pointer;
+          box-shadow: 0 8px 22px rgba(0, 8, 157, 0.12);
+          transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+          z-index: 5;
+        }
+        .rp-arrow svg {
+          width: 20px;
+          height: 20px;
+        }
+        .rp-arrow:hover {
+          background: #00089d;
+          color: #ffffff;
+          transform: scale(1.08);
+        }
+        @media (max-width: 640px) {
+          .rp-arrow {
+            width: 40px;
+            height: 40px;
+          }
+          .rp-slide {
+            padding: 0 8px;
           }
         }
-        
+
+        .rp-dots {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 36px;
+        }
+        .rp-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          border: none;
+          background: #d4d7e3;
+          cursor: pointer;
+          padding: 0;
+          transition: all 0.4s ease;
+        }
+        .rp-dot-active {
+          width: 26px;
+          border-radius: 4px;
+          background: #00089d;
+        }
+
         .rp-card-link {
           display: block;
           text-decoration: none;
