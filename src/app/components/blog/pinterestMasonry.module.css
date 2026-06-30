@@ -1,0 +1,319 @@
+.masonry {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.upperGrid {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pinWrap {
+  break-inside: avoid;
+}
+
+.pin {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 8, 157, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 8, 157, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease;
+}
+
+.pin:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200, 161, 75, 0.4);
+  box-shadow: 0 16px 36px rgba(0, 8, 157, 0.12);
+}
+
+.pinImageWrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(165deg, #eef1f8 0%, #e8ebf4 100%);
+  transition: height 0.35s ease;
+}
+
+.pinImage {
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.pin:hover .pinImage {
+  transform: scale(1.04);
+}
+
+.pinBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(0, 8, 157, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.pinShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.65s ease;
+  pointer-events: none;
+}
+
+.pin:hover .pinShimmer {
+  transform: translateX(120%);
+}
+
+.pinOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(0, 8, 157, 0.55) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  text-align: center;
+}
+
+.pin:hover .pinOverlay {
+  opacity: 1;
+}
+
+.pinCategory {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c8a14b;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 161, 75, 0.5);
+  background: rgba(10, 10, 10, 0.35);
+}
+
+.pinTitle {
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: clamp(15px, 1.6vw, 20px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.pinCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.pinCaption {
+  padding: 12px 14px 14px;
+}
+
+.pinMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 11px;
+  color: rgba(10, 10, 10, 0.4);
+  margin-bottom: 6px;
+}
+
+.pinMeta span + span::before {
+  content: "·";
+  margin-right: 8px;
+  color: rgba(10, 10, 10, 0.25);
+}
+
+.pinCaptionTitle {
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0 0 6px;
+  line-height: 1.35;
+  transition: color 0.3s ease;
+}
+
+.pin:hover .pinCaptionTitle {
+  color: #00089d;
+}
+
+.pinExcerpt {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(10, 10, 10, 0.55);
+  margin: 0 0 8px;
+}
+
+.pinTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.pinTag {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 10px;
+  text-transform: lowercase;
+  color: rgba(0, 8, 157, 0.75);
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0, 8, 157, 0.06);
+  border: 1px solid rgba(0, 8, 157, 0.1);
+}
+
+/* ── Wide rectangle pin (bottom row) ── */
+.widePinWrap {
+  width: 100%;
+}
+
+.widePin {
+  display: grid;
+  grid-template-columns: minmax(180px, 38%) minmax(0, 1fr);
+  text-decoration: none;
+  color: inherit;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 8, 157, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 8, 157, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease;
+  min-height: 220px;
+}
+
+.widePin:hover {
+  transform: translateY(-3px);
+  border-color: rgba(200, 161, 75, 0.4);
+  box-shadow: 0 16px 36px rgba(0, 8, 157, 0.12);
+}
+
+.widePinImageWrap {
+  position: relative;
+  min-height: 220px;
+  background: linear-gradient(165deg, #eef1f8 0%, #e8ebf4 100%);
+}
+
+.widePinCaption {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 28px;
+}
+
+.widePinTitle {
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0 0 10px;
+  line-height: 1.35;
+  transition: color 0.3s ease;
+}
+
+.widePin:hover .widePinTitle {
+  color: #00089d;
+}
+
+.widePinExcerpt {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(10, 10, 10, 0.58);
+  margin: 0 0 12px;
+  max-width: 56ch;
+}
+
+.widePinCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #00089d;
+}
+
+@media (max-width: 639px) {
+  .upperGrid {
+    gap: 10px;
+  }
+
+  .masonry {
+    gap: 10px;
+  }
+
+  .column {
+    gap: 10px;
+  }
+
+  .widePin {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .widePinImageWrap {
+    min-height: 200px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .widePinCaption {
+    padding: 16px 18px 20px;
+  }
+}

@@ -15,7 +15,7 @@ export default function ShopGrid() {
   const [animKey, setAnimKey] = useState(0);
   const [quickViewProduct, setQuickViewProduct] = useState<PerfumeProduct | null>(null);
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(PER_PAGE);
 
   /* Filter by search query (brand, description, notes) */
   const filteredProducts = useMemo(() => {
@@ -49,30 +49,27 @@ export default function ShopGrid() {
     }
   }, [sortBy, filteredProducts]);
 
-  const totalPages = Math.max(1, Math.ceil(sortedProducts.length / PER_PAGE));
-
-  /* Keep page in range when filters change */
+  /* Reset visible products when filters change */
   useEffect(() => {
-    setPage(1);
+    setVisibleCount(PER_PAGE);
   }, [search, sortBy]);
 
-  const pageProducts = useMemo(() => {
-    const start = (page - 1) * PER_PAGE;
-    return sortedProducts.slice(start, start + PER_PAGE);
-  }, [sortedProducts, page]);
+  const visibleProducts = useMemo(
+    () => sortedProducts.slice(0, visibleCount),
+    [sortedProducts, visibleCount]
+  );
+
+  const hasMore = visibleCount < sortedProducts.length;
 
   const handleSortChange = (sort: SortOption) => {
     setSortBy(sort);
     setAnimKey((k) => k + 1);
   };
 
-  const goToPage = (p: number) => {
-    const next = Math.min(Math.max(1, p), totalPages);
-    setPage(next);
-    setAnimKey((k) => k + 1);
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  const loadMore = () => {
+    setVisibleCount((count) =>
+      Math.min(count + PER_PAGE, sortedProducts.length)
+    );
   };
 
   return (
@@ -87,7 +84,7 @@ export default function ShopGrid() {
         onSearchChange={setSearch}
       />
 
-      {pageProducts.length === 0 ? (
+      {visibleProducts.length === 0 ? (
         <div className="sg-empty">
           <p className="sg-empty-title">No fragrances found</p>
           <p className="sg-empty-sub">Try a different search term.</p>
@@ -98,7 +95,7 @@ export default function ShopGrid() {
           key={`${layoutMode}-${animKey}`}
         >
           <AnimatePresence mode="popLayout">
-            {pageProducts.map((product, idx) => (
+            {visibleProducts.map((product, idx) => (
               <motion.div
                 layout
                 key={product.id}
@@ -124,46 +121,10 @@ export default function ShopGrid() {
         </div>
       )}
 
-      {/* ── Pagination ── */}
-      {totalPages > 1 && (
-        <div className="sg-pagination">
-          <button
-            type="button"
-            className="sg-page-arrow"
-            onClick={() => goToPage(page - 1)}
-            disabled={page === 1}
-            aria-label="Previous page"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-
-          {Array.from({ length: totalPages }).map((_, i) => {
-            const p = i + 1;
-            return (
-              <button
-                key={p}
-                type="button"
-                className={`sg-page-btn${p === page ? " sg-page-btn--active" : ""}`}
-                onClick={() => goToPage(p)}
-                aria-current={p === page ? "page" : undefined}
-              >
-                {p}
-              </button>
-            );
-          })}
-
-          <button
-            type="button"
-            className="sg-page-arrow"
-            onClick={() => goToPage(page + 1)}
-            disabled={page === totalPages}
-            aria-label="Next page"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 6l6 6-6 6" />
-            </svg>
+      {hasMore && (
+        <div className="sg-load-more-wrap">
+          <button type="button" className="sg-load-more" onClick={loadMore}>
+            Load More
           </button>
         </div>
       )}
@@ -269,58 +230,40 @@ export default function ShopGrid() {
           margin: 0 auto;
         }
 
-        /* ── Pagination ── */
-        .sg-pagination {
+        /* ── Load more ── */
+        .sg-load-more-wrap {
           display: flex;
-          align-items: center;
           justify-content: center;
-          gap: 8px;
           margin-top: 50px;
-          flex-wrap: wrap;
         }
 
-        .sg-page-btn,
-        .sg-page-arrow {
-          min-width: 42px;
-          height: 42px;
-          padding: 0 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid rgba(0, 8, 157, 0.12);
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.85);
-          backdrop-filter: blur(10px);
-          color: #2c3650;
+        .sg-load-more {
+          min-width: 200px;
+          padding: 14px 36px;
+          border: 1px solid var(--poi-btn-border);
+          border-radius: 999px;
+          background: var(--poi-btn-bg);
+          color: #ffffff;
           font-family: var(--font-inter), "Inter", sans-serif;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 600;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
           cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
         }
 
-        .sg-page-btn:hover,
-        .sg-page-arrow:hover:not(:disabled) {
-          border-color: rgba(0, 8, 157, 0.35);
-          color: #00089d;
+        .sg-load-more:hover {
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          color: #ffffff;
           transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(0, 8, 157, 0.12);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
-        .sg-page-btn--active {
-          background: linear-gradient(135deg, #00089d 0%, #000672 100%);
-          border-color: #00089d;
-          color: #ffffff;
-          box-shadow: 0 6px 18px rgba(0, 8, 157, 0.3);
-        }
-
-        .sg-page-btn--active:hover {
-          color: #ffffff;
-        }
-
-        .sg-page-arrow:disabled {
-          opacity: 0.4;
-          cursor: not-allowed;
+        .sg-load-more:active {
+          transform: translateY(0);
         }
 
         /* ── Responsive Padding ── */

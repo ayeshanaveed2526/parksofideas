@@ -122,7 +122,7 @@ export default function LegalModal({ variant, isOpen, onClose }: LegalModalProps
           <p className="legal-modal-footer-note">
             By using this website, you agree to our terms.
           </p>
-          <button type="button" className="legal-modal-accept" onClick={onClose}>
+          <button type="button" className="legal-modal-accept poi-btn" onClick={onClose}>
             I Understand
           </button>
         </footer>

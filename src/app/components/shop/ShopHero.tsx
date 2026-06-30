@@ -354,21 +354,24 @@ export default function ShopHero() {
           width: 36px;
           height: 36px;
           border-radius: 50%;
-          border: 1px solid rgba(255, 255, 255, 0.25);
-          background: rgba(0, 0, 0, 0.35);
+          border: 1px solid var(--poi-btn-border);
+          background: var(--poi-btn-bg);
           backdrop-filter: blur(12px);
           color: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
           outline: none;
         }
 
         .sh-control-btn:hover {
-          background: rgba(0, 8, 157, 0.8);
-          border-color: rgba(255, 255, 255, 0.55);
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
+          color: #ffffff;
           transform: translateY(-2px) scale(1.05);
         }
 

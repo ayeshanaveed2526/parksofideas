@@ -72,19 +72,20 @@ export default function TickerBar() {
           font-weight: 500;
           font-size: 12px;
           line-height: 50px;
-          color: #FCD8A5;
+          color: #0a0a0a;
           text-transform: uppercase;
           transition: color 0.3s ease, letter-spacing 0.3s ease;
+          cursor: default;
         }
 
         .fb-ticker-item:hover {
-          color: #FFF5DF;
+          color: #c8a14b;
           letter-spacing: 0.05em;
         }
 
         .fb-ticker-separator {
           margin: 0 14px;
-          color: #c8a14b;
+          color: rgba(10, 10, 10, 0.35);
           font-size: 9px;
           line-height: 50px;
         }

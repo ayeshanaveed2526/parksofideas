@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import VideoHero from "./components/VideoHero";
 import Herosection from "./components/Herosection";
 import TickerBar from "./components/TickerBar";
 import ShopByCategory from "./components/ShopByCategory";
@@ -13,13 +14,14 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background relative">
       <Header />
-      <Herosection />
-      <TickerBar />
+      <VideoHero />
       <ShopByCategory />
       <TopCategory />
       <VideoSection />
       <NewProducts />
+      <Herosection />
       <TrustBadges />
+      <TickerBar />
       <FBottomBar />
       <Footer />
     </main>

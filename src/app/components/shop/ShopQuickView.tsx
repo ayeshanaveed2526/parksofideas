@@ -177,20 +177,21 @@ export default function ShopQuickView({ product, onClose }: ShopQuickViewProps) 
           display: flex;
           align-items: center;
           justify-content: center;
-          border: none;
+          border: 1px solid var(--poi-btn-border);
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.9);
-          color: #333;
+          background: var(--poi-btn-bg);
+          color: #ffffff;
           cursor: pointer;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          transition: color 0.25s ease, transform 0.25s ease,
-            box-shadow 0.25s ease;
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
         }
 
         .sq-close:hover {
-          color: #00089d;
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
+          color: #ffffff;
           transform: scale(1.1) rotate(90deg);
-          box-shadow: 0 4px 16px rgba(0, 8, 157, 0.2);
         }
 
         /* ── Inner layout ── */
@@ -331,17 +332,19 @@ export default function ShopQuickView({ product, onClose }: ShopQuickViewProps) 
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: #ffffff;
-          background: linear-gradient(135deg, #00089d 0%, #000672 100%);
-          border: none;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
           border-radius: 12px;
           cursor: pointer;
-          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-            box-shadow 0.35s ease;
+          transition: var(--poi-btn-transition);
         }
 
         .sq-atc-btn:hover {
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
           transform: translateY(-2px);
-          box-shadow: 0 10px 28px rgba(0, 8, 157, 0.35);
         }
 
         .sq-details-btn {
@@ -355,21 +358,21 @@ export default function ShopQuickView({ product, onClose }: ShopQuickViewProps) 
           letter-spacing: 0.15em;
           text-transform: uppercase;
           text-decoration: none;
-          color: #00089d;
-          background: transparent;
-          border: 1.5px solid rgba(0, 8, 157, 0.2);
+          color: #ffffff;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
           border-radius: 12px;
           cursor: pointer;
           box-sizing: border-box;
-          transition: background-color 0.3s ease,
-            border-color 0.3s ease,
-            color 0.3s ease,
-            transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+          transition: var(--poi-btn-transition);
         }
 
         .sq-details-btn:hover {
-          background: rgba(0, 8, 157, 0.06);
-          border-color: rgba(0, 8, 157, 0.4);
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
+          color: #ffffff;
           transform: translateY(-1px);
         }
 

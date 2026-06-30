@@ -5,10 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
-import { Navigation, A11y, Autoplay } from "swiper/modules";
+import { Autoplay, A11y } from "swiper/modules";
 import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
 import "swiper/css";
-import "swiper/css/navigation";
 
 interface Product {
   id: number;
@@ -23,7 +22,7 @@ interface Product {
   isExternal?: boolean;
 }
 
-const productsData: Product[] = PERFUME_CATALOG.slice(12, 18).map((perfume) => ({
+const productsData: Product[] = PERFUME_CATALOG.slice(0, 16).map((perfume) => ({
   id: perfume.id,
   name: perfume.brand,
   description: perfume.description,
@@ -34,57 +33,39 @@ const productsData: Product[] = PERFUME_CATALOG.slice(12, 18).map((perfume) => (
   badges: [
     ...(perfume.id % 2 === 0 ? [{ text: "-11%", color: "#000000" }] : []),
     ...(perfume.id % 3 === 0 ? [{ text: "FEATURED", color: "#00089d" }] : []),
-    ...(perfume.id === 17 ? [{ text: "NEW", color: "#00089d" }] : []),
+    ...(perfume.id % 5 === 0 ? [{ text: "NEW", color: "#00089d" }] : []),
   ],
 }));
 
 export default function NewProducts() {
+  const swiperRef = useRef<SwiperType | null>(null);
   const currentProducts = productsData;
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
 
-  const bindNavigation = (swiper: SwiperType) => {
-    if (!swiper.params.navigation || typeof swiper.params.navigation === "boolean") return;
-    swiper.params.navigation.prevEl = prevRef.current;
-    swiper.params.navigation.nextEl = nextRef.current;
-    swiper.navigation.init();
-    swiper.navigation.update();
-  };
+  const pauseMarquee = () => swiperRef.current?.autoplay?.stop();
+  const resumeMarquee = () => swiperRef.current?.autoplay?.start();
 
   return (
     <section className="np-section">
-      <div className="np-container">
-        <div className="np-carousel">
-          <button
-            ref={prevRef}
-            type="button"
-            className="np-carousel-nav np-carousel-nav--prev"
-            aria-label="Previous slide"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-
-          <div className="np-carousel-track">
+      <div
+        className="np-marquee-wrap"
+        onMouseEnter={pauseMarquee}
+        onMouseLeave={resumeMarquee}
+      >
         <Swiper
-          modules={[Navigation, A11y, Autoplay]}
-          spaceBetween={8}
-          slidesPerView={1}
-          slidesPerGroup={1}
-          speed={550}
-          navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-          onBeforeInit={(swiper) => {
-            if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-            }
+          modules={[Autoplay, A11y]}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
           }}
-          onSwiper={bindNavigation}
-          autoplay={{ delay: 2000, disableOnInteraction: false }}
-          breakpoints={{
-            640: { slidesPerView: 2, spaceBetween: 8, slidesPerGroup: 1 },
-            1024: { slidesPerView: 4, spaceBetween: 8, slidesPerGroup: 1 },
+          loop
+          slidesPerView="auto"
+          spaceBetween={16}
+          speed={16000}
+          allowTouchMove
+          grabCursor
+          autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
           className="np-swiper"
         >
@@ -188,19 +169,6 @@ export default function NewProducts() {
             );
           })}
         </Swiper>
-          </div>
-
-          <button
-            ref={nextRef}
-            type="button"
-            className="np-carousel-nav np-carousel-nav--next"
-            aria-label="Next slide"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
-        </div>
       </div>
 
       <style jsx>{`
@@ -225,68 +193,44 @@ export default function NewProducts() {
           overflow: hidden;
         }
 
-        .np-container {
+        .np-marquee-wrap {
           width: 100%;
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 40px;
-        }
-
-        .np-carousel {
-          display: grid;
-          grid-template-columns: auto minmax(0, 1fr) auto;
-          align-items: center;
-          gap: 20px;
-        }
-
-        .np-carousel-track {
-          min-width: 0;
           overflow: hidden;
         }
 
         .np-swiper {
           width: 100%;
-          overflow: hidden;
-        }
-
-        .np-carousel-nav {
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 44px;
-          height: 44px;
-          border: 1px solid rgba(0, 8, 157, 0.12);
-          border-radius: 50%;
-          background: #ffffff;
-          color: #00089d;
-          cursor: pointer;
-          box-shadow: 0 2px 12px rgba(0, 8, 157, 0.08);
-          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                      box-shadow 0.35s ease,
-                      border-color 0.35s ease,
-                      opacity 0.3s ease;
-        }
-
-        .np-carousel-nav:hover:not(:disabled) {
-          transform: scale(1.12);
-          border-color: rgba(0, 8, 157, 0.35);
-          box-shadow: 0 8px 24px rgba(0, 8, 157, 0.28);
-        }
-
-        .np-carousel-nav:disabled,
-        .np-carousel-nav.swiper-button-disabled {
-          opacity: 0.35;
-          cursor: default;
+          overflow: visible;
+          padding: 8px 0 12px;
         }
 
         :global(.np-swiper .swiper-slide) {
           height: auto;
           box-sizing: border-box;
+          width: min(300px, 82vw);
         }
 
         :global(.np-swiper .swiper-wrapper) {
           align-items: stretch;
+          transition-timing-function: linear !important;
+        }
+
+        @media (min-width: 640px) {
+          :global(.np-swiper .swiper-slide) {
+            width: 280px;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          :global(.np-swiper .swiper-slide) {
+            width: 300px;
+          }
+        }
+
+        @media (min-width: 1400px) {
+          :global(.np-swiper .swiper-slide) {
+            width: 320px;
+          }
         }
 
         /* Card */
@@ -433,11 +377,12 @@ export default function NewProducts() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #ffffff;
+          background: var(--poi-btn-bg);
           border: none;
-          color: #000000;
+          color: #ffffff;
           cursor: pointer;
-          transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
           padding: 0;
         }
 
@@ -447,9 +392,10 @@ export default function NewProducts() {
         }
 
         .np-action-btn:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
           color: #ffffff;
           transform: scale(1.05);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
         .np-action-divider {
@@ -471,8 +417,9 @@ export default function NewProducts() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #ffffff;
-          background: linear-gradient(135deg, #00089d 0%, #000672 100%);
-          border: none;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
           box-sizing: border-box;
           cursor: pointer;
           display: flex;
@@ -482,7 +429,7 @@ export default function NewProducts() {
           opacity: 0;
           transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
                       opacity 0.45s ease,
-                      box-shadow 0.3s ease;
+                      var(--poi-btn-transition);
           z-index: 5;
           padding: 0 10px;
         }
@@ -493,7 +440,9 @@ export default function NewProducts() {
         }
 
         .np-atc-btn:hover {
-          box-shadow: 0 -4px 20px rgba(0, 8, 157, 0.35);
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
         /* Description Box */
@@ -503,10 +452,10 @@ export default function NewProducts() {
           padding: 24px 16px 20px;
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: flex-start;
           justify-content: flex-start;
           background: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%);
-          text-align: center;
+          text-align: left;
           min-height: 180px;
           position: relative;
         }
@@ -515,11 +464,11 @@ export default function NewProducts() {
           content: "";
           position: absolute;
           top: 0;
-          left: 50%;
-          transform: translateX(-50%);
+          left: 16px;
+          transform: none;
           width: 48px;
           height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(0, 8, 157, 0.35), transparent);
+          background: linear-gradient(90deg, rgba(0, 8, 157, 0.35), transparent);
           border-radius: 1px;
         }
 
@@ -532,7 +481,9 @@ export default function NewProducts() {
           text-transform: uppercase;
           color: #111111;
           margin: 0 0 8px;
-          padding-left: 0.18em;
+          padding-left: 0;
+          text-align: left;
+          width: 100%;
           transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
@@ -592,6 +543,7 @@ export default function NewProducts() {
           display: flex;
           gap: 10px;
           align-items: center;
+          align-self: flex-end;
           transition: transform 0.35s ease;
         }
 
@@ -616,18 +568,8 @@ export default function NewProducts() {
         }
 
         @media (max-width: 639px) {
-          .np-carousel {
-            gap: 12px;
-          }
-
-          .np-carousel-nav {
-            width: 36px;
-            height: 36px;
-          }
-
-          .np-carousel-nav svg {
-            width: 15px;
-            height: 15px;
+          .np-section {
+            padding: 40px 0 50px;
           }
         }
 
@@ -635,15 +577,6 @@ export default function NewProducts() {
         @media (min-width: 640px) {
           .np-section {
             padding: 65px 0 75px;
-          }
-
-          .np-container {
-            padding: 0 20px;
-          }
-
-          .np-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
           }
 
           .np-card {
@@ -701,16 +634,6 @@ export default function NewProducts() {
         @media (min-width: 1180px) {
           .np-section {
             padding: 85px 0 95px;
-          }
-
-          .np-container {
-            padding: 0 40px;
-            max-width: 1400px;
-          }
-
-          .np-grid {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
           }
 
           .np-card {

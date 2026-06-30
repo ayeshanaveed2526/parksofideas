@@ -242,12 +242,12 @@ export default function RelatedProducts() {
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          border: 1px solid rgba(0, 8, 157, 0.12);
-          background: #ffffff;
-          color: #00089d;
+          border: 1px solid var(--poi-btn-border);
+          background: var(--poi-btn-bg);
+          color: #ffffff;
           cursor: pointer;
-          box-shadow: 0 8px 22px rgba(0, 8, 157, 0.12);
-          transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
           z-index: 5;
         }
         .rp-arrow svg {
@@ -255,7 +255,9 @@ export default function RelatedProducts() {
           height: 20px;
         }
         .rp-arrow:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
           color: #ffffff;
           transform: scale(1.08);
         }
@@ -280,15 +282,15 @@ export default function RelatedProducts() {
           height: 8px;
           border-radius: 50%;
           border: none;
-          background: #d4d7e3;
+          background: var(--poi-btn-bg);
           cursor: pointer;
           padding: 0;
-          transition: all 0.4s ease;
+          transition: var(--poi-btn-transition);
         }
         .rp-dot-active {
           width: 26px;
           border-radius: 4px;
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
         }
 
         .rp-card-link {
@@ -377,11 +379,12 @@ export default function RelatedProducts() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: none;
-          border: none;
-          color: #333;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
+          color: #ffffff;
           cursor: pointer;
-          transition: color 0.3s, background-color 0.3s;
+          transition: var(--poi-btn-transition);
           border-radius: 30px;
         }
         .rp-action-btn svg {
@@ -389,7 +392,7 @@ export default function RelatedProducts() {
           height: 18px;
         }
         .rp-action-btn:hover {
-          background-color: #00089d;
+          background: var(--poi-btn-bg-hover);
           color: #ffffff;
         }
         .rp-action-div {
@@ -405,22 +408,28 @@ export default function RelatedProducts() {
           left: 0;
           width: 100%;
           height: 48px;
-          background-color: #00089d;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
           color: #ffffff;
           font-size: 11px;
           font-weight: 600;
           letter-spacing: 0.2em;
-          border: none;
+          border-top: none;
+          border-left: none;
+          border-right: none;
           cursor: pointer;
           transform: translateY(100%);
-          transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+          transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), var(--poi-btn-transition);
           z-index: 10;
         }
         .rp-card:hover .rp-atc {
           transform: translateY(0);
         }
         .rp-atc:hover {
-          background-color: #000672;
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
         
         .rp-info {

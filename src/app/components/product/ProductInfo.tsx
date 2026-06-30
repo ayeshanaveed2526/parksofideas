@@ -83,7 +83,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <button
               type="button"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="flex h-full w-10 items-center justify-center text-lg text-gray-600 transition-all hover:bg-[#f4f6fa]"
+              className="poi-btn flex h-full w-10 items-center justify-center text-lg text-white"
             >
               −
             </button>
@@ -91,7 +91,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <button
               type="button"
               onClick={() => setQuantity((q) => q + 1)}
-              className="flex h-full w-10 items-center justify-center text-lg text-gray-600 transition-all hover:bg-[#f4f6fa]"
+              className="poi-btn flex h-full w-10 items-center justify-center text-lg text-white"
             >
               +
             </button>
@@ -99,12 +99,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
           <button
             type="button"
-            className="group relative h-12 w-[220px] overflow-hidden border border-[#00089d] bg-[#00089d] text-xs font-bold tracking-widest text-white transition-all duration-300 hover-btn-shine"
+            className="poi-btn group relative h-12 w-[220px] overflow-hidden text-xs font-bold tracking-widest text-white"
           >
-            <span className="relative z-10 transition-colors duration-300 group-hover:text-[#00089d]">
-              ADD TO CART
-            </span>
-            <div className="absolute inset-0 -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0" />
+            <span className="relative z-10">ADD TO CART</span>
           </button>
         </motion.div>
 

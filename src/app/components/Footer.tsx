@@ -347,24 +347,22 @@ export default function Footer() {
           color: #6b7280;
         }
         .footer-newsletter-form button {
-          background-color: #ffffff;
-          color: #000000;
+          background: var(--poi-btn-bg);
+          color: #ffffff;
           border: none;
           padding: 0 20px;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                      background-color 0.3s ease,
-                      color 0.3s ease,
-                      box-shadow 0.3s ease;
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
         }
         .footer-newsletter-form button:hover {
-          background-color: #00089d;
+          background: var(--poi-btn-bg-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
           color: #ffffff;
           transform: scale(1.05);
-          box-shadow: 0 4px 16px rgba(0, 8, 157, 0.35);
         }
         .footer-links {
           list-style: none;
@@ -539,16 +537,16 @@ export default function Footer() {
           border: none;
           padding: 0;
           cursor: pointer;
-          background: #ffffff;
-          transition: all 0.35s ease;
+          background: var(--poi-btn-bg);
+          transition: var(--poi-btn-transition);
         }
         .rating-dot--active {
           width: 18px;
           border-radius: 3px;
-          background: #ffffff;
+          background: var(--poi-btn-bg-hover);
         }
         .rating-dot:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
           opacity: 1;
         }
         .footer-bottom {
@@ -577,11 +575,11 @@ export default function Footer() {
         .footer-legal-btn {
           color: #ffffff;
           text-decoration: none;
-          transition: all 0.3s;
-          background: none;
-          border: none;
-          padding: 4px 8px;
-          border-radius: 4px;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
+          padding: 6px 14px;
+          border-radius: 6px;
           margin-left: -8px;
           font: inherit;
           font-size: inherit;
@@ -589,10 +587,13 @@ export default function Footer() {
           position: relative;
           z-index: 2;
           letter-spacing: 0.01em;
+          transition: var(--poi-btn-transition);
         }
         .footer-legal-btn:hover {
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
           color: #ffffff;
-          background-color: #00089d;
         }
         .footer-payment {
           display: flex;

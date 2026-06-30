@@ -97,10 +97,8 @@ export default function ShopByCategory() {
                   key={c.key}
                   type="button"
                   onClick={() => setActive(c.key)}
-                  className={`rounded-full px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] transition-all duration-300 ease-out md:px-8 ${
-                    isActive
-                      ? "bg-[#00089d] text-white shadow-[0_6px_18px_rgba(0,8,157,0.35)] hover:-translate-y-0.5 hover:shadow-[0_10px_26px_rgba(0,8,157,0.45)]"
-                      : "text-[#3a3a4a] hover:-translate-y-0.5 hover:bg-[#00089d]/10 hover:tracking-[0.22em] hover:text-[#00089d] hover:shadow-[0_6px_18px_rgba(0,8,157,0.18)]"
+                  className={`poi-btn rounded-full px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] md:px-8${
+                    isActive ? " poi-btn-active" : ""
                   }`}
                   style={{ fontFamily: "var(--font-marcellus), serif" }}
                 >

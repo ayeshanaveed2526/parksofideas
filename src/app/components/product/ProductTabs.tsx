@@ -31,19 +31,11 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-8 py-4 text-xs font-semibold tracking-widest transition-all relative hover-lift-sm ${
-              activeTab === tab.id ? 'text-black' : 'text-gray-400 hover:text-gray-600'
+            className={`poi-btn px-8 py-4 text-xs font-semibold tracking-widest relative rounded-md${
+              activeTab === tab.id ? " poi-btn-active" : ""
             }`}
           >
             {tab.label}
-            {activeTab === tab.id && (
-              <motion.div
-                layoutId="activeTab"
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-black"
-                initial={false}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              />
-            )}
           </button>
         ))}
       </div>

@@ -181,13 +181,20 @@ export default function FBottomBar() {
           text-indent: 0.22em;
           text-transform: uppercase;
           text-decoration: none;
-          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          background: var(--poi-btn-bg);
+          color: #ffffff;
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
           box-sizing: border-box;
         }
 
         .fb-banner-btn:hover {
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
+          color: #ffffff;
           transform: translateY(-3px);
-          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
         }
 
         /* ── Dark theme (white text) ── */
@@ -199,15 +206,6 @@ export default function FBottomBar() {
           color: #ffffff;
           text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
         }
-        .fb-content-light .fb-banner-btn {
-          border: 1px solid #ffffff;
-          color: #ffffff;
-        }
-        .fb-content-light .fb-banner-btn:hover {
-          background-color: #ffffff;
-          color: #1a1a1a;
-          border-color: #ffffff;
-        }
 
         /* ── Light theme (dark text) ── */
         .fb-content-dark .fb-banner-subtitle {
@@ -215,15 +213,6 @@ export default function FBottomBar() {
         }
         .fb-content-dark .fb-banner-title {
           color: #1a1a1a;
-        }
-        .fb-content-dark .fb-banner-btn {
-          border: 1px solid #1a1a1a;
-          color: #1a1a1a;
-        }
-        .fb-content-dark .fb-banner-btn:hover {
-          background-color: #1a1a1a;
-          color: #ffffff;
-          border-color: #1a1a1a;
         }
 
         /* ── Responsive: tablet (2 per frame) ── */

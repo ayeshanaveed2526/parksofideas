@@ -493,12 +493,12 @@ export default function ShopProductCard({
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #ffffff;
+          background: var(--poi-btn-bg);
           border: none;
-          color: #000000;
+          color: #ffffff;
           cursor: pointer;
-          transition: background-color 0.25s ease, color 0.25s ease,
-            transform 0.25s ease;
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
           padding: 0;
         }
 
@@ -508,8 +508,9 @@ export default function ShopProductCard({
         }
 
         .sp-action-btn:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
           color: #ffffff;
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
         .sp-action-divider {
@@ -522,13 +523,13 @@ export default function ShopProductCard({
         .sp-card-info {
           width: 100%;
           box-sizing: border-box;
-          padding: 14px 8px 12px;
+          padding: 14px 10px 12px;
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: flex-start;
           justify-content: flex-start;
           background: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%);
-          text-align: center;
+          text-align: left;
           position: relative;
           flex-grow: 1;
         }
@@ -537,13 +538,12 @@ export default function ShopProductCard({
           content: "";
           position: absolute;
           top: 0;
-          left: 50%;
-          transform: translateX(-50%);
+          left: 10px;
+          transform: none;
           width: 28px;
           height: 1px;
           background: linear-gradient(
             90deg,
-            transparent,
             rgba(0, 8, 157, 0.12),
             transparent
           );
@@ -559,7 +559,9 @@ export default function ShopProductCard({
           text-transform: uppercase;
           color: #111111;
           margin: 0 0 3px;
-          padding-left: 0.12em;
+          padding-left: 0;
+          text-align: left;
+          width: 100%;
           transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
@@ -641,6 +643,7 @@ export default function ShopProductCard({
           color: #00089d;
           letter-spacing: 0.01em;
           margin-top: auto;
+          align-self: flex-end;
           transition: transform 0.35s ease;
         }
 
@@ -650,7 +653,8 @@ export default function ShopProductCard({
 
         /* Grid Add to cart button always visible */
         .sp-grid-atc-btn {
-          width: 90%;
+          width: 100%;
+          align-self: stretch;
           margin-top: 10px;
           height: 32px;
           font-family: var(--font-inter), "Inter", sans-serif;
@@ -659,21 +663,21 @@ export default function ShopProductCard({
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #ffffff;
-          background: linear-gradient(135deg, #00089d 0%, #000672 100%);
-          border: none;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
           border-radius: 6px;
           cursor: pointer;
-          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                      box-shadow 0.25s ease,
-                      background 0.25s ease;
+          transition: var(--poi-btn-transition);
           position: relative;
           z-index: 5;
         }
 
         .sp-grid-atc-btn:hover {
-          box-shadow: 0 4px 12px rgba(0, 8, 157, 0.25);
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
           transform: translateY(-2px);
-          background: linear-gradient(135deg, #000672 0%, #00089d 100%);
         }
 
         .sp-grid-atc-btn:active {
@@ -811,16 +815,19 @@ export default function ShopProductCard({
           font-size: 9.5px;
           letter-spacing: 0.08em;
           color: #ffffff;
-          background: linear-gradient(135deg, #00089d 0%, #000672 100%);
-          border: none;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
           border-radius: 16px;
           padding: 7px 15px;
           cursor: pointer;
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          transition: var(--poi-btn-transition);
         }
 
         .sp-list-atc:hover {
-          box-shadow: 0 3px 8px rgba(0, 8, 157, 0.18);
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
           transform: translateY(-1px);
         }
 
@@ -828,20 +835,22 @@ export default function ShopProductCard({
           width: 28px;
           height: 28px;
           border-radius: 50%;
-          border: 1px solid rgba(0, 8, 157, 0.08);
-          background: #ffffff;
-          color: #000000;
+          border: 1px solid var(--poi-btn-border);
+          background: var(--poi-btn-bg);
+          color: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
         }
 
         .sp-list-icon-btn:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
           color: #ffffff;
-          border-color: #00089d;
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
           transform: scale(1.05);
         }
 
@@ -870,14 +879,14 @@ export default function ShopProductCard({
           }
 
           .sp-card--list .sp-card-info {
-            align-items: center;
-            text-align: center;
+            align-items: flex-start;
+            text-align: left;
             padding: 16px 12px;
           }
 
           .sp-card--list .sp-card-info::before {
-            left: 50%;
-            transform: translateX(-50%);
+            left: 12px;
+            transform: none;
           }
 
           .sp-card--list .sp-card-desc {

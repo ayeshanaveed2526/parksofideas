@@ -335,47 +335,34 @@ export default function TopCategory() {
           line-height: 1;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: rgba(0, 0, 0, 0.3);
-          background: none;
-          border: none;
-          padding: 6px 0 10px;
+          color: #ffffff;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
+          border-radius: 6px;
+          padding: 10px 18px 10px;
           cursor: pointer;
           position: relative;
-          transition: color 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+          transition: var(--poi-btn-transition);
         }
 
         .tp-tab:hover {
-          color: #00089d;
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
+          color: #ffffff;
           transform: translateY(-2px);
         }
 
         .tp-tab--on {
-          color: #00089d;
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          color: #ffffff;
         }
 
         /* Animated underline indicator */
         .tp-tab-indicator {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 2px;
-          background: #00089d;
-          transform: scaleX(0);
-          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: center;
-        }
-
-        .tp-tab--on .tp-tab-indicator {
-          transform: scaleX(1);
-        }
-
-        .tp-tab:hover .tp-tab-indicator {
-          transform: scaleX(0.5);
-        }
-
-        .tp-tab--on:hover .tp-tab-indicator {
-          transform: scaleX(1);
+          display: none;
         }
 
         /* ── Container ── */
@@ -404,24 +391,25 @@ export default function TopCategory() {
           padding: 17px 30px 17px 30px;
           width: 160px;
           height: 50px;
-          border: 1.5px solid #000;
-          background-color: #000;
+          border: 1px solid var(--poi-btn-border);
+          background: var(--poi-btn-bg);
           color: #fff;
           font-family: var(--font-inter), "Inter", sans-serif;
           text-decoration: none;
           cursor: pointer;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
           box-sizing: border-box;
           white-space: nowrap;
           border-radius: 6px;
         }
 
         .tp-view-all-btn:hover {
-          background-color: #fff;
-          color: #000;
-          border-color: #000;
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          color: #fff;
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
         /* ── Grid ── */
@@ -590,11 +578,12 @@ export default function TopCategory() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #fff;
+          background: var(--poi-btn-bg);
           border: none;
-          color: #000;
+          color: #ffffff;
           cursor: pointer;
-          transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+          box-shadow: var(--poi-btn-shadow);
+          transition: var(--poi-btn-transition);
           padding: 0;
         }
 
@@ -604,9 +593,10 @@ export default function TopCategory() {
         }
 
         .tp-action-btn:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
           color: #fff;
           transform: scale(1.05);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
         .tp-action-divider {
@@ -629,8 +619,9 @@ export default function TopCategory() {
           text-transform: uppercase;
           text-decoration: none;
           color: #fff;
-          background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
-          border: none;
+          background: var(--poi-btn-bg);
+          border: 1px solid var(--poi-btn-border);
+          box-shadow: var(--poi-btn-shadow);
           box-sizing: border-box;
           cursor: pointer;
           display: flex;
@@ -640,7 +631,7 @@ export default function TopCategory() {
           opacity: 0;
           transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
                       opacity 0.45s ease,
-                      background 0.2s linear;
+                      var(--poi-btn-transition);
           z-index: 5;
           padding: 0 10px;
         }
@@ -651,7 +642,9 @@ export default function TopCategory() {
         }
 
         .tp-atc-btn:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
         .tp-btn-disabled {
@@ -703,8 +696,9 @@ export default function TopCategory() {
           text-transform: uppercase;
           color: #000;
           margin: 0 0 8px;
-          padding-left: 0.2em;
-          text-align: center;
+          padding-left: 0;
+          text-align: left;
+          width: 100%;
           transition: color 0.35s ease, letter-spacing 0.35s ease;
         }
 
@@ -990,7 +984,7 @@ export default function TopCategory() {
           .tp-card-name {
             letter-spacing: 0.25em;
             margin: 0 0 12px;
-            padding-left: 0.25em;
+            padding-left: 0;
           }
 
           .tp-badge {

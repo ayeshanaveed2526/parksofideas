@@ -26,7 +26,7 @@ export default function VideoSection() {
             ></iframe>
             <button
               onClick={() => setIsPlaying(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-40 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-black/60 hover:bg-black text-white hover-scale-sm transition-all shadow-lg backdrop-blur-sm"
+              className="poi-btn absolute top-4 right-4 sm:top-6 sm:right-6 z-40 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full text-white shadow-lg backdrop-blur-sm"
               aria-label="Close video"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,7 +43,7 @@ export default function VideoSection() {
             {/* Play Button */}
             <button
               type="button"
-              className="group flex h-[50px] w-[50px] sm:h-[58px] sm:w-[58px] md:h-[66px] md:w-[66px] items-center justify-center rounded-full bg-black text-white hover:bg-white hover:text-black hover-btn-shine hover-ring-pulse shadow-xl cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300"
+              className="poi-btn group flex h-[50px] w-[50px] sm:h-[58px] sm:w-[58px] md:h-[66px] md:w-[66px] items-center justify-center rounded-full text-white shadow-xl cursor-pointer transform hover:scale-110 active:scale-95"
               aria-label="Play video"
             >
               <svg

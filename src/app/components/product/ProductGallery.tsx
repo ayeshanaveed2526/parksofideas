@@ -316,14 +316,14 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          border: 1px solid rgba(0, 8, 157, 0.1);
-          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid var(--poi-btn-border);
+          background: var(--poi-btn-bg);
           backdrop-filter: blur(10px);
-          color: #00089d;
+          color: #ffffff;
           cursor: pointer;
+          box-shadow: var(--poi-btn-shadow);
           opacity: 0;
-          transition: opacity 0.4s ease, background 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-          box-shadow: 0 8px 20px rgba(0, 8, 157, 0.12);
+          transition: opacity 0.4s ease, var(--poi-btn-transition);
         }
 
         .pg-stage:hover .pg-nav {
@@ -331,8 +331,10 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
         }
 
         .pg-nav:hover {
-          background: #00089d;
+          background: var(--poi-btn-bg-hover);
           color: #ffffff;
+          border-color: var(--poi-btn-border-hover);
+          box-shadow: var(--poi-btn-shadow-hover);
         }
 
         .pg-nav-prev { left: 14px; }
