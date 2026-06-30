@@ -6,6 +6,36 @@
   background: #000;
 }
 
+.muteBtn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.muteBtn:hover {
+  background: rgba(0, 8, 157, 0.75);
+  border-color: rgba(200, 161, 75, 0.55);
+  transform: scale(1.06);
+}
+
+.muteBtn:focus-visible {
+  outline: 2px solid #c8a14b;
+  outline-offset: 2px;
+}
+
 .video {
   position: absolute;
   top: 50%;
@@ -25,5 +55,12 @@
 @media (max-width: 768px) {
   .hero {
     height: 500px;
+  }
+
+  .muteBtn {
+    bottom: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
   }
 }
