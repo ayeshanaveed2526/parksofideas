@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: linear-gradient(180deg, #eef1f8 0%, #f5f7fc 42%, #eaeef6 100%);
+  background: var(--poi-bg-page);
 }
 
 .bg {
@@ -16,8 +16,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 8, 157, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 8, 157, 0.04) 1px, transparent 1px);
+    linear-gradient(var(--poi-primary-a04) 1px, transparent 1px),
+    linear-gradient(90deg, var(--poi-primary-a04) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse at 50% 20%, black 18%, transparent 75%);
 }
@@ -31,8 +31,8 @@
   height: 300px;
   background: radial-gradient(
     ellipse at center top,
-    rgba(0, 8, 157, 0.1) 0%,
-    rgba(200, 161, 75, 0.08) 45%,
+    var(--poi-primary-a10) 0%,
+    var(--poi-gold-a08) 45%,
     transparent 72%
   );
 }
@@ -49,7 +49,7 @@
   height: 420px;
   top: -100px;
   right: -120px;
-  background: rgba(0, 8, 157, 0.12);
+  background: var(--poi-primary-a12);
 }
 
 .orbGold {
@@ -57,7 +57,7 @@
   height: 320px;
   bottom: 60px;
   left: -80px;
-  background: rgba(200, 161, 75, 0.14);
+  background: var(--poi-gold-a14);
   animation-delay: -5s;
 }
 
@@ -89,31 +89,31 @@
 .heroLine {
   width: 56px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #c8a14b, transparent);
+  background: var(--poi-gradient-gold-line);
 }
 
 .heroDiamond {
   width: 7px;
   height: 7px;
-  background: #c8a14b;
+  background: var(--poi-gold);
   transform: rotate(45deg);
 }
 
 .heroTitle {
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-family: var(--poi-font-display);
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #0a0a0a;
+  color: var(--poi-text);
   margin: 0 0 10px;
 }
 
 .heroDesc {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 14px;
   line-height: 1.65;
-  color: rgba(10, 10, 10, 0.55);
+  color: var(--poi-muted);
   margin: 0;
 }
 
@@ -136,8 +136,8 @@
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid rgba(0, 8, 157, 0.12);
-  border-top-color: #00089d;
+  border: 3px solid var(--poi-primary-a12);
+  border-top-color: var(--poi-primary);
   border-radius: 50%;
   animation: spin 0.85s linear infinite;
 }
@@ -147,7 +147,7 @@
 }
 
 .loadingText {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 14px;
   letter-spacing: 0.06em;
   color: rgba(10, 10, 10, 0.5);
@@ -163,40 +163,40 @@
   padding: 16px 20px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 8, 157, 0.1);
-  box-shadow: 0 6px 20px rgba(0, 8, 157, 0.05);
+  border: 1px solid var(--poi-primary-a10);
+  box-shadow: 0 6px 20px var(--poi-primary-a05);
 }
 
 .toolbarCount {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 13px;
-  color: rgba(10, 10, 10, 0.55);
+  color: var(--poi-muted);
 }
 
 .toolbarCount strong {
-  color: #00089d;
+  color: var(--poi-primary);
   font-weight: 700;
 }
 
 .clearBtn {
   padding: 8px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(0, 8, 157, 0.15);
+  border: 1px solid var(--poi-primary-a15);
   background: transparent;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(10, 10, 10, 0.55);
+  color: var(--poi-muted);
   cursor: pointer;
   transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
 .clearBtn:hover {
-  color: #00089d;
-  border-color: rgba(0, 8, 157, 0.35);
-  background: rgba(0, 8, 157, 0.04);
+  color: var(--poi-primary);
+  border-color: var(--poi-primary-a35);
+  background: var(--poi-primary-a04);
 }
 
 .empty {
@@ -207,8 +207,8 @@
   padding: 56px 24px 64px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 8, 157, 0.1);
-  box-shadow: 0 12px 36px rgba(0, 8, 157, 0.06);
+  border: 1px solid var(--poi-primary-a10);
+  box-shadow: 0 12px 36px var(--poi-primary-a06);
 }
 
 .emptyIcon {
@@ -218,25 +218,25 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(0, 8, 157, 0.08) 0%, rgba(200, 161, 75, 0.12) 100%);
-  color: #00089d;
+  background: var(--poi-gradient-avatar);
+  color: var(--poi-primary);
   margin-bottom: 22px;
 }
 
 .emptyTitle {
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-family: var(--poi-font-display);
   font-size: 26px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0a0a0a;
+  color: var(--poi-text);
   margin: 0 0 12px;
 }
 
 .emptyText {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 14px;
   line-height: 1.7;
-  color: rgba(10, 10, 10, 0.55);
+  color: var(--poi-muted);
   max-width: 420px;
   margin: 0 0 28px;
 }
@@ -248,7 +248,7 @@
   padding: 14px 32px;
   border-radius: 999px;
   text-decoration: none;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -268,15 +268,15 @@
   border-radius: 18px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(0, 8, 157, 0.08);
-  box-shadow: 0 8px 28px rgba(0, 8, 157, 0.06);
+  border: 1px solid var(--poi-primary-a08);
+  box-shadow: 0 8px 28px var(--poi-primary-a06);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  border-color: rgba(200, 161, 75, 0.35);
-  box-shadow: 0 18px 40px rgba(0, 8, 157, 0.12);
+  border-color: var(--poi-gold-a35);
+  box-shadow: 0 18px 40px var(--poi-primary-a12);
 }
 
 .removeBtn {
@@ -290,24 +290,24 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 1px solid rgba(0, 8, 157, 0.12);
+  border: 1px solid var(--poi-primary-a12);
   background: rgba(255, 255, 255, 0.92);
-  color: rgba(10, 10, 10, 0.55);
+  color: var(--poi-muted);
   cursor: pointer;
   transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
 
 .removeBtn:hover {
-  color: #00089d;
-  border-color: rgba(0, 8, 157, 0.3);
-  background: #ffffff;
+  color: var(--poi-primary);
+  border-color: var(--poi-primary-a30);
+  background: var(--poi-white);
 }
 
 .cardImageLink {
   display: block;
   position: relative;
   height: 280px;
-  background: linear-gradient(165deg, #eef1f8 0%, #ffffff 55%, #f3f5fb 100%);
+  background: var(--poi-bg-image);
 }
 
 .cardImage {
@@ -324,25 +324,25 @@
 }
 
 .cardName {
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-family: var(--poi-font-display);
   font-size: 16px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0a0a0a;
+  color: var(--poi-text);
   margin: 0;
   text-decoration: none;
   transition: color 0.25s ease;
 }
 
 .cardName:hover {
-  color: #00089d;
+  color: var(--poi-primary);
 }
 
 .cardDesc {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 12px;
   line-height: 1.55;
-  color: rgba(10, 10, 10, 0.52);
+  color: var(--poi-muted);
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -351,10 +351,10 @@
 }
 
 .cardPrice {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 18px;
   font-weight: 700;
-  color: #00089d;
+  color: var(--poi-primary);
   margin: 4px 0 8px;
 }
 
@@ -368,7 +368,7 @@
   flex: 1;
   padding: 11px 14px;
   border-radius: 10px;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -381,21 +381,21 @@
   justify-content: center;
   padding: 11px 14px;
   border-radius: 10px;
-  border: 1px solid rgba(0, 8, 157, 0.15);
+  border: 1px solid var(--poi-primary-a15);
   background: transparent;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #00089d;
+  color: var(--poi-primary);
   text-decoration: none;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
 
 .viewLink:hover {
-  background: rgba(0, 8, 157, 0.05);
-  border-color: rgba(0, 8, 157, 0.3);
+  background: var(--poi-primary-a05);
+  border-color: var(--poi-primary-a30);
 }
 
 .cta {
@@ -414,9 +414,9 @@
   gap: 20px;
   padding: 32px 36px;
   border-radius: 20px;
-  background: linear-gradient(125deg, #000470 0%, #00089d 45%, #0a1570 100%);
-  border: 1px solid rgba(200, 161, 75, 0.25);
-  box-shadow: 0 16px 48px rgba(0, 8, 157, 0.22);
+  background: var(--poi-gradient-cta);
+  border: 1px solid var(--poi-gold-a25);
+  box-shadow: 0 16px 48px var(--poi-primary-a22);
 }
 
 .ctaGlow {
@@ -426,17 +426,17 @@
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  background: rgba(200, 161, 75, 0.22);
+  background: var(--poi-gold-a22);
   filter: blur(40px);
   animation: floatOrb 10s ease-in-out infinite;
 }
 
 .ctaTitle {
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-family: var(--poi-font-display);
   font-size: clamp(20px, 3.5vw, 28px);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: var(--poi-white);
   margin: 0 0 6px;
   position: relative;
 }
@@ -483,14 +483,14 @@
   padding: 22px 14px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(0, 8, 157, 0.08);
+  border: 1px solid var(--poi-primary-a08);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .trustItem:hover {
   transform: translateY(-5px);
-  border-color: rgba(200, 161, 75, 0.4);
-  box-shadow: 0 14px 32px rgba(0, 8, 157, 0.1);
+  border-color: var(--poi-gold-a40);
+  box-shadow: 0 14px 32px var(--poi-primary-a10);
 }
 
 .trustIcon {
@@ -501,7 +501,7 @@
   justify-content: center;
   border-radius: 50%;
   background: var(--poi-btn-bg);
-  color: #ffffff;
+  color: var(--poi-white);
   box-shadow: var(--poi-btn-shadow);
 }
 
@@ -509,13 +509,13 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #0a0a0a;
+  color: var(--poi-text);
   margin: 0;
 }
 
 .trustSub {
   font-size: 11px;
-  color: rgba(10, 10, 10, 0.48);
+  color: var(--poi-muted-soft);
   margin: 0;
 }
 

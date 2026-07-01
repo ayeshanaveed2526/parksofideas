@@ -7,7 +7,7 @@
   width: 100%;
   height: min(52vh, 420px);
   overflow: hidden;
-  background: linear-gradient(165deg, #eef1f8 0%, #ffffff 55%, #f3f5fb 100%);
+  background: var(--poi-bg-image);
 }
 
 .heroImg {
@@ -21,7 +21,7 @@
   background: linear-gradient(
     180deg,
     rgba(10, 10, 10, 0.15) 0%,
-    rgba(0, 8, 157, 0.25) 55%,
+    var(--poi-primary-a25) 55%,
     #f0f2f8 100%
   );
 }
@@ -40,13 +40,13 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #00089d;
+  color: var(--poi-primary);
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .backLink:hover {
-  color: #c8a14b;
+  color: var(--poi-gold);
   transform: translateX(-4px);
 }
 
@@ -58,23 +58,23 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: var(--poi-white);
   background: var(--poi-btn-bg);
   margin-bottom: 16px;
 }
 
 .title {
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-family: var(--poi-font-display);
   font-size: clamp(28px, 5vw, 42px);
   letter-spacing: 0.06em;
   line-height: 1.2;
-  color: #0a0a0a;
+  color: var(--poi-text);
   margin: 0 0 12px;
 }
 
 .meta {
   font-size: 13px;
-  color: rgba(10, 10, 10, 0.45);
+  color: var(--poi-muted-soft);
   margin: 0 0 20px;
 }
 
@@ -84,7 +84,7 @@
   color: rgba(10, 10, 10, 0.65);
   margin: 0 0 28px;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(0, 8, 157, 0.1);
+  border-bottom: 1px solid var(--poi-primary-a10);
 }
 
 .body {
@@ -116,11 +116,11 @@
 .related {
   margin-top: 48px;
   padding-top: 32px;
-  border-top: 1px solid rgba(0, 8, 157, 0.1);
+  border-top: 1px solid var(--poi-primary-a10);
 }
 
 .relatedTitle {
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-family: var(--poi-font-display);
   font-size: 22px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -138,14 +138,14 @@
   color: inherit;
   border-radius: 14px;
   overflow: hidden;
-  background: #ffffff;
-  border: 1px solid rgba(0, 8, 157, 0.08);
+  background: var(--poi-white);
+  border: 1px solid var(--poi-primary-a08);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .relatedCard:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 36px rgba(0, 8, 157, 0.12);
+  box-shadow: 0 16px 36px var(--poi-primary-a12);
 }
 
 .relatedImage {
@@ -158,10 +158,10 @@
   padding: 12px 14px 16px;
   margin: 0;
   letter-spacing: 0.03em;
-  color: #0a0a0a;
+  color: var(--poi-text);
   transition: color 0.3s ease;
 }
 
 .relatedCard:hover h3 {
-  color: #00089d;
+  color: var(--poi-primary);
 }

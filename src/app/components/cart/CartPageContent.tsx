@@ -72,7 +72,7 @@ function CartLineItem({
           alt={product.brand}
           fill
           className={styles.lineImage}
-          sizes="120px"
+          sizes="(max-width: 639px) 80px, (max-width: 767px) 96px, 120px"
         />
       </Link>
 
@@ -87,26 +87,28 @@ function CartLineItem({
       </div>
 
       <div className={styles.lineActions}>
-        <div className={styles.qtyControl}>
-          <button
-            type="button"
-            className={styles.qtyBtn}
-            onClick={() => onQuantityChange(product.id, quantity - 1)}
-            aria-label={`Decrease quantity of ${product.brand}`}
-          >
-            <Minus size={14} />
-          </button>
-          <span className={styles.qtyValue}>{quantity}</span>
-          <button
-            type="button"
-            className={styles.qtyBtn}
-            onClick={() => onQuantityChange(product.id, quantity + 1)}
-            aria-label={`Increase quantity of ${product.brand}`}
-          >
-            <Plus size={14} />
-          </button>
+        <div className={styles.lineActionsMain}>
+          <div className={styles.qtyControl}>
+            <button
+              type="button"
+              className={styles.qtyBtn}
+              onClick={() => onQuantityChange(product.id, quantity - 1)}
+              aria-label={`Decrease quantity of ${product.brand}`}
+            >
+              <Minus size={14} />
+            </button>
+            <span className={styles.qtyValue}>{quantity}</span>
+            <button
+              type="button"
+              className={styles.qtyBtn}
+              onClick={() => onQuantityChange(product.id, quantity + 1)}
+              aria-label={`Increase quantity of ${product.brand}`}
+            >
+              <Plus size={14} />
+            </button>
+          </div>
+          <p className={styles.lineTotal}>{formatPerfumePrice(lineTotal)}</p>
         </div>
-        <p className={styles.lineTotal}>{formatPerfumePrice(lineTotal)}</p>
         <button
           type="button"
           className={styles.removeBtn}
@@ -329,8 +331,10 @@ export default function CartPageContent() {
                 <div className={styles.trustIcon}>
                   <Icon size={20} strokeWidth={1.75} />
                 </div>
-                <h4 className={styles.trustLabel}>{label}</h4>
-                <p className={styles.trustSub}>{sub}</p>
+                <div className={styles.trustCopy}>
+                  <h4 className={styles.trustLabel}>{label}</h4>
+                  <p className={styles.trustSub}>{sub}</p>
+                </div>
               </motion.div>
             ))}
           </div>

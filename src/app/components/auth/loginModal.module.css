@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px 16px;
-  background: rgba(8, 12, 28, 0.55);
+  background: var(--poi-overlay);
   backdrop-filter: blur(6px);
   animation: fadeIn 0.25s ease;
 }
@@ -24,10 +24,10 @@
   overflow-y: auto;
   padding: 36px 32px 28px;
   border-radius: 24px;
-  background: linear-gradient(165deg, #ffffff 0%, #f8f9fd 55%, #f3f5fb 100%);
-  border: 1px solid rgba(0, 8, 157, 0.1);
+  background: var(--poi-bg-modal);
+  border: 1px solid var(--poi-primary-a10);
   box-shadow:
-    0 24px 64px rgba(0, 8, 157, 0.18),
+    0 24px 64px var(--poi-primary-a18),
     0 8px 24px rgba(0, 0, 0, 0.08);
   animation: slideUp 0.3s ease;
 }
@@ -42,8 +42,8 @@
   border-radius: 24px 24px 0 0;
   background: radial-gradient(
     ellipse at 30% 0%,
-    rgba(0, 8, 157, 0.1) 0%,
-    rgba(200, 161, 75, 0.06) 45%,
+    var(--poi-primary-a10) 0%,
+    var(--poi-gold-a06) 45%,
     transparent 72%
   );
   pointer-events: none;
@@ -72,15 +72,15 @@
   justify-content: center;
   border: none;
   border-radius: 50%;
-  background: rgba(0, 8, 157, 0.06);
-  color: rgba(10, 10, 10, 0.45);
+  background: var(--poi-primary-a06);
+  color: var(--poi-muted-soft);
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 .closeBtn:hover {
-  background: rgba(0, 8, 157, 0.12);
-  color: #00089d;
+  background: var(--poi-primary-a12);
+  color: var(--poi-primary);
 }
 
 .header {
@@ -99,12 +99,12 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #000470 0%, #00089d 55%, #1a2fb8 100%);
-  color: #ffffff;
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  background: var(--poi-gradient-primary);
+  color: var(--poi-white);
+  font-family: var(--poi-font-display);
   font-size: 28px;
   letter-spacing: 0.06em;
-  box-shadow: 0 8px 24px rgba(0, 8, 157, 0.28);
+  box-shadow: 0 8px 24px var(--poi-primary-a28);
   margin-bottom: 18px;
 }
 
@@ -115,18 +115,18 @@
 }
 
 .title {
-  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-family: var(--poi-font-display);
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.06em;
-  color: #0a0a0a;
+  color: var(--poi-text);
   margin: 0 0 8px;
 }
 
 .subtitle {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 14px;
-  color: rgba(10, 10, 10, 0.52);
+  color: var(--poi-muted);
   margin: 0;
 }
 
@@ -139,19 +139,19 @@
   gap: 12px;
   padding: 13px 18px;
   border-radius: 12px;
-  border: 1px solid rgba(0, 8, 157, 0.14);
-  background: #ffffff;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  border: 1px solid var(--poi-primary-a14);
+  background: var(--poi-white);
+  font-family: var(--poi-font-sans);
   font-size: 14px;
   font-weight: 500;
-  color: #0a0a0a;
+  color: var(--poi-text);
   cursor: pointer;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .googleBtn:hover {
-  border-color: rgba(0, 8, 157, 0.3);
-  box-shadow: 0 4px 16px rgba(0, 8, 157, 0.08);
+  border-color: var(--poi-primary-a30);
+  box-shadow: 0 4px 16px var(--poi-primary-a08);
   transform: translateY(-1px);
 }
 
@@ -165,13 +165,13 @@
 .dividerLine {
   flex: 1;
   height: 1px;
-  background: rgba(0, 8, 157, 0.1);
+  background: var(--poi-primary-a10);
 }
 
 .dividerText {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 12px;
-  color: rgba(10, 10, 10, 0.42);
+  color: var(--poi-muted-faint);
   white-space: nowrap;
 }
 
@@ -188,15 +188,15 @@
 }
 
 .label {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 13px;
   font-weight: 600;
-  color: #0a0a0a;
+  color: var(--poi-text);
 }
 
 .labelRequired::after {
   content: " *";
-  color: #00089d;
+  color: var(--poi-primary);
 }
 
 .inputWrap {
@@ -208,7 +208,7 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(10, 10, 10, 0.38);
+  color: var(--poi-muted-light);
   pointer-events: none;
 }
 
@@ -216,19 +216,19 @@
   width: 100%;
   height: 48px;
   padding: 0 44px 0 42px;
-  border: 1px solid rgba(0, 8, 157, 0.12);
+  border: 1px solid var(--poi-primary-a12);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.9);
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 14px;
-  color: #0a0a0a;
+  color: var(--poi-text);
   outline: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .input:focus {
-  border-color: rgba(0, 8, 157, 0.4);
-  box-shadow: 0 0 0 3px rgba(0, 8, 157, 0.08);
+  border-color: var(--poi-primary-a40);
+  box-shadow: 0 0 0 3px var(--poi-primary-a08);
 }
 
 .input::placeholder {
@@ -254,15 +254,15 @@
 }
 
 .togglePassword:hover {
-  color: #00089d;
-  background: rgba(0, 8, 157, 0.06);
+  color: var(--poi-primary);
+  background: var(--poi-primary-a06);
 }
 
 .remember {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 13px;
   color: rgba(10, 10, 10, 0.62);
   cursor: pointer;
@@ -272,7 +272,7 @@
 .checkbox {
   width: 16px;
   height: 16px;
-  accent-color: #00089d;
+  accent-color: var(--poi-primary);
   cursor: pointer;
 }
 
@@ -282,21 +282,21 @@
   padding: 14px 20px;
   border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #000348 0%, #000672 30%, #00089d 100%);
-  font-family: var(--font-inter), "Inter", sans-serif;
+  background: var(--poi-gradient-primary-btn);
+  font-family: var(--poi-font-sans);
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: var(--poi-white);
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 8, 157, 0.3);
+  box-shadow: 0 8px 24px var(--poi-primary-a30);
   transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 }
 
 .signInBtn:hover {
   filter: brightness(1.06);
-  box-shadow: 0 10px 28px rgba(0, 8, 157, 0.38);
+  box-shadow: 0 10px 28px var(--poi-primary-a38);
   transform: translateY(-1px);
 }
 
@@ -306,9 +306,9 @@
 }
 
 .signUpText {
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 14px;
-  color: rgba(10, 10, 10, 0.55);
+  color: var(--poi-muted);
   margin: 0 0 10px;
 }
 
@@ -319,13 +319,13 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: 700;
-  color: #00089d;
+  color: var(--poi-primary);
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .signUpLink:hover {
-  color: #c8a14b;
+  color: var(--poi-gold);
 }
 
 .forgotLink {
@@ -333,26 +333,26 @@
   border: none;
   background: none;
   padding: 0;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 13px;
-  color: rgba(10, 10, 10, 0.48);
+  color: var(--poi-muted-soft);
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .forgotLink:hover {
-  color: #00089d;
+  color: var(--poi-primary);
 }
 
 .secureNote {
   margin-top: 22px;
   padding-top: 18px;
-  border-top: 1px solid rgba(0, 8, 157, 0.08);
-  font-family: var(--font-inter), "Inter", sans-serif;
+  border-top: 1px solid var(--poi-primary-a08);
+  font-family: var(--poi-font-sans);
   font-size: 11px;
   line-height: 1.5;
   text-align: center;
-  color: rgba(10, 10, 10, 0.38);
+  color: var(--poi-muted-light);
 }
 
 @media (max-width: 480px) {

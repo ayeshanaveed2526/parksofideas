@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   gap: 16px;
   padding: 0 0 28px;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   position: relative;
   z-index: 10;
 }
@@ -29,7 +29,7 @@
 }
 
 .count strong {
-  color: #0a0a0a;
+  color: var(--poi-text);
   font-weight: 600;
 }
 
@@ -50,20 +50,20 @@
 }
 
 .search:focus-within .searchIcon {
-  color: #00089d;
+  color: var(--poi-primary);
 }
 
 .searchInput {
   width: 100%;
   height: 44px;
   padding: 0 40px 0 42px;
-  border: 1px solid rgba(0, 8, 157, 0.12);
+  border: 1px solid var(--poi-primary-a12);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 13px;
-  color: #0a0a0a;
+  color: var(--poi-text);
   letter-spacing: 0.01em;
   text-align: left;
   outline: none;
@@ -75,9 +75,9 @@
 }
 
 .searchInput:focus {
-  border-color: rgba(0, 8, 157, 0.4);
-  box-shadow: 0 4px 16px rgba(0, 8, 157, 0.12);
-  background: #ffffff;
+  border-color: var(--poi-primary-a40);
+  box-shadow: 0 4px 16px var(--poi-primary-a12);
+  background: var(--poi-white);
 }
 
 .searchClear {
@@ -91,7 +91,7 @@
   border: 1px solid var(--poi-btn-border);
   border-radius: 50%;
   background: var(--poi-btn-bg);
-  color: #ffffff;
+  color: var(--poi-white);
   cursor: pointer;
   box-shadow: var(--poi-btn-shadow);
   transition: var(--poi-btn-transition);
@@ -101,7 +101,7 @@
   background: var(--poi-btn-bg-hover);
   border-color: var(--poi-btn-border-hover);
   box-shadow: var(--poi-btn-shadow-hover);
-  color: #ffffff;
+  color: var(--poi-white);
   transform: scale(1.08);
 }
 
@@ -140,7 +140,7 @@
 .sortValue {
   font-size: 12px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--poi-white);
   letter-spacing: 0.02em;
 }
 
@@ -162,9 +162,9 @@
   min-width: 240px;
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 8, 157, 0.1);
+  border: 1px solid var(--poi-primary-a10);
   border-radius: 14px;
-  box-shadow: 0 12px 40px rgba(0, 8, 157, 0.14), 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 40px var(--poi-primary-a14), 0 4px 12px rgba(0, 0, 0, 0.06);
   padding: 6px;
   display: flex;
   flex-direction: column;
@@ -193,7 +193,7 @@
   border-radius: 10px;
   background: transparent;
   cursor: pointer;
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--poi-font-sans);
   font-size: 13px;
   font-weight: 500;
   color: #333;
@@ -205,13 +205,13 @@
 
 .dropdownItem:hover {
   background: var(--poi-btn-bg-hover);
-  color: #ffffff;
+  color: var(--poi-white);
   transform: translateX(2px);
 }
 
 .dropdownItemActive {
   background: var(--poi-btn-bg);
-  color: #ffffff;
+  color: var(--poi-white);
   font-weight: 600;
 }
 
@@ -220,7 +220,7 @@
 }
 
 .dropdownItem svg {
-  color: #00089d;
+  color: var(--poi-primary);
   flex-shrink: 0;
 }
 
@@ -237,7 +237,7 @@
   align-items: center;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 8, 157, 0.1);
+  border: 1px solid var(--poi-primary-a10);
   border-radius: 10px;
   padding: 3px;
   gap: 2px;
@@ -252,7 +252,7 @@
   border: none;
   background: var(--poi-btn-bg);
   border-radius: 8px;
-  color: #ffffff;
+  color: var(--poi-white);
   cursor: pointer;
   box-shadow: var(--poi-btn-shadow);
   transition: var(--poi-btn-transition);
@@ -260,13 +260,13 @@
 
 .layoutBtn:hover {
   background: var(--poi-btn-bg-hover);
-  color: #ffffff;
+  color: var(--poi-white);
   box-shadow: var(--poi-btn-shadow-hover);
 }
 
 .layoutBtnActive {
   background: var(--poi-btn-bg-hover);
-  color: #ffffff;
+  color: var(--poi-white);
   box-shadow: var(--poi-btn-shadow-hover);
 }
 
