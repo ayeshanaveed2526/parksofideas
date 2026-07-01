@@ -6,6 +6,8 @@ import Image from "next/image";
 import { User, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
 import { motion } from "framer-motion";
+import { useLoginModal } from "./auth/LoginModalProvider";
+import { useCart } from "./cart/CartProvider";
 
 /**
  * MainNavbar — the second bar.
@@ -14,6 +16,8 @@ import { motion } from "framer-motion";
 export default function MainNavbar() {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { openLoginModal } = useLoginModal();
+  const { itemCount: cartCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,7 +98,7 @@ export default function MainNavbar() {
                       {homeVariants.map((v) => (
                         <Link href="/" key={v.name} className="flex flex-col items-center gap-[15px] group/item hover-lift-sm">
                           <div className="w-[89px] h-[98px] relative border border-transparent hover:border-black transition-all duration-300 bg-gray-50 overflow-hidden hover-image-zoom hover-ring-pulse">
-                            <Image src={v.image} alt={v.name} fill style={{ objectFit: "cover" }} />
+                            <Image src={v.image} alt={v.name} fill sizes="89px" style={{ objectFit: "cover" }} />
                           </div>
                           <span
                             className="text-[12px] text-[#1a1a1a] hover:text-[#00089d] transition-colors"
@@ -213,14 +217,14 @@ export default function MainNavbar() {
                           <img src={perfume.image} alt={perfume.brand} className="max-h-[190px] max-w-full object-contain" />
                           <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-4" />
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-5 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
-                            <button className="poi-btn w-[34px] h-[32px] flex items-center justify-center text-white" aria-label="Quick View">
+                            <button type="button" className="poi-btn w-[34px] h-[32px] flex items-center justify-center text-white" aria-label="Quick View">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
                                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                                 <circle cx="12" cy="12" r="3" />
                               </svg>
                             </button>
                             <div className="w-px h-[32px] bg-black"></div>
-                            <button className="poi-btn w-[34px] h-[32px] flex items-center justify-center text-white" aria-label="Add to Wishlist">
+                            <button type="button" className="poi-btn w-[34px] h-[32px] flex items-center justify-center text-white" aria-label="Add to Wishlist">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
                                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                               </svg>
@@ -251,16 +255,30 @@ export default function MainNavbar() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-3 sm:gap-6 text-black"
           >
-            <button aria-label="Account" className="hidden sm:block hover-icon-pop hover-scale-sm">
+            <button
+              type="button"
+              aria-label="Account"
+              className="hidden sm:block hover-icon-pop hover-scale-sm"
+              onClick={openLoginModal}
+            >
               <User size={20} strokeWidth={1.5} />
             </button>
-            <button aria-label="Wishlist" className="hidden sm:block hover-icon-pop hover-scale-sm">
+            <Link href="/wishlist" aria-label="Wishlist" className="hidden sm:block hover-icon-pop hover-scale-sm relative">
               <Heart size={20} strokeWidth={1.5} />
-            </button>
-            <button aria-label="Cart" className="hover-icon-pop hover-scale-sm">
+            </Link>
+            <Link href="/cart" aria-label="Cart" className="hover-icon-pop hover-scale-sm relative">
               <ShoppingBag size={20} strokeWidth={1.5} />
-            </button>
+              {cartCount > 0 && (
+                <span
+                  className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-[#00089d] text-white text-[10px] font-bold leading-none"
+                  aria-hidden="true"
+                >
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
             <button
+              type="button"
               aria-label="Menu"
               className="md:hidden! hover-icon-pop hover-scale-sm"
               onClick={() => setMobileMenuOpen(true)}
@@ -293,6 +311,7 @@ export default function MainNavbar() {
             Menu
           </span>
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(false)}
             className="transition-all duration-200 hover:scale-110 hover:opacity-70"
             aria-label="Close menu"
@@ -321,14 +340,23 @@ export default function MainNavbar() {
 
         {/* Mobile-only icons (Account, Wishlist) */}
         <div className="sm:hidden px-6 pt-2 flex items-center gap-6 border-t border-gray-100 py-4">
-          <button aria-label="Account" className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#00089d] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+          <button
+            type="button"
+            aria-label="Account"
+            className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#00089d] transition-colors"
+            style={{ fontFamily: "Inter, sans-serif" }}
+            onClick={() => {
+              setMobileMenuOpen(false);
+              openLoginModal();
+            }}
+          >
             <User size={18} strokeWidth={1.5} />
             <span>Account</span>
           </button>
-          <button aria-label="Wishlist" className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#00089d] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+          <Link href="/wishlist" aria-label="Wishlist" className="flex items-center gap-2 text-[13px] tracking-widest uppercase text-[#1a1a1a] hover:text-[#00089d] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
             <Heart size={18} strokeWidth={1.5} />
             <span>Wishlist</span>
-          </button>
+          </Link>
         </div>
       </div>
     </>

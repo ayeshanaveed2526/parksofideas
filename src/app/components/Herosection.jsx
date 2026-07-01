@@ -107,6 +107,7 @@ export default function Herosection() {
                   src={slide.image} 
                   alt={slide.title} 
                   fill 
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   style={{ objectFit: "cover", objectPosition: "center" }} 
                   priority={idx === 0}
                 />
@@ -251,6 +252,7 @@ export default function Herosection() {
                   src={slide.image} 
                   alt={slide.title} 
                   fill 
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   style={{ objectFit: "cover", objectPosition: "center" }} 
                   priority={idx === 0}
                 />

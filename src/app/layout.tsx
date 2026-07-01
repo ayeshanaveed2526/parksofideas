@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono, Inter, Marcellus } from "next/font/google";
 import { LegalModalProvider } from "./components/legal/LegalModalProvider";
+import { LoginModalProvider } from "./components/auth/LoginModalProvider";
+import { CartProvider } from "./components/cart/CartProvider";
+import { WishlistProvider } from "./components/wishlist/WishlistProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -44,7 +47,13 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {/* Removed unpkg.com react-grab script to prevent blocking initial rendering and speed up component loading */}
-        <LegalModalProvider>{children}</LegalModalProvider>
+        <LegalModalProvider>
+          <LoginModalProvider>
+            <CartProvider>
+              <WishlistProvider>{children}</WishlistProvider>
+            </CartProvider>
+          </LoginModalProvider>
+        </LegalModalProvider>
       </body>
     </html>
   );

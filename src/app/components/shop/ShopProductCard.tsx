@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { PERFUME_CATALOG, type PerfumeProduct } from "../../data/perfumeCatalog";
 import type { LayoutMode } from "./ShopToolbar";
+import { useWishlist } from "../wishlist/WishlistProvider";
+import { useCart } from "../cart/CartProvider";
 
 interface ShopProductCardProps {
   product: PerfumeProduct;
@@ -21,6 +23,9 @@ export default function ShopProductCard({
   layoutMode,
 }: ShopProductCardProps) {
   const router = useRouter();
+  const { toggle, has } = useWishlist();
+  const { add: addToCart } = useCart();
+  const inWishlist = has(product.id);
 
   /* Derive badges */
   const badges: { text: string; color: string }[] = [];
@@ -160,16 +165,17 @@ export default function ShopProductCard({
             <button
               className="sp-action-btn"
               type="button"
-              aria-label="Add to wishlist"
+              aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                toggle(product.id);
               }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                fill="none"
+                fill={inWishlist ? "currentColor" : "none"}
                 stroke="currentColor"
                 strokeWidth="1.8"
                 strokeLinecap="round"
@@ -210,6 +216,7 @@ export default function ShopProductCard({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+              addToCart(product.id);
             }}
           >
             ADD TO CART
@@ -225,6 +232,7 @@ export default function ShopProductCard({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                addToCart(product.id);
               }}
             >
               + ADD TO CART
@@ -257,16 +265,17 @@ export default function ShopProductCard({
             <button
               className="sp-list-icon-btn"
               type="button"
-              aria-label="Add to wishlist"
+              aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                toggle(product.id);
               }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                fill="none"
+                fill={inWishlist ? "currentColor" : "none"}
                 stroke="currentColor"
                 strokeWidth="1.8"
                 strokeLinecap="round"
