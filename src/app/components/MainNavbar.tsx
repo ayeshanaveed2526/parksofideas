@@ -217,21 +217,21 @@ export default function MainNavbar() {
                           <img src={perfume.image} alt={perfume.brand} className="max-h-[190px] max-w-full object-contain" />
                           <div className="absolute inset-0 bg-white/40 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 z-4" />
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white border border-black z-5 opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 w-[69px] h-[34px]">
-                            <button type="button" className="poi-btn w-[34px] h-[32px] flex items-center justify-center text-white" aria-label="Quick View">
+                            <button type="button" className="poi-btn poi-btn-compact w-[34px] h-[32px] flex items-center justify-center" aria-label="Quick View">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
                                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                                 <circle cx="12" cy="12" r="3" />
                               </svg>
                             </button>
                             <div className="w-px h-[32px] bg-black"></div>
-                            <button type="button" className="poi-btn w-[34px] h-[32px] flex items-center justify-center text-white" aria-label="Add to Wishlist">
+                            <button type="button" className="poi-btn poi-btn-compact w-[34px] h-[32px] flex items-center justify-center" aria-label="Add to Wishlist">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[14px] h-[14px]">
                                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                               </svg>
                             </button>
                           </div>
-                          <button className="poi-btn absolute bottom-0 left-0 w-full h-[36px] font-semibold text-[10px] tracking-[0.15em] uppercase text-white flex items-center justify-center translate-y-full opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 transition-all duration-300 z-5" type="button" style={{ fontFamily: "Inter, sans-serif" }}>
-                            + ADD TO CART
+                          <button className="poi-btn poi-btn-compact absolute bottom-0 left-0 w-full h-[36px] flex items-center justify-center translate-y-full opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 transition-all duration-300 z-5 text-[10px] tracking-[0.15em]" type="button">
+                            + Add to Cart
                           </button>
                         </div>
                         <div className="w-[260px] h-[252px] flex flex-col items-center justify-center px-4">

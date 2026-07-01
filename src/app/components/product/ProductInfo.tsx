@@ -79,19 +79,21 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
         <motion.div variants={itemVariants} className="mb-8 h-px w-full bg-[#dfe3eb]" />
 
         <motion.div variants={itemVariants} className="mb-6 flex items-stretch gap-3 sm:gap-4">
-          <div className="flex h-12 w-[120px] shrink-0 items-center border border-[#dfe3eb] bg-white sm:w-32">
+          <div className="flex h-12 w-[120px] shrink-0 items-center overflow-hidden rounded-full border border-[#dfe3eb] bg-white sm:w-32">
             <button
               type="button"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="poi-btn flex h-full w-10 items-center justify-center text-lg text-white"
+              className="flex h-full w-10 items-center justify-center text-lg font-light text-[#00089d] transition-colors hover:bg-[rgba(0,8,157,0.06)]"
+              aria-label="Decrease quantity"
             >
               −
             </button>
-            <div className="flex flex-1 items-center justify-center text-sm font-medium">{quantity}</div>
+            <div className="flex flex-1 items-center justify-center text-sm font-semibold text-[#1a1a1a]">{quantity}</div>
             <button
               type="button"
               onClick={() => setQuantity((q) => q + 1)}
-              className="poi-btn flex h-full w-10 items-center justify-center text-lg text-white"
+              className="flex h-full w-10 items-center justify-center text-lg font-light text-[#00089d] transition-colors hover:bg-[rgba(0,8,157,0.06)]"
+              aria-label="Increase quantity"
             >
               +
             </button>
@@ -99,9 +101,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
           <button
             type="button"
-            className="poi-btn group relative h-12 w-[220px] overflow-hidden text-xs font-bold tracking-widest text-white"
+            className="poi-btn h-12 min-w-[220px] flex-1 sm:flex-none"
           >
-            <span className="relative z-10">ADD TO CART</span>
+            Add to Cart
           </button>
         </motion.div>
 

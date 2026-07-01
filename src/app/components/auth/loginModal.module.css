@@ -138,20 +138,21 @@
   justify-content: center;
   gap: 12px;
   padding: 13px 18px;
-  border-radius: 12px;
-  border: 1px solid var(--poi-primary-a14);
+  border-radius: var(--poi-radius-full);
+  border: 1px solid var(--poi-primary-a18);
   background: var(--poi-white);
   font-family: var(--poi-font-sans);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--poi-text);
   cursor: pointer;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s var(--poi-ease-out);
 }
 
 .googleBtn:hover {
-  border-color: var(--poi-primary-a30);
-  box-shadow: 0 4px 16px var(--poi-primary-a08);
+  border-color: var(--poi-gold-a40);
+  box-shadow: 0 6px 20px var(--poi-primary-a10);
   transform: translateY(-1px);
 }
 
@@ -280,24 +281,7 @@
   width: 100%;
   margin-top: 4px;
   padding: 14px 20px;
-  border-radius: 12px;
-  border: none;
-  background: var(--poi-gradient-primary-btn);
-  font-family: var(--poi-font-sans);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--poi-white);
-  cursor: pointer;
-  box-shadow: 0 8px 24px var(--poi-primary-a30);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-}
-
-.signInBtn:hover {
-  filter: brightness(1.06);
-  box-shadow: 0 10px 28px var(--poi-primary-a38);
-  transform: translateY(-1px);
+  border-radius: var(--poi-radius-full);
 }
 
 .footer {

@@ -161,33 +161,36 @@
   --top-background-color: #e4c1b1;
   --top-color-hr: rgb(205, 174, 159);
 
-  /* ── Button system ── */
+  /* ── Button system (elegant luxury) ── */
   --poi-btn-bg: linear-gradient(
-    135deg,
-    #050505 0%,
-    #141414 30%,
-    #525252 50%,
-    #1a1a1a 70%,
-    #0a0a0a 100%
+    148deg,
+    var(--poi-primary-darker) 0%,
+    var(--poi-primary-mid) 38%,
+    var(--poi-primary) 72%,
+    var(--poi-primary-light) 100%
   );
   --poi-btn-bg-hover: linear-gradient(
-    135deg,
-    var(--poi-primary-darker) 0%,
-    var(--poi-primary-mid) 25%,
-    var(--poi-primary) 45%,
-    #6b7280 58%,
-    #4b5563 72%,
-    var(--poi-primary) 100%
+    148deg,
+    var(--poi-primary-dark) 0%,
+    var(--poi-primary) 42%,
+    var(--poi-primary-lighter) 100%
   );
-  --poi-btn-border: rgba(255, 255, 255, 0.1);
-  --poi-btn-border-hover: rgba(156, 163, 175, 0.45);
-  --poi-btn-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --poi-btn-shadow-hover: 0 8px 24px var(--poi-primary-a40);
-  --poi-btn-transition: transform 0.35s ease,
-    box-shadow 0.35s ease,
-    background 0.4s ease,
-    border-color 0.35s ease,
-    color 0.3s ease;
+  --poi-btn-border: rgba(200, 161, 75, 0.32);
+  --poi-btn-border-hover: rgba(200, 161, 75, 0.62);
+  --poi-btn-shadow:
+    0 4px 18px rgba(0, 8, 157, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --poi-btn-shadow-hover:
+    0 10px 32px rgba(0, 8, 157, 0.28),
+    0 0 0 1px rgba(200, 161, 75, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --poi-btn-transition:
+    transform 0.32s var(--poi-ease-out),
+    box-shadow 0.32s var(--poi-ease-out),
+    background 0.35s ease,
+    border-color 0.32s ease,
+    color 0.25s ease,
+    filter 0.25s ease;
 
   /* ── Scrollbar ── */
   --poi-scrollbar-track: #f1f1f1;
@@ -348,11 +351,12 @@ img, video {
 .hover-btn-shine {
   position: relative;
   overflow: hidden;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.35s ease,
-              color 0.3s ease,
-              background-color 0.3s ease,
-              border-color 0.3s ease;
+  transition:
+    transform 0.35s var(--poi-ease-out),
+    box-shadow 0.35s ease,
+    color 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 .hover-btn-shine::before {
   content: "";
@@ -360,21 +364,239 @@ img, video {
   inset: 0;
   background: linear-gradient(
     105deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.35) 50%,
-    transparent 60%
+    transparent 38%,
+    rgba(200, 161, 75, 0.22) 48%,
+    rgba(255, 255, 255, 0.18) 52%,
+    transparent 62%
   );
-  background-size: 200% 100%;
-  background-position: -200% center;
-  transition: background-position 0.6s ease;
+  background-size: 220% 100%;
+  background-position: -220% center;
+  transition: background-position 0.75s ease;
   pointer-events: none;
 }
 .hover-btn-shine:hover::before {
-  background-position: 200% center;
+  background-position: 220% center;
 }
 .hover-btn-shine:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 28px rgba(0, 8, 157, 0.18);
+}
+
+/* ── Premium button system ── */
+.poi-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--poi-radius-full);
+  background: var(--poi-btn-bg);
+  color: var(--poi-white);
+  border: 1px solid var(--poi-btn-border);
+  box-shadow: var(--poi-btn-shadow);
+  cursor: pointer;
+  font-family: var(--poi-font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition: var(--poi-btn-transition);
+}
+
+.poi-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    transparent 42%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.poi-btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.poi-btn:hover:not(:disabled) {
+  background: var(--poi-btn-bg-hover);
+  border-color: var(--poi-btn-border-hover);
+  box-shadow: var(--poi-btn-shadow-hover);
+  color: var(--poi-white);
+  transform: translateY(-2px);
+}
+
+.poi-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 3px 12px rgba(0, 8, 157, 0.22);
+  filter: brightness(0.98);
+}
+
+.poi-btn-active {
+  background: var(--poi-btn-bg-hover);
+  border-color: var(--poi-btn-border-hover);
+  box-shadow: var(--poi-btn-shadow-hover);
+}
+
+.poi-btn-active:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.poi-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Outline — refined secondary actions */
+.poi-btn-outline {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--poi-primary);
+  border: 1px solid var(--poi-primary-a22);
+  box-shadow: 0 2px 12px var(--poi-primary-a06);
+}
+
+.poi-btn-outline::after {
+  display: none;
+}
+
+.poi-btn-outline:hover:not(:disabled) {
+  background: var(--poi-white);
+  color: var(--poi-primary-dark);
+  border-color: var(--poi-gold-a40);
+  box-shadow: 0 8px 24px var(--poi-primary-a12);
+}
+
+/* Ghost — minimal text actions */
+.poi-btn-ghost {
+  background: transparent;
+  color: var(--poi-primary);
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.poi-btn-ghost::after {
+  display: none;
+}
+
+.poi-btn-ghost:hover:not(:disabled) {
+  background: var(--poi-primary-a06);
+  border-color: var(--poi-primary-a12);
+  color: var(--poi-primary-dark);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Gold accent — special CTAs */
+.poi-btn-gold {
+  background: linear-gradient(
+    145deg,
+    #a8842e 0%,
+    var(--poi-gold) 45%,
+    #dfc06a 100%
+  );
+  color: var(--poi-primary-darker);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 6px 22px var(--poi-gold-a25);
+}
+
+.poi-btn-gold:hover:not(:disabled) {
+  background: linear-gradient(145deg, #b89238 0%, #d4ad58 50%, #eed078 100%);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--poi-primary-darker);
+  box-shadow: 0 10px 28px var(--poi-gold-a35);
+}
+
+/* Compact icon buttons */
+.poi-btn-icon {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+}
+
+.poi-btn-sm {
+  padding: 10px 20px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+/* Compact — when explicit w/h are set on the element */
+.poi-btn-compact {
+  padding: 0;
+  min-width: 0;
+  border-radius: 0;
+  letter-spacing: normal;
+  text-transform: none;
+  font-size: inherit;
+}
+
+.poi-btn-compact::after {
+  display: none;
+}
+
+/* Hero slider CTAs */
+.poi-btn-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 30px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1.2;
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.4s var(--poi-ease-out),
+    box-shadow 0.4s ease,
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.poi-btn-hero--light {
+  color: #1a1a1a;
+  border-color: rgba(26, 26, 26, 0.75);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+}
+
+.poi-btn-hero--light:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  border-color: #1a1a1a;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+  transform: translateY(-2px);
+}
+
+.poi-btn-hero--dark {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(6px);
+}
+
+.poi-btn-hero--dark:hover {
+  background: #ffffff;
+  color: var(--poi-primary);
+  border-color: #ffffff;
+  box-shadow: 0 10px 32px rgba(0, 8, 157, 0.22);
+  transform: translateY(-2px);
 }
 
 .hover-card-3d {
@@ -414,46 +636,6 @@ img, video {
   text-shadow: 0 0 20px rgba(205, 174, 159, 0.4);
 }
 
-/* ── Premium button system ── */
-.poi-btn {
-  background: var(--poi-btn-bg);
-  color: var(--poi-white);
-  border: 1px solid var(--poi-btn-border);
-  box-shadow: var(--poi-btn-shadow);
-  cursor: pointer;
-  transition: var(--poi-btn-transition);
-  letter-spacing: var(--poi-letter-tight);
-}
-
-.poi-btn:hover:not(:disabled) {
-  background: var(--poi-btn-bg-hover);
-  border-color: var(--poi-btn-border-hover);
-  box-shadow: var(--poi-btn-shadow-hover);
-  color: var(--poi-white);
-  transform: translateY(-2px);
-}
-
-.poi-btn:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.poi-btn-active {
-  background: var(--poi-btn-bg-hover);
-  border-color: var(--poi-btn-border-hover);
-  box-shadow: var(--poi-btn-shadow-hover);
-}
-
-.poi-btn-active:hover:not(:disabled) {
-  filter: brightness(1.04);
-}
-
-.poi-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-/* ── Shared page patterns (cart, wishlist, contact, blog) ── */
 .poi-page {
   position: relative;
   min-height: 100vh;
@@ -769,20 +951,19 @@ img, video {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--poi-btn-bg);
-  border: 1px solid var(--poi-btn-border);
-  color: var(--poi-white);
+  background: var(--poi-primary-a06);
+  border: 1px solid var(--poi-primary-a12);
+  color: var(--poi-primary);
   cursor: pointer;
-  box-shadow: var(--poi-btn-shadow);
   transition: var(--poi-btn-transition);
 }
 
 .legal-modal-close:hover {
-  background: var(--poi-btn-bg-hover);
-  border-color: var(--poi-btn-border-hover);
-  box-shadow: var(--poi-btn-shadow-hover);
-  color: var(--poi-white);
-  transform: scale(1.08);
+  background: var(--poi-primary-a12);
+  border-color: var(--poi-gold-a40);
+  color: var(--poi-primary-dark);
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px var(--poi-primary-a12);
 }
 
 .legal-modal-body {

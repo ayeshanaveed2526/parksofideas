@@ -31,7 +31,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Finding Your Signature Scent in 2026",
     excerpt:
       "Learn how to layer notes, test on skin, and choose a fragrance that feels unmistakably yours.",
-    image: "/perfumes/elysia.png",
+    image: "/images/products/elix-01.png",
     category: "Guides",
     tags: ["perfume", "notes", "gifting"],
     date: "Mar 12, 2026",
@@ -44,7 +44,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "The Art of Perfume Layering",
     excerpt:
       "Combine complementary accords to build depth — from bright citrus openings to warm amber bases.",
-    image: "/perfumes/mystique.png",
+    image: "/images/products/elix-02.png",
     category: "Fragrance",
     tags: ["layering", "perfume", "tips"],
     date: "Mar 8, 2026",
@@ -57,7 +57,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Morning Rituals That Last All Day",
     excerpt:
       "Build a calm, elevated routine with scent, texture, and small luxuries that carry through evening.",
-    image: "/perfumes/lucent.png",
+    image: "/images/products/elix-03.png",
     category: "Lifestyle",
     tags: ["lifestyle", "wellness", "routine"],
     date: "Mar 2, 2026",
@@ -69,7 +69,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Understanding Fragrance Families",
     excerpt:
       "From floral and oriental to woody and fresh — decode the language of perfumery with ease.",
-    image: "/perfumes/opaline.png",
+    image: "/images/products/elix-04.png",
     category: "Guides",
     tags: ["notes", "education", "perfume"],
     date: "Feb 26, 2026",
@@ -81,7 +81,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Spring Collection Preview: Light & Luminous",
     excerpt:
       "A first look at airy florals and soft musks crafted for longer days and golden evenings.",
-    image: "/perfumes/celeste.png",
+    image: "/images/products/elix-05.png",
     category: "News",
     tags: ["new arrivals", "seasonal", "collection"],
     date: "Feb 20, 2026",

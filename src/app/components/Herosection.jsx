@@ -165,24 +165,11 @@ export default function Herosection() {
                 >
                   <Link 
                     href={slide.link} 
-                    className={`w-fit border hover-btn-shine ${
+                    className={`poi-btn-hero hover-btn-shine ${
                       slide.theme === "dark" 
-                        ? "border-white text-white hover:bg-white hover:text-black" 
-                        : "border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white"
+                        ? "poi-btn-hero--dark" 
+                        : "poi-btn-hero--light"
                     }`}
-                    style={{
-                      display: "inline-block",
-                      outline: "none",
-                      fontWeight: 400,
-                      fontSize: "11px",
-                      lineHeight: 1.2,
-                      textAlign: "center",
-                      letterSpacing: "0.265em",
-                      textIndent: "0.265em",
-                      textTransform: "uppercase",
-                      padding: "14px 24px",
-                      textDecoration: "none"
-                    }}
                   >
                     EXPLORE
                   </Link>
@@ -310,24 +297,11 @@ export default function Herosection() {
                 >
                   <Link 
                     href={slide.link} 
-                    className={`w-fit border hover-btn-shine ${
+                    className={`poi-btn-hero hover-btn-shine ${
                       slide.theme === "dark" 
-                        ? "border-white text-white hover:bg-white hover:text-black" 
-                        : "border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white"
+                        ? "poi-btn-hero--dark" 
+                        : "poi-btn-hero--light"
                     }`}
-                    style={{
-                      display: "inline-block",
-                      outline: "none",
-                      fontWeight: 400,
-                      fontSize: "11px",
-                      lineHeight: 1.2,
-                      textAlign: "center",
-                      letterSpacing: "0.265em",
-                      textIndent: "0.265em",
-                      textTransform: "uppercase",
-                      padding: "14px 24px",
-                      textDecoration: "none"
-                    }}
                   >
                     EXPLORE
                   </Link>

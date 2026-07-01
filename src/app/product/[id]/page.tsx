@@ -9,6 +9,7 @@ import RelatedProducts from '../../components/product/RelatedProducts';
 import AnimatedBackground from '../../components/product/AnimatedBackground';
 import PageTransition from '../../components/product/PageTransition';
 import { mockProducts } from '../../data/mockProducts';
+import { getProductGalleryViews } from '../../data/perfumeCatalog';
 import { notFound } from 'next/navigation';
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -22,18 +23,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
-  // Ensure there are at least 4 images for the gallery
-  const galleryImages = [...product.images];
-
-  // If a product doesn't have 4 images, pad it by repeating its own images so the slider is always full without mixing products
-  if (galleryImages.length > 0) {
-    let pIdx = 0;
-    const originalLength = galleryImages.length;
-    while (galleryImages.length < 4) {
-      galleryImages.push(galleryImages[pIdx % originalLength]);
-      pIdx++;
-    }
-  }
+  const galleryViews = getProductGalleryViews(Number(id));
 
   return (
     <main className="min-h-screen relative overflow-hidden bg-transparent">
@@ -48,7 +38,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-12 lg:pt-14 pb-16 lg:pb-20">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
           <div className="w-full lg:sticky lg:top-[136px] lg:self-center">
-            <ProductGallery images={galleryImages} />
+            <ProductGallery views={galleryViews} />
           </div>
 
           <div className="flex w-full items-center lg:min-h-[520px]">

@@ -356,13 +356,6 @@
 .submitBtn {
   margin-top: 20px;
   width: 100%;
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-family: var(--poi-font-sans);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 
 .successMsg {

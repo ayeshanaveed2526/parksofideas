@@ -167,7 +167,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             Remember me for 30 days
           </label>
 
-          <button type="submit" className={styles.signInBtn}>
+          <button type="submit" className={`poi-btn ${styles.signInBtn}`}>
             Sign In
           </button>
         </form>

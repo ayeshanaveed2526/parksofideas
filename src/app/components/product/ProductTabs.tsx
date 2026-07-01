@@ -31,7 +31,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`poi-btn px-8 py-4 text-xs font-semibold tracking-widest relative rounded-md${
+            className={`poi-btn rounded-full px-8 py-3.5 text-[11px] font-semibold tracking-[0.14em] relative${
               activeTab === tab.id ? " poi-btn-active" : ""
             }`}
           >
@@ -71,7 +71,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
                   <div className="w-full h-80 bg-gray-100 flex items-center justify-center relative overflow-hidden group hover-lift rounded-sm">
                      {/* Replace with actual image related to description, simulating Lady Gaga image */}
                      <div className="absolute inset-0 bg-pink-600/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10" />
-                     <img src="/perfumes/elysia.png" alt="Elysia Eau de Parfum" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+                     <img src="/images/products/elix-02.png" alt="Elysia Eau de Parfum" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
                      <h2 className="absolute bottom-10 right-10 text-white font-serif text-4xl font-bold z-20 mix-blend-overlay">VOCE<br/>VIVA</h2>
                   </div>
                 </motion.div>
