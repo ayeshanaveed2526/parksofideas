@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { motion, Variants } from 'framer-motion';
 import { Heart, Share2, ShieldCheck, RefreshCw, Truck } from 'lucide-react';
 import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { useCart } from '../cart/CartProvider';
 import { Product } from '../../data/mockProducts';
 
 interface ProductInfoProps {
@@ -16,8 +18,15 @@ const avgRating = (reviews: Product['reviews']) => {
 };
 
 const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
+  const router = useRouter();
+  const { add: addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const rating = avgRating(product.reviews);
+
+  const handleAddToCart = () => {
+    addToCart(product.id, quantity);
+    router.push('/cart');
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -102,6 +111,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           <button
             type="button"
             className="poi-btn h-12 min-w-[220px] flex-1 sm:flex-none"
+            onClick={handleAddToCart}
           >
             ADD TO CART
           </button>

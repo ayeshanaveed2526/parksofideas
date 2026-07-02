@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Heart,
@@ -103,9 +104,15 @@ function WishlistCard({
 }
 
 export default function WishlistPageContent() {
+  const router = useRouter();
   const { ids, loaded, remove, clear } = useWishlist();
   const { add: addToCart } = useCart();
   const [showContent, setShowContent] = useState(false);
+
+  const handleAddToCart = (id: number) => {
+    addToCart(id, 1);
+    router.push("/cart");
+  };
 
   useEffect(() => {
     if (!loaded) return;
@@ -203,7 +210,7 @@ export default function WishlistPageContent() {
                     product={product}
                     index={idx}
                     onRemove={remove}
-                    onAddToCart={addToCart}
+                    onAddToCart={handleAddToCart}
                   />
                 ))}
               </motion.div>

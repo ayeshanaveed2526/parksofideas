@@ -217,6 +217,7 @@ export default function ShopProductCard({
               e.preventDefault();
               e.stopPropagation();
               addToCart(product.id);
+              router.push("/cart");
             }}
           >
             ADD TO CART
@@ -233,6 +234,7 @@ export default function ShopProductCard({
                 e.preventDefault();
                 e.stopPropagation();
                 addToCart(product.id);
+                router.push("/cart");
               }}
             >
               + ADD TO CART
