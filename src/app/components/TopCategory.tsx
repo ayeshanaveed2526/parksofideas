@@ -732,7 +732,7 @@ export default function TopCategory() {
         .tp-card-stars svg {
           width: 14px;
           height: 14px;
-          color: #e6b400;
+          color: #FFD700;
           filter: drop-shadow(0 1px 1px rgba(230, 180, 0, 0.25));
           transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }

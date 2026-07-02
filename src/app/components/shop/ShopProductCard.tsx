@@ -630,13 +630,12 @@ export default function ShopProductCard({
         }
 
         .sp-star {
-          color: #a4b7ff;
+          color: #FFD700;
           font-size: 10px;
-          transition: transform 0.3s ease, color 0.3s ease;
+          transition: transform 0.3s ease;
         }
 
         .sp-card:hover .sp-star {
-          color: #00089d;
           animation: spStarPop 0.4s ease both;
         }
 

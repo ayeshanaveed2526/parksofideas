@@ -520,13 +520,12 @@ export default function NewProducts() {
         }
 
         .np-star {
-          color: #5b7cff;
+          color: #FFD700;
           font-size: 14px;
-          transition: transform 0.3s ease, color 0.3s ease;
+          transition: transform 0.3s ease;
         }
 
         .np-card:hover .np-star {
-          color: #00089d;
           animation: starPop 0.4s ease both;
         }
 
