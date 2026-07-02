@@ -129,7 +129,6 @@ export default function NewProducts() {
                           <circle cx="12" cy="12" r="3" />
                         </svg>
                       </button>
-                      <div className="np-action-divider" />
                       <button className="np-action-btn" type="button" aria-label="Add to Wishlist">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
@@ -139,7 +138,7 @@ export default function NewProducts() {
 
                     {/* Bottom Add to Cart Button */}
                     <button className="np-atc-btn" type="button">
-                      + ADD TO CART
+                      ADD TO CART
                     </button>
                   </div>
 
@@ -350,19 +349,11 @@ export default function NewProducts() {
           left: 50%;
           transform: translate(-50%, -40%);
           display: flex;
-          background: #ffffff;
-          border-radius: 30px;
-          border: 1px solid rgba(0, 8, 157, 0.1);
-          box-shadow: 0 8px 28px rgba(0, 8, 157, 0.15);
-          overflow: hidden;
-          z-index: 5;
+          gap: 12px;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.4s ease, visibility 0.4s ease,
-                      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-          width: calc(var(--btn-size) * 2 + 1px);
-          height: var(--btn-size);
-          box-sizing: border-box;
+          transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+          z-index: 10;
         }
 
         .np-card:hover .np-hover-actions {
@@ -396,12 +387,6 @@ export default function NewProducts() {
           color: #ffffff;
           transform: scale(1.05);
           box-shadow: var(--poi-btn-shadow-hover);
-        }
-
-        .np-action-divider {
-          width: 1px;
-          height: calc(var(--btn-size) - 2px);
-          background: rgba(0, 8, 157, 0.12);
         }
 
         /* Add to cart button */

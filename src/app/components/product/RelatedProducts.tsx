@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -16,47 +16,6 @@ const relatedProducts = PERFUME_CATALOG.slice(0, 8).map((p) => ({
 }));
 
 export default function RelatedProducts() {
-  const [perView, setPerView] = useState(3);
-  const [index, setIndex] = useState(0);
-  const hoverRef = useRef(false);
-
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      setPerView(w < 640 ? 1 : w < 1024 ? 2 : 3);
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
-
-  const maxIndex = Math.max(0, relatedProducts.length - perView);
-
-  useEffect(() => {
-    setIndex((i) => Math.min(i, maxIndex));
-  }, [maxIndex]);
-
-  const goTo = useCallback(
-    (next: number) => {
-      setIndex(() => {
-        if (next < 0) return maxIndex;
-        if (next > maxIndex) return 0;
-        return next;
-      });
-    },
-    [maxIndex]
-  );
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (!hoverRef.current) {
-        setIndex((i) => (i >= maxIndex ? 0 : i + 1));
-      }
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [maxIndex]);
-
-  const cardBasis = 100 / relatedProducts.length;
 
   return (
     <section className="rp-section">
@@ -72,113 +31,65 @@ export default function RelatedProducts() {
           <div className="rp-divider"></div>
         </motion.div>
 
-        <div
-          className="rp-slider"
-          onMouseEnter={() => (hoverRef.current = true)}
-          onMouseLeave={() => (hoverRef.current = false)}
-        >
-          <button
-            type="button"
-            className="rp-arrow rp-arrow-prev"
-            aria-label="Previous"
-            onClick={() => goTo(index - 1)}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
+        <div className="rp-marquee-wrap">
+          <div className="rp-marquee-track">
+            {[...relatedProducts, ...relatedProducts].map((product, idx) => (
+              <div key={`${product.id}-${idx}`} className="rp-marquee-item">
+                <Link href={`/product/${product.id}`} className="rp-card-link">
+                  <article className="rp-card">
+                    <div className="rp-img-wrap">
+                      {product.badge && (
+                        <span className="rp-badge">{product.badge}</span>
+                      )}
+                      <div className="rp-img-inner">
+                        <motion.div
+                          animate={{ y: [0, -10, 0] }}
+                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: (idx % 8) * 0.2 }}
+                          style={{ width: '100%', height: '100%', position: 'relative' }}
+                        >
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            style={{ objectFit: 'contain' }}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
+                          />
+                        </motion.div>
+                      </div>
+                      <div className="rp-hover-bg"></div>
 
-          <div className="rp-viewport">
-            <div
-              className="rp-track"
-              style={{
-                width: `${(relatedProducts.length / perView) * 100}%`,
-                transform: `translateX(-${index * cardBasis}%)`,
-              }}
-            >
-              {relatedProducts.map((product, idx) => (
-                <div key={product.id} className="rp-slide" style={{ flex: `0 0 ${cardBasis}%` }}>
-                  <Link href={`/product/${product.id}`} className="rp-card-link">
-                    <article className="rp-card">
-                      <div className="rp-img-wrap">
-                        {product.badge && (
-                          <span className="rp-badge">{product.badge}</span>
-                        )}
-                        <div className="rp-img-inner">
-                          <motion.div
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
-                            style={{ width: '100%', height: '100%', position: 'relative' }}
-                          >
-                            <Image
-                              src={product.image}
-                              alt={product.name}
-                              fill
-                              style={{ objectFit: 'contain' }}
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                              className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
-                            />
-                          </motion.div>
-                        </div>
-                        <div className="rp-hover-bg"></div>
-
-                        {/* Action buttons */}
-                        <div className="rp-actions">
-                          <button className="rp-action-btn" aria-label="Quick View">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                              <circle cx="12" cy="12" r="3" />
-                            </svg>
-                          </button>
-                          <div className="rp-action-div"></div>
-                          <button className="rp-action-btn" aria-label="Add to Wishlist">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                            </svg>
-                          </button>
-                        </div>
-
-                        {/* ATC Button */}
-                        <button className="rp-atc">
-                          + ADD TO CART
+                      {/* Action buttons */}
+                      <div className="rp-actions">
+                        <button className="rp-action-btn" aria-label="Quick View">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                        </button>
+                        <button className="rp-action-btn" aria-label="Add to Wishlist">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                          </svg>
                         </button>
                       </div>
 
-                      <div className="rp-info">
-                        <h3 className="rp-name">{product.name}</h3>
-                        <p className="rp-desc">{product.desc}</p>
-                        <p className="rp-price">{formatPerfumePrice(product.price)}</p>
-                      </div>
-                    </article>
-                  </Link>
-                </div>
-              ))}
-            </div>
+                      {/* ATC Button */}
+                      <button className="rp-atc">
+                        ADD TO CART
+                      </button>
+                    </div>
+
+                    <div className="rp-info">
+                      <h3 className="rp-name">{product.name}</h3>
+                      <p className="rp-desc">{product.desc}</p>
+                      <p className="rp-price">{formatPerfumePrice(product.price)}</p>
+                    </div>
+                  </article>
+                </Link>
+              </div>
+            ))}
           </div>
-
-          <button
-            type="button"
-            className="rp-arrow rp-arrow-next"
-            aria-label="Next"
-            onClick={() => goTo(index + 1)}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 6l6 6-6 6" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Dots */}
-        <div className="rp-dots">
-          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              aria-label={`Go to slide ${i + 1}`}
-              className={`rp-dot ${i === index ? 'rp-dot-active' : ''}`}
-              onClick={() => goTo(i)}
-            />
-          ))}
         </div>
       </div>
 
@@ -213,84 +124,32 @@ export default function RelatedProducts() {
           margin: 0 auto;
         }
         
-        /* ── Slider ── */
-        .rp-slider {
-          position: relative;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .rp-viewport {
-          overflow: hidden;
+        /* ── Marquee ── */
+        .rp-marquee-wrap {
           width: 100%;
-          padding: 10px 0;
-        }
-        .rp-track {
-          display: flex;
-          transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .rp-slide {
-          padding: 0 15px;
-          box-sizing: border-box;
+          overflow: hidden;
+          padding: 20px 0;
         }
 
-        .rp-arrow {
+        .rp-marquee-track {
+          display: flex;
+          width: max-content;
+          animation: rp-scroll 35s linear infinite;
+        }
+
+        .rp-marquee-wrap:hover .rp-marquee-track {
+          animation-play-state: paused;
+        }
+
+        .rp-marquee-item {
+          width: min(340px, 85vw);
+          margin-right: 24px;
           flex-shrink: 0;
-          width: 46px;
-          height: 46px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 50%;
-          border: 1px solid var(--poi-btn-border);
-          background: var(--poi-btn-bg);
-          color: #ffffff;
-          cursor: pointer;
-          box-shadow: var(--poi-btn-shadow);
-          transition: var(--poi-btn-transition);
-          z-index: 5;
-        }
-        .rp-arrow svg {
-          width: 20px;
-          height: 20px;
-        }
-        .rp-arrow:hover {
-          background: var(--poi-btn-bg-hover);
-          border-color: var(--poi-btn-border-hover);
-          box-shadow: var(--poi-btn-shadow-hover);
-          color: #ffffff;
-          transform: scale(1.08);
-        }
-        @media (max-width: 640px) {
-          .rp-arrow {
-            width: 40px;
-            height: 40px;
-          }
-          .rp-slide {
-            padding: 0 8px;
-          }
         }
 
-        .rp-dots {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-top: 36px;
-        }
-        .rp-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          border: none;
-          background: var(--poi-btn-bg);
-          cursor: pointer;
-          padding: 0;
-          transition: var(--poi-btn-transition);
-        }
-        .rp-dot-active {
-          width: 26px;
-          border-radius: 4px;
-          background: var(--poi-btn-bg-hover);
+        @keyframes rp-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-50%)); }
         }
 
         .rp-card-link {
@@ -306,6 +165,7 @@ export default function RelatedProducts() {
           overflow: hidden;
           transition: transform 0.4s ease, box-shadow 0.4s ease;
           border: 1px solid rgba(0,0,0,0.04);
+          height: 100%;
         }
         .rp-card:hover {
           transform: translateY(-8px);
@@ -359,9 +219,7 @@ export default function RelatedProducts() {
           left: 50%;
           transform: translate(-50%, -40%);
           display: flex;
-          background: #ffffff;
-          border-radius: 30px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+          gap: 12px;
           opacity: 0;
           visibility: hidden;
           transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -394,12 +252,6 @@ export default function RelatedProducts() {
         .rp-action-btn:hover {
           background: var(--poi-btn-bg-hover);
           color: #ffffff;
-        }
-        .rp-action-div {
-          width: 1px;
-          height: 24px;
-          background: #eee;
-          margin: auto 0;
         }
         
         .rp-atc {
@@ -436,6 +288,7 @@ export default function RelatedProducts() {
           padding: 25px 20px;
           text-align: center;
           background: #ffffff;
+          flex-grow: 1;
         }
         .rp-name {
           font-family: var(--font-marcellus), "Marcellus", serif;

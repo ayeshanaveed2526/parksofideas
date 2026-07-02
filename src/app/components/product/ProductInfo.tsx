@@ -103,7 +103,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             type="button"
             className="poi-btn h-12 min-w-[220px] flex-1 sm:flex-none"
           >
-            Add to Cart
+            ADD TO CART
           </button>
         </motion.div>
 

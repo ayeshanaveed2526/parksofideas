@@ -424,8 +424,22 @@
 }
 
 .socialLink:hover {
-  background: var(--poi-btn-bg-hover);
   transform: translateY(-2px);
+}
+
+.socialLink[data-network="facebook"]:hover {
+  background: #1877f2;
+  box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4);
+}
+
+.socialLink[data-network="instagram"]:hover {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  box-shadow: 0 8px 20px rgba(220, 39, 67, 0.35);
+}
+
+.socialLink[data-network="youtube"]:hover {
+  background: #ff0000;
+  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
 }
 
 .faqList {

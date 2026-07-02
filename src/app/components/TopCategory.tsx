@@ -200,7 +200,6 @@ export default function TopCategory() {
                         <circle cx="12" cy="12" r="3" />
                       </svg>
                     </button>
-                    <div className="tp-action-divider" />
                     <button className="tp-action-btn" type="button" aria-label="Add to Wishlist">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
@@ -219,7 +218,7 @@ export default function TopCategory() {
                     </button>
                   ) : (
                     <button className="tp-atc-btn" type="button">
-                      + ADD TO CART
+                      ADD TO CART
                     </button>
                   )}
                 </div>
@@ -552,18 +551,11 @@ export default function TopCategory() {
           left: 50%;
           transform: translate(-50%, -40%);
           display: flex;
-          background: #fff;
-          border-radius: 30px;
-          box-shadow: 0 6px 24px rgba(0,0,0,0.10);
-          overflow: hidden;
-          z-index: 5;
+          gap: 12px;
           opacity: 0;
           visibility: hidden;
-          transition: opacity 0.4s ease, visibility 0.4s ease,
-                      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-          width: calc(var(--btn-size) * 2 + 1px);
-          height: var(--btn-size);
-          box-sizing: border-box;
+          transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+          z-index: 10;
         }
 
         .tp-card:hover .tp-hover-actions {
@@ -585,6 +577,7 @@ export default function TopCategory() {
           box-shadow: var(--poi-btn-shadow);
           transition: var(--poi-btn-transition);
           padding: 0;
+          border-radius: 50%;
         }
 
         .tp-action-btn svg {
@@ -594,15 +587,9 @@ export default function TopCategory() {
 
         .tp-action-btn:hover {
           background: var(--poi-btn-bg-hover);
-          color: #fff;
+          color: #ffffff;
           transform: scale(1.05);
           box-shadow: var(--poi-btn-shadow-hover);
-        }
-
-        .tp-action-divider {
-          width: 1px;
-          height: calc(var(--btn-size) - 2px);
-          background: rgba(0, 0, 0, 0.12);
         }
 
         /* ── Add-to-cart & External buttons ── */
