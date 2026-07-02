@@ -6,6 +6,7 @@ export interface PerfumeProduct {
   notes: string;
   price: number;
   image: string;
+  hoverImage?: string;
 }
 
 /** User-uploaded ELIX product shots — cycled across the catalog grid. */
@@ -23,7 +24,21 @@ export const PRODUCT_GRID_IMAGES = [
 ] as const;
 
 export function getProductImageForId(id: number): string {
+  const index = (id - 1) % 4;
+  if (index === 0) return "/images/products/top-cat-1.png";
+  if (index === 1) return "/images/products/top-cat-2.png";
+  if (index === 2) return "/images/products/top-cat-3.png";
+  if (index === 3) return "/images/products/top-cat-4.png";
   return PRODUCT_GRID_IMAGES[(id - 1) % PRODUCT_GRID_IMAGES.length];
+}
+
+export function getProductHoverImageForId(id: number): string | undefined {
+  const index = (id - 1) % 4;
+  if (index === 0) return "/images/products/top-cat-1-hover.png";
+  if (index === 1) return "/images/products/top-cat-2-hover.png";
+  if (index === 2) return "/images/products/top-cat-3-hover.png";
+  if (index === 3) return "/images/products/top-cat-4-hover.png";
+  return undefined;
 }
 
 type PerfumeDefinition = Omit<PerfumeProduct, "image">;
@@ -66,6 +81,7 @@ export const PERFUME_CATALOG: PerfumeProduct[] = PERFUME_DEFINITIONS.map(
   (perfume) => ({
     ...perfume,
     image: getProductImageForId(perfume.id),
+    hoverImage: getProductHoverImageForId(perfume.id),
   })
 );
 
@@ -160,6 +176,7 @@ export interface CatalogCardProduct {
   description: string;
   price: string;
   image: string;
+  hoverImage?: string;
   badges: { text: string; color: string }[];
   outOfStock?: boolean;
   isExternal?: boolean;
@@ -184,6 +201,7 @@ export function toCatalogCard(perfume: PerfumeProduct): CatalogCardProduct {
     description: perfume.description,
     price: formatPerfumePrice(perfume.price),
     image: perfume.image,
+    hoverImage: perfume.hoverImage,
     badges,
     outOfStock: perfume.id === 10,
   };

@@ -205,13 +205,26 @@ export default function TopCategory() {
 
                   {/* Product image */}
                   <div className="tp-card-img">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
-                    />
+                    <div className={`tp-img-layer tp-img-primary ${product.hoverImage ? 'has-hover' : ''}`}>
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
+                      />
+                    </div>
+                    {product.hoverImage && (
+                      <div className="tp-img-layer tp-img-hover">
+                        <Image
+                          src={product.hoverImage}
+                          alt={`${product.name} Alternate`}
+                          fill
+                          style={{ objectFit: "cover" }}
+                          sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* Hover white overlay background */}
@@ -485,7 +498,7 @@ export default function TopCategory() {
         .tp-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 260 / 335;
+          aspect-ratio: 260 / 370;
           overflow: hidden;
           background: linear-gradient(180deg, #f8f9fd 0%, #ffffff 50%, #f3f5fb 100%);
         }
@@ -494,6 +507,31 @@ export default function TopCategory() {
           position: absolute;
           inset: 0;
           transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .tp-img-layer {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .tp-img-primary {
+          opacity: 1;
+          transition: opacity 0.5s ease;
+        }
+
+        .tp-card:hover .tp-img-primary.has-hover {
+          opacity: 0;
+        }
+
+        .tp-img-hover {
+          opacity: 0;
+          transition: opacity 0.5s ease;
+        }
+
+        .tp-card:hover .tp-img-hover {
+          opacity: 1;
         }
 
         .tp-card:hover .tp-card-img {
@@ -555,18 +593,18 @@ export default function TopCategory() {
         .tp-card-hover-bg {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.2);
-          backdrop-filter: blur(4px);
+          background: rgba(0, 8, 157, 0.0);
           opacity: 0;
           visibility: hidden;
           transition: opacity 0.45s ease, visibility 0.45s ease, background 0.45s ease;
           z-index: 4;
+          pointer-events: none;
         }
 
         .tp-card:hover .tp-card-hover-bg {
           opacity: 1;
           visibility: visible;
-          background: rgba(0, 8, 157, 0.06);
+          background: rgba(0, 8, 157, 0.03);
         }
 
         /* ── Center Eye / Heart Action buttons ── */
@@ -677,7 +715,7 @@ export default function TopCategory() {
         .tp-card-info {
           width: 100%;
           box-sizing: border-box;
-          padding: 12px 16px;
+          padding: 8px 16px 8px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -705,7 +743,7 @@ export default function TopCategory() {
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: #000;
-          margin: 0 0 8px;
+          margin: 0 0 4px;
           padding-left: 0;
           text-align: left;
           width: 100%;
@@ -724,7 +762,7 @@ export default function TopCategory() {
           align-items: center;
           justify-content: flex-start;
           gap: 3px;
-          margin: 0 0 10px;
+          margin: 0 0 4px;
         }
 
         .tp-card-stars svg {
@@ -760,7 +798,7 @@ export default function TopCategory() {
           line-height: 1;
           color: #000;
           letter-spacing: 0.02em;
-          margin-top: 10px;
+          margin-top: 4px;
           align-self: flex-end;
           text-align: right;
           transition: transform 0.35s ease;
