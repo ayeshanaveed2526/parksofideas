@@ -116,7 +116,7 @@ export default function WishlistPageContent() {
 
   useEffect(() => {
     if (!loaded) return;
-    const timer = window.setTimeout(() => setShowContent(true), 450);
+    const timer = window.setTimeout(() => setShowContent(true), 0);
     return () => window.clearTimeout(timer);
   }, [loaded]);
 

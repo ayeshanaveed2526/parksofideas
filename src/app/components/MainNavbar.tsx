@@ -210,7 +210,7 @@ export default function MainNavbar() {
                     {/* Image section */}
                     <div className="flex-1 pt-[41px] px-[20px] pb-[10px] flex gap-[20px] overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-track]:bg-[#f0f0f0] [&::-webkit-scrollbar-thumb]:bg-[#c0c0c0] [&::-webkit-scrollbar-thumb]:hover:bg-[#a0a0a0]">
                       {megaMenuPerfumes.map((perfume, idx) => (
-                      <div key={perfume.id} className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
+                      <Link href={`/product/${perfume.id}`} key={perfume.id} className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
                         <div className="relative w-[260px] h-[230px] flex items-center justify-center overflow-hidden border-b border-[#f2f2f2]">
                           {idx === 1 && <span className="absolute top-0 left-0 bg-[#1a1a1a] text-white text-[10px] font-bold px-2 py-1 tracking-wider z-10">NEW</span>}
                           {(idx === 1 || idx === 2) && <span className="absolute top-0 right-0 bg-[#00089d] text-white text-[10px] font-bold px-2 py-1 tracking-wider uppercase z-10">FEATURED</span>}
@@ -222,7 +222,7 @@ export default function MainNavbar() {
                           <p className="text-[#888] text-[13px] mb-6">{perfume.description}</p>
                           <span className="text-[#1a1a1a] text-[15px] font-medium">{formatPerfumePrice(perfume.price)}</span>
                         </div>
-                      </div>
+                      </Link>
                       ))}
                     </div>
                   </div>

@@ -24,7 +24,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const rating = avgRating(product.reviews);
 
   const handleAddToCart = () => {
-    addToCart(product.id, quantity);
+    addToCart(Number(product.id), quantity);
     router.push('/cart');
   };
 
