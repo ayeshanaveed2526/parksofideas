@@ -70,11 +70,7 @@ export default function NewProducts() {
 
   return (
     <section className="np-section">
-      <div
-        className="np-marquee-wrap"
-        onMouseEnter={pauseMarquee}
-        onMouseLeave={resumeMarquee}
-      >
+      <div className="np-marquee-wrap">
         <Swiper
           modules={[Autoplay, A11y]}
           onSwiper={(swiper) => {
@@ -571,9 +567,9 @@ export default function NewProducts() {
         .np-price-current {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 600;
-          font-size: 15px;
-          color: #00089d;
-          letter-spacing: 0.02em;
+          font-size: 13px;
+          color: #000000;
+          letter-spacing: 0.01em;
         }
 
         @media (max-width: 639px) {
