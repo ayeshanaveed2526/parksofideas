@@ -36,10 +36,14 @@ function GoogleIcon() {
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [mounted, setMounted] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -72,7 +76,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       role="presentation"
     >
       <div
-        className={styles.card}
+        className={`${styles.card} ${isSignUp ? styles.cardSignUp : ""}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="login-modal-title"
@@ -88,16 +92,28 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         </button>
 
         <header className={styles.header}>
-          <ProfileAvatar initial="E" />
-          <h2 id="login-modal-title" className={styles.title}>
-            Welcome Back
-          </h2>
-          <p className={styles.subtitle}>Sign in to your account</p>
+          {isSignUp ? (
+            <>
+              <div className={`${styles.avatar} ${styles.avatarSignUp}`}>E</div>
+              <h2 id="login-modal-title" className={styles.title}>
+                Join Elix by IR
+              </h2>
+              <p className={styles.subtitle}>Create your account</p>
+            </>
+          ) : (
+            <>
+              <ProfileAvatar initial="E" />
+              <h2 id="login-modal-title" className={styles.title}>
+                Welcome Back
+              </h2>
+              <p className={styles.subtitle}>Sign in to your account</p>
+            </>
+          )}
         </header>
 
         <button type="button" className={styles.googleBtn}>
           <GoogleIcon />
-          Sign in with Google
+          {isSignUp ? "Sign up with Google" : "Sign in with Google"}
         </button>
 
         <div className={styles.divider}>
@@ -107,6 +123,29 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
+          {isSignUp && (
+            <div className={styles.field}>
+              <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="signup-fullname">
+                Full Name
+              </label>
+              <div className={styles.inputWrap}>
+                <svg className={styles.inputIcon} width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <input
+                  id="signup-fullname"
+                  type="text"
+                  className={styles.input}
+                  placeholder="Enter your full name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+          )}
+
           <div className={styles.field}>
             <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="login-email">
               Email Address
@@ -140,7 +179,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                autoComplete="current-password"
+                autoComplete={isSignUp ? "new-password" : "current-password"}
               />
               <button
                 type="button"
@@ -157,31 +196,68 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             </div>
           </div>
 
-          <label className={styles.remember}>
-            <input
-              type="checkbox"
-              className={styles.checkbox}
-              checked={remember}
-              onChange={(e) => setRemember(e.target.checked)}
-            />
-            Remember me for 30 days
-          </label>
+          {isSignUp && (
+            <div className={styles.field}>
+              <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="signup-confirm-password">
+                Confirm Password
+              </label>
+              <div className={styles.inputWrap}>
+                <Lock className={styles.inputIcon} size={17} strokeWidth={1.75} />
+                <input
+                  id="signup-confirm-password"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className={styles.input}
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  className={styles.togglePassword}
+                  onClick={() => setShowConfirmPassword((v) => !v)}
+                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={17} strokeWidth={1.75} />
+                  ) : (
+                    <Eye size={17} strokeWidth={1.75} />
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
 
-          <button type="submit" className={`poi-btn ${styles.signInBtn}`}>
-            Sign In
+          {!isSignUp && (
+            <label className={styles.remember}>
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+              />
+              Remember me for 30 days
+            </label>
+          )}
+
+          <button type="submit" className={isSignUp ? styles.signUpSubmitBtn : `poi-btn ${styles.signInBtn}`}>
+            {isSignUp ? "Create Account" : "Sign In"}
           </button>
         </form>
 
         <footer className={styles.footer}>
           <p className={styles.signUpText}>
-            Don&apos;t have an account?{" "}
-            <button type="button" className={styles.signUpLink}>
-              Sign Up
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+            <button type="button" className={isSignUp ? styles.signInLink : styles.signUpLink} onClick={() => setIsSignUp(!isSignUp)}>
+              {isSignUp ? "Log In" : "Sign Up"}
             </button>
           </p>
-          <button type="button" className={styles.forgotLink}>
-            Forgot your password?
-          </button>
+          {!isSignUp && (
+            <button type="button" className={styles.forgotLink}>
+              Forgot your password?
+            </button>
+          )}
           <p className={styles.secureNote}>
             Secure authentication powered by Google &amp; Facebook
           </p>

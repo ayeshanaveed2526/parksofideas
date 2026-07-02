@@ -60,6 +60,15 @@
   }
 }
 
+.cardSignUp::before {
+  background: radial-gradient(
+    ellipse at 30% 0%,
+    var(--poi-primary-a10) 0%,
+    var(--poi-gold-a06) 45%,
+    transparent 72%
+  );
+}
+
 .closeBtn {
   position: absolute;
   top: 16px;
@@ -112,6 +121,11 @@
   width: 40px;
   height: 40px;
   font-size: 16px;
+}
+
+.avatarSignUp {
+  background: var(--poi-gradient-primary);
+  box-shadow: 0 8px 24px var(--poi-primary-a28);
 }
 
 .title {
@@ -284,6 +298,28 @@
   border-radius: var(--poi-radius-full);
 }
 
+.signUpSubmitBtn {
+  width: 100%;
+  margin-top: 4px;
+  padding: 14px 20px;
+  border-radius: var(--poi-radius-full);
+  border: none;
+  background: var(--poi-primary);
+  color: var(--poi-white);
+  font-family: var(--poi-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.signUpSubmitBtn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--poi-primary-a18);
+}
+
 .footer {
   margin-top: 22px;
   text-align: center;
@@ -309,6 +345,22 @@
 }
 
 .signUpLink:hover {
+  color: var(--poi-gold);
+}
+
+.signInLink {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--poi-primary);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.signInLink:hover {
   color: var(--poi-gold);
 }
 
