@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PERFUME_CATALOG, toCatalogCard, type CatalogCardProduct } from "../data/perfumeCatalog";
+import { useCart } from "./cart/CartProvider";
+import { useWishlist } from "./wishlist/WishlistProvider";
 
 type Product = CatalogCardProduct;
 
@@ -30,6 +33,28 @@ const tabs = ["NEWEST", "POPULAR", "CATEGORY", "BRAND"];
 export default function TopCategory() {
   const [activeTab, setActiveTab] = useState("NEWEST");
   const [animKey, setAnimKey] = useState(0);
+
+  const router = useRouter();
+  const { add: addToCart } = useCart();
+  const { add: addToWishlist } = useWishlist();
+
+  const handleQuickView = (e: React.MouseEvent, id: number) => {
+    e.preventDefault();
+    router.push(`/product/${id}`);
+  };
+
+  const handleWishlist = (e: React.MouseEvent, id: number) => {
+    e.preventDefault();
+    addToWishlist(id);
+    router.push("/wishlist");
+  };
+
+  const handleAddToCart = (e: React.MouseEvent, id: number) => {
+    e.preventDefault();
+    addToCart(id, 1);
+    router.push("/cart");
+  };
+
   const currentProducts = (products[activeTab] || []).slice(0, 10);
 
   const handleTabChange = (tab: string) => {
@@ -194,13 +219,13 @@ export default function TopCategory() {
 
                   {/* Center Eye / Heart Action buttons */}
                   <div className="tp-hover-actions">
-                    <button className="tp-action-btn" type="button" aria-label="Quick View">
+                    <button className="tp-action-btn" type="button" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                         <circle cx="12" cy="12" r="3" />
                       </svg>
                     </button>
-                    <button className="tp-action-btn" type="button" aria-label="Add to Wishlist">
+                    <button className="tp-action-btn" type="button" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                       </svg>
@@ -217,7 +242,7 @@ export default function TopCategory() {
                       BUY ON AMAZON
                     </button>
                   ) : (
-                    <button className="tp-atc-btn" type="button">
+                    <button className="tp-atc-btn" type="button" onClick={(e) => handleAddToCart(e, product.id)}>
                       ADD TO CART
                     </button>
                   )}

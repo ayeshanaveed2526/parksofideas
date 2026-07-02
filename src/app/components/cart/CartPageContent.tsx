@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import styles from "./cart.module.css";
 import { useCart } from "./CartProvider";
+import { useLoginModal } from "../auth/LoginModalProvider";
 import {
   PERFUME_CATALOG,
   formatPerfumePrice,
@@ -124,7 +125,9 @@ function CartLineItem({
 
 export default function CartPageContent() {
   const { lines, loaded, remove, setQuantity, clear } = useCart();
+  const { openLoginModal } = useLoginModal();
   const [showContent, setShowContent] = useState(false);
+  const [showCheckoutOptions, setShowCheckoutOptions] = useState(false);
 
   useEffect(() => {
     if (!loaded) return;
@@ -281,7 +284,11 @@ export default function CartPageContent() {
                   </span>
                 </div>
 
-                <button type="button" className={`poi-btn ${styles.checkoutBtn}`}>
+                <button 
+                  type="button" 
+                  className={`poi-btn ${styles.checkoutBtn}`}
+                  onClick={() => setShowCheckoutOptions(true)}
+                >
                   Proceed to Checkout
                 </button>
                 <Link href="/shop" className={styles.continueLink}>
@@ -340,6 +347,36 @@ export default function CartPageContent() {
           </div>
         </motion.section>
       </div>
+
+      {showCheckoutOptions && (
+        <div className={styles.modalOverlay} onClick={() => setShowCheckoutOptions(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeModalBtn} onClick={() => setShowCheckoutOptions(false)}>
+              <X size={20} />
+            </button>
+            <h2 className={styles.modalTitle}>Checkout Options</h2>
+            <p className={styles.modalSub}>How would you like to proceed with your order?</p>
+            <div className={styles.modalActions}>
+              <button 
+                className={`poi-btn ${styles.modalBtnLogin}`} 
+                onClick={() => {
+                  setShowCheckoutOptions(false);
+                  openLoginModal();
+                }}
+              >
+                Login to Checkout
+              </button>
+              <Link 
+                href="/checkout" 
+                className={`poi-btn ${styles.modalBtnGuest}`}
+                onClick={() => setShowCheckoutOptions(false)}
+              >
+                Checkout as Guest
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

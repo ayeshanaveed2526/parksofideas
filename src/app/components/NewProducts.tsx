@@ -3,10 +3,13 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Autoplay, A11y } from "swiper/modules";
 import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
+import { useCart } from "./cart/CartProvider";
+import { useWishlist } from "./wishlist/WishlistProvider";
 import "swiper/css";
 
 interface Product {
@@ -39,10 +42,31 @@ const productsData: Product[] = PERFUME_CATALOG.slice(0, 16).map((perfume) => ({
 
 export default function NewProducts() {
   const swiperRef = useRef<SwiperType | null>(null);
-  const currentProducts = productsData;
+  const router = useRouter();
+  const { add: addToCart } = useCart();
+  const { add: addToWishlist } = useWishlist();
 
   const pauseMarquee = () => swiperRef.current?.autoplay?.stop();
   const resumeMarquee = () => swiperRef.current?.autoplay?.start();
+
+  const handleQuickView = (e: React.MouseEvent, id: number) => {
+    e.preventDefault();
+    router.push(`/product/${id}`);
+  };
+
+  const handleWishlist = (e: React.MouseEvent, id: number) => {
+    e.preventDefault();
+    addToWishlist(id);
+    router.push("/wishlist");
+  };
+
+  const handleAddToCart = (e: React.MouseEvent, id: number) => {
+    e.preventDefault();
+    addToCart(id, 1);
+    router.push("/cart");
+  };
+
+  const currentProducts = productsData;
 
   return (
     <section className="np-section">
@@ -123,13 +147,13 @@ export default function NewProducts() {
 
                     {/* Center Eye / Heart Action buttons */}
                     <div className="np-hover-actions">
-                      <button className="np-action-btn" type="button" aria-label="Quick View">
+                      <button className="np-action-btn" type="button" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                           <circle cx="12" cy="12" r="3" />
                         </svg>
                       </button>
-                      <button className="np-action-btn" type="button" aria-label="Add to Wishlist">
+                      <button className="np-action-btn" type="button" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                         </svg>
@@ -137,7 +161,7 @@ export default function NewProducts() {
                     </div>
 
                     {/* Bottom Add to Cart Button */}
-                    <button className="np-atc-btn" type="button">
+                    <button className="np-atc-btn" type="button" onClick={(e) => handleAddToCart(e, product.id)}>
                       ADD TO CART
                     </button>
                   </div>
