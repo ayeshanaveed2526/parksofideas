@@ -165,14 +165,15 @@ export default function NewProducts() {
                   {/* Description Box */}
                   <div className="np-card-info">
                     <h3 className="np-card-name">{product.name}</h3>
-                    <p className="np-card-desc">{product.description}</p>
-                    
+
                     {/* Star Rating */}
                     <div className="np-card-rating">
                       {Array.from({ length: product.rating }).map((_, i) => (
                         <span key={i} className="np-star">★</span>
                       ))}
                     </div>
+
+                    <p className="np-card-desc">{product.description}</p>
 
                     {/* Prices */}
                     <div className="np-card-prices">
@@ -288,7 +289,7 @@ export default function NewProducts() {
         .np-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 360 / 330;
+          aspect-ratio: 360 / 500;
           background: linear-gradient(165deg, #f8f9fd 0%, #ffffff 55%, #f3f5fb 100%);
           overflow: hidden;
         }
@@ -455,7 +456,7 @@ export default function NewProducts() {
         .np-card-info {
           width: 100%;
           box-sizing: border-box;
-          padding: 24px 16px 20px;
+          padding: 3px 16px 20px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -479,13 +480,14 @@ export default function NewProducts() {
 
         .np-card-name {
           font-family: var(--font-marcellus), "Marcellus", serif;
-          font-weight: 400;
+          font-weight: 600;
           font-size: 16px;
           line-height: 1.26;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: #111111;
-          margin: 0 0 8px;
+          margin: 0;
+          padding-bottom: 5px;
           padding-left: 0;
           text-align: left;
           width: 100%;
@@ -503,7 +505,7 @@ export default function NewProducts() {
           font-size: 13.5px;
           line-height: 1.5;
           color: rgb(130, 130, 130);
-          margin: 0 0 12px;
+          margin: 0 0 5px;
           max-width: 90%;
           transition: color 0.3s ease;
         }
@@ -516,7 +518,7 @@ export default function NewProducts() {
         .np-card-rating {
           display: flex;
           gap: 3px;
-          margin-bottom: 12px;
+          margin-bottom: 5px;
         }
 
         .np-star {
@@ -543,7 +545,7 @@ export default function NewProducts() {
 
         /* Prices */
         .np-card-prices {
-          margin-top: auto;
+          margin-top: 2px;
           display: flex;
           gap: 10px;
           align-items: center;
@@ -595,7 +597,7 @@ export default function NewProducts() {
           }
 
           .np-card-info {
-            padding: 16px 20px;
+            padding: 3px 20px 16px;
           }
 
           .np-card-name {
@@ -647,7 +649,7 @@ export default function NewProducts() {
           }
 
           .np-card-img-wrap {
-            aspect-ratio: 360 / 368;
+            aspect-ratio: 360 / 500;
           }
 
           .np-card-img {
@@ -655,24 +657,25 @@ export default function NewProducts() {
           }
 
           .np-card-info {
-            padding: 20px 24px;
+            padding: 3px 24px 20px;
           }
 
           .np-card-name {
             font-size: 22px;
             letter-spacing: 0.2em;
-            margin: 0 0 12px;
+            margin: 0;
+            padding-bottom: 5px;
           }
 
           .np-card-desc {
             font-size: 14.5px;
             line-height: 1.6;
-            margin: 0 0 15px;
+            margin: 0 0 5px;
           }
 
           .np-card-rating {
             gap: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
           }
 
           .np-star {

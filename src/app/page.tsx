@@ -14,12 +14,12 @@ export default function Home() {
     <main className="min-h-screen bg-background relative">
       <Header />
       <VideoHero />
+      <TickerBar />
       <ShopByCategory />
       <TopCategory />
       <NewProducts />
       <Herosection />
       <TrustBadges />
-      <TickerBar />
       <FBottomBar />
       <Footer />
     </main>

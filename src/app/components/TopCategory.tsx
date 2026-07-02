@@ -498,7 +498,7 @@ export default function TopCategory() {
         .tp-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 260 / 370;
+          aspect-ratio: 260 / 380;
           overflow: hidden;
           background: linear-gradient(180deg, #f8f9fd 0%, #ffffff 50%, #f3f5fb 100%);
         }
@@ -715,7 +715,7 @@ export default function TopCategory() {
         .tp-card-info {
           width: 100%;
           box-sizing: border-box;
-          padding: 8px 16px 8px;
+          padding: 3px 16px 8px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -737,13 +737,14 @@ export default function TopCategory() {
 
         .tp-card-name {
           font-family: var(--font-marcellus), "Marcellus", serif;
-          font-weight: 400;
+          font-weight: 600;
           font-size: var(--name-fs);
           line-height: 1.26;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: #000;
-          margin: 0 0 4px;
+          margin: 0;
+          padding-bottom: 5px;
           padding-left: 0;
           text-align: left;
           width: 100%;
@@ -762,7 +763,7 @@ export default function TopCategory() {
           align-items: center;
           justify-content: flex-start;
           gap: 3px;
-          margin: 0 0 4px;
+          margin: 0 0 5px;
         }
 
         .tp-card-stars svg {
@@ -783,7 +784,7 @@ export default function TopCategory() {
           font-size: var(--desc-fs);
           line-height: 1.5;
           color: rgb(130, 130, 130);
-          margin: 0;
+          margin: 0 0 5px;
           transition: color 0.3s ease;
         }
 
@@ -793,12 +794,12 @@ export default function TopCategory() {
 
         .tp-card-price {
           font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 600;
+          font-weight: 500;
           font-size: var(--price-fs);
           line-height: 1;
           color: #000;
           letter-spacing: 0.02em;
-          margin-top: 4px;
+          margin-top: 2px;
           align-self: flex-end;
           text-align: right;
           transition: transform 0.35s ease;
@@ -879,7 +880,7 @@ export default function TopCategory() {
             --name-fs: 16px;
             --desc-fs: 12px;
             --price-fs: 14px;
-            --info-pt: 18px;
+            --info-pt: 3px;
             --info-pb: 18px;
           }
 
@@ -958,7 +959,7 @@ export default function TopCategory() {
             --name-fs: 17px;
             --desc-fs: 12px;
             --price-fs: 15px;
-            --info-pt: 20px;
+            --info-pt: 4px;
             --info-pb: 20px;
           }
 
@@ -1020,7 +1021,7 @@ export default function TopCategory() {
             --name-fs: 20px;
             --desc-fs: 13px;
             --price-fs: 16px;
-            --info-pt: 26px;
+            --info-pt: 3px;
             --info-pb: 26px;
           }
 
@@ -1031,7 +1032,8 @@ export default function TopCategory() {
 
           .tp-card-name {
             letter-spacing: 0.25em;
-            margin: 0 0 12px;
+            margin: 0;
+            padding-bottom: 5px;
             padding-left: 0;
           }
 

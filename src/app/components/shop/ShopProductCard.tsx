@@ -189,29 +189,57 @@ export default function ShopProductCard({
       </div>
 
       {/* ── Info area ── */}
-      <div className="sp-card-info">
-        <h3 className="sp-card-name">{product.brand}</h3>
-        <p className="sp-card-desc">{product.description}</p>
-
-        {/* Notes peek */}
-        <p className="sp-card-notes">{product.notes}</p>
-
-        {/* Star rating */}
-        <div className="sp-card-rating">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <span key={i} className="sp-star">
-              ★
-            </span>
-          ))}
+      <div className={`sp-card-info sp-card-info--${layoutMode}`}>
+        <div className="sp-info-header">
+          <h3 className="sp-info-price">{formattedPrice}</h3>
+          <button
+            className="sp-info-wishlist"
+            type="button"
+            aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggle(product.id);
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill={inWishlist ? "currentColor" : "none"}
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            </svg>
+          </button>
         </div>
 
-        {/* Price */}
-        <div className="sp-card-price">{formattedPrice}</div>
+        <p className="sp-info-title">{product.brand} - {product.description}</p>
+        
+        <div className="sp-info-meta">
+          Available Online • Ships in 24 hours
+        </div>
 
-        {/* Grid and Cinematic layout: Always visible Add to Cart button */}
-        {layoutMode !== "list" && (
+        <div className="sp-info-actions">
           <button
-            className="sp-grid-atc-btn"
+            className="sp-info-btn sp-info-btn-outline"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onQuickView(product);
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            Quick View
+          </button>
+          <button
+            className="sp-info-btn sp-info-btn-solid"
             type="button"
             onClick={(e) => {
               e.preventDefault();
@@ -220,76 +248,14 @@ export default function ShopProductCard({
               router.push("/cart");
             }}
           >
-            ADD TO CART
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="8" cy="21" r="1" />
+              <circle cx="19" cy="21" r="1" />
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+            </svg>
+            Add to Cart
           </button>
-        )}
-
-        {/* List layout action buttons */}
-        {layoutMode === "list" && (
-          <div className="sp-list-actions">
-            <button
-              className="sp-list-atc"
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                addToCart(product.id);
-                router.push("/cart");
-              }}
-            >
-              + ADD TO CART
-            </button>
-            <button
-              className="sp-list-icon-btn"
-              type="button"
-              aria-label="Quick view"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onQuickView(product);
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                width="15"
-                height="15"
-              >
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            </button>
-            <button
-              className="sp-list-icon-btn"
-              type="button"
-              aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggle(product.id);
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill={inWishlist ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                width="15"
-                height="15"
-              >
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-              </svg>
-            </button>
-          </div>
-        )}
+        </div>
       </div>
 
       <style jsx>{`
@@ -332,12 +298,12 @@ export default function ShopProductCard({
         .sp-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1.15;
+          aspect-ratio: 360 / 500;
           background: linear-gradient(
             165deg,
-            #f9fafc 0%,
-            #ffffff 60%,
-            #f5f7fc 100%
+            #f8f9fd 0%,
+            #ffffff 55%,
+            #f3f5fb 100%
           );
           overflow: hidden;
           cursor: pointer;
@@ -530,168 +496,15 @@ export default function ShopProductCard({
           background: rgba(0, 8, 157, 0.06);
         }
 
-        /* ── Info area ── */
         .sp-card-info {
-          width: 100%;
-          box-sizing: border-box;
-          padding: 8px 10px;
+          flex: 1;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
+          align-items: stretch;
           justify-content: flex-start;
-          background: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%);
           text-align: left;
-          position: relative;
-          flex-grow: 1;
-        }
-
-        .sp-card-info::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 10px;
-          transform: none;
-          width: 28px;
-          height: 1px;
-          background: linear-gradient(
-            90deg,
-            rgba(0, 8, 157, 0.12),
-            transparent
-          );
-        }
-
-        /* Name */
-        .sp-card-name {
-          font-family: var(--font-marcellus), "Marcellus", serif;
-          font-weight: 400;
-          font-size: 12.5px;
-          line-height: 1.25;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #111111;
-          margin: 0 0 3px;
-          padding-left: 0;
-          text-align: left;
-          width: 100%;
-          transition: color 0.35s ease, letter-spacing 0.35s ease;
-        }
-
-        .sp-card:hover .sp-card-name {
-          color: #00089d;
-          letter-spacing: 0.16em;
-        }
-
-        /* Description */
-        .sp-card-desc {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 400;
-          font-size: 10px;
-          line-height: 1.35;
-          color: rgb(145, 145, 145);
-          margin: 0 0 3px;
-          max-width: 95%;
-          transition: color 0.3s ease;
-        }
-
-        .sp-card:hover .sp-card-desc {
-          color: rgb(95, 95, 95);
-        }
-
-        /* Notes */
-        .sp-card-notes {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 400;
-          font-size: 8.5px;
-          font-style: italic;
-          line-height: 1.25;
-          color: rgba(0, 0, 0, 0.18);
-          margin: 0 0 5px;
-          max-width: 90%;
-          max-height: 0;
-          overflow: hidden;
-          opacity: 0;
-          transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-            opacity 0.35s ease,
-            margin 0.35s ease;
-        }
-
-        .sp-card:hover .sp-card-notes {
-          max-height: 32px;
-          opacity: 1;
-          margin: 0 0 6px;
-          color: rgba(0, 0, 0, 0.32);
-        }
-
-        /* Rating */
-        .sp-card-rating {
-          display: flex;
-          gap: 1.5px;
-          margin-bottom: 6px;
-        }
-
-        .sp-star {
-          color: #FFD700;
-          font-size: 10px;
-          transition: transform 0.3s ease;
-        }
-
-        .sp-card:hover .sp-star {
-          animation: spStarPop 0.4s ease both;
-        }
-
-        .sp-card:hover .sp-star:nth-child(1) { animation-delay: 0s; }
-        .sp-card:hover .sp-star:nth-child(2) { animation-delay: 0.04s; }
-        .sp-card:hover .sp-star:nth-child(3) { animation-delay: 0.08s; }
-        .sp-card:hover .sp-star:nth-child(4) { animation-delay: 0.12s; }
-        .sp-card:hover .sp-star:nth-child(5) { animation-delay: 0.16s; }
-
-        /* Price */
-        .sp-card-price {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 600;
-          font-size: 13px;
-          color: #00089d;
-          letter-spacing: 0.01em;
-          margin-top: auto;
-          align-self: flex-end;
-          transition: transform 0.35s ease;
-        }
-
-        .sp-card:hover .sp-card-price {
-          transform: scale(1.03);
-        }
-
-        /* Grid Add to cart button always visible */
-        .sp-grid-atc-btn {
-          width: 100%;
-          align-self: stretch;
-          margin-top: 10px;
-          height: 32px;
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 600;
-          font-size: 9.5px;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: #ffffff;
-          background: var(--poi-btn-bg);
-          border: 1px solid var(--poi-btn-border);
-          box-shadow: var(--poi-btn-shadow);
-          border-radius: 0;
-          cursor: pointer;
-          transition: var(--poi-btn-transition);
-          position: relative;
-          z-index: 5;
-        }
-
-        .sp-grid-atc-btn:hover {
-          background: var(--poi-btn-bg-hover);
-          border-color: var(--poi-btn-border-hover);
-          box-shadow: var(--poi-btn-shadow-hover);
-          transform: translateY(-2px);
-        }
-
-        .sp-grid-atc-btn:active {
-          transform: scale(0.96) translateY(0);
+          padding: 16px 12px;
+          min-height: 180px;
         }
 
         /* ── Cinematic Duo Layout modifiers ── */
@@ -734,10 +547,119 @@ export default function ShopProductCard({
         }
 
         /* ── Detailed List Layout Modifiers (Landscape) ── */
+        .sp-info-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          width: 100%;
+          margin-bottom: 8px;
+        }
+
+        .sp-info-price {
+          font-family: var(--font-inter), "Inter", sans-serif;
+          font-weight: 700;
+          font-size: 18px;
+          color: #111;
+          margin: 0;
+        }
+
+        .sp-info-wishlist {
+          background: none;
+          border: none;
+          padding: 2px;
+          cursor: pointer;
+          color: #111;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .sp-info-wishlist:hover {
+          color: #00089d;
+          transform: scale(1.1);
+        }
+
+        .sp-info-wishlist svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .sp-info-title {
+          font-family: var(--font-inter), "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 12px;
+          color: #333;
+          margin: 0 0 12px;
+          line-height: 1.4;
+        }
+
+        .sp-info-meta {
+          font-family: var(--font-inter), "Inter", sans-serif;
+          font-size: 11px;
+          color: #666;
+          margin-top: auto;
+          margin-bottom: 10px;
+        }
+
+        .sp-info-actions {
+          display: flex;
+          gap: 6px;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .sp-info-btn {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          padding: 8px 6px;
+          font-family: var(--font-inter), "Inter", sans-serif;
+          font-size: 11px;
+          font-weight: 500;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .sp-info-btn svg {
+          width: 12px;
+          height: 12px;
+        }
+
+        .sp-info-btn-outline {
+          background: transparent;
+          border: 1px solid #111;
+          color: #111;
+        }
+
+        .sp-info-btn-outline:hover {
+          background: rgba(0,0,0,0.03);
+        }
+
+        .sp-info-btn-solid {
+          background: #002f34;
+          border: 1px solid #002f34;
+          color: #fff;
+        }
+
+        .sp-info-btn-solid:hover {
+          background: #004b53;
+          border-color: #004b53;
+        }
+
+        /* ── Layout Overrides ── */
+        .sp-card--cinematic .sp-card-img-wrap {
+          aspect-ratio: 4 / 5;
+        }
+
         .sp-card--list {
           flex-direction: row;
           align-items: stretch;
-          border-radius: 14px;
+          justify-content: flex-start;
+          width: 100%;
           min-height: 200px;
         }
 
@@ -760,133 +682,43 @@ export default function ShopProductCard({
         }
 
         .sp-card--list .sp-card-info {
-          flex: 1;
-          align-items: flex-start;
-          justify-content: center;
-          text-align: left;
-          padding: 20px 24px;
-          min-height: auto;
+          padding: 24px;
         }
 
-        .sp-card--list .sp-card-info::before {
-          left: 24px;
-          transform: none;
-          width: 20px;
+        .sp-card--list .sp-info-price {
+          font-size: 22px;
         }
-
-        .sp-card--list .sp-card-name {
-          font-size: 16px;
-          margin-bottom: 4px;
-          letter-spacing: 0.16em;
+        
+        .sp-card--list .sp-info-wishlist svg {
+          width: 22px;
+          height: 22px;
         }
-
-        .sp-card--list:hover .sp-card-name {
-          letter-spacing: 0.16em;
-        }
-
-        .sp-card--list .sp-card-desc {
-          font-size: 11px;
-          margin-bottom: 4px;
-          max-width: 85%;
-        }
-
-        .sp-card--list .sp-card-notes {
-          max-height: 45px;
-          opacity: 1;
-          margin: 4px 0 8px;
-          font-size: 9.5px;
-          color: rgba(0, 0, 0, 0.35);
-        }
-
-        .sp-card--list .sp-card-rating {
-          margin-bottom: 8px;
-        }
-
-        .sp-card--list .sp-card-price {
+        
+        .sp-card--list .sp-info-title {
           font-size: 15px;
-          margin-top: 0;
+          margin-bottom: 16px;
+        }
+
+        .sp-card--list .sp-info-meta {
+          font-size: 13px;
           margin-bottom: 12px;
         }
 
-        /* List layout bottom actions bar */
-        .sp-list-actions {
-          position: relative;
-          z-index: 5;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          width: 100%;
-          margin-top: auto;
+        .sp-card--list .sp-info-actions {
+          gap: 12px;
+          justify-content: flex-start;
         }
 
-        .sp-list-atc {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 600;
-          font-size: 9.5px;
-          letter-spacing: 0.08em;
-          color: #ffffff;
-          background: var(--poi-btn-bg);
-          border: 1px solid var(--poi-btn-border);
-          box-shadow: var(--poi-btn-shadow);
-          border-radius: 16px;
-          padding: 7px 15px;
-          cursor: pointer;
-          transition: var(--poi-btn-transition);
+        .sp-card--list .sp-info-btn {
+          flex: none;
+          padding: 10px 24px;
+          font-size: 14px;
         }
-
-        .sp-list-atc:hover {
-          background: var(--poi-btn-bg-hover);
-          border-color: var(--poi-btn-border-hover);
-          box-shadow: var(--poi-btn-shadow-hover);
-          transform: translateY(-1px);
+        
+        .sp-card--list .sp-info-btn svg {
+          width: 16px;
+          height: 16px;
         }
-
-        .sp-list-icon-btn {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          border: 1px solid var(--poi-btn-border);
-          background: var(--poi-btn-bg);
-          color: #ffffff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          box-shadow: var(--poi-btn-shadow);
-          transition: var(--poi-btn-transition);
-        }
-
-        .sp-list-icon-btn:hover {
-          background: var(--poi-btn-bg-hover);
-          color: #ffffff;
-          border-color: var(--poi-btn-border-hover);
-          box-shadow: var(--poi-btn-shadow-hover);
-          transform: scale(1.05);
-        }
-
-        /* ── Responsive Styling ── */
-        @media (max-width: 639px) {
-          .sp-card-img {
-            inset: 0;
-          }
-          
-          .sp-card--list {
-            flex-direction: column;
-            min-height: auto;
-          }
-
-          .sp-card--list .sp-card-link {
-            flex-direction: column;
-          }
-
-          .sp-card--list .sp-card-img-wrap {
-            flex: none;
-            width: 100%;
-            height: 160px;
-            min-height: auto;
-            border-right: none;
-            border-bottom: 1px solid rgba(0, 8, 157, 0.04);
-          }
 
           .sp-card--list .sp-card-info {
             align-items: flex-start;
@@ -899,34 +731,52 @@ export default function ShopProductCard({
             transform: none;
           }
 
-          .sp-card--list .sp-card-desc {
-            max-width: 90%;
+          .sp-card--list .sp-card-info {
+            padding: 16px;
           }
 
           .sp-card--list .sp-list-actions {
             justify-content: center;
           }
+
+          .sp-card--list .sp-card-desc {
+            max-width: 90%;
+          }
         }
 
         @media (min-width: 640px) {
-          .sp-card-img {
-            inset: 0;
+          .sp-card-img-wrap {
+            aspect-ratio: 360 / 500;
           }
 
           .sp-card-info {
-            padding: 16px 10px 12px;
+            padding: 3px 24px 20px;
           }
 
           .sp-card-name {
-            font-size: 13px;
+            font-size: 22px;
+            letter-spacing: 0.2em;
+            margin: 0;
+            padding-bottom: 5px;
+          }
+
+          .sp-card-desc {
+            font-size: 14.5px;
+            line-height: 1.6;
+            margin: 0 0 5px;
+          }
+
+          .sp-card-rating {
+            gap: 4px;
+            margin-bottom: 5px;
           }
 
           .sp-star {
-            font-size: 10.5px;
+            font-size: 16px;
           }
 
           .sp-card-price {
-            font-size: 13.5px;
+            font-size: 17px;
           }
         }
 

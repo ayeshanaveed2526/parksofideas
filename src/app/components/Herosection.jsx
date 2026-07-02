@@ -10,7 +10,7 @@ export default function Herosection() {
       image: "/images/primary_1.png",
       subtitle: "PACKAGE",
       title: "PREMIUM",
-      link: "#",
+      link: "/shop",
       theme: "dark",
     },
     {
@@ -18,7 +18,7 @@ export default function Herosection() {
       image: "/images/primary_2.png",
       subtitle: "ORGANIC",
       title: "BEAUTY",
-      link: "#",
+      link: "/shop",
       theme: "dark",
     },
     {
@@ -26,7 +26,7 @@ export default function Herosection() {
       image: "/images/primary_3.png",
       subtitle: "BOTANICAL",
       title: "ESSENCE",
-      link: "#",
+      link: "/shop",
       theme: "light",
     },
   ];
@@ -37,7 +37,7 @@ export default function Herosection() {
       image: "/images/primary_4.png",
       subtitle: "NEW BRAND",
       title: "TOUCH",
-      link: "#",
+      link: "/shop",
       theme: "light",
     },
     {
@@ -45,7 +45,7 @@ export default function Herosection() {
       image: "/images/primary_5.png",
       subtitle: "PURE SAND",
       title: "LUXURY",
-      link: "#",
+      link: "/shop",
       theme: "dark",
     },
     {
@@ -53,7 +53,7 @@ export default function Herosection() {
       image: "/images/primary_6.png",
       subtitle: "MINIMALIST",
       title: "SERUM",
-      link: "#",
+      link: "/shop",
       theme: "light",
     },
   ];

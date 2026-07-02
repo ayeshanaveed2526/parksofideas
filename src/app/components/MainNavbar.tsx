@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { User, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
@@ -16,6 +17,7 @@ import { useCart } from "./cart/CartProvider";
 export default function MainNavbar() {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
   const { openLoginModal } = useLoginModal();
   const { itemCount: cartCount } = useCart();
 
@@ -85,7 +87,14 @@ export default function MainNavbar() {
                   fontFamily: "Inter, sans-serif",
                 }}
               >
-                <Link href={link.href} className="hover:text-[#00089d] hover-link-slide transition-colors flex items-center h-full">
+                <Link 
+                  href={link.href} 
+                  className={`hover-link-slide transition-colors flex items-center h-full ${
+                    link.href !== "#" && (link.href === "/" ? pathname === "/" : pathname.startsWith(link.href))
+                      ? "text-[#00089d]"
+                      : "hover:text-[#00089d]"
+                  }`}
+                >
                   {link.label}
                 </Link>
 
@@ -178,55 +187,7 @@ export default function MainNavbar() {
                   </div>
                 )}
 
-                {/* Mega Menu for SHOP */}
-                {link.label === "SHOP" && (
-                  <div
-                    className="absolute top-[70px] md:top-[90px] left-1/2 -translate-x-1/2 w-screen max-w-[1160px] h-auto min-h-[538px] bg-[#f9f9f9] shadow-[0_10px_40px_rgba(0,0,0,0.08)] opacity-0 invisible translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible transition-all duration-400 ease-out z-200 border-t border-gray-100 cursor-default flex text-left"
-                  >
-                    {/* Sidebar section */}
-                    <div className="w-[250px] xl:w-[300px] shrink-0 min-h-[523px] bg-white pt-[50px] pl-[30px] xl:pl-[50px] flex flex-col gap-[40px]">
-                      <div>
-                        <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>BRANDS</h4>
-                        <ul className="flex flex-col gap-[18px]">
-                          {["AERIN", "FABLE&MANE", "LOREAL", "MAC", "SCHWARZKOPF"].map((item) => (
-                            <li key={item} className="w-full">
-                              <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="text-[17px] font-medium text-[#000000] mb-[25px] tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>CAPACITY</h4>
-                        <ul className="flex flex-col gap-[18px]">
-                          {["30 ML", "40 ML", "50 ML"].map((item) => (
-                            <li key={item} className="w-full">
-                              <Link href="#" className="text-[13px] font-normal text-[#1a1a1a] hover:text-[#00089d] transition-colors tracking-widest uppercase block w-full" style={{ fontFamily: "Inter, sans-serif" }}>{item}</Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    {/* Image section */}
-                    <div className="flex-1 pt-[41px] px-[20px] pb-[10px] flex gap-[20px] overflow-x-auto overflow-y-hidden [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-track]:bg-[#f0f0f0] [&::-webkit-scrollbar-thumb]:bg-[#c0c0c0] [&::-webkit-scrollbar-thumb]:hover:bg-[#a0a0a0]">
-                      {megaMenuPerfumes.map((perfume, idx) => (
-                      <Link href={`/product/${perfume.id}`} key={perfume.id} className="flex flex-col w-[260px] min-w-[260px] bg-white text-center group/card cursor-pointer">
-                        <div className="relative w-[260px] h-[230px] flex items-center justify-center overflow-hidden border-b border-[#f2f2f2]">
-                          {idx === 1 && <span className="absolute top-0 left-0 bg-[#1a1a1a] text-white text-[10px] font-bold px-2 py-1 tracking-wider z-10">NEW</span>}
-                          {(idx === 1 || idx === 2) && <span className="absolute top-0 right-0 bg-[#00089d] text-white text-[10px] font-bold px-2 py-1 tracking-wider uppercase z-10">FEATURED</span>}
-                          <img src={perfume.image} alt={perfume.brand} className="w-full h-full object-cover" />
 
-                        </div>
-                        <div className="w-[260px] h-[252px] flex flex-col items-center justify-center px-4">
-                          <h5 className="text-[16px] text-[#1a1a1a] group-hover/card:text-[#00089d] transition-colors duration-150 tracking-[0.2em] uppercase mb-2" style={{ fontFamily: "var(--font-marcellus), Marcellus, serif" }}>{perfume.brand}</h5>
-                          <p className="text-[#888] text-[13px] mb-6">{perfume.description}</p>
-                          <span className="text-[#1a1a1a] text-[15px] font-medium">{formatPerfumePrice(perfume.price)}</span>
-                        </div>
-                      </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </motion.li>
             ))}
           </motion.ul>
@@ -311,7 +272,11 @@ export default function MainNavbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block py-3 text-[14px] font-medium tracking-[0.13em] uppercase text-[#1a1a1a] hover:text-[#00089d] hover-link-slide transition-colors border-b border-gray-50"
+                  className={`block py-3 text-[14px] font-medium tracking-[0.13em] uppercase transition-colors border-b border-gray-50 hover-link-slide ${
+                    link.href !== "#" && (link.href === "/" ? pathname === "/" : pathname.startsWith(link.href))
+                      ? "text-[#00089d]"
+                      : "text-[#1a1a1a] hover:text-[#00089d]"
+                  }`}
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
                   {link.label}

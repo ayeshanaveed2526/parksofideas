@@ -9,7 +9,7 @@ export default function FBottomBar() {
       image: "/images/banner-golden.png",
       subtitle: "SIGNATURE",
       title: "GOLDEN OUD",
-      link: "#",
+      link: "/shop",
       theme: "light", // dark text on golden bg
     },
     {
@@ -17,7 +17,7 @@ export default function FBottomBar() {
       image: "/images/banner-blue.png",
       subtitle: "FRESH AQUATIC",
       title: "AZURE BLUE",
-      link: "#",
+      link: "/shop",
       theme: "dark", // white text on deep blue bg
     },
     {
@@ -25,7 +25,7 @@ export default function FBottomBar() {
       image: "/images/banner-gray.png",
       subtitle: "NEW ARRIVAL",
       title: "SILVER MUSK",
-      link: "#",
+      link: "/shop",
       theme: "light", // dark text on light gray bg
     },
   ];

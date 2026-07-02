@@ -86,11 +86,11 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
                     activeIdx === idx ? 'bg-[#f5f7fe]' : 'bg-white group-hover:bg-[#f4f6fa]'
                   }`}
                 />
-                <div className="pg-thumb-scene relative z-10 flex h-full w-full items-center justify-center overflow-hidden">
+                <div className="pg-thumb-scene relative z-10 flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
                   <img
                     src={view.src}
                     alt={view.label}
-                    className="pg-thumb-bottle h-full w-full object-contain p-1"
+                    className="pg-thumb-bottle h-full w-full object-cover"
                     style={{ transform: galleryViewTransform(view, 1) }}
                   />
                 </div>
@@ -107,7 +107,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
         )}
 
         <div
-          className={`pg-stage group relative w-full overflow-hidden rounded-2xl border border-[#e5e8f0] aspect-4/5 sm:aspect-5/6 ${
+          className={`pg-stage group relative w-full overflow-hidden rounded-2xl shadow-sm aspect-4/5 sm:aspect-5/6 ${
             displayViews.length <= 1 ? 'col-span-full' : ''
           }`}
         >
@@ -139,11 +139,11 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
                   transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
                   className="pg-bottle-wrap relative flex h-full w-full items-center justify-center"
                 >
-                  <div className="pg-bottle-scene flex h-full w-full items-center justify-center overflow-hidden">
+                  <div className="pg-bottle-scene flex h-full w-full items-center justify-center overflow-hidden rounded-2xl">
                     <img
                       src={activeView.src}
                       alt={activeView.label}
-                      className="pg-bottle relative z-10 h-full w-full object-contain p-2 sm:p-4"
+                      className="pg-bottle relative z-10 h-full w-full object-cover"
                       style={{ transform: galleryViewTransform(activeView) }}
                     />
                   </div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ShopToolbar, { type SortOption, type LayoutMode } from "./ShopToolbar";
 import ShopProductCard from "./ShopProductCard";
 import ShopQuickView from "./ShopQuickView";
+import ShopSidebar from "./ShopSidebar";
 import { PERFUME_CATALOG, type PerfumeProduct } from "../../data/perfumeCatalog";
 
 const PER_PAGE = 20;
@@ -15,19 +16,45 @@ export default function ShopGrid() {
   const [animKey, setAnimKey] = useState(0);
   const [quickViewProduct, setQuickViewProduct] = useState<PerfumeProduct | null>(null);
   const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("all");
   const [visibleCount, setVisibleCount] = useState(PER_PAGE);
 
-  /* Filter by search query (brand, description, notes) */
+  /* Filter by search query (brand, description, notes) and category */
   const filteredProducts = useMemo(() => {
+    let products = PERFUME_CATALOG;
+
+    if (activeCategory !== "all") {
+      products = products.filter((p) => {
+        const notes = p.notes.toLowerCase();
+        if (activeCategory === "him") {
+          return notes.includes("oud") || notes.includes("leather") || notes.includes("wood") || notes.includes("cedar") || notes.includes("vetiver");
+        }
+        if (activeCategory === "her") {
+          return notes.includes("rose") || notes.includes("jasmine") || notes.includes("peony") || notes.includes("floral") || notes.includes("vanilla");
+        }
+        if (activeCategory === "unisex") {
+          return notes.includes("bergamot") || notes.includes("musk") || notes.includes("amber") || notes.includes("sea") || notes.includes("tea");
+        }
+        if (activeCategory === "best-sellers") {
+          return p.id % 3 === 0;
+        }
+        if (activeCategory === "new-arrivals") {
+          return p.id <= 8;
+        }
+        return true;
+      });
+    }
+
     const q = search.trim().toLowerCase();
-    if (!q) return PERFUME_CATALOG;
-    return PERFUME_CATALOG.filter(
+    if (!q) return products;
+    
+    return products.filter(
       (p) =>
         p.brand.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q) ||
         p.notes.toLowerCase().includes(q)
     );
-  }, [search]);
+  }, [search, activeCategory]);
 
   /* Sorted products */
   const sortedProducts = useMemo(() => {
@@ -52,7 +79,7 @@ export default function ShopGrid() {
   /* Reset visible products when filters change */
   useEffect(() => {
     setVisibleCount(PER_PAGE);
-  }, [search, sortBy]);
+  }, [search, sortBy, activeCategory]);
 
   const visibleProducts = useMemo(
     () => sortedProducts.slice(0, visibleCount),
@@ -90,42 +117,55 @@ export default function ShopGrid() {
           <p className="sg-empty-sub">Try a different search term.</p>
         </div>
       ) : (
-        <div
-          className={`sg-grid sg-grid--${layoutMode}`}
-          key={`${layoutMode}-${animKey}`}
-        >
-          <AnimatePresence mode="popLayout">
-            {visibleProducts.map((product, idx) => (
-              <motion.div
-                layout
-                key={product.id}
-                initial={{ opacity: 0, y: 32 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{
-                  duration: 0.5,
-                  delay: idx * 0.03,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                style={{ width: "100%" }}
-              >
-                <ShopProductCard
-                  product={product}
-                  index={idx}
-                  onQuickView={setQuickViewProduct}
-                  layoutMode={layoutMode}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-      )}
+        <div className="sg-layout-inner">
+          {layoutMode !== "grid" && (
+            <aside className="sg-sidebar-container">
+              <ShopSidebar 
+                activeCategory={activeCategory} 
+                onSelectCategory={setActiveCategory} 
+              />
+            </aside>
+          )}
 
-      {hasMore && (
-        <div className="sg-load-more-wrap">
-          <button type="button" className="sg-load-more" onClick={loadMore}>
-            Load More
-          </button>
+          <div className="sg-main-content">
+            <div
+              className={`sg-grid sg-grid--${layoutMode}`}
+              key={`${layoutMode}-${animKey}`}
+            >
+              <AnimatePresence mode="popLayout">
+                {visibleProducts.map((product, idx) => (
+                  <motion.div
+                    layout
+                    key={product.id}
+                    initial={{ opacity: 0, y: 32 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: idx * 0.03,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    style={{ width: "100%" }}
+                  >
+                    <ShopProductCard
+                      product={product}
+                      index={idx}
+                      onQuickView={setQuickViewProduct}
+                      layoutMode={layoutMode}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {hasMore && (
+              <div className="sg-load-more-wrap">
+                <button type="button" className="sg-load-more" onClick={loadMore}>
+                  Load More
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -163,6 +203,36 @@ export default function ShopGrid() {
           font-size: 14px;
           color: #8b93a5;
           margin: 0;
+        }
+
+        /* ── Layout ── */
+        .sg-layout-inner {
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+          width: 100%;
+        }
+
+        .sg-main-content {
+          flex: 1;
+          width: 100%;
+          min-width: 0;
+        }
+
+        .sg-sidebar-container {
+          width: 100%;
+        }
+
+        @media (min-width: 1024px) {
+          .sg-layout-inner {
+            flex-direction: row;
+            align-items: flex-start;
+          }
+
+          .sg-sidebar-container {
+            width: 260px;
+            flex-shrink: 0;
+          }
         }
 
         :global(.sg-grid) {
@@ -216,8 +286,15 @@ export default function ShopGrid() {
 
         @media (min-width: 1024px) {
           :global(.sg-grid--grid) {
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 18px;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          :global(.sg-grid--grid) {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
           }
         }
 
