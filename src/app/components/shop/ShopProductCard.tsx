@@ -102,7 +102,7 @@ export default function ShopProductCard({
               src={product.image}
               alt={product.brand}
               fill
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "cover" }}
               sizes={
                 layoutMode === "list"
                   ? "(max-width: 559px) 90vw, 220px"
@@ -119,7 +119,7 @@ export default function ShopProductCard({
               src={hoverImage}
               alt={`${product.brand} Alternate`}
               fill
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "cover" }}
               sizes={
                 layoutMode === "list"
                   ? "(max-width: 559px) 90vw, 220px"
@@ -332,7 +332,7 @@ export default function ShopProductCard({
         .sp-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 1 / 1;
+          aspect-ratio: 1 / 1.15;
           background: linear-gradient(
             165deg,
             #f9fafc 0%,
@@ -364,7 +364,7 @@ export default function ShopProductCard({
         /* ── Double-image hover swap structure ── */
         .sp-card-img {
           position: absolute;
-          inset: 14px; /* Lower padding makes the bottle image larger and bolder */
+          inset: 0; /* Lower padding makes the bottle image larger and bolder */
           transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -478,7 +478,7 @@ export default function ShopProductCard({
           transform: translate(-50%, -30%);
           display: flex;
           background: #ffffff;
-          border-radius: 25px;
+          border-radius: 4px;
           border: 1px solid rgba(0, 8, 157, 0.06);
           box-shadow: 0 8px 24px rgba(0, 8, 157, 0.08);
           overflow: hidden;
@@ -534,7 +534,7 @@ export default function ShopProductCard({
         .sp-card-info {
           width: 100%;
           box-sizing: border-box;
-          padding: 14px 10px 12px;
+          padding: 8px 10px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -676,7 +676,7 @@ export default function ShopProductCard({
           background: var(--poi-btn-bg);
           border: 1px solid var(--poi-btn-border);
           box-shadow: var(--poi-btn-shadow);
-          border-radius: 6px;
+          border-radius: 0;
           cursor: pointer;
           transition: var(--poi-btn-transition);
           position: relative;
@@ -867,7 +867,7 @@ export default function ShopProductCard({
         /* ── Responsive Styling ── */
         @media (max-width: 639px) {
           .sp-card-img {
-            inset: 14px;
+            inset: 0;
           }
           
           .sp-card--list {
@@ -910,7 +910,7 @@ export default function ShopProductCard({
 
         @media (min-width: 640px) {
           .sp-card-img {
-            inset: 18px;
+            inset: 0;
           }
 
           .sp-card-info {
@@ -932,7 +932,7 @@ export default function ShopProductCard({
 
         @media (min-width: 1024px) {
           .sp-card-img {
-            inset: 22px;
+            inset: 0;
           }
 
           .sp-card-info {

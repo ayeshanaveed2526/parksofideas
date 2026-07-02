@@ -209,7 +209,7 @@ export default function TopCategory() {
                       src={product.image}
                       alt={product.name}
                       fill
-                      style={{ objectFit: "contain" }}
+                      style={{ objectFit: "cover" }}
                       sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
                     />
                   </div>
@@ -363,8 +363,8 @@ export default function TopCategory() {
           background: var(--poi-btn-bg);
           border: 1px solid var(--poi-btn-border);
           box-shadow: var(--poi-btn-shadow);
-          border-radius: 6px;
-          padding: 10px 18px 10px;
+          border-radius: 0;
+          padding: 12px 24px;
           cursor: pointer;
           position: relative;
           transition: var(--poi-btn-transition);
@@ -485,14 +485,14 @@ export default function TopCategory() {
         .tp-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 260 / 300;
-          background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+          aspect-ratio: 260 / 335;
           overflow: hidden;
+          background: linear-gradient(180deg, #f8f9fd 0%, #ffffff 50%, #f3f5fb 100%);
         }
 
         .tp-card-img {
           position: absolute;
-          inset: 8px;
+          inset: 0;
           transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
@@ -602,7 +602,7 @@ export default function TopCategory() {
           box-shadow: var(--poi-btn-shadow);
           transition: var(--poi-btn-transition);
           padding: 0;
-          border-radius: 50%;
+          border-radius: 0;
         }
 
         .tp-action-btn svg {
@@ -677,15 +677,13 @@ export default function TopCategory() {
         .tp-card-info {
           width: 100%;
           box-sizing: border-box;
-          padding: var(--info-pt) 16px var(--info-pb);
+          padding: 12px 16px;
           display: flex;
           flex-direction: column;
-          align-items: stretch;
-          justify-content: flex-start;
-          background: linear-gradient(180deg, #ffffff 0%, #fdfcfb 100%);
-          text-align: left;
-          min-height: auto;
+          align-items: flex-start;
+          background: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%);
           position: relative;
+          flex-grow: 1;
         }
 
         .tp-card-info::before {
@@ -873,7 +871,7 @@ export default function TopCategory() {
           }
 
           .tp-card-img {
-            inset: 10px;
+            inset: 0;
           }
 
           .tp-view-all-wrap {
@@ -1022,7 +1020,7 @@ export default function TopCategory() {
           }
 
           .tp-card-img {
-            inset: 12px;
+            inset: 0;
           }
 
           .tp-view-all-wrap {

@@ -241,7 +241,7 @@ export default function ShopGrid() {
           min-width: 200px;
           padding: 14px 36px;
           border: 1px solid var(--poi-btn-border);
-          border-radius: 999px;
+          border-radius: 0;
           background: var(--poi-btn-bg);
           color: #ffffff;
           font-family: var(--font-inter), "Inter", sans-serif;

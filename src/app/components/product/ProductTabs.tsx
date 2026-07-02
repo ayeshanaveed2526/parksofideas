@@ -26,12 +26,12 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
       className="w-full max-w-4xl mx-auto my-20"
     >
       {/* Tab Headers */}
-      <div className="flex justify-center border-b border-gray-200 mb-8 relative">
+      <div className="flex justify-center gap-4 border-b border-gray-200 mb-8 pb-4 relative">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`poi-btn rounded-full px-8 py-3.5 text-[11px] font-semibold tracking-[0.14em] relative${
+            className={`poi-btn px-8 py-3.5 text-[11px] font-semibold tracking-[0.14em] relative${
               activeTab === tab.id ? " poi-btn-active" : ""
             }`}
           >

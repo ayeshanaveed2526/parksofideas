@@ -89,7 +89,7 @@ export default function ShopByCategory() {
         </div>
 
         <div className="mb-9 flex items-center justify-center">
-          <div className="flex items-center gap-2 rounded-full border border-white/60 bg-white/40 p-1.5 shadow-[0_8px_30px_rgba(0,8,157,0.08)] backdrop-blur-md">
+          <div className="flex items-center gap-6 border border-white/60 bg-white/40 p-3 shadow-[0_8px_30px_rgba(0,8,157,0.08)] backdrop-blur-md">
             {collections.map((c) => {
               const isActive = c.key === active;
               return (
@@ -97,7 +97,7 @@ export default function ShopByCategory() {
                   key={c.key}
                   type="button"
                   onClick={() => setActive(c.key)}
-                  className={`poi-btn rounded-full px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] md:px-8${
+                  className={`poi-btn px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] md:px-8${
                     isActive ? " poi-btn-active" : ""
                   }`}
                   style={{ fontFamily: "var(--font-marcellus), serif" }}

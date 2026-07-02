@@ -90,7 +90,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
         <motion.div variants={itemVariants} className="mb-8 h-px w-full bg-[#dfe3eb]" />
 
         <motion.div variants={itemVariants} className="mb-6 flex items-stretch gap-3 sm:gap-4">
-          <div className="flex h-12 w-[120px] shrink-0 items-center overflow-hidden rounded-full border border-[#dfe3eb] bg-white sm:w-32">
+          <div className="flex h-12 w-[120px] shrink-0 items-center overflow-hidden rounded-none border border-[#dfe3eb] bg-white sm:w-32">
             <button
               type="button"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -99,7 +99,17 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             >
               −
             </button>
-            <div className="flex flex-1 items-center justify-center text-sm font-semibold text-[#1a1a1a]">{quantity}</div>
+            <input
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => {
+                const val = parseInt(e.target.value, 10);
+                setQuantity(isNaN(val) || val < 1 ? 1 : val);
+              }}
+              className="flex w-full flex-1 appearance-none items-center justify-center bg-transparent text-center text-sm font-semibold text-[#1a1a1a] outline-none"
+              style={{ WebkitAppearance: "none", MozAppearance: "textfield" }}
+            />
             <button
               type="button"
               onClick={() => setQuantity((q) => q + 1)}

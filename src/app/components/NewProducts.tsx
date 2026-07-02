@@ -133,7 +133,7 @@ export default function NewProducts() {
                         src={product.image}
                         alt={product.name}
                         fill
-                        style={{ objectFit: "contain" }}
+                        style={{ objectFit: "cover" }}
                         sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
                       />
                     </div>
@@ -288,7 +288,7 @@ export default function NewProducts() {
         .np-card-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 360 / 280;
+          aspect-ratio: 360 / 330;
           background: linear-gradient(165deg, #f8f9fd 0%, #ffffff 55%, #f3f5fb 100%);
           overflow: hidden;
         }
@@ -304,7 +304,7 @@ export default function NewProducts() {
 
         .np-card-img {
           position: absolute;
-          inset: 16px;
+          inset: 0;
           transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
@@ -425,6 +425,7 @@ export default function NewProducts() {
           background: var(--poi-btn-bg);
           border: 1px solid var(--poi-btn-border);
           box-shadow: var(--poi-btn-shadow);
+          border-radius: 0;
           box-sizing: border-box;
           cursor: pointer;
           display: flex;
@@ -461,7 +462,6 @@ export default function NewProducts() {
           justify-content: flex-start;
           background: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%);
           text-align: left;
-          min-height: 180px;
           position: relative;
         }
 
@@ -500,7 +500,7 @@ export default function NewProducts() {
         .np-card-desc {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 400;
-          font-size: 12px;
+          font-size: 13.5px;
           line-height: 1.5;
           color: rgb(130, 130, 130);
           margin: 0 0 12px;
@@ -591,12 +591,11 @@ export default function NewProducts() {
           }
 
           .np-card-img {
-            inset: 20px;
+            inset: 0;
           }
 
           .np-card-info {
-            padding: 32px 20px 28px;
-            min-height: 210px;
+            padding: 16px 20px;
           }
 
           .np-card-name {
@@ -605,7 +604,7 @@ export default function NewProducts() {
           }
 
           .np-card-desc {
-            font-size: 13px;
+            font-size: 14.5px;
           }
 
           .np-star {
@@ -648,26 +647,25 @@ export default function NewProducts() {
           }
 
           .np-card-img-wrap {
-            aspect-ratio: 360 / 318;
+            aspect-ratio: 360 / 368;
           }
 
           .np-card-img {
-            inset: 24px;
+            inset: 0;
           }
 
           .np-card-info {
-            padding: 40px 24px 35px;
-            min-height: 255px;
+            padding: 20px 24px;
           }
 
           .np-card-name {
             font-size: 22px;
-            letter-spacing: 0.22em;
+            letter-spacing: 0.2em;
             margin: 0 0 12px;
           }
 
           .np-card-desc {
-            font-size: 13px;
+            font-size: 14.5px;
             line-height: 1.6;
             margin: 0 0 15px;
           }

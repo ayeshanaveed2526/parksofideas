@@ -98,7 +98,17 @@ function CartLineItem({
             >
               <Minus size={14} />
             </button>
-            <span className={styles.qtyValue}>{quantity}</span>
+            <input
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => {
+                const val = parseInt(e.target.value, 10);
+                onQuantityChange(product.id, isNaN(val) || val < 1 ? 1 : val);
+              }}
+              className={styles.qtyValue}
+              style={{ WebkitAppearance: "none", MozAppearance: "textfield", border: "none", outline: "none", textAlign: "center", background: "transparent" }}
+            />
             <button
               type="button"
               className={styles.qtyBtn}

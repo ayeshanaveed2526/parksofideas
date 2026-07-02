@@ -152,7 +152,7 @@
   justify-content: center;
   gap: 12px;
   padding: 13px 18px;
-  border-radius: var(--poi-radius-full);
+  border-radius: 0;
   border: 1px solid var(--poi-primary-a18);
   background: var(--poi-white);
   font-family: var(--poi-font-sans);
@@ -295,14 +295,14 @@
   width: 100%;
   margin-top: 4px;
   padding: 14px 20px;
-  border-radius: var(--poi-radius-full);
+  border-radius: 0;
 }
 
 .signUpSubmitBtn {
   width: 100%;
   margin-top: 4px;
   padding: 14px 20px;
-  border-radius: var(--poi-radius-full);
+  border-radius: 0;
   border: none;
   background: var(--poi-primary);
   color: var(--poi-white);
