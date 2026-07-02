@@ -6,6 +6,7 @@ import { Heart, Share2, ShieldCheck, RefreshCw, Truck } from 'lucide-react';
 import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../cart/CartProvider';
+import { useWishlist } from '../wishlist/WishlistProvider';
 import { Product } from '../../data/mockProducts';
 
 interface ProductInfoProps {
@@ -20,6 +21,7 @@ const avgRating = (reviews: Product['reviews']) => {
 const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const router = useRouter();
   const { add: addToCart } = useCart();
+  const { toggle: toggleWishlist, has: isInWishlist } = useWishlist();
   const [quantity, setQuantity] = useState(1);
   const rating = avgRating(product.reviews);
 
@@ -120,10 +122,15 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
         <motion.button
           variants={itemVariants}
           type="button"
-          className="group mb-8 flex w-fit items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 transition-all hover:text-[#1a1a1a]"
+          onClick={() => toggleWishlist(Number(product.id))}
+          className={`group mb-8 flex w-fit items-center gap-2 text-xs font-semibold tracking-wider transition-all ${
+            isInWishlist(Number(product.id)) ? 'text-[#1a1a1a]' : 'text-gray-500 hover:text-[#1a1a1a]'
+          }`}
         >
-          <Heart className="h-4 w-4 transition-all duration-300 group-hover:scale-110 group-hover:fill-[#1a1a1a]" />
-          ADD TO WISHLIST
+          <Heart className={`h-4 w-4 transition-all duration-300 group-hover:scale-110 ${
+            isInWishlist(Number(product.id)) ? 'fill-[#1a1a1a] text-[#1a1a1a]' : 'group-hover:fill-[#1a1a1a]'
+          }`} />
+          {isInWishlist(Number(product.id)) ? 'IN WISHLIST' : 'ADD TO WISHLIST'}
         </motion.button>
 
         <motion.div
