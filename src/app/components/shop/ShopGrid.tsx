@@ -12,7 +12,7 @@ const PER_PAGE = 20;
 
 export default function ShopGrid() {
   const [sortBy, setSortBy] = useState<SortOption>("featured");
-  const [layoutMode, setLayoutMode] = useState<LayoutMode>("grid");
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>("list");
   const [animKey, setAnimKey] = useState(0);
   const [quickViewProduct, setQuickViewProduct] = useState<PerfumeProduct | null>(null);
   const [search, setSearch] = useState("");

@@ -16,795 +16,406 @@ interface ShopProductCardProps {
   layoutMode: LayoutMode;
 }
 
-export default function ShopProductCard({
-  product,
-  index,
-  onQuickView,
-  layoutMode,
-}: ShopProductCardProps) {
+export default function ShopProductCard({ product, index, onQuickView, layoutMode }: ShopProductCardProps) {
   const router = useRouter();
   const { toggle, has } = useWishlist();
   const { add: addToCart } = useCart();
   const inWishlist = has(product.id);
 
-  /* Derive badges */
   const badges: { text: string; color: string }[] = [];
   if (product.id <= 6) badges.push({ text: "NEW", color: "#00089d" });
-  if (product.id % 4 === 0) badges.push({ text: "FEATURED", color: "#00089d" });
-  if (product.id === 5) badges.push({ text: "-10%", color: "#000000" });
-
+  if (product.id % 4 === 0) badges.push({ text: "FEATURED", color: "#c8a96e" });
+  if (product.id === 5) badges.push({ text: "-10%", color: "#1a1a1a" });
   const leftBadges = badges.filter((b) => b.text !== "FEATURED");
-  const rightBadges = badges.filter((b) => b.text === "FEATURED");
 
   const formattedPrice = `$${product.price.toFixed(2)}`;
-
-  // Find the next product image in the catalog for the hover swap effect
   const hoverProduct = PERFUME_CATALOG[(index + 1) % PERFUME_CATALOG.length];
   const hoverImage = hoverProduct ? hoverProduct.image : product.image;
 
-  // Programmatic navigation to prevent overlay blocking or invalid link nesting
   const handleCardClick = (e: React.MouseEvent) => {
-    // If the click is inside a button or clickable icon, do not navigate
-    if ((e.target as HTMLElement).closest("button")) {
-      return;
-    }
+    if ((e.target as HTMLElement).closest("button")) return;
     router.push(`/product/${product.id}`);
   };
 
+  /* ════════════════════════════════════════
+     LIST VIEW  —  Horizontal Listing Card
+     [  Image LEFT  |  Info RIGHT  ]
+  ════════════════════════════════════════ */
+  if (layoutMode === "list") {
+    return (
+      <motion.article
+        layout
+        onClick={handleCardClick}
+        whileHover={{ boxShadow: "0 16px 48px rgba(0,8,157,0.12), 0 4px 12px rgba(0,0,0,0.04)" }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          display: "flex",
+          flexDirection: "row" as const,
+          alignItems: "stretch",
+          width: "100%",
+          height: "240px",
+          background: "#fff",
+          borderRadius: "16px",
+          border: "1px solid #E8EAF0",
+          overflow: "hidden",
+          cursor: "pointer",
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
+        {/* ══ LEFT: Image ══ */}
+        <div style={{
+          position: "relative",
+          flexShrink: 0,
+          width: "34%",
+          height: "100%",
+          background: "linear-gradient(145deg, #f0f2fa 0%, #e8eaf5 100%)",
+          borderRight: "1px solid #E8EAF0",
+        }}>
+          {leftBadges.length > 0 && (
+            <span style={{
+              position: "absolute", top: 14, left: 14, zIndex: 5,
+              background: leftBadges[0].color, color: "#fff",
+              fontSize: "9px", fontWeight: 700,
+              letterSpacing: "0.1em", textTransform: "uppercase" as const,
+              padding: "4px 10px", borderRadius: "20px",
+            }}>
+              {leftBadges[0].text}
+            </span>
+          )}
+          {/* Images */}
+          <div style={{ position: "absolute", inset: 0, transition: "opacity 0.5s ease, transform 0.7s ease" }}
+            className="lcard-img-primary">
+            <Image src={product.image} alt={product.brand} fill
+              style={{ objectFit: "cover" }} sizes="34vw" priority={index < 6} />
+          </div>
+          <div style={{ position: "absolute", inset: 0, opacity: 0, transition: "opacity 0.5s ease, transform 0.7s ease", transform: "scale(0.96)" }}
+            className="lcard-img-hover">
+            <Image src={hoverImage} alt="" fill style={{ objectFit: "cover" }} sizes="34vw" />
+          </div>
+        </div>
+
+        {/* ══ RIGHT: Info ══ */}
+        <div style={{
+          flex: "1 1 0",
+          minWidth: 0,
+          display: "flex",
+          flexDirection: "column" as const,
+          padding: "22px 26px 20px",
+          position: "relative",
+          background: "#fff",
+        }}>
+          {/* Wishlist heart */}
+          <button type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(product.id); }}
+            style={{
+              position: "absolute", top: 18, right: 20,
+              background: "none", border: "none", padding: 4,
+              cursor: "pointer", lineHeight: 0,
+            }}>
+            <svg width="22" height="22" viewBox="0 0 24 24"
+              fill={inWishlist ? "#00089d" : "none"}
+              stroke={inWishlist ? "#00089d" : "#9CA3AF"}
+              strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            </svg>
+          </button>
+
+          {/* 1 ─ Brand name */}
+          <h3 className="lcard-name" style={{
+            fontFamily: "Marcellus, Georgia, serif",
+            fontSize: "21px", fontWeight: 400,
+            letterSpacing: "0.1em", textTransform: "uppercase" as const,
+            color: "#0c0c1d", margin: "0 40px 6px 0",
+            lineHeight: 1.2,
+          }}>
+            {product.brand}
+          </h3>
+
+          {/* 2 ─ Description */}
+          <p style={{
+            fontSize: "13px", color: "#6B7280",
+            margin: "0 0 10px", lineHeight: 1.55,
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical" as const,
+            overflow: "hidden",
+          }}>
+            {product.description}
+          </p>
+
+          {/* 3 ─ Price */}
+          <p style={{
+            fontSize: "19px", fontWeight: 700,
+            color: "#0c0c1d", margin: "0",
+            letterSpacing: "-0.01em",
+          }}>
+            {formattedPrice}
+          </p>
+
+          {/* Spacer */}
+          <div style={{ flex: 1 }} />
+
+          {/* Divider */}
+          <div style={{ height: "1px", background: "#F1F3F8", marginBottom: 12 }} />
+
+          {/* 4 ─ Meta + Buttons */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+            <span style={{ fontSize: "11.5px", color: "#9CA3AF", display: "flex", alignItems: "center", gap: 5 }}>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+              </svg>
+              Ships in 24 hours
+            </span>
+
+            <div style={{ display: "flex", gap: 8 }}>
+              {/* Quick View */}
+              <button type="button"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product); }}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 5,
+                  padding: "7px 14px", fontSize: "12px", fontWeight: 500,
+                  fontFamily: "inherit",
+                  background: "transparent", border: "1.5px solid #D1D5DB", color: "#374151",
+                  borderRadius: "8px", cursor: "pointer",
+                  transition: "all 0.2s",
+                }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
+                </svg>
+                Quick View
+              </button>
+              {/* Add to Cart */}
+              <button type="button"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product.id); router.push("/cart"); }}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 5,
+                  padding: "7px 14px", fontSize: "12px", fontWeight: 600,
+                  fontFamily: "inherit",
+                  background: "linear-gradient(135deg,#00089d,#0010c4)",
+                  border: "none", color: "#fff",
+                  borderRadius: "8px", cursor: "pointer",
+                  transition: "all 0.2s",
+                  boxShadow: "0 3px 10px rgba(0,8,157,0.28)",
+                }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" />
+                  <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                </svg>
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .lcard-img-primary, .lcard-img-hover {
+            transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1);
+          }
+          article:hover .lcard-img-primary {
+            opacity: 0 !important;
+            transform: scale(1.05);
+          }
+          article:hover .lcard-img-hover {
+            opacity: 1 !important;
+            transform: scale(1) !important;
+          }
+          .lcard-name {
+            transition: color 0.25s ease;
+          }
+          article:hover .lcard-name {
+            color: #00089d !important;
+          }
+        `}</style>
+      </motion.article>
+    );
+  }
+
+  /* ════════════════════════════════════════
+     GRID & CINEMATIC VIEWS
+  ════════════════════════════════════════ */
   return (
     <motion.article
       layout
       className={`sp-card sp-card--${layoutMode}`}
-      whileHover={{
-        y: -5,
-        boxShadow: "0 18px 36px rgba(0, 8, 157, 0.08), 0 6px 14px rgba(0, 8, 157, 0.04), 0 0 0 1px rgba(0, 8, 157, 0.03)",
-      }}
+      whileHover={{ y: -5, boxShadow: "0 18px 36px rgba(0,8,157,0.08), 0 6px 14px rgba(0,8,157,0.04)" }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       onClick={handleCardClick}
     >
-      {/* ── Image area ── */}
       <div className="sp-card-img-wrap">
-        {/* Left badges */}
         {leftBadges.length > 0 && (
           <div className="sp-badges sp-badges--left">
             {leftBadges.map((b, i) => (
-              <span
-                key={i}
-                className="sp-badge"
-                style={{ backgroundColor: b.color }}
-              >
-                {b.text}
-              </span>
+              <span key={i} className="sp-badge" style={{ backgroundColor: b.color }}>{b.text}</span>
             ))}
           </div>
         )}
-
-        {/* Right badges */}
-        {rightBadges.length > 0 && (
-          <div className="sp-badges sp-badges--right">
-            {rightBadges.map((b, i) => (
-              <span
-                key={i}
-                className="sp-badge"
-                style={{ backgroundColor: b.color }}
-              >
-                {b.text}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Product image (Two images overlaying for hover transition, with smaller sized bottles) */}
         <div className="sp-card-img">
-          {/* Primary/Default Image */}
           <div className="sp-img-layer sp-img-layer--primary">
-            <Image
-              src={product.image}
-              alt={product.brand}
-              fill
+            <Image src={product.image} alt={product.brand} fill
               style={{ objectFit: "cover" }}
-              sizes={
-                layoutMode === "list"
-                  ? "(max-width: 559px) 90vw, 220px"
-                  : layoutMode === "cinematic"
-                  ? "(max-width: 559px) 45vw, 320px"
-                  : "(max-width: 559px) 50vw, (max-width: 1023px) 25vw, 280px"
-              }
+              sizes={layoutMode === "cinematic"
+                ? "(max-width:559px) 45vw, 320px"
+                : "(max-width:559px) 50vw, (max-width:1023px) 25vw, 280px"}
               priority={index < 8}
             />
           </div>
-          {/* Secondary/Hover Image */}
           <div className="sp-img-layer sp-img-layer--hover">
-            <Image
-              src={hoverImage}
-              alt={`${product.brand} Alternate`}
-              fill
+            <Image src={hoverImage} alt="" fill
               style={{ objectFit: "cover" }}
-              sizes={
-                layoutMode === "list"
-                  ? "(max-width: 559px) 90vw, 220px"
-                  : layoutMode === "cinematic"
-                  ? "(max-width: 559px) 45vw, 320px"
-                  : "(max-width: 559px) 50vw, (max-width: 1023px) 25vw, 280px"
-              }
+              sizes={layoutMode === "cinematic"
+                ? "(max-width:559px) 45vw, 320px"
+                : "(max-width:559px) 50vw, (max-width:1023px) 25vw, 280px"}
             />
           </div>
         </div>
-
-        {/* Hover overlay shimmer */}
         <div className="sp-card-overlay" />
         <div className="sp-shimmer-effect" />
-
-        {/* Center action buttons (Standard and Cinematic only) */}
-        {layoutMode !== "list" && (
-          <div className="sp-hover-actions">
-            <button
-              className="sp-action-btn"
-              type="button"
-              aria-label="Quick view"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onQuickView(product);
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-            </button>
-            <div className="sp-action-divider" />
-            <button
-              className="sp-action-btn"
-              type="button"
-              aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggle(product.id);
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill={inWishlist ? "currentColor" : "none"}
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-              </svg>
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* ── Info area ── */}
-      <div className={`sp-card-info sp-card-info--${layoutMode}`}>
-        <div className="sp-info-header">
-          <h3 className="sp-info-price">{formattedPrice}</h3>
-          <button
-            className="sp-info-wishlist"
-            type="button"
+        <div className="sp-hover-actions">
+          <button className="sp-action-btn" type="button" aria-label="Quick view"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product); }}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+          <div className="sp-action-divider" />
+          <button className="sp-action-btn" type="button"
             aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggle(product.id);
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(product.id); }}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
               fill={inWishlist ? "currentColor" : "none"}
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+              stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
             </svg>
           </button>
         </div>
+      </div>
 
-        <p className="sp-info-title">{product.brand} - {product.description}</p>
-        
-        <div className="sp-info-meta">
-          Available Online • Ships in 24 hours
+      <div className="sp-card-info">
+        <h3 className="sp-card-name">{product.brand}</h3>
+        <p className="sp-card-desc">{product.description}</p>
+        <div className="sp-card-rating">
+          {Array.from({ length: 5 }).map((_, i) => <span key={i} className="sp-star">★</span>)}
         </div>
-
-        <div className="sp-info-actions">
-          <button
-            className="sp-info-btn sp-info-btn-outline"
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onQuickView(product);
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-            Quick View
-          </button>
-          <button
-            className="sp-info-btn sp-info-btn-solid"
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              addToCart(product.id);
-              router.push("/cart");
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="8" cy="21" r="1" />
-              <circle cx="19" cy="21" r="1" />
-              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
-            </svg>
-            Add to Cart
-          </button>
-        </div>
+        <div className="sp-card-price">{formattedPrice}</div>
+        <button className="sp-grid-atc-btn" type="button"
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product.id); router.push("/cart"); }}>
+          ADD TO CART
+        </button>
       </div>
 
       <style jsx>{`
-        /* ── Keyframes ── */
         @keyframes spStarPop {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.35);
-          }
-          100% {
-            transform: scale(1);
-          }
+          0%,100% { transform:scale(1); }
+          50% { transform:scale(1.35); }
         }
-
-        /* ── Card ── */
         .sp-card {
-          width: 100%;
-          background: #ffffff;
-          display: flex;
-          flex-direction: column;
-          position: relative;
-          border-radius: 12px;
-          overflow: hidden;
-          border: 1px solid rgba(0, 8, 157, 0.05);
-          box-shadow: 0 4px 16px rgba(0, 8, 157, 0.02);
-          transition: border-color 0.4s ease;
-          cursor: pointer;
-
-          --btn-size: 36px;
-          --btn-icon: 13px;
+          width:100%; background:#fff; display:flex; flex-direction:column;
+          position:relative; border-radius:12px; overflow:hidden;
+          border:1px solid rgba(0,8,157,0.05);
+          box-shadow:0 4px 16px rgba(0,8,157,0.02);
+          transition:border-color 0.4s ease; cursor:pointer;
+          --btn-size:36px; --btn-icon:13px;
         }
+        .sp-card:hover { border-color:rgba(0,8,157,0.12); }
 
-        .sp-card:hover {
-          border-color: rgba(0, 8, 157, 0.12);
-        }
-
-        /* ── Image wrapper ── */
         .sp-card-img-wrap {
-          position: relative;
-          width: 100%;
-          aspect-ratio: 360 / 500;
-          background: linear-gradient(
-            165deg,
-            #f8f9fd 0%,
-            #ffffff 55%,
-            #f3f5fb 100%
-          );
-          overflow: hidden;
-          cursor: pointer;
+          position:relative; width:100%; aspect-ratio:360/500;
+          background:linear-gradient(165deg,#f8f9fd 0%,#fff 55%,#f3f5fb 100%);
+          overflow:hidden;
         }
-
-        .sp-card-img,
-        .sp-img-layer {
-          cursor: pointer;
-        }
+        .sp-card--cinematic .sp-card-img-wrap { aspect-ratio:4/5; }
 
         .sp-card-img-wrap::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            transparent 75%,
-            rgba(0, 8, 157, 0.015) 100%
-          );
-          pointer-events: none;
-          z-index: 1;
+          content:""; position:absolute; inset:0;
+          background:linear-gradient(180deg,transparent 75%,rgba(0,8,157,0.015) 100%);
+          pointer-events:none; z-index:1;
         }
-
-        /* ── Double-image hover swap structure ── */
-        .sp-card-img {
-          position: absolute;
-          inset: 0; /* Lower padding makes the bottle image larger and bolder */
-          transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
+        .sp-card-img { position:absolute; inset:0; transition:transform 0.8s cubic-bezier(0.16,1,0.3,1); }
         .sp-img-layer {
-          position: absolute;
-          inset: 0;
-          transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+          position:absolute; inset:0;
+          transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
         }
+        .sp-img-layer--hover { opacity:0; transform:scale(0.93) rotate(-2deg); }
+        .sp-card:hover .sp-card-img { transform:scale(1.03); }
+        .sp-card:hover .sp-img-layer--primary { opacity:0; transform:scale(0.95) rotate(2deg); }
+        .sp-card:hover .sp-img-layer--hover { opacity:1; transform:scale(1.02) rotate(0deg); }
 
-        .sp-img-layer--hover {
-          opacity: 0;
-          transform: scale(0.93) rotate(-2deg);
-        }
-
-        /* Hover actions on image */
-        .sp-card:hover .sp-card-img {
-          transform: scale(1.03);
-        }
-
-        .sp-card:hover .sp-img-layer--primary {
-          opacity: 0;
-          transform: scale(0.95) rotate(2deg);
-        }
-
-        .sp-card:hover .sp-img-layer--hover {
-          opacity: 1;
-          transform: scale(1.02) rotate(0deg);
-        }
-
-        /* ── Badges ── */
-        .sp-badges {
-          position: absolute;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          z-index: 6;
-        }
-
-        .sp-badges--left {
-          top: 10px;
-          left: 10px;
-        }
-
-        .sp-badges--right {
-          top: 10px;
-          right: 10px;
-        }
-
+        .sp-badges { position:absolute; display:flex; flex-direction:column; gap:4px; z-index:6; }
+        .sp-badges--left { top:10px; left:10px; }
         .sp-badge {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 600;
-          font-size: 8px;
-          line-height: 1;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          color: #ffffff;
-          padding: 4px 7px;
-          border-radius: 4px;
-          box-shadow: 0 1px 4px rgba(0, 8, 157, 0.06);
+          font-family:var(--font-inter),"Inter",sans-serif;
+          font-weight:600; font-size:8px; letter-spacing:0.06em;
+          text-transform:uppercase; color:#fff;
+          padding:4px 7px; border-radius:4px;
         }
 
-        /* ── Hover overlay ── */
         .sp-card-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.02) 0%,
-            rgba(0, 8, 157, 0.02) 100%
-          );
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity 0.45s ease, visibility 0.45s ease;
-          z-index: 3;
+          position:absolute; inset:0;
+          background:linear-gradient(180deg,transparent 55%,rgba(0,0,30,0.06) 100%);
+          opacity:0; transition:opacity 0.4s ease; z-index:2; pointer-events:none;
         }
+        .sp-card:hover .sp-card-overlay { opacity:1; }
 
-        .sp-card:hover .sp-card-overlay {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        /* ── Luxury Shimmer Effect ── */
         .sp-shimmer-effect {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            110deg,
-            transparent 35%,
-            rgba(255, 255, 255, 0.3) 48%,
-            rgba(0, 8, 157, 0.02) 50%,
-            rgba(255, 255, 255, 0.3) 52%,
-            transparent 65%
-          );
-          background-size: 200% 100%;
-          background-position: -200% center;
-          z-index: 3;
-          pointer-events: none;
-          transition: background-position 0.8s ease;
+          position:absolute; inset:0;
+          background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.18) 50%,transparent 60%);
+          transform:translateX(-100%); z-index:3; pointer-events:none;
         }
+        .sp-card:hover .sp-shimmer-effect { transform:translateX(100%); transition:transform 0.7s ease; }
 
-        .sp-card:hover .sp-shimmer-effect {
-          background-position: 200% center;
-        }
-
-        /* ── Center action buttons ── */
         .sp-hover-actions {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -30%);
-          display: flex;
-          background: #ffffff;
-          border-radius: 4px;
-          border: 1px solid rgba(0, 8, 157, 0.06);
-          box-shadow: 0 8px 24px rgba(0, 8, 157, 0.08);
-          overflow: hidden;
-          z-index: 5;
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity 0.4s ease, visibility 0.4s ease,
-            transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-          width: calc(var(--btn-size) * 2 + 1px);
-          height: var(--btn-size);
-          box-sizing: border-box;
+          position:absolute; bottom:14px; left:50%;
+          transform:translateX(-50%) translateY(8px);
+          display:flex; align-items:center;
+          background:var(--poi-btn-bg,rgba(0,8,100,0.92));
+          backdrop-filter:blur(8px); border-radius:24px;
+          padding:4px; opacity:0; z-index:7;
+          transition:opacity 0.3s ease, transform 0.3s ease;
+          box-shadow:0 4px 20px rgba(0,8,157,0.2);
         }
-
-        .sp-card:hover .sp-hover-actions {
-          opacity: 1;
-          visibility: visible;
-          transform: translate(-50%, -50%);
-        }
-
+        .sp-card:hover .sp-hover-actions { opacity:1; transform:translateX(-50%) translateY(0); }
         .sp-action-btn {
-          width: var(--btn-size);
-          height: calc(var(--btn-size) - 2px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--poi-btn-bg);
-          border: none;
-          color: #ffffff;
-          cursor: pointer;
-          box-shadow: var(--poi-btn-shadow);
-          transition: var(--poi-btn-transition);
-          padding: 0;
+          width:var(--btn-size); height:var(--btn-size);
+          border-radius:50%; border:none; background:transparent;
+          color:#fff; display:flex; align-items:center; justify-content:center;
+          cursor:pointer; transition:background 0.2s ease;
         }
-
-        .sp-action-btn svg {
-          width: var(--btn-icon);
-          height: var(--btn-icon);
-        }
-
-        .sp-action-btn:hover {
-          background: var(--poi-btn-bg-hover);
-          color: #ffffff;
-          box-shadow: var(--poi-btn-shadow-hover);
-        }
-
-        .sp-action-divider {
-          width: 1px;
-          height: calc(var(--btn-size) - 2px);
-          background: rgba(0, 8, 157, 0.06);
-        }
+        .sp-action-btn svg { width:var(--btn-icon); height:var(--btn-icon); }
+        .sp-action-btn:hover { background:rgba(255,255,255,0.15); }
+        .sp-action-divider { width:1px; height:calc(var(--btn-size) - 10px); background:rgba(255,255,255,0.2); }
 
         .sp-card-info {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          justify-content: flex-start;
-          text-align: left;
-          padding: 16px 12px;
-          min-height: 180px;
+          width:100%; padding:10px 14px 16px;
+          display:flex; flex-direction:column; align-items:flex-start;
+          background:#fff; flex-grow:1;
         }
-
-        /* ── Cinematic Duo Layout modifiers ── */
-        .sp-card--cinematic {
-          border-radius: 16px;
+        .sp-card-name {
+          font-family:var(--font-marcellus),"Marcellus",serif;
+          font-weight:600; font-size:13px; letter-spacing:0.16em;
+          text-transform:uppercase; color:#111; margin:0 0 3px;
+          transition:color 0.3s ease;
         }
-
-        .sp-card--cinematic .sp-card-img-wrap {
-          background: linear-gradient(135deg, #fcfdfe 0%, #f5f7fd 100%);
+        .sp-card:hover .sp-card-name { color:#00089d; }
+        .sp-card-desc {
+          font-family:var(--font-inter),"Inter",sans-serif;
+          font-size:11px; color:#888; margin:0 0 5px; line-height:1.4;
         }
-
-        .sp-card--cinematic .sp-card-img {
-          inset: 38px;
+        .sp-card-rating { display:flex; gap:2px; margin-bottom:5px; }
+        .sp-star { color:#FFD700; font-size:10px; }
+        .sp-card-price {
+          font-family:var(--font-inter),"Inter",sans-serif;
+          font-weight:700; font-size:14px; color:#111; margin-bottom:10px;
         }
-
-        .sp-card--cinematic .sp-card-info {
-          padding: 20px 14px 16px;
+        .sp-grid-atc-btn {
+          width:100%; padding:8px 0;
+          font-family:var(--font-inter),"Inter",sans-serif;
+          font-weight:600; font-size:9px; letter-spacing:0.12em;
+          text-transform:uppercase; color:#fff;
+          background:var(--poi-btn-bg,rgba(0,8,100,0.92));
+          border:none; cursor:pointer;
+          transition:background 0.25s ease, transform 0.2s ease;
         }
-
-        .sp-card--cinematic .sp-card-name {
-          font-size: 16px;
-          letter-spacing: 0.16em;
-          margin-bottom: 6px;
-        }
-
-        .sp-card--cinematic .sp-card-desc {
-          font-size: 11.5px;
-          line-height: 1.45;
-          margin-bottom: 8px;
-        }
-
-        .sp-card--cinematic .sp-card-price {
-          font-size: 15px;
-        }
-
-        .sp-card--cinematic .sp-grid-atc-btn {
-          height: 36px;
-          font-size: 10px;
-          margin-top: 14px;
-        }
-
-        /* ── Detailed List Layout Modifiers (Landscape) ── */
-        .sp-info-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          width: 100%;
-          margin-bottom: 8px;
-        }
-
-        .sp-info-price {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 700;
-          font-size: 18px;
-          color: #111;
-          margin: 0;
-        }
-
-        .sp-info-wishlist {
-          background: none;
-          border: none;
-          padding: 2px;
-          cursor: pointer;
-          color: #111;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .sp-info-wishlist:hover {
-          color: #00089d;
-          transform: scale(1.1);
-        }
-
-        .sp-info-wishlist svg {
-          width: 18px;
-          height: 18px;
-        }
-
-        .sp-info-title {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-weight: 400;
-          font-size: 12px;
-          color: #333;
-          margin: 0 0 12px;
-          line-height: 1.4;
-        }
-
-        .sp-info-meta {
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-size: 11px;
-          color: #666;
-          margin-top: auto;
-          margin-bottom: 10px;
-        }
-
-        .sp-info-actions {
-          display: flex;
-          gap: 6px;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .sp-info-btn {
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 4px;
-          padding: 8px 6px;
-          font-family: var(--font-inter), "Inter", sans-serif;
-          font-size: 11px;
-          font-weight: 500;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .sp-info-btn svg {
-          width: 12px;
-          height: 12px;
-        }
-
-        .sp-info-btn-outline {
-          background: transparent;
-          border: 1px solid #111;
-          color: #111;
-        }
-
-        .sp-info-btn-outline:hover {
-          background: rgba(0,0,0,0.03);
-        }
-
-        .sp-info-btn-solid {
-          background: #002f34;
-          border: 1px solid #002f34;
-          color: #fff;
-        }
-
-        .sp-info-btn-solid:hover {
-          background: #004b53;
-          border-color: #004b53;
-        }
-
-        /* ── Layout Overrides ── */
-        .sp-card--cinematic .sp-card-img-wrap {
-          aspect-ratio: 4 / 5;
-        }
-
-        .sp-card--list {
-          flex-direction: row;
-          align-items: stretch;
-          justify-content: flex-start;
-          width: 100%;
-          min-height: 200px;
-        }
-
-        .sp-card--list .sp-card-link {
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-        }
-
-        .sp-card--list .sp-card-img-wrap {
-          flex: 0 0 200px;
-          aspect-ratio: auto;
-          height: auto;
-          min-height: 200px;
-          border-right: 1px solid rgba(0, 8, 157, 0.04);
-        }
-
-        .sp-card--list .sp-card-img {
-          inset: 32px;
-        }
-
-        .sp-card--list .sp-card-info {
-          padding: 24px;
-        }
-
-        .sp-card--list .sp-info-price {
-          font-size: 22px;
-        }
-        
-        .sp-card--list .sp-info-wishlist svg {
-          width: 22px;
-          height: 22px;
-        }
-        
-        .sp-card--list .sp-info-title {
-          font-size: 15px;
-          margin-bottom: 16px;
-        }
-
-        .sp-card--list .sp-info-meta {
-          font-size: 13px;
-          margin-bottom: 12px;
-        }
-
-        .sp-card--list .sp-info-actions {
-          gap: 12px;
-          justify-content: flex-start;
-        }
-
-        .sp-card--list .sp-info-btn {
-          flex: none;
-          padding: 10px 24px;
-          font-size: 14px;
-        }
-        
-        .sp-card--list .sp-info-btn svg {
-          width: 16px;
-          height: 16px;
-        }
-
-          .sp-card--list .sp-card-info {
-            align-items: flex-start;
-            text-align: left;
-            padding: 16px 12px;
-          }
-
-          .sp-card--list .sp-card-info::before {
-            left: 12px;
-            transform: none;
-          }
-
-          .sp-card--list .sp-card-info {
-            padding: 16px;
-          }
-
-          .sp-card--list .sp-list-actions {
-            justify-content: center;
-          }
-
-          .sp-card--list .sp-card-desc {
-            max-width: 90%;
-          }
-        }
-
-        @media (min-width: 640px) {
-          .sp-card-img-wrap {
-            aspect-ratio: 360 / 500;
-          }
-
-          .sp-card-info {
-            padding: 3px 24px 20px;
-          }
-
-          .sp-card-name {
-            font-size: 22px;
-            letter-spacing: 0.2em;
-            margin: 0;
-            padding-bottom: 5px;
-          }
-
-          .sp-card-desc {
-            font-size: 14.5px;
-            line-height: 1.6;
-            margin: 0 0 5px;
-          }
-
-          .sp-card-rating {
-            gap: 4px;
-            margin-bottom: 5px;
-          }
-
-          .sp-star {
-            font-size: 16px;
-          }
-
-          .sp-card-price {
-            font-size: 17px;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .sp-card-img {
-            inset: 0;
-          }
-
-          .sp-card-info {
-            padding: 18px 12px 14px;
-          }
-
-          .sp-card-name {
-            font-size: 13.5px;
-          }
-
-          .sp-card-desc {
-            font-size: 10.5px;
-          }
-
-          .sp-star {
-            font-size: 11px;
-          }
-
-          .sp-card-price {
-            font-size: 14px;
-          }
-        }
+        .sp-grid-atc-btn:hover { background:#00089d; transform:translateY(-1px); }
       `}</style>
     </motion.article>
   );
