@@ -17,6 +17,8 @@ import {
 import styles from "./wishlist.module.css";
 import { useWishlist } from "./WishlistProvider";
 import { useCart } from "../cart/CartProvider";
+import ProfileLayout from "../profile/ProfileLayout";
+import profileStyles from "../profile/profile.module.css";
 import {
   PERFUME_CATALOG,
   formatPerfumePrice,
@@ -132,36 +134,13 @@ export default function WishlistPageContent() {
   const isEmpty = products.length === 0;
 
   return (
-    <div className={styles.page}>
-      <div className={styles.bg} aria-hidden="true">
-        <div className={styles.bgGrid} />
-        <div className={styles.bgShine} />
-        <div className={`${styles.orb} ${styles.orbBlue}`} />
-        <div className={`${styles.orb} ${styles.orbGold}`} />
-      </div>
+    <ProfileLayout>
+      <h1 className={profileStyles.sectionTitle}>My Wishlist</h1>
+      <p className={profileStyles.sectionDesc}>
+        Save your favorite ELIX fragrances and return anytime to shop the scents you love most.
+      </p>
 
-      <div className={styles.content}>
-        <motion.header
-          className={styles.hero}
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-        >
-          <motion.div className={styles.heroAccent} variants={fadeUp} custom={0}>
-            <span className={styles.heroLine} />
-            <span className={styles.heroDiamond} />
-            <span className={styles.heroLine} />
-          </motion.div>
-          <motion.h1 className={styles.heroTitle} variants={fadeUp} custom={1}>
-            My Wishlist
-          </motion.h1>
-          <motion.p className={styles.heroDesc} variants={fadeUp} custom={2}>
-            Save your favorite ELIX fragrances and return anytime to shop the
-            scents you love most.
-          </motion.p>
-        </motion.header>
-
-        <section className={styles.main}>
+      <section className={styles.main}>
           {isLoading ? (
             <div className={styles.loading}>
               <div className={styles.spinner} aria-hidden="true" />
@@ -217,53 +196,6 @@ export default function WishlistPageContent() {
             </>
           )}
         </section>
-
-        <motion.section
-          className={styles.cta}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55 }}
-        >
-          <div className={styles.ctaInner}>
-            <span className={styles.ctaGlow} aria-hidden="true" />
-            <div>
-              <h2 className={styles.ctaTitle}>New Arrivals Every Week</h2>
-              <p className={styles.ctaSub}>
-                Stay ahead with our weekly fragrance drops
-              </p>
-            </div>
-            <Link href="/shop" className={`poi-btn ${styles.ctaLink}`}>
-              Shop New <ArrowRight size={16} />
-            </Link>
-          </div>
-        </motion.section>
-
-        <motion.section
-          className={styles.trust}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-40px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-        >
-          <div className={styles.trustGrid}>
-            {trustItems.map(({ icon: Icon, label, sub }, idx) => (
-              <motion.div
-                key={label}
-                className={styles.trustItem}
-                variants={fadeUp}
-                custom={idx}
-              >
-                <div className={styles.trustIcon}>
-                  <Icon size={20} strokeWidth={1.75} />
-                </div>
-                <h4 className={styles.trustLabel}>{label}</h4>
-                <p className={styles.trustSub}>{sub}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-      </div>
-    </div>
+    </ProfileLayout>
   );
 }

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { X, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useLoginModal } from "./LoginModalProvider";
 import ProfileAvatar from "./ProfileAvatar";
 import styles from "./loginModal.module.css";
 
@@ -44,6 +45,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const { login } = useLoginModal();
 
   useEffect(() => {
     setMounted(true);
@@ -66,7 +69,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onClose();
+    login({
+      name: fullName || "Alex",
+      email: email || "smarttech4422@gmail.com",
+      initial: fullName ? fullName.charAt(0).toUpperCase() : "A",
+    });
   };
 
   return createPortal(
@@ -123,28 +130,26 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          {isSignUp && (
-            <div className={styles.field}>
-              <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="signup-fullname">
-                Full Name
-              </label>
-              <div className={styles.inputWrap}>
-                <svg className={styles.inputIcon} width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <input
-                  id="signup-fullname"
-                  type="text"
-                  className={styles.input}
-                  placeholder="Enter your full name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                />
-              </div>
+          <div className={styles.field}>
+            <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="login-fullname">
+              Full Name
+            </label>
+            <div className={styles.inputWrap}>
+              <svg className={styles.inputIcon} width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input
+                id="login-fullname"
+                type="text"
+                className={styles.input}
+                placeholder="Enter your full name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
             </div>
-          )}
+          </div>
 
           <div className={styles.field}>
             <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="login-email">
@@ -160,6 +165,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                title="Please enter a valid email address."
                 autoComplete="email"
               />
             </div>
@@ -179,6 +186,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+                title="Password must be at least 8 characters, with 1 uppercase, 1 lowercase, and 1 number."
                 autoComplete={isSignUp ? "new-password" : "current-password"}
               />
               <button
@@ -211,6 +220,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+                  title="Password must be at least 8 characters, with 1 uppercase, 1 lowercase, and 1 number."
                   autoComplete="new-password"
                 />
                 <button

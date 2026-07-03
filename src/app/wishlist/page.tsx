@@ -1,5 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import WishlistPageContent from "../components/wishlist/WishlistPageContent";
 
 export const metadata = {
@@ -9,11 +7,5 @@ export const metadata = {
 };
 
 export default function WishlistPage() {
-  return (
-    <main className="min-h-screen relative">
-      <Header />
-      <WishlistPageContent />
-      <Footer />
-    </main>
-  );
+  return <WishlistPageContent />;
 }

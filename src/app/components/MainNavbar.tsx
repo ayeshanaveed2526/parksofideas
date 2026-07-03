@@ -4,11 +4,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { User, Heart, ShoppingBag, Menu, X } from "lucide-react";
+import { User, Heart, ShoppingBag, Menu, X, ChevronDown, LogOut } from "lucide-react";
 import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
 import { motion } from "framer-motion";
 import { useLoginModal } from "./auth/LoginModalProvider";
 import { useCart } from "./cart/CartProvider";
+import ProfileAvatar from "./auth/ProfileAvatar";
 
 /**
  * MainNavbar — the second bar.
@@ -18,7 +19,7 @@ export default function MainNavbar() {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { openLoginModal } = useLoginModal();
+  const { openLoginModal, isLoggedIn, user, logout } = useLoginModal();
   const { itemCount: cartCount } = useCart();
 
   useEffect(() => {
@@ -61,8 +62,9 @@ export default function MainNavbar() {
         <div className="relative mx-auto flex h-[70px] md:h-[90px] w-full items-center justify-between px-[15px] md:px-[50px]">
           {/* Logo */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-            <Link href="/" aria-label="Luchiana Home" className="shrink-0 hover-scale-sm transition-transform duration-300">
-            <span className="text-[20px] md:text-[24px] font-bold tracking-widest uppercase text-black" style={{ fontFamily: "Inter, sans-serif" }}>ELIX BY IR</span>
+            <Link href="/" aria-label="Luchiana Home" className="shrink-0 flex items-center gap-2 hover-scale-sm transition-transform duration-300">
+              <img src="/logo.png" alt="ELIX BY IR Logo" className="h-[40px] md:h-[50px] object-contain" />
+              <span className="text-[20px] md:text-[24px] font-bold tracking-widest uppercase text-black" style={{ fontFamily: "Inter, sans-serif" }}>ELIX BY IR</span>
             </Link>
           </motion.div>
 
@@ -199,14 +201,64 @@ export default function MainNavbar() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-3 sm:gap-6 text-black"
           >
-            <button
-              type="button"
-              aria-label="Account"
-              className="hidden sm:block hover-icon-pop hover-scale-sm"
-              onClick={openLoginModal}
-            >
-              <User size={20} strokeWidth={1.5} />
-            </button>
+            {isLoggedIn && user ? (
+              <div className="hidden sm:block relative group/profile">
+                <button
+                  type="button"
+                  aria-label="Profile"
+                  className="flex items-center gap-2 bg-[#f4f2f4] hover:bg-[#eae8ea] transition-colors pl-2 pr-4 py-1.5 rounded-full"
+                >
+                  <ProfileAvatar initial={user.initial} size="sm" imageUrl={user.profilePhoto} />
+                  <span className="text-[14px] font-medium text-[#1a1a1a]" style={{ fontFamily: "Inter, sans-serif" }}>{user.name}</span>
+                  <ChevronDown size={16} className="text-gray-500" />
+                </button>
+                <div className="absolute top-[calc(100%+8px)] right-0 w-[260px] bg-[#f2f0f2] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] opacity-0 invisible translate-y-3 group-hover/profile:translate-y-0 group-hover/profile:opacity-100 group-hover/profile:visible transition-all duration-300 ease-out z-200 border border-[#e8e5e8] overflow-hidden">
+                  <div className="p-5 border-b border-[#e8e5e8]">
+                    <p className="font-semibold text-[#1a1a1a] text-[16px]" style={{ fontFamily: "Inter, sans-serif" }}>{user.name}</p>
+                    <p className="text-[14px] text-gray-500 mt-0.5">{user.email}</p>
+                  </div>
+                  <ul className="py-2">
+                    <li>
+                      <Link href="/profile" className="flex items-center gap-4 px-5 py-3 hover:bg-[#eae8ea] text-[14px] text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+                        <User size={18} strokeWidth={1.5} />
+                        My Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/orders" className="flex items-center gap-4 px-5 py-3 hover:bg-[#eae8ea] text-[14px] text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+                        <ShoppingBag size={18} strokeWidth={1.5} />
+                        My Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/wishlist" className="flex items-center gap-4 px-5 py-3 hover:bg-[#eae8ea] text-[14px] text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+                        <Heart size={18} strokeWidth={1.5} />
+                        My Wishlist (0)
+                      </Link>
+                    </li>
+                  </ul>
+                  <div className="border-t border-[#e8e5e8] py-2">
+                    <button
+                      onClick={logout}
+                      className="w-full flex items-center gap-4 px-5 py-3 hover:bg-[#eae8ea] text-[14px] text-[#e55353] transition-colors"
+                      style={{ fontFamily: "Inter, sans-serif" }}
+                    >
+                      <LogOut size={18} strokeWidth={1.5} className="rotate-180" />
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                aria-label="Account"
+                className="hidden sm:block hover-icon-pop hover-scale-sm"
+                onClick={openLoginModal}
+              >
+                <User size={20} strokeWidth={1.5} />
+              </button>
+            )}
             <Link href="/wishlist" aria-label="Wishlist" className="hidden sm:block hover-icon-pop hover-scale-sm relative">
               <Heart size={20} strokeWidth={1.5} />
             </Link>

@@ -126,7 +126,8 @@ export default function Footer() {
         <div className="footer-main">
           {/* Left Column */}
           <div className="footer-col footer-left">
-            <div className="footer-logo">
+            <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <img src="/logo.png" alt="ELIX BY IR Logo" style={{ height: '50px', objectFit: 'contain' }} />
               <span className="footer-logo-text">ELIX BY IR</span>
             </div>
             <p className="footer-desc">
@@ -317,9 +318,13 @@ export default function Footer() {
         .footer-content {
           position: relative;
           z-index: 1;
-          max-width: 1536px;
-          margin: 0 auto;
-          padding: 40px 40px 15px;
+          width: 100%;
+          padding: 60px 15px 20px;
+        }
+        @media (min-width: 768px) {
+          .footer-content {
+            padding: 80px 50px 30px;
+          }
         }
         .footer-main {
           display: grid;

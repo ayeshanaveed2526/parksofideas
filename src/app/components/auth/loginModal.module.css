@@ -20,16 +20,17 @@
   position: relative;
   width: 100%;
   max-width: 440px;
-  max-height: min(92vh, 720px);
-  overflow-y: auto;
-  padding: 36px 32px 28px;
+  max-height: 98vh;
+  overflow-y: hidden;
+  padding: 24px 32px 24px;
   border-radius: 24px;
-  background: var(--poi-bg-modal);
-  border: 1px solid var(--poi-primary-a10);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow:
     0 24px 64px var(--poi-primary-a18),
     0 8px 24px rgba(0, 0, 0, 0.08);
-  animation: slideUp 0.3s ease;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card::before {
@@ -98,12 +99,12 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 26px;
+  margin-bottom: 20px;
 }
 
 .avatar {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,16 +112,19 @@
   background: var(--poi-gradient-primary);
   color: var(--poi-white);
   font-family: var(--poi-font-display);
-  font-size: 28px;
+  font-size: 24px;
   letter-spacing: 0.06em;
   box-shadow: 0 8px 24px var(--poi-primary-a28);
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .avatarSm {
-  width: 40px;
-  height: 40px;
-  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  background: var(--poi-gradient-primary);
+  color: var(--poi-white);
+  margin-bottom: 0;
+  box-shadow: none;
 }
 
 .avatarSignUp {
@@ -130,11 +134,11 @@
 
 .title {
   font-family: var(--poi-font-display);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 400;
   letter-spacing: 0.06em;
   color: var(--poi-text);
-  margin: 0 0 8px;
+  margin: 0 0 4px;
 }
 
 .subtitle {
@@ -174,7 +178,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 22px 0;
+  margin: 16px 0;
 }
 
 .dividerLine {
@@ -193,7 +197,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
 
 .field {
@@ -229,19 +233,21 @@
 
 .input {
   width: 100%;
-  height: 48px;
+  height: 44px;
   padding: 0 44px 0 42px;
   border: 1px solid var(--poi-primary-a12);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
   font-family: var(--poi-font-sans);
   font-size: 14px;
   color: var(--poi-text);
   outline: none;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .input:focus {
+  background: rgba(255, 255, 255, 0.9);
   border-color: var(--poi-primary-a40);
   box-shadow: 0 0 0 3px var(--poi-primary-a08);
 }
@@ -321,7 +327,7 @@
 }
 
 .footer {
-  margin-top: 22px;
+  margin-top: 16px;
   text-align: center;
 }
 
@@ -381,8 +387,8 @@
 }
 
 .secureNote {
-  margin-top: 22px;
-  padding-top: 18px;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid var(--poi-primary-a08);
   font-family: var(--poi-font-sans);
   font-size: 11px;

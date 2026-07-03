@@ -34,7 +34,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   ).slice(0, 3);
 
   return (
-    <main className="min-h-screen relative" style={{ background: "linear-gradient(180deg, #f0f2f8 0%, #f5f7fc 100%)" }}>
+    <main className={`min-h-screen relative ${styles.pageBg}`}>
       <Header />
       <article className={styles.article}>
         <div className={styles.heroImage}>

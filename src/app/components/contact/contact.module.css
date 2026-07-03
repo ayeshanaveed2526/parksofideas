@@ -98,9 +98,46 @@
 /* ── Hero ── */
 .hero {
   text-align: center;
-  padding: 32px 20px 28px;
-  max-width: 720px;
-  margin: 0 auto;
+  padding: 60px 20px 48px;
+  max-width: 1200px;
+  margin: 0 auto 48px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #111111 0%, #0a0a1a 45%, #0A0FAF 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(10, 15, 175, 0.15);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 40px 60px, #ffffff 1px, rgba(255,255,255,0.4) 4px, transparent 8px),
+    radial-gradient(circle at 350px 140px, #ffffff 2px, rgba(255,255,255,0.5) 6px, transparent 12px),
+    radial-gradient(circle at 680px 60px, #ffffff 1px, rgba(255,255,255,0.5) 4px, transparent 8px),
+    radial-gradient(circle at 1000px 150px, #ffffff 1.5px, rgba(255,255,255,0.4) 5px, transparent 10px);
+  background-size: 1100px 300px;
+  background-repeat: repeat;
+  opacity: 0.9;
+  pointer-events: none;
+  animation: twinkle1 4s ease-in-out infinite;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 120px 180px, #ffffff 1.5px, rgba(255,255,255,0.6) 5px, transparent 10px),
+    radial-gradient(circle at 200px 40px, #ffffff 1px, rgba(255,255,255,0.3) 4px, transparent 8px),
+    radial-gradient(circle at 550px 200px, #ffffff 2px, rgba(255,255,255,0.6) 7px, transparent 14px),
+    radial-gradient(circle at 850px 80px, #ffffff 1px, rgba(255,255,255,0.4) 4px, transparent 8px);
+  background-size: 1100px 300px;
+  background-repeat: repeat;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: twinkle2 5s ease-in-out infinite 2s;
 }
 
 .heroAccent {
@@ -125,20 +162,24 @@
 }
 
 .heroTitle {
-  font-family: var(--poi-font-display);
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-marcellus), "Marcellus", serif;
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 400;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--poi-text);
+  color: #ffffff;
   margin: 0 0 14px;
 }
 
 .heroDesc {
+  position: relative;
+  z-index: 1;
   font-family: var(--poi-font-sans);
   font-size: 15px;
   line-height: 1.7;
-  color: rgba(10, 10, 10, 0.58);
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
 }
 
