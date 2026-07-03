@@ -162,7 +162,14 @@
   --top-color-hr: rgb(205, 174, 159);
 
   /* ── Button system (elegant luxury) ── */
-  --poi-btn-bg: #000000;
+  --poi-btn-bg: linear-gradient(
+    90deg,
+    #000000 0%,
+    #000000 65%,
+    #1a1a1a 80%,
+    #3d3d3d 90%,
+    #5e5e5e 100%
+  );
   --poi-btn-bg-hover: linear-gradient(
     90deg,
     #0A0FAF 0%,
@@ -810,6 +817,35 @@ img, video {
   font-size: 11px;
   color: var(--poi-muted-soft);
   margin: 0;
+}
+
+/* ── Product Info pill badges (SKU, Tags) ── */
+.pi-pill {
+  display: inline-block;
+  cursor: default;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4b5563;
+  background: transparent;
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    color 0.22s ease,
+    box-shadow 0.28s ease,
+    transform 0.25s var(--poi-ease-out);
+}
+
+.pi-pill:hover {
+  background: var(--poi-btn-bg-hover);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 8, 157, 0.28);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 1023px) {

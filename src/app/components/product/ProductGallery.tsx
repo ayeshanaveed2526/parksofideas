@@ -75,17 +75,13 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
                 onClick={() => handleThumbClick(idx)}
                 aria-label={view.label}
                 aria-current={activeIdx === idx ? 'true' : undefined}
-                className={`pg-thumb group relative min-h-0 flex-1 w-full overflow-hidden rounded-xl border bg-white transition-all duration-500 ease-out
+                className={`pg-thumb group relative min-h-0 flex-1 w-full overflow-hidden rounded-xl border transition-all duration-500 ease-out
                   ${activeIdx === idx
-                    ? 'border-[#00089d] shadow-[0_8px_28px_rgba(0,8,157,0.18)]'
-                    : 'border-[#e5e8f0] opacity-55 hover:opacity-100 hover:border-[#aab2c6]'
+                    ? 'border-gray-400 shadow-[0_4px_16px_rgba(0,0,0,0.18)]'
+                    : 'border-gray-200 opacity-60 hover:opacity-100 hover:border-gray-400'
                   }`}
               >
-                <div
-                  className={`absolute inset-0 transition-colors duration-300 ${
-                    activeIdx === idx ? 'bg-[#f5f7fe]' : 'bg-white group-hover:bg-[#f4f6fa]'
-                  }`}
-                />
+                <div className="absolute inset-0" />
                 <div className="pg-thumb-scene relative z-10 flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
                   <img
                     src={view.src}
@@ -97,7 +93,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
                 {activeIdx === idx && (
                   <motion.span
                     layoutId="pg-thumb-active"
-                    className="absolute inset-0 z-20 rounded-xl ring-2 ring-[#00089d]"
+                    className="absolute inset-0 z-20 rounded-xl ring-2 ring-white/70"
                     transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                   />
                 )}
@@ -118,7 +114,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-block rounded-md bg-[#00089d] px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white shadow-[0_6px_18px_rgba(0,8,157,0.35)]"
+              className="inline-block rounded-md bg-black border border-white/20 px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white shadow-[0_6px_18px_rgba(0,0,0,0.5)]"
             >
               NEW
             </motion.span>
@@ -128,15 +124,13 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIdx}
-                initial={{ opacity: 0, scale: 1.04 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 className="pg-slide absolute inset-0 flex items-center justify-center"
               >
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+                <div
                   className="pg-bottle-wrap relative flex h-full w-full items-center justify-center"
                 >
                   <div className="pg-bottle-scene flex h-full w-full items-center justify-center overflow-hidden rounded-2xl">
@@ -147,7 +141,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
                       style={{ transform: galleryViewTransform(activeView) }}
                     />
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -184,27 +178,29 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
 
       <style jsx>{`
         .pg-stage {
-          box-shadow: 0 30px 70px -28px rgba(0, 8, 157, 0.28),
-                      0 8px 24px -12px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.14),
+                      0 2px 8px -2px rgba(0, 0, 0, 0.06);
           isolation: isolate;
-        }
-
-        .pg-bg,
-        .pg-slide,
-        .pg-bottle-wrap {
-          background: #ffffff;
+          background: transparent;
         }
 
         .pg-bg {
           position: absolute;
           inset: 0;
           z-index: 0;
+          background: transparent;
+        }
+
+        .pg-slide,
+        .pg-bottle-wrap {
+          background: transparent;
         }
 
         .pg-bottle-scene,
         .pg-thumb-scene {
           perspective: 1200px;
           transform-style: preserve-3d;
+          background: transparent;
         }
 
         .pg-thumb-scene {
@@ -214,10 +210,23 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
         .pg-bottle,
         .pg-thumb-bottle {
           transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+          object-fit: cover;
+          animation: pgGlowBreathe 6s ease-in-out infinite;
+        }
+
+        @keyframes pgGlowBreathe {
+          0%, 100% {
+            filter: brightness(1) saturate(1);
+          }
+          50% {
+            filter: brightness(1.08) saturate(1.12);
+          }
         }
 
         .pg-thumb-bottle {
           filter: none;
+          object-fit: cover;
+          animation: none;
         }
 
         .pg-sheen {
@@ -226,8 +235,8 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ views }) => {
           z-index: 15;
           pointer-events: none;
           background:
-            radial-gradient(60% 45% at 50% 18%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 70%),
-            radial-gradient(130% 120% at 50% 50%, transparent 62%, rgba(0, 8, 157, 0.06) 100%);
+            radial-gradient(60% 45% at 50% 18%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%),
+            radial-gradient(130% 120% at 50% 50%, transparent 62%, rgba(255, 255, 255, 0.04) 100%);
           mix-blend-mode: screen;
         }
 

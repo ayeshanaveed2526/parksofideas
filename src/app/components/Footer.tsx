@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLegalModal } from "./legal/LegalModalProvider";
 
@@ -37,6 +37,73 @@ const AUTO_PLAY_MS = 2000;
 export default function Footer() {
   const [activeIdx, setActiveIdx] = useState(0);
   const { openLegalModal } = useLegalModal();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // ── Starry background animation ──
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    const STAR_COUNT = 160;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    interface Star {
+      x: number;
+      y: number;
+      r: number;
+      opacity: number;
+      twinkleSpeed: number;
+      twinkleOffset: number;
+      driftX: number;
+      driftY: number;
+    }
+
+    const stars: Star[] = Array.from({ length: STAR_COUNT }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2 + 0.2,
+      opacity: Math.random() * 0.6 + 0.2,
+      twinkleSpeed: Math.random() * 0.02 + 0.005,
+      twinkleOffset: Math.random() * Math.PI * 2,
+      driftX: (Math.random() - 0.5) * 0.08,
+      driftY: -(Math.random() * 0.12 + 0.04),
+    }));
+
+    let t = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      t += 1;
+      stars.forEach((s) => {
+        s.x += s.driftX;
+        s.y += s.driftY;
+        if (s.y < -2) { s.y = canvas.height + 2; s.x = Math.random() * canvas.width; }
+        if (s.x < -2) s.x = canvas.width + 2;
+        if (s.x > canvas.width + 2) s.x = -2;
+
+        const alpha = s.opacity * (0.55 + 0.45 * Math.sin(t * s.twinkleSpeed + s.twinkleOffset));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.fill();
+      });
+      animId = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
 
   const goNext = useCallback(() => {
     setActiveIdx((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -52,6 +119,8 @@ export default function Footer() {
   return (
     <>
     <footer className="footer-wrapper">
+      {/* Animated Starry Canvas Background */}
+      <canvas ref={canvasRef} className="footer-stars-canvas" aria-hidden="true" />
 
       <div className="footer-content">
         <div className="footer-main">
@@ -236,6 +305,14 @@ export default function Footer() {
           font-family: var(--font-inter), "Inter", sans-serif;
           border-top: 1px solid rgba(255, 255, 255, 0.08);
           overflow: hidden;
+        }
+        .footer-stars-canvas {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
         }
         .footer-content {
           position: relative;

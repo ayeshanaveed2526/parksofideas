@@ -191,7 +191,7 @@ export default function ShopHero() {
           background: linear-gradient(
             to bottom,
             rgba(0, 0, 0, 0.5) 0%,
-            rgba(0, 8, 157, 0.12) 60%,
+            rgba(0, 0, 0, 0.18) 60%,
             rgba(240, 242, 248, 0.95) 100%
           );
           z-index: 1;
@@ -395,7 +395,7 @@ export default function ShopHero() {
         .sh-mouse {
           width: 22px;
           height: 36px;
-          border: 1.5px solid rgba(0, 8, 157, 0.4);
+          border: 1.5px solid rgba(0, 0, 0, 0.4);
           border-radius: 20px;
           position: relative;
           background: rgba(255, 255, 255, 0.45);
@@ -405,7 +405,7 @@ export default function ShopHero() {
         .sh-wheel {
           width: 4px;
           height: 8px;
-          background: #00089d;
+          background: #111111;
           border-radius: 2px;
           position: absolute;
           top: 6px;

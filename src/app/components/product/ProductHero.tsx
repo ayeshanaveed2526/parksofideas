@@ -14,7 +14,7 @@ const ProductHero: React.FC<ProductHeroProps> = ({ category, productName }) => {
   return (
     <div
       className="relative w-full h-48 md:h-56 flex flex-col items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#00089dff' }}
+      style={{ backgroundColor: '#000000' }}
     >
       <ProductHeroGeometricBackground />
 

@@ -48,13 +48,18 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
         animate="visible"
         className="mx-auto w-full max-w-md lg:max-w-none lg:mx-0 text-left"
       >
-        <motion.h1
-          variants={itemVariants}
-          className="mb-3 text-2xl font-serif uppercase leading-tight tracking-widest text-[#1a1a1a] sm:text-3xl lg:text-[2rem]"
-          style={{ fontFamily: 'var(--font-marcellus), Marcellus, serif' }}
-        >
-          {product.name}
-        </motion.h1>
+        <motion.div variants={itemVariants} className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+          <h1
+            className="text-2xl font-serif uppercase leading-tight tracking-widest text-[#1a1a1a] sm:text-3xl lg:text-[2rem]"
+            style={{ fontFamily: 'var(--font-marcellus), Marcellus, serif' }}
+          >
+            {product.name}
+          </h1>
+          <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-emerald-600">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            IN STOCK
+          </span>
+        </motion.div>
 
         {product.reviews.length > 0 && (
           <motion.div variants={itemVariants} className="mb-5 flex items-center gap-2">
@@ -81,10 +86,6 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
 
         <motion.div variants={itemVariants} className="mb-8 flex items-baseline gap-4">
           <span className="text-2xl font-semibold text-[#1a1a1a]">${product.price.toFixed(2)}</span>
-          <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-emerald-600">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            IN STOCK
-          </span>
         </motion.div>
 
         <motion.div variants={itemVariants} className="mb-8 h-px w-full bg-[#dfe3eb]" />
@@ -94,7 +95,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <button
               type="button"
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              className="flex h-full w-10 items-center justify-center text-lg font-light text-[#00089d] transition-colors hover:bg-[rgba(0,8,157,0.06)]"
+              className="flex h-full w-10 items-center justify-center text-lg font-light text-[#1a1a1a] transition-colors hover:bg-[rgba(0,0,0,0.06)]"
               aria-label="Decrease quantity"
             >
               −
@@ -113,7 +114,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             <button
               type="button"
               onClick={() => setQuantity((q) => q + 1)}
-              className="flex h-full w-10 items-center justify-center text-lg font-light text-[#00089d] transition-colors hover:bg-[rgba(0,8,157,0.06)]"
+              className="flex h-full w-10 items-center justify-center text-lg font-light text-[#1a1a1a] transition-colors hover:bg-[rgba(0,0,0,0.06)]"
               aria-label="Increase quantity"
             >
               +
@@ -152,8 +153,11 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
             { icon: RefreshCw, label: 'Easy Returns', sub: '30-day policy' },
             { icon: ShieldCheck, label: 'Secure Pay', sub: '100% protected' },
           ].map(({ icon: Icon, label, sub }) => (
-            <div key={label} className="flex flex-col items-center gap-1 text-center">
-              <Icon className="mb-0.5 h-4 w-4 text-[#8b93a5]" />
+            <div
+              key={label}
+              className="group flex flex-col items-center gap-1 text-center cursor-default transition-transform duration-300 hover:scale-110"
+            >
+              <Icon className="mb-0.5 h-4 w-4 text-[#8b93a5] transition-colors duration-300 group-hover:text-[#00089d]" />
               <span className="text-[10px] font-semibold uppercase tracking-wide text-[#1a1a1a]">{label}</span>
               <span className="text-[10px] text-gray-400">{sub}</span>
             </div>
@@ -161,13 +165,24 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
         </motion.div>
 
         <motion.div variants={itemVariants} className="mb-8 flex flex-col gap-2.5 text-xs text-gray-500">
-          <p className="flex flex-wrap items-baseline gap-x-2">
+          <p className="flex flex-wrap items-center gap-x-2">
             <span className="font-semibold uppercase tracking-wider text-[#1a1a1a]">SKU</span>
-            <span>{product.sku}</span>
+            <span className="pi-pill">
+              {product.sku}
+            </span>
           </p>
-          <p className="flex flex-wrap items-baseline gap-x-2">
+          <p className="flex flex-wrap items-center gap-x-2">
             <span className="font-semibold uppercase tracking-wider text-[#1a1a1a]">Tags</span>
-            <span>{product.tags.join(', ')}</span>
+            <span className="flex flex-wrap gap-1.5">
+              {product.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="pi-pill"
+                >
+                  {tag}
+                </span>
+              ))}
+            </span>
           </p>
         </motion.div>
 
@@ -175,10 +190,10 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           <span className="uppercase tracking-wider">Share</span>
           <div className="h-4 w-px bg-[#dfe3eb]" />
           <div className="flex gap-3 text-[#8b93a5]">
-            <FaFacebookF className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
-            <FaTwitter className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
-            <FaInstagram className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
-            <Share2 className="h-3.5 w-3.5 cursor-pointer transition-colors hover:text-[#1a1a1a]" />
+            <FaFacebookF className="h-3.5 w-3.5 cursor-pointer transition-colors duration-200 hover:text-[#1877f2]" />
+            <FaTwitter className="h-3.5 w-3.5 cursor-pointer transition-colors duration-200 hover:text-[#000000]" />
+            <FaInstagram className="h-3.5 w-3.5 cursor-pointer transition-colors duration-200 hover:text-[#e1306c]" />
+            <Share2 className="h-3.5 w-3.5 cursor-pointer transition-colors duration-200 hover:text-[#1a1a1a]" />
           </div>
         </motion.div>
       </motion.div>
