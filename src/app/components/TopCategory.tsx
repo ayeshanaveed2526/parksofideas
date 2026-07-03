@@ -438,7 +438,7 @@ export default function TopCategory() {
           transition: var(--poi-btn-transition);
           box-sizing: border-box;
           white-space: nowrap;
-          border-radius: 6px;
+          border-radius: 0;
         }
 
         .tp-view-all-btn:hover {

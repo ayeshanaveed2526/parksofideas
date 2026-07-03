@@ -56,8 +56,6 @@ export default function ShopSidebar({ activeCategory, onSelectCategory }: ShopSi
           border-radius: 16px;
           padding: 32px 24px;
           box-shadow: 0 10px 40px rgba(0, 8, 157, 0.05);
-          position: sticky;
-          top: 100px;
         }
 
         .sidebar-title {

@@ -27,8 +27,11 @@ export default function VideoHero() {
         playsInline
         preload="auto"
       >
-        <source src="/make_a_video_make_perfume_el.mp4" type="video/mp4" />
+        <source src="/Generate_a_elegant_videos_of_p.mp4" type="video/mp4" />
       </video>
+      <div className={styles.watermarkCover}>
+        PARKS OF IDEAS
+      </div>
     </section>
   );
 }

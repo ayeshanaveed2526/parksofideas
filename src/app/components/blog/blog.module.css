@@ -56,30 +56,64 @@
   z-index: 1;
 }
 
-/* ── Hero (compact) ── */
+/* ── Hero (Elegant Blue Pattern) ── */
 .hero {
   text-align: center;
-  padding: 16px 20px 12px;
-  max-width: 780px;
-  margin: 0 auto;
+  padding: 80px 20px;
+  max-width: 1320px;
+  margin: 0 auto 48px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0A0FAF 0%, #171d87 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(10, 15, 175, 0.15);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .heroTitle {
-  font-family: var(--poi-font-display);
-  font-size: clamp(26px, 4vw, 36px);
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: clamp(32px, 5vw, 48px);
   font-weight: 400;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--poi-text);
-  margin: 0 0 6px;
+  color: #ffffff;
+  margin: 0 0 12px;
 }
 
 .heroDesc {
+  position: relative;
+  z-index: 1;
   font-family: var(--poi-font-sans);
-  font-size: 13px;
-  line-height: 1.5;
-  color: rgba(10, 10, 10, 0.5);
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ── Blog grid: sidebar + masonry side by side ── */
@@ -299,8 +333,7 @@
 
 .searchWrap {
   position: relative;
-  flex: 1 1 240px;
-  max-width: 360px;
+  width: 100%;
 }
 
 .searchIcon {
@@ -375,7 +408,9 @@
 }
 
 .cardImage {
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 

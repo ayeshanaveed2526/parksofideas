@@ -144,8 +144,9 @@ export default function ShopHero() {
         .sh-hero {
           position: relative;
           width: 100%;
-          height: 530px;
-          min-height: 530px;
+          aspect-ratio: 21 / 9; /* Ultra-wide cinematic to show bottles well */
+          min-height: 600px;
+          max-height: 85vh;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -170,18 +171,6 @@ export default function ShopHero() {
           height: 100%;
           object-fit: cover;
           object-position: center;
-          transform: scale(1.02);
-          will-change: transform;
-          animation: videoSlowZoom 25s linear infinite alternate;
-        }
-
-        @keyframes videoSlowZoom {
-          0% {
-            transform: scale(1.02);
-          }
-          100% {
-            transform: scale(1.08);
-          }
         }
 
         /* Shading overlays */

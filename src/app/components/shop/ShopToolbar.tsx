@@ -120,12 +120,13 @@ export default function ShopToolbar({
             type="button"
             className={`${styles.layoutBtn}${layoutMode === "cinematic" ? ` ${styles.layoutBtnActive}` : ""}`}
             onClick={() => onLayoutModeChange("cinematic")}
-            title="Cinematic Duo View"
-            aria-label="Cinematic Duo View"
+            title="Cinematic View"
+            aria-label="Cinematic View"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="7" height="18" rx="1" />
-              <rect x="14" y="3" width="7" height="18" rx="1" />
+              <rect x="2.5" y="4" width="4.5" height="16" rx="1" />
+              <rect x="9.75" y="4" width="4.5" height="16" rx="1" />
+              <rect x="17" y="4" width="4.5" height="16" rx="1" />
             </svg>
           </button>
           <button

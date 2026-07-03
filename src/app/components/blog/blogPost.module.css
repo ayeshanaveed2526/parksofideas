@@ -5,14 +5,14 @@
 .heroImage {
   position: relative;
   width: 100%;
-  height: min(52vh, 420px);
+  height: min(65vh, 600px);
   overflow: hidden;
-  background: var(--poi-bg-image);
+  background: linear-gradient(135deg, #0A0FAF 0%, #171d87 100%);
 }
 
 .heroImg {
   object-fit: contain;
-  padding: 24px;
+  padding: 40px;
 }
 
 .heroOverlay {
@@ -27,20 +27,24 @@
 }
 
 .container {
-  max-width: 760px;
-  margin: -60px auto 0;
-  padding: 0 20px;
+  max-width: 840px;
+  margin: -100px auto 60px;
+  padding: 56px 64px;
   position: relative;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.1);
 }
 
 .backLink {
   display: inline-flex;
-  margin-bottom: 18px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  margin-bottom: 24px;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--poi-primary);
+  color: #0A0FAF;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -52,24 +56,25 @@
 
 .badge {
   display: inline-block;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--poi-white);
-  background: var(--poi-btn-bg);
-  margin-bottom: 16px;
+  color: #ffffff;
+  background: #0A0FAF;
+  margin-bottom: 20px;
 }
 
 .title {
-  font-family: var(--poi-font-display);
-  font-size: clamp(28px, 5vw, 42px);
-  letter-spacing: 0.06em;
-  line-height: 1.2;
-  color: var(--poi-text);
-  margin: 0 0 12px;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: clamp(32px, 5vw, 56px);
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  color: #111111;
+  margin: 0 0 16px;
 }
 
 .meta {
@@ -79,22 +84,23 @@
 }
 
 .lead {
-  font-size: 18px;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 22px;
   line-height: 1.7;
-  color: rgba(10, 10, 10, 0.65);
-  margin: 0 0 28px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--poi-primary-a10);
+  color: #444444;
+  margin: 0 0 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .body {
-  font-size: 15px;
-  line-height: 1.8;
-  color: rgba(10, 10, 10, 0.62);
+  font-size: 17px;
+  line-height: 1.9;
+  color: #555555;
 }
 
 .body p {
-  margin: 0 0 18px;
+  margin: 0 0 24px;
 }
 
 .tags {
@@ -120,11 +126,11 @@
 }
 
 .relatedTitle {
-  font-family: var(--poi-font-display);
-  font-size: 22px;
-  letter-spacing: 0.08em;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 28px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin: 0 0 20px;
+  margin: 0 0 24px;
 }
 
 .relatedGrid {
@@ -154,14 +160,22 @@
 }
 
 .relatedCard h3 {
-  font-size: 14px;
-  padding: 12px 14px 16px;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 16px;
+  padding: 16px 18px 20px;
   margin: 0;
-  letter-spacing: 0.03em;
-  color: var(--poi-text);
+  letter-spacing: 0.04em;
+  color: #111111;
   transition: color 0.3s ease;
 }
 
 .relatedCard:hover h3 {
-  color: var(--poi-primary);
+  color: #0A0FAF;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 32px 24px;
+    border-radius: 16px;
+  }
 }

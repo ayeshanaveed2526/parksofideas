@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import PinterestMasonry from "./PinterestMasonry";
+
 import {
   Search,
   ShieldCheck,
@@ -93,7 +93,7 @@ export default function BlogPageContent() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className={styles.heroTitle}>Our Blog</h1>
+          <h1 className={styles.heroTitle}>O U R &nbsp; B L O G</h1>
           <p className={styles.heroDesc}>
             Fragrance stories, guides &amp; inspiration
           </p>
@@ -101,6 +101,18 @@ export default function BlogPageContent() {
 
         <div className={styles.blogGrid}>
           <aside className={styles.sidebar}>
+            <div className={styles.searchWrap}>
+              <Search className={styles.searchIcon} size={16} aria-hidden="true" />
+              <input
+                type="search"
+                className={styles.searchInput}
+                placeholder="Search posts…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label="Search blog posts"
+              />
+            </div>
+
             <motion.div
               className={styles.panel}
               initial={{ opacity: 0, x: -24 }}
@@ -203,20 +215,9 @@ export default function BlogPageContent() {
               <div>
                 <h2 className={styles.mainTitle}>All Posts</h2>
                 <p className={styles.mainCount}>
-                  <strong>{filteredPosts.length}</strong> of{" "}
-                  <strong>{BLOG_POSTS.length}</strong>
+                  Showing <strong>{filteredPosts.length}</strong> of{" "}
+                  <strong>{BLOG_POSTS.length}</strong> Posts
                 </p>
-              </div>
-              <div className={styles.searchWrap}>
-                <Search className={styles.searchIcon} size={16} aria-hidden="true" />
-                <input
-                  type="search"
-                  className={styles.searchInput}
-                  placeholder="Search posts…"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  aria-label="Search blog posts"
-                />
               </div>
             </motion.div>
 
@@ -250,7 +251,31 @@ export default function BlogPageContent() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <PinterestMasonry posts={filteredPosts} />
+                  <div className={styles.grid}>
+                    {filteredPosts.map((post) => (
+                      <Link key={post.id} href={`/blog/${post.slug}`} className={styles.card}>
+                        <div className={styles.cardImageWrap}>
+                          <img src={post.image} alt={post.title} className={styles.cardImage} />
+                          <span className={styles.cardShimmer} aria-hidden="true" />
+                          <span className={styles.cardBadge}>{post.category}</span>
+                        </div>
+                        <div className={styles.cardBody}>
+                          <div className={styles.cardMeta}>
+                            <span>{post.date}</span>
+                            <span>{post.readTime}</span>
+                          </div>
+                          <h3 className={styles.cardTitle}>{post.title}</h3>
+                          <p className={styles.cardExcerpt}>{post.excerpt}</p>
+                          <div className={styles.cardTags}>
+                            {post.tags.slice(0, 3).map((tag) => (
+                              <span key={tag} className={styles.cardTag}>{tag}</span>
+                            ))}
+                          </div>
+                          <span className={styles.cardReadMore}>Read More <ArrowRight size={14} /></span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
