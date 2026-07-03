@@ -326,10 +326,10 @@
 }
 
 .inquiryBtnActive {
-  background: var(--poi-btn-bg);
-  color: var(--poi-white);
-  border-color: var(--poi-btn-border);
-  box-shadow: var(--poi-btn-shadow);
+  background: rgba(255, 255, 255, 0.95);
+  color: #000000;
+  border-color: #000000;
+  font-weight: 600;
 }
 
 .fieldGrid {

@@ -60,7 +60,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
                   className="flex-1"
                 >
                   <h3 className="text-2xl font-serif text-black mb-4 uppercase tracking-widest">From Lady Gaga</h3>
-                  <p className="leading-relaxed">{product.description}</p>
+                  <p className="font-sans text-lg md:text-xl font-light text-gray-700 leading-[1.85] tracking-[0.02em]">{product.description}</p>
                 </motion.div>
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.95 }}

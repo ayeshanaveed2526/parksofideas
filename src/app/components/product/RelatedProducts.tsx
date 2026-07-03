@@ -9,14 +9,20 @@ import { PERFUME_CATALOG, formatPerfumePrice } from '../../data/perfumeCatalog';
 import { useCart } from '../cart/CartProvider';
 import { useWishlist } from '../wishlist/WishlistProvider';
 
-const relatedProducts = PERFUME_CATALOG.slice(0, 8).map((p) => ({
-  id: String(p.id),
-  name: p.brand,
-  desc: p.description,
-  price: p.price,
-  image: p.image,
-  badge: p.id % 4 === 0 ? 'FEATURED' : p.id <= 8 ? 'NEW' : null,
-}));
+const relatedProducts = PERFUME_CATALOG.slice(0, 8).map((p) => {
+  const hasDiscount = p.id === 5;
+  const currentPrice = hasDiscount ? p.price * 0.9 : p.price;
+  
+  return {
+    id: String(p.id),
+    name: p.brand,
+    desc: p.description,
+    price: currentPrice,
+    originalPrice: hasDiscount ? p.price : undefined,
+    image: p.image,
+    badge: p.id === 5 ? '-10%' : p.id % 4 === 0 ? 'FEATURED' : p.id <= 8 ? 'NEW' : null,
+  };
+});
 
 export default function RelatedProducts() {
   const router = useRouter();
@@ -53,11 +59,12 @@ export default function RelatedProducts() {
           <h2 className="rp-title">You May Also Like</h2>
           <div className="rp-divider"></div>
         </motion.div>
+      </div>
 
-        <div className="rp-marquee-wrap">
-          <div className="rp-marquee-track">
-            {[...relatedProducts, ...relatedProducts].map((product, idx) => (
-              <div key={`${product.id}-${idx}`} className="rp-marquee-item">
+      <div className="rp-marquee-wrap">
+        <div className="rp-marquee-track">
+          {[...relatedProducts, ...relatedProducts].map((product, idx) => (
+            <div key={`${product.id}-${idx}`} className="rp-marquee-item">
                 <Link href={`/product/${product.id}`} className="rp-card-link">
                   <article className="rp-card">
                     <div className="rp-img-wrap">
@@ -70,14 +77,14 @@ export default function RelatedProducts() {
                           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: (idx % 8) * 0.2 }}
                           style={{ width: '100%', height: '100%', position: 'relative' }}
                         >
-                          <Image
-                            src={product.image}
-                            alt={product.name}
-                            fill
-                            style={{ objectFit: 'contain' }}
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
-                          />
+                            <Image
+                              src={product.image}
+                              alt={product.name}
+                              fill
+                              style={{ objectFit: 'cover' }}
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
+                            />
                         </motion.div>
                       </div>
                       <div className="rp-hover-bg"></div>
@@ -104,9 +111,25 @@ export default function RelatedProducts() {
                     </div>
 
                     <div className="rp-info">
-                      <h3 className="rp-name">{product.name}</h3>
+                      <div className="rp-info-header">
+                        <h3 className="rp-name">{product.name}</h3>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                          <p className="rp-price">{formatPerfumePrice(product.price)}</p>
+                          {product.originalPrice && (
+                            <p style={{ textDecoration: 'line-through', color: '#9CA3AF', fontSize: '13px', margin: 0 }}>
+                              {formatPerfumePrice(product.originalPrice)}
+                            </p>
+                          )}
+                        </div>
+                      </div>
                       <p className="rp-desc">{product.desc}</p>
-                      <p className="rp-price">{formatPerfumePrice(product.price)}</p>
+                      <div className="rp-rating">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <svg key={i} viewBox="0 0 20 20" fill="currentColor" className="rp-star">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
                     </div>
                   </article>
                 </Link>
@@ -114,7 +137,6 @@ export default function RelatedProducts() {
             ))}
           </div>
         </div>
-      </div>
 
       <style jsx>{`
         .rp-section {
@@ -217,7 +239,7 @@ export default function RelatedProducts() {
         
         .rp-img-inner {
           position: absolute;
-          inset: 20px;
+          inset: 0;
           transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .rp-card:hover .rp-img-inner {
@@ -309,15 +331,23 @@ export default function RelatedProducts() {
         
         .rp-info {
           padding: 25px 20px;
-          text-align: center;
+          text-align: left;
           background: #ffffff;
           flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .rp-info-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px;
         }
         .rp-name {
           font-family: var(--font-marcellus), "Marcellus", serif;
           font-size: 18px;
           color: #111;
-          margin: 0 0 10px;
+          margin: 0;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           transition: color 0.3s ease;
@@ -328,7 +358,7 @@ export default function RelatedProducts() {
         .rp-desc {
           font-size: 13px;
           color: #888;
-          margin: 0 0 15px;
+          margin: 0 0 12px;
           line-height: 1.5;
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -337,9 +367,19 @@ export default function RelatedProducts() {
         }
         .rp-price {
           font-size: 15px;
-          font-weight: 600;
-          color: #00089d;
+          font-weight: 700;
+          color: #000000;
           margin: 0;
+        }
+        .rp-rating {
+          display: flex;
+          gap: 2px;
+          margin-top: auto;
+        }
+        .rp-star {
+          width: 14px;
+          height: 14px;
+          color: #fbbf24;
         }
       `}</style>
     </section>

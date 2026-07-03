@@ -272,7 +272,14 @@ export default function TopCategory() {
                     ))}
                   </div>
                   <p className="tp-card-desc">{product.description}</p>
-                  <span className="tp-card-price">{product.price}</span>
+                  <div className="tp-card-price-wrap">
+                    {product.originalPrice && (
+                      <span className="tp-card-original-price">
+                        {product.originalPrice}
+                      </span>
+                    )}
+                    <span className="tp-card-price">{product.price}</span>
+                  </div>
                 </div>
                 </article>
               </Link>
@@ -792,6 +799,31 @@ export default function TopCategory() {
           color: rgb(97, 97, 97);
         }
 
+        .tp-card-price-wrap {
+          display: flex;
+          align-items: baseline;
+          justify-content: flex-end;
+          gap: 8px;
+          margin-top: 2px;
+          align-self: flex-end;
+          width: 100%;
+          transition: transform 0.35s ease;
+          transform-origin: right bottom;
+        }
+        
+        .tp-card:hover .tp-card-price-wrap {
+          transform: scale(1.05);
+        }
+
+        .tp-card-original-price {
+          font-family: var(--font-inter), "Inter", sans-serif;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 1;
+          color: #9CA3AF;
+          text-decoration: line-through;
+        }
+
         .tp-card-price {
           font-family: var(--font-inter), "Inter", sans-serif;
           font-weight: 500;
@@ -799,14 +831,6 @@ export default function TopCategory() {
           line-height: 1;
           color: #000;
           letter-spacing: 0.02em;
-          margin-top: 2px;
-          align-self: flex-end;
-          text-align: right;
-          transition: transform 0.35s ease;
-        }
-
-        .tp-card:hover .tp-card-price {
-          transform: scale(1.05);
         }
 
         /* ════════════════ RESPONSIVE ════════════════ */

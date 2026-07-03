@@ -175,6 +175,7 @@ export interface CatalogCardProduct {
   name: string;
   description: string;
   price: string;
+  originalPrice?: string;
   image: string;
   hoverImage?: string;
   badges: { text: string; color: string }[];
@@ -184,22 +185,27 @@ export interface CatalogCardProduct {
 
 export function toCatalogCard(perfume: PerfumeProduct): CatalogCardProduct {
   const badges: { text: string; color: string }[] = [];
+  let currentPrice = perfume.price;
+  let originalPrice: string | undefined = undefined;
 
   if (perfume.id <= 6) {
     badges.push({ text: "NEW", color: "#00089d" });
   }
   if (perfume.id % 4 === 0) {
-    badges.push({ text: "FEATURED", color: "#00089d" });
+    badges.push({ text: "FEATURED", color: "#c8a96e" });
   }
   if (perfume.id === 5) {
-    badges.push({ text: "-10%", color: "#000000" });
+    badges.push({ text: "-10%", color: "#1a1a1a" });
+    currentPrice = perfume.price * 0.9;
+    originalPrice = formatPerfumePrice(perfume.price);
   }
 
   return {
     id: perfume.id,
     name: perfume.brand,
     description: perfume.description,
-    price: formatPerfumePrice(perfume.price),
+    price: formatPerfumePrice(currentPrice),
+    originalPrice,
     image: perfume.image,
     hoverImage: perfume.hoverImage,
     badges,

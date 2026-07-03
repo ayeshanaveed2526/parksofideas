@@ -28,7 +28,11 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
   if (product.id === 5) badges.push({ text: "-10%", color: "#1a1a1a" });
   const leftBadges = badges.filter((b) => b.text !== "FEATURED");
 
-  const formattedPrice = `$${product.price.toFixed(2)}`;
+  const hasDiscount = product.id === 5;
+  const currentPrice = hasDiscount ? product.price * 0.9 : product.price;
+
+  const formattedPrice = `$${currentPrice.toFixed(2)}`;
+  const formattedOriginalPrice = hasDiscount ? `$${product.price.toFixed(2)}` : null;
   const hoverProduct = PERFUME_CATALOG[(index + 1) % PERFUME_CATALOG.length];
   const hoverImage = hoverProduct ? hoverProduct.image : product.image;
 
@@ -144,13 +148,24 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
           </p>
 
           {/* 3 ─ Price */}
-          <p style={{
-            fontSize: "19px", fontWeight: 700,
-            color: "#0c0c1d", margin: "0",
-            letterSpacing: "-0.01em",
-          }}>
-            {formattedPrice}
-          </p>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 8, margin: 0 }}>
+            <p style={{
+              fontSize: "19px", fontWeight: 700,
+              color: "#0c0c1d", margin: "0",
+              letterSpacing: "-0.01em",
+            }}>
+              {formattedPrice}
+            </p>
+            {formattedOriginalPrice && (
+              <p style={{
+                fontSize: "15px", fontWeight: 500,
+                color: "#9CA3AF", margin: "0",
+                textDecoration: "line-through",
+              }}>
+                {formattedOriginalPrice}
+              </p>
+            )}
+          </div>
 
           {/* Spacer */}
           <div style={{ flex: 1 }} />
@@ -296,7 +311,14 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
         <div className="sp-card-rating">
           {Array.from({ length: 5 }).map((_, i) => <span key={i} className="sp-star">★</span>)}
         </div>
-        <div className="sp-card-price">{formattedPrice}</div>
+        <div className="sp-card-price-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+          <div className="sp-card-price">{formattedPrice}</div>
+          {formattedOriginalPrice && (
+            <div className="sp-card-original-price" style={{ textDecoration: 'line-through', color: '#9CA3AF', fontSize: '13px' }}>
+              {formattedOriginalPrice}
+            </div>
+          )}
+        </div>
         <button className="sp-grid-atc-btn" type="button"
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product.id); router.push("/cart"); }}>
           ADD TO CART

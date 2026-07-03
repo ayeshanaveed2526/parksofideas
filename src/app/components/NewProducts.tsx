@@ -25,20 +25,25 @@ interface Product {
   isExternal?: boolean;
 }
 
-const productsData: Product[] = PERFUME_CATALOG.slice(0, 16).map((perfume) => ({
-  id: perfume.id,
-  name: perfume.brand,
-  description: perfume.description,
-  price: formatPerfumePrice(perfume.price),
-  oldPrice: perfume.id % 2 === 0 ? formatPerfumePrice(perfume.price + 12) : undefined,
-  image: perfume.image,
-  rating: 5,
-  badges: [
-    ...(perfume.id % 2 === 0 ? [{ text: "-11%", color: "#000000" }] : []),
-    ...(perfume.id % 3 === 0 ? [{ text: "FEATURED", color: "#00089d" }] : []),
-    ...(perfume.id % 5 === 0 ? [{ text: "NEW", color: "#00089d" }] : []),
-  ],
-}));
+const productsData: Product[] = PERFUME_CATALOG.slice(0, 16).map((perfume) => {
+  const hasDiscount = perfume.id === 5;
+  const currentPrice = hasDiscount ? perfume.price * 0.9 : perfume.price;
+
+  return {
+    id: perfume.id,
+    name: perfume.brand,
+    description: perfume.description,
+    price: formatPerfumePrice(currentPrice),
+    oldPrice: hasDiscount ? formatPerfumePrice(perfume.price) : undefined,
+    image: perfume.image,
+    rating: 5,
+    badges: [
+      ...(hasDiscount ? [{ text: "-10%", color: "#000000" }] : []),
+      ...(perfume.id % 4 === 0 ? [{ text: "FEATURED", color: "#c8a96e" }] : []),
+      ...(perfume.id <= 6 && perfume.id !== 5 && perfume.id % 4 !== 0 ? [{ text: "NEW", color: "#00089d" }] : []),
+    ],
+  };
+});
 
 export default function NewProducts() {
   const swiperRef = useRef<SwiperType | null>(null);
