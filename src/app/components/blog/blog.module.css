@@ -19,7 +19,6 @@
     linear-gradient(var(--poi-primary-a04) 1px, transparent 1px),
     linear-gradient(90deg, var(--poi-primary-a04) 1px, transparent 1px);
   background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 78%);
 }
 
 .orb {
@@ -60,9 +59,7 @@
 .hero {
   text-align: center;
   padding: 80px 20px;
-  max-width: 1320px;
-  margin: 0 auto 48px;
-  border-radius: 20px;
+  margin: 0 0 48px;
   background: linear-gradient(90deg, #111111 0%, #0a0a1a 45%, #0A0FAF 100%);
   position: relative;
   overflow: hidden;

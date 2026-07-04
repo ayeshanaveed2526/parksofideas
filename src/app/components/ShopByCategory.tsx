@@ -26,6 +26,9 @@ const collections: Collection[] = [
       bySlug("mirabelle"),
       bySlug("celeste"),
       bySlug("floren"),
+      bySlug("velora"),
+      bySlug("elysia"),
+      bySlug("seraphine"),
     ],
   },
   {
@@ -37,6 +40,9 @@ const collections: Collection[] = [
       bySlug("vespera"),
       bySlug("verdelle"),
       bySlug("montrea"),
+      bySlug("armonia"),
+      bySlug("azelia"),
+      bySlug("celeva"),
     ],
   },
   {
@@ -48,6 +54,9 @@ const collections: Collection[] = [
       bySlug("aura-crystal"),
       bySlug("ambrette"),
       bySlug("elaria"),
+      bySlug("mystique"),
+      bySlug("solene"),
+      bySlug("opaline"),
     ],
   },
 ];
@@ -117,7 +126,7 @@ export default function ShopByCategory() {
             spaceBetween={12}
             slidesPerView={2}
             autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-            loop={false}
+            loop={true}
             breakpoints={{
               640: { slidesPerView: 3, spaceBetween: 16 },
               1024: { slidesPerView: 5, spaceBetween: 16 },

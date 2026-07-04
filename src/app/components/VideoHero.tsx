@@ -29,9 +29,7 @@ export default function VideoHero() {
       >
         <source src="/Generate_a_elegant_videos_of_p.mp4" type="video/mp4" />
       </video>
-      <div className={styles.watermarkCover}>
-        PARKS OF IDEAS
-      </div>
+
     </section>
   );
 }
