@@ -75,6 +75,20 @@ export default function NewProducts() {
 
   return (
     <section className="np-section">
+      <div className="mb-6 flex flex-col items-center text-center">
+        <span
+          className="mb-3 text-[12px] uppercase tracking-[0.35em] text-[#00089d]/70"
+          style={{ fontFamily: "var(--font-marcellus), serif" }}
+        >
+          Discover The Latest
+        </span>
+        <h2
+          className="text-[28px] font-bold leading-tight text-[#1a1a1a] md:text-[40px] uppercase tracking-[0.14em] pl-[0.14em]"
+          style={{ fontFamily: "var(--font-marcellus), serif" }}
+        >
+          New Products
+        </h2>
+      </div>
       <div className="np-marquee-wrap">
         <Swiper
           modules={[Autoplay, A11y]}
@@ -213,7 +227,7 @@ export default function NewProducts() {
         .np-section {
           width: 100%;
           background: linear-gradient(180deg, #f0f2f8 0%, #f5f7fc 50%, #eef1f8 100%);
-          padding: 50px 0 60px;
+          padding: 20px 0 60px;
           font-family: var(--font-inter), "Inter", sans-serif;
           overflow: hidden;
         }
@@ -580,14 +594,14 @@ export default function NewProducts() {
 
         @media (max-width: 639px) {
           .np-section {
-            padding: 40px 0 50px;
+            padding: 15px 0 50px;
           }
         }
 
         /* ── Responsive: sm ── */
         @media (min-width: 640px) {
           .np-section {
-            padding: 65px 0 75px;
+            padding: 25px 0 75px;
           }
 
           .np-card {
@@ -643,7 +657,7 @@ export default function NewProducts() {
         /* ── Responsive: desktop ── */
         @media (min-width: 1180px) {
           .np-section {
-            padding: 85px 0 95px;
+            padding: 35px 0 95px;
           }
 
           .np-card {

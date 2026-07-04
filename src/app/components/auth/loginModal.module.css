@@ -127,9 +127,10 @@
   box-shadow: none;
 }
 
-.avatarSignUp {
-  background: var(--poi-gradient-primary);
-  box-shadow: 0 8px 24px var(--poi-primary-a28);
+.logoImage {
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 12px;
 }
 
 .title {
