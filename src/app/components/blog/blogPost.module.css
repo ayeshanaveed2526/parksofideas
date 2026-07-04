@@ -22,105 +22,73 @@
   z-index: 1;
 }
 
-.heroImage {
-  position: relative;
-  width: 100%;
-  height: min(65vh, 600px);
-  overflow: hidden;
+.heroSplit {
+  display: flex;
+  min-height: 85vh;
   background: linear-gradient(135deg, #0A0FAF 0%, #171d87 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-.heroImage::before {
-  content: "";
+.heroStars {
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(circle at 40px 60px, #ffffff 1px, rgba(255,255,255,0.4) 4px, transparent 8px),
-    radial-gradient(circle at 350px 140px, #ffffff 2.5px, rgba(255,255,255,0.5) 8px, transparent 15px),
-    radial-gradient(circle at 680px 60px, #ffffff 1.5px, rgba(255,255,255,0.5) 6px, transparent 11px),
-    radial-gradient(circle at 800px 150px, #ffffff 2px, rgba(255,255,255,0.4) 7px, transparent 12px);
-  background-size: 900px 300px;
-  background-repeat: repeat;
-  opacity: 0.95;
+  width: 50%;
   pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 40px 60px, #ffffff 1.5px, rgba(255,255,255,0.4) 5px, transparent 10px),
+    radial-gradient(circle at 350px 140px, #ffffff 2px, rgba(255,255,255,0.5) 8px, transparent 15px),
+    radial-gradient(circle at 680px 60px, #ffffff 1px, rgba(255,255,255,0.5) 6px, transparent 11px);
+  background-size: 800px 300px;
+  background-repeat: repeat;
+  opacity: 0.9;
   animation: twinkle1 4s ease-in-out infinite;
 }
 
-.heroImage::after {
-  content: "";
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(200, 161, 75, 0.15) 0%, transparent 60%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.heroImg {
-  object-fit: contain;
-  padding: 40px;
-  position: relative;
-  z-index: 1;
-}
-
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 15, 175, 0.2) 0%,
-    rgba(10, 15, 175, 0.4) 100%
-  );
-}
-
-.heroOverlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 120px 180px, #ffffff 2px, rgba(255,255,255,0.6) 6px, transparent 12px),
-    radial-gradient(circle at 200px 40px, #ffffff 1.5px, rgba(255,255,255,0.3) 5px, transparent 9px),
-    radial-gradient(circle at 450px 80px, #ffffff 1px, rgba(255,255,255,0.4) 5px, transparent 10px),
-    radial-gradient(circle at 550px 200px, #ffffff 3px, rgba(255,255,255,0.6) 9px, transparent 18px);
-  background-size: 900px 300px;
-  background-repeat: repeat;
-  opacity: 0.8;
-  pointer-events: none;
-  animation: twinkle2 5s ease-in-out infinite 2s;
-}
-
 @keyframes twinkle1 {
-  0%, 100% { opacity: 0.95; }
+  0%, 100% { opacity: 0.9; }
   50% { opacity: 0.3; }
 }
 
-@keyframes twinkle2 {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 0.2; }
+.heroTextContent {
+  flex: 1;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+
+.heroImageWrap {
+  flex: 1;
+  position: relative;
+  min-height: 100%;
+}
+
+.heroImgSplit {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .container {
   max-width: 840px;
-  margin: -100px auto 60px;
-  padding: 56px 64px;
+  margin: 60px auto;
+  padding: 0 40px;
   position: relative;
-  background: #ffffff;
-  border-radius: 24px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.1);
 }
 
 .backLink {
   display: inline-flex;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   font-family: var(--font-marcellus), "Marcellus", serif;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0A0FAF;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -136,47 +104,100 @@
   border-radius: 8px;
   font-family: var(--font-marcellus), "Marcellus", serif;
   font-size: 11px;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #ffffff;
-  background: #0A0FAF;
-  margin-bottom: 20px;
+  color: #111;
+  background: var(--poi-gold);
+  margin-bottom: 24px;
+  align-self: flex-start;
 }
 
 .title {
   font-family: var(--font-marcellus), "Marcellus", serif;
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(36px, 5vw, 64px);
   letter-spacing: 0.04em;
   line-height: 1.15;
-  color: #111111;
-  margin: 0 0 16px;
+  color: #ffffff;
+  margin: 0 0 24px;
 }
 
 .meta {
   font-size: 13px;
-  color: var(--poi-muted-soft);
-  margin: 0 0 20px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 24px;
 }
 
 .lead {
   font-family: var(--font-marcellus), "Marcellus", serif;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.7;
-  color: #444444;
-  margin: 0 0 32px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  max-width: 600px;
 }
 
 .body {
-  font-size: 17px;
-  line-height: 1.9;
-  color: #555555;
+  font-size: 18px;
+  line-height: 1.95;
+  color: #444;
+  font-family: var(--poi-font-sans);
 }
 
 .body p {
-  margin: 0 0 24px;
+  margin: 0 0 28px;
+}
+
+.dropcap:first-letter {
+  float: left;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 72px;
+  line-height: 0.8;
+  padding: 8px 12px 0 0;
+  color: #0A0FAF;
+}
+
+.blockquote {
+  margin: 48px 0;
+  padding: 0 0 0 32px;
+  border-left: 4px solid #0A0FAF;
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 26px;
+  font-style: italic;
+  color: #111;
+  line-height: 1.6;
+}
+
+.blockquote span {
+  display: block;
+  font-family: var(--poi-font-sans);
+  font-size: 14px;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  margin-top: 16px;
+}
+
+.heading3 {
+  font-family: var(--font-marcellus), "Marcellus", serif;
+  font-size: 32px;
+  color: #111;
+  margin: 48px 0 24px;
+}
+
+.inlineImageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 48px 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.inlineImage {
+  object-fit: cover;
 }
 
 .tags {
@@ -249,9 +270,23 @@
   color: #0A0FAF;
 }
 
+@media (max-width: 1024px) {
+  .heroSplit {
+    flex-direction: column;
+  }
+  .heroStars {
+    width: 100%;
+  }
+  .heroImageWrap {
+    min-height: 40vh;
+  }
+}
+
 @media (max-width: 768px) {
+  .heroTextContent {
+    padding: 60px 32px;
+  }
   .container {
-    padding: 32px 24px;
-    border-radius: 16px;
+    padding: 0 24px;
   }
 }

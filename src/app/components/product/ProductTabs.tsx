@@ -23,7 +23,7 @@ const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="w-full max-w-4xl mx-auto my-20"
+      className="w-full max-w-4xl mx-auto mb-20"
     >
       {/* Tab Headers */}
       <div className="flex justify-center gap-4 border-b border-gray-200 mb-8 pb-4 relative">

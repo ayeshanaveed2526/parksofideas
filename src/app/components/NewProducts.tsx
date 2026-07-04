@@ -20,7 +20,7 @@ interface Product {
   oldPrice?: string;
   image: string;
   rating: number;
-  badges: { text: string; color: string }[];
+  badges: { text: string; color: string; textColor?: string }[];
   outOfStock?: boolean;
   isExternal?: boolean;
 }
@@ -40,7 +40,7 @@ const productsData: Product[] = PERFUME_CATALOG.slice(0, 16).map((perfume) => {
     badges: [
       ...(hasDiscount ? [{ text: "-10%", color: "#000000" }] : []),
       ...(perfume.id % 4 === 0 ? [{ text: "FEATURED", color: "#c8a96e" }] : []),
-      ...(perfume.id <= 6 && perfume.id !== 5 && perfume.id % 4 !== 0 ? [{ text: "NEW", color: "#00089d" }] : []),
+      ...(perfume.id <= 6 && perfume.id !== 5 && perfume.id % 4 !== 0 ? [{ text: "NEW", color: "#ffd700", textColor: "#000" }] : []),
     ],
   };
 });
@@ -128,7 +128,7 @@ export default function NewProducts() {
                     {leftBadges.length > 0 && (
                       <div className="np-badges-left">
                         {leftBadges.map((b, i) => (
-                          <span key={i} className="np-badge" style={{ backgroundColor: b.color }}>
+                          <span key={i} className="np-badge" style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}>
                             {b.text}
                           </span>
                         ))}
@@ -139,7 +139,7 @@ export default function NewProducts() {
                     {rightBadges.length > 0 && (
                       <div className="np-badges-right">
                         {rightBadges.map((b, i) => (
-                          <span key={i} className="np-badge" style={{ backgroundColor: b.color }}>
+                          <span key={i} className="np-badge" style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}>
                             {b.text}
                           </span>
                         ))}
@@ -505,7 +505,7 @@ export default function NewProducts() {
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: #111111;
-          margin: 0;
+          margin: 5px 0 0 0;
           padding-bottom: 5px;
           padding-left: 0;
           text-align: left;
@@ -682,7 +682,7 @@ export default function NewProducts() {
           .np-card-name {
             font-size: 22px;
             letter-spacing: 0.2em;
-            margin: 0;
+            margin: 5px 0 0 0;
             padding-bottom: 5px;
           }
 

@@ -35,7 +35,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <ProductHero category={product.category} productName={product.name} />
 
       {/* Main Product Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-12 lg:pt-14 pb-16 lg:pb-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-12 lg:pt-14 pb-4 lg:pb-8">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
           <div className="w-full lg:sticky lg:top-[136px] lg:self-center">
             <ProductGallery views={galleryViews} />

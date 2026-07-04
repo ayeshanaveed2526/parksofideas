@@ -45,7 +45,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+  const [errors, setErrors] = useState<{ fullName?: string; email?: string; password?: string; confirmPassword?: string }>({});
   const { login } = useLoginModal();
 
   useEffect(() => {
@@ -69,6 +69,40 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors: { fullName?: string; email?: string; password?: string; confirmPassword?: string } = {};
+
+    if (isSignUp && !fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    } else if (/@(gail|gmai|gmal|gmial|gamil)\.com$/i.test(email)) {
+      newErrors.email = "Did you mean @gmail.com?";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (isSignUp) {
+      if (!confirmPassword) {
+        newErrors.confirmPassword = "Confirm password is required";
+      } else if (password !== confirmPassword) {
+        newErrors.confirmPassword = "Passwords do not match";
+      }
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
     login({
       name: fullName || "Alex",
       email: email || "smarttech4422@gmail.com",
@@ -145,10 +179,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 className={styles.input}
                 placeholder="Enter your full name"
                 value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  if (errors.fullName) setErrors({ ...errors, fullName: undefined });
+                }}
                 required
               />
             </div>
+            {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
           </div>
 
           <div className={styles.field}>
@@ -163,13 +201,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 className={styles.input}
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
-                title="Please enter a valid email address."
-                autoComplete="email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors({ ...errors, email: undefined });
+                }}
               />
             </div>
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
           <div className={styles.field}>
@@ -184,11 +222,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 className={styles.input}
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (errors.password) setErrors({ ...errors, password: undefined });
+                }}
                 required
-                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
-                title="Password must be at least 8 characters, with 1 uppercase, 1 lowercase, and 1 number."
-                autoComplete={isSignUp ? "new-password" : "current-password"}
               />
               <button
                 type="button"
@@ -203,6 +241,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 )}
               </button>
             </div>
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
 
           {isSignUp && (
@@ -218,11 +257,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   className={styles.input}
                   placeholder="Confirm your password"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: undefined });
+                  }}
                   required
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
-                  title="Password must be at least 8 characters, with 1 uppercase, 1 lowercase, and 1 number."
-                  autoComplete="new-password"
                 />
                 <button
                   type="button"
@@ -237,6 +276,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   )}
                 </button>
               </div>
+              {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
             </div>
           )}
 

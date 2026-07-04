@@ -253,7 +253,7 @@ export default function MainNavbar() {
               <button
                 type="button"
                 aria-label="Account"
-                className="hidden sm:block hover-icon-pop hover-scale-sm"
+                className="hidden sm:block hover-icon-pop hover-scale-sm cursor-pointer"
                 onClick={openLoginModal}
               >
                 <User size={20} strokeWidth={1.5} />

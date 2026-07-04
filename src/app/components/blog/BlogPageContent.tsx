@@ -48,6 +48,7 @@ export default function BlogPageContent() {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(9);
 
   const categoryCounts = useMemo(() => getCategoryCounts(), []);
   const popularTags = useMemo(() => getPopularTags(), []);
@@ -71,6 +72,7 @@ export default function BlogPageContent() {
     setCategory("All");
     setActiveTag(null);
     setSearch("");
+    setVisibleCount(9);
   };
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -252,30 +254,48 @@ export default function BlogPageContent() {
                   transition={{ duration: 0.3 }}
                 >
                   <div className={styles.grid}>
-                    {filteredPosts.map((post) => (
-                      <Link key={post.id} href={`/blog/${post.slug}`} className={styles.card}>
-                        <div className={styles.cardImageWrap}>
-                          <img src={post.image} alt={post.title} className={styles.cardImage} />
-                          <span className={styles.cardShimmer} aria-hidden="true" />
-                          <span className={styles.cardBadge}>{post.category}</span>
-                        </div>
-                        <div className={styles.cardBody}>
-                          <div className={styles.cardMeta}>
-                            <span>{post.date}</span>
-                            <span>{post.readTime}</span>
+                    {filteredPosts.slice(0, visibleCount).map((post, index) => {
+                      // Every 4th item (index 0, 4, 8, etc.) is horizontal, taking up full width.
+                      const isHorizontal = index % 4 === 0;
+                      return (
+                        <Link 
+                          key={post.id} 
+                          href={`/blog/${post.slug}`} 
+                          className={`${styles.card} ${isHorizontal ? styles.cardHorizontal : styles.cardVertical}`}
+                        >
+                          <div className={styles.cardImageWrap}>
+                            <img src={post.image} alt={post.title} className={styles.cardImage} />
+                            <span className={styles.cardShimmer} aria-hidden="true" />
+                            <span className={styles.cardBadge}>{post.category}</span>
                           </div>
-                          <h3 className={styles.cardTitle}>{post.title}</h3>
-                          <p className={styles.cardExcerpt}>{post.excerpt}</p>
-                          <div className={styles.cardTags}>
-                            {post.tags.slice(0, 3).map((tag) => (
-                              <span key={tag} className={styles.cardTag}>{tag}</span>
-                            ))}
+                          <div className={styles.cardBody}>
+                            <div className={styles.cardMeta}>
+                              <span>{post.date}</span>
+                              <span>{post.readTime}</span>
+                            </div>
+                            <h3 className={styles.cardTitle}>{post.title}</h3>
+                            <p className={styles.cardExcerpt}>{post.excerpt}</p>
+                            <div className={styles.cardTags}>
+                              {post.tags.slice(0, 3).map((tag) => (
+                                <span key={tag} className={styles.cardTag}>{tag}</span>
+                              ))}
+                            </div>
+                            <span className={styles.cardReadMore}>Read More <ArrowRight size={14} /></span>
                           </div>
-                          <span className={styles.cardReadMore}>Read More <ArrowRight size={14} /></span>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      );
+                    })}
                   </div>
+                  {visibleCount < filteredPosts.length && (
+                    <div className="flex justify-center mt-12">
+                      <button 
+                        className="poi-btn px-8 py-3 rounded-full text-sm font-bold uppercase tracking-widest bg-[#0A0FAF] text-white hover:bg-[#00089d] transition-colors"
+                        onClick={() => setVisibleCount(v => v + 9)}
+                      >
+                        Load More
+                      </button>
+                    </div>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

@@ -22,8 +22,8 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
   const { add: addToCart } = useCart();
   const inWishlist = has(product.id);
 
-  const badges: { text: string; color: string }[] = [];
-  if (product.id <= 6) badges.push({ text: "NEW", color: "#00089d" });
+  const badges: { text: string; color: string; textColor?: string }[] = [];
+  if (product.id <= 6) badges.push({ text: "NEW", color: "#ffd700", textColor: "#000" });
   if (product.id % 4 === 0) badges.push({ text: "FEATURED", color: "#c8a96e" });
   if (product.id === 5) badges.push({ text: "-10%", color: "#1a1a1a" });
   const leftBadges = badges.filter((b) => b.text !== "FEATURED");
@@ -78,7 +78,7 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
           {leftBadges.length > 0 && (
             <span style={{
               position: "absolute", top: 14, left: 14, zIndex: 5,
-              background: leftBadges[0].color, color: "#fff",
+              background: leftBadges[0].color, color: leftBadges[0].textColor || "#fff",
               fontSize: "9px", fontWeight: 700,
               letterSpacing: "0.1em", textTransform: "uppercase" as const,
               padding: "4px 10px", borderRadius: "20px",
@@ -251,7 +251,7 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
   return (
     <motion.article
       layout
-      className={`sp-card sp-card--${layoutMode}`}
+      className={`sp-card sp-card--${layoutMode} cursor-pointer`}
       whileHover={{ y: -5, boxShadow: "0 18px 36px rgba(0,8,157,0.08), 0 6px 14px rgba(0,8,157,0.04)" }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       onClick={handleCardClick}
@@ -260,7 +260,7 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
         {leftBadges.length > 0 && (
           <div className="sp-badges sp-badges--left">
             {leftBadges.map((b, i) => (
-              <span key={i} className="sp-badge" style={{ backgroundColor: b.color }}>{b.text}</span>
+              <span key={i} className="sp-badge" style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}>{b.text}</span>
             ))}
           </div>
         )}
@@ -307,17 +307,17 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
 
       <div className="sp-card-info">
         <h3 className="sp-card-name">{product.brand}</h3>
-        <p className="sp-card-desc">{product.description}</p>
         <div className="sp-card-rating">
           {Array.from({ length: 5 }).map((_, i) => <span key={i} className="sp-star">★</span>)}
         </div>
-        <div className="sp-card-price-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
-          <div className="sp-card-price">{formattedPrice}</div>
+        <p className="sp-card-desc">{product.description}</p>
+        <div className="sp-card-price-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', width: '100%', marginBottom: '10px' }}>
           {formattedOriginalPrice && (
             <div className="sp-card-original-price" style={{ textDecoration: 'line-through', color: '#9CA3AF', fontSize: '13px' }}>
               {formattedOriginalPrice}
             </div>
           )}
+          <div className="sp-card-price">{formattedPrice}</div>
         </div>
         <button className="sp-grid-atc-btn" type="button"
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product.id); router.push("/cart"); }}>

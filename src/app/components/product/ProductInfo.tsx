@@ -61,24 +61,39 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           </span>
         </motion.div>
 
-        {product.reviews.length > 0 && (
-          <motion.div variants={itemVariants} className="mb-5 flex items-center gap-2">
-            <div className="flex gap-0.5">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg
-                  key={i}
-                  className={`h-3.5 w-3.5 ${i < Math.round(rating) ? 'fill-amber-400 text-amber-400' : 'fill-gray-200 text-gray-200'}`}
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))}
+        <motion.div variants={itemVariants} className="mb-5 flex flex-wrap items-center justify-start gap-6">
+          {product.reviews.length > 0 ? (
+            <div className="flex items-center gap-2">
+              <div className="flex gap-0.5">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <svg
+                    key={i}
+                    className={`h-3.5 w-3.5 ${i < Math.round(rating) ? 'fill-amber-400 text-amber-400' : 'fill-gray-200 text-gray-200'}`}
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-xs tracking-wide text-gray-400">
+                ({product.reviews.length} {product.reviews.length === 1 ? 'review' : 'reviews'})
+              </span>
             </div>
-            <span className="text-xs tracking-wide text-gray-400">
-              ({product.reviews.length} {product.reviews.length === 1 ? 'review' : 'reviews'})
-            </span>
-          </motion.div>
-        )}
+          ) : <div />}
+
+          <button
+            type="button"
+            onClick={() => toggleWishlist(Number(product.id))}
+            className={`group flex items-center gap-2 text-xs font-semibold tracking-wider transition-all ${
+              isInWishlist(Number(product.id)) ? 'text-[#1a1a1a]' : 'text-gray-500 hover:text-[#1a1a1a]'
+            }`}
+          >
+            <Heart className={`h-4 w-4 transition-all duration-300 group-hover:scale-110 ${
+              isInWishlist(Number(product.id)) ? 'fill-[#1a1a1a] text-[#1a1a1a]' : 'group-hover:fill-[#1a1a1a]'
+            }`} />
+            {isInWishlist(Number(product.id)) ? 'IN WISHLIST' : 'ADD TO WISHLIST'}
+          </button>
+        </motion.div>
 
         <motion.p variants={itemVariants} className="mb-6 text-sm leading-relaxed text-gray-500">
           {product.shortDescription}
@@ -130,19 +145,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           </button>
         </motion.div>
 
-        <motion.button
-          variants={itemVariants}
-          type="button"
-          onClick={() => toggleWishlist(Number(product.id))}
-          className={`group mb-8 flex w-fit items-center gap-2 text-xs font-semibold tracking-wider transition-all ${
-            isInWishlist(Number(product.id)) ? 'text-[#1a1a1a]' : 'text-gray-500 hover:text-[#1a1a1a]'
-          }`}
-        >
-          <Heart className={`h-4 w-4 transition-all duration-300 group-hover:scale-110 ${
-            isInWishlist(Number(product.id)) ? 'fill-[#1a1a1a] text-[#1a1a1a]' : 'group-hover:fill-[#1a1a1a]'
-          }`} />
-          {isInWishlist(Number(product.id)) ? 'IN WISHLIST' : 'ADD TO WISHLIST'}
-        </motion.button>
+
 
         <motion.div
           variants={itemVariants}

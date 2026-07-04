@@ -163,7 +163,7 @@ export default function TopCategory() {
             return (
               <Link href={`/product/${product.id}`} key={product.id} style={{ display: 'contents', textDecoration: 'none' }}>
                 <article
-                  className="tp-card"
+                  className="tp-card cursor-pointer"
                   style={{ animationDelay: `${idx * 0.07}s` }}
                 >
                 {/* ▸ Image area (Top box) */}
@@ -175,7 +175,7 @@ export default function TopCategory() {
                         <span
                           key={i}
                           className="tp-badge"
-                          style={{ backgroundColor: b.color }}
+                          style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}
                         >
                           {b.text}
                         </span>
@@ -190,7 +190,7 @@ export default function TopCategory() {
                         <span
                           key={i}
                           className="tp-badge"
-                          style={{ backgroundColor: b.color }}
+                          style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}
                         >
                           {b.text}
                         </span>
@@ -287,9 +287,9 @@ export default function TopCategory() {
           })}
         </div>
         <div className="tp-view-all-wrap">
-          <a href="#" className="tp-view-all-btn">
-            VIEW ALL
-          </a>
+          <button type="button" onClick={() => router.push('/shop')} className="tp-view-all-btn">
+            LOAD MORE
+          </button>
         </div>
       </div>
       </div>
@@ -359,7 +359,7 @@ export default function TopCategory() {
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 16px;
+          gap: 10px;
           flex-wrap: wrap;
         }
 

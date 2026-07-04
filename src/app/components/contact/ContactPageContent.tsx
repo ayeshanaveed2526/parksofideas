@@ -108,9 +108,37 @@ export default function ContactPageContent() {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [errors, setErrors] = useState<{ name?: string; email?: string; subject?: string; message?: string }>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors: { name?: string; email?: string; subject?: string; message?: string } = {};
+
+    if (!name.trim()) newErrors.name = "Full Name is required";
+    
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    } else if (/@(gail|gmai|gmal|gmial|gamil)\.com$/i.test(email)) {
+      newErrors.email = "Did you mean @gmail.com?";
+    }
+    
+    if (!subject.trim()) newErrors.subject = "Subject is required";
+    
+    if (!message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setSubmitted(false);
+      return;
+    }
+    
+    setErrors({});
     setSubmitted(true);
   };
 
@@ -221,9 +249,13 @@ export default function ContactPageContent() {
                     type="text"
                     required
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      if (errors.name) setErrors({ ...errors, name: undefined });
+                    }}
                     placeholder="Your name"
                   />
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                 </div>
                 <div className={styles.field}>
                   <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="contact-email">
@@ -235,9 +267,13 @@ export default function ContactPageContent() {
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (errors.email) setErrors({ ...errors, email: undefined });
+                    }}
                     placeholder="you@example.com"
                   />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
                 <div className={`${styles.field} ${styles.fieldFull}`}>
                   <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="contact-subject">
@@ -249,9 +285,13 @@ export default function ContactPageContent() {
                     type="text"
                     required
                     value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
+                    onChange={(e) => {
+                      setSubject(e.target.value);
+                      if (errors.subject) setErrors({ ...errors, subject: undefined });
+                    }}
                     placeholder="How can we help?"
                   />
+                  {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject}</p>}
                 </div>
                 <div className={`${styles.field} ${styles.fieldFull}`}>
                   <label className={`${styles.label} ${styles.labelRequired}`} htmlFor="contact-message">
@@ -263,10 +303,20 @@ export default function ContactPageContent() {
                     required
                     maxLength={1000}
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      if (errors.message) setErrors({ ...errors, message: undefined });
+                    }}
                     placeholder="Tell us more about your inquiry…"
                   />
-                  <p className={styles.charCount}>{message.length}/1000 characters</p>
+                  <div className="flex items-center justify-between mt-1">
+                    {errors.message ? (
+                      <p className="text-red-500 text-xs">{errors.message}</p>
+                    ) : (
+                      <span />
+                    )}
+                    <p className={styles.charCount}>{message.length}/1000 characters</p>
+                  </div>
                 </div>
               </div>
 

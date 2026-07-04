@@ -101,7 +101,7 @@ export default function ShopByCategory() {
         </div>
 
         <div className="mb-9 flex items-center justify-center">
-          <div className="flex items-center gap-6 rounded-full border border-white/60 bg-white/40 p-3 shadow-[0_8px_30px_rgba(0,8,157,0.08)] backdrop-blur-md">
+          <div className="flex items-center gap-2 md:gap-3 rounded-full border border-white/60 bg-white/40 px-6 py-4 shadow-[0_8px_30px_rgba(0,8,157,0.08)] backdrop-blur-md">
             {collections.map((c) => {
               const isActive = c.key === active;
               return (

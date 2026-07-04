@@ -114,7 +114,7 @@ const PRODUCT_GALLERY_ANGLES: Omit<ProductGalleryView, "src">[] = [
     label: "Left angle",
     rotateY: 0,
     rotateZ: 0,
-    scale: 1.08,
+    scale: 1.15,
     translateX: -6,
     translateY: 0,
   },
@@ -122,7 +122,7 @@ const PRODUCT_GALLERY_ANGLES: Omit<ProductGalleryView, "src">[] = [
     label: "Right angle",
     rotateY: 0,
     rotateZ: 0,
-    scale: 1.08,
+    scale: 1.15,
     translateX: 6,
     translateY: 0,
   },
@@ -178,18 +178,18 @@ export interface CatalogCardProduct {
   originalPrice?: string;
   image: string;
   hoverImage?: string;
-  badges: { text: string; color: string }[];
+  badges: { text: string; color: string; textColor?: string }[];
   outOfStock?: boolean;
   isExternal?: boolean;
 }
 
 export function toCatalogCard(perfume: PerfumeProduct): CatalogCardProduct {
-  const badges: { text: string; color: string }[] = [];
+  const badges: { text: string; color: string; textColor?: string }[] = [];
   let currentPrice = perfume.price;
   let originalPrice: string | undefined = undefined;
 
   if (perfume.id <= 6) {
-    badges.push({ text: "NEW", color: "#00089d" });
+    badges.push({ text: "NEW", color: "#ffd700", textColor: "#000" });
   }
   if (perfume.id % 4 === 0) {
     badges.push({ text: "FEATURED", color: "#c8a96e" });

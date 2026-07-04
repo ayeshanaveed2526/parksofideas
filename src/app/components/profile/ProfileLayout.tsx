@@ -15,7 +15,7 @@ interface ProfileLayoutProps {
 
 export default function ProfileLayout({ children }: ProfileLayoutProps) {
   const pathname = usePathname();
-  const { isLoggedIn, logout } = useLoginModal();
+  const { isLoggedIn, logout, openLoginModal } = useLoginModal();
 
   const navLinks = [
     { label: "My Profile", href: "/profile", icon: User },
@@ -23,14 +23,22 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
     { label: "My Wishlist", href: "/wishlist", icon: Heart },
   ];
 
-  if (!isLoggedIn) {
+  const isWishlist = pathname === "/wishlist";
+
+  if (!isLoggedIn && !isWishlist) {
     return (
       <main className="min-h-screen relative flex flex-col">
         <Header />
         <div className="flex-1 flex items-center justify-center bg-gray-50">
           <div className="text-center p-8 bg-white rounded-2xl shadow-xl max-w-md w-full mx-4 border border-gray-100">
             <h2 className="text-2xl font-semibold mb-4" style={{ fontFamily: "Inter, sans-serif" }}>Authentication Required</h2>
-            <p className="text-gray-500 mb-6">Please sign in to view your dashboard.</p>
+            <p className="text-gray-500 mb-6">Please sign in to view this page.</p>
+            <button 
+              onClick={openLoginModal}
+              className="poi-btn w-full"
+            >
+              Sign In
+            </button>
           </div>
         </div>
         <Footer />
@@ -67,16 +75,18 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
                   </Link>
                 );
               })}
-              <div className="border-t border-gray-100 mt-2 pt-2">
-                <button
-                  type="button"
-                  className="flex items-center gap-2 w-full justify-center bg-red-500 hover:bg-red-600 text-white font-medium py-2.5 px-4 rounded-xl transition-colors shadow-sm mt-2"
-                  onClick={logout}
-                >
-                  <LogOut size={18} strokeWidth={2} />
-                  Sign Out
-                </button>
-              </div>
+              {isLoggedIn && (
+                <div className="border-t border-gray-100 mt-2 pt-2">
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 w-full justify-center bg-red-500 hover:bg-red-600 text-white font-medium py-2.5 px-4 rounded-xl transition-colors shadow-sm mt-2"
+                    onClick={logout}
+                  >
+                    <LogOut size={18} strokeWidth={2} />
+                    Sign Out
+                  </button>
+                </div>
+              )}
             </nav>
           </aside>
 
