@@ -254,14 +254,12 @@ export default function BlogPageContent() {
                   transition={{ duration: 0.3 }}
                 >
                   <div className={styles.grid}>
-                    {filteredPosts.slice(0, visibleCount).map((post, index) => {
-                      // Every 4th item (index 0, 4, 8, etc.) is horizontal, taking up full width.
-                      const isHorizontal = index % 4 === 0;
+                    {filteredPosts.slice(0, visibleCount).map((post) => {
                       return (
                         <Link 
                           key={post.id} 
                           href={`/blog/${post.slug}`} 
-                          className={`${styles.card} ${isHorizontal ? styles.cardHorizontal : styles.cardVertical}`}
+                          className={`${styles.card} ${styles.cardVertical}`}
                         >
                           <div className={styles.cardImageWrap}>
                             <img src={post.image} alt={post.title} className={styles.cardImage} />

@@ -344,7 +344,8 @@ img, video {
   transform-origin: right;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.hover-link-slide:hover::after {
+.hover-link-slide:hover::after,
+.active-link-slide::after {
   transform: scaleX(1);
   transform-origin: left;
 }

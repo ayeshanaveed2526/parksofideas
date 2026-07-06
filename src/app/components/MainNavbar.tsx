@@ -91,9 +91,9 @@ export default function MainNavbar() {
               >
                 <Link 
                   href={link.href} 
-                  className={`hover-link-slide transition-colors flex items-center h-full ${
+                  className={`hover-link-slide transition-colors ${
                     link.href !== "#" && (link.href === "/" ? pathname === "/" : pathname.startsWith(link.href))
-                      ? "text-[#00089d]"
+                      ? "text-[#00089d] active-link-slide"
                       : "hover:text-[#00089d]"
                   }`}
                 >
