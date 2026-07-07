@@ -19,11 +19,8 @@ import { useWishlist } from "./WishlistProvider";
 import { useCart } from "../cart/CartProvider";
 import ProfileLayout from "../profile/ProfileLayout";
 import profileStyles from "../profile/profile.module.css";
-import {
-  PERFUME_CATALOG,
-  formatPerfumePrice,
-  type PerfumeProduct,
-} from "../../data/perfumeCatalog";
+import { fetchAllProducts, type ApiProduct } from "../../lib/api";
+import { formatPerfumePrice } from "../../data/perfumeCatalog";
 
 const trustItems = [
   { icon: ShieldCheck, label: "Secure Payment", sub: "SSL Protected" },
@@ -51,7 +48,7 @@ function WishlistCard({
   onRemove,
   onAddToCart,
 }: {
-  product: PerfumeProduct;
+  product: ApiProduct;
   index: number;
   onRemove: (id: number) => void;
   onAddToCart: (id: number) => void;
@@ -87,7 +84,7 @@ function WishlistCard({
           {product.brand}
         </Link>
         <p className={styles.cardDesc}>{product.description}</p>
-        <p className={styles.cardPrice}>{formatPerfumePrice(product.price)}</p>
+        <p className={styles.cardPrice}>{formatPerfumePrice(product.new_price)}</p>
         <div className={styles.cardActions}>
           <button
             type="button"
@@ -110,6 +107,11 @@ export default function WishlistPageContent() {
   const { ids, loaded, remove, clear } = useWishlist();
   const { add: addToCart } = useCart();
   const [showContent, setShowContent] = useState(false);
+  const [allProducts, setAllProducts] = useState<ApiProduct[]>([]);
+
+  useEffect(() => {
+    fetchAllProducts().then(setAllProducts);
+  }, []);
 
   const handleAddToCart = (id: number) => {
     addToCart(id, 1);
@@ -125,9 +127,9 @@ export default function WishlistPageContent() {
   const products = useMemo(
     () =>
       ids
-        .map((id) => PERFUME_CATALOG.find((p) => p.id === id))
-        .filter((p): p is PerfumeProduct => Boolean(p)),
-    [ids]
+        .map((id) => allProducts.find((p) => p.id === id))
+        .filter((p): p is ApiProduct => Boolean(p)),
+    [ids, allProducts]
   );
 
   const isLoading = !loaded || !showContent;
@@ -141,61 +143,61 @@ export default function WishlistPageContent() {
       </p>
 
       <section className={styles.main}>
-          {isLoading ? (
-            <div className={styles.loading}>
-              <div className={styles.spinner} aria-hidden="true" />
-              <p className={styles.loadingText}>Loading your wishlist…</p>
+        {isLoading ? (
+          <div className={styles.loading}>
+            <div className={styles.spinner} aria-hidden="true" />
+            <p className={styles.loadingText}>Loading your wishlist…</p>
+          </div>
+        ) : isEmpty ? (
+          <motion.div
+            className={styles.empty}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.45 }}
+          >
+            <div className={styles.emptyIcon}>
+              <Heart size={36} strokeWidth={1.5} />
             </div>
-          ) : isEmpty ? (
-            <motion.div
-              className={styles.empty}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.45 }}
-            >
-              <div className={styles.emptyIcon}>
-                <Heart size={36} strokeWidth={1.5} />
-              </div>
-              <h2 className={styles.emptyTitle}>Your wishlist is empty</h2>
-              <p className={styles.emptyText}>
-                Browse our collection and tap the heart icon on any fragrance to
-                save it here for later.
+            <h2 className={styles.emptyTitle}>Your wishlist is empty</h2>
+            <p className={styles.emptyText}>
+              Browse our collection and tap the heart icon on any fragrance to
+              save it here for later.
+            </p>
+            <Link href="/shop" className={`poi-btn ${styles.shopBtn}`}>
+              Start Shopping <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+        ) : (
+          <>
+            <div className={styles.toolbar}>
+              <p className={styles.toolbarCount}>
+                <strong>{products.length}</strong>{" "}
+                {products.length === 1 ? "item" : "items"} saved
               </p>
-              <Link href="/shop" className={`poi-btn ${styles.shopBtn}`}>
-                Start Shopping <ArrowRight size={16} />
-              </Link>
-            </motion.div>
-          ) : (
-            <>
-              <div className={styles.toolbar}>
-                <p className={styles.toolbarCount}>
-                  <strong>{products.length}</strong>{" "}
-                  {products.length === 1 ? "item" : "items"} saved
-                </p>
-                <button type="button" className={styles.clearBtn} onClick={clear}>
-                  Clear wishlist
-                </button>
-              </div>
+              <button type="button" className={styles.clearBtn} onClick={clear}>
+                Clear wishlist
+              </button>
+            </div>
 
-              <motion.div
-                className={styles.grid}
-                initial="hidden"
-                animate="visible"
-                variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
-              >
-                {products.map((product, idx) => (
-                  <WishlistCard
-                    key={product.id}
-                    product={product}
-                    index={idx}
-                    onRemove={remove}
-                    onAddToCart={handleAddToCart}
-                  />
-                ))}
-              </motion.div>
-            </>
-          )}
-        </section>
+            <motion.div
+              className={styles.grid}
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
+            >
+              {products.map((product, idx) => (
+                <WishlistCard
+                  key={product.id}
+                  product={product}
+                  index={idx}
+                  onRemove={remove}
+                  onAddToCart={handleAddToCart}
+                />
+              ))}
+            </motion.div>
+          </>
+        )}
+      </section>
     </ProfileLayout>
   );
 }

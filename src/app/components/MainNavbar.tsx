@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { User, Heart, ShoppingBag, Menu, X, ChevronDown, LogOut } from "lucide-react";
-import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
+import { formatPerfumePrice } from "../data/perfumeCatalog";
+import { fetchAllProducts, type ApiProduct } from "../lib/api";
 import { motion } from "framer-motion";
 import { useLoginModal } from "./auth/LoginModalProvider";
 import { useCart } from "./cart/CartProvider";
@@ -21,6 +22,16 @@ export default function MainNavbar() {
   const pathname = usePathname();
   const { openLoginModal, isLoggedIn, user, logout } = useLoginModal();
   const { itemCount: cartCount } = useCart();
+  const [homeVariants, setHomeVariants] = useState<{name: string, image: string}[]>([]);
+
+  useEffect(() => {
+    fetchAllProducts().then(data => {
+      setHomeVariants(data.slice(0, 8).map((p: ApiProduct) => ({
+        name: p.brand,
+        image: p.image
+      })));
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,13 +60,6 @@ export default function MainNavbar() {
     { label: "CONTACT", href: "/contact" },
   ];
 
-  const homeVariants = PERFUME_CATALOG.slice(0, 8).map((perfume) => ({
-    name: perfume.brand,
-    image: perfume.image,
-  }));
-
-  const megaMenuPerfumes = PERFUME_CATALOG.filter((p) => [2, 16, 23].includes(p.id));
-
   return (
     <>
       <div className={`w-full bg-white transition-all duration-300 ${isSticky ? "shadow-[0_4px_12px_rgba(0,0,0,0.05)] border-b border-gray-100" : ""}`}>
@@ -63,7 +67,7 @@ export default function MainNavbar() {
           {/* Logo */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
             <Link href="/" aria-label="Luchiana Home" className="shrink-0 flex items-center gap-2 hover-scale-sm transition-transform duration-300">
-              <img src="/assets/logo.png" alt="ELIX BY IR Logo" className="h-[40px] md:h-[50px] object-contain" />
+
               <span className="text-[20px] md:text-[24px] font-bold tracking-widest uppercase text-black" style={{ fontFamily: "Inter, sans-serif" }}>ELIX BY IR</span>
             </Link>
           </motion.div>

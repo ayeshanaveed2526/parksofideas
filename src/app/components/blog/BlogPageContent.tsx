@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -11,17 +11,12 @@ import {
   RefreshCw,
   Heart,
   ArrowRight,
+  Loader2,
 } from "lucide-react";
 import styles from "./blog.module.css";
-import {
-  BLOG_CATEGORIES,
-  BLOG_POSTS,
-  getCategoryCounts,
-  getPopularTags,
-  type BlogCategory,
-} from "../../data/blogPosts";
+import { fetchAllBlogs, type ApiBlog } from "../../lib/api";
 
-type FilterCategory = BlogCategory | "All";
+type FilterCategory = string | "All";
 
 const trustItems = [
   { icon: ShieldCheck, label: "Secure Payment", sub: "SSL Protected" },
@@ -49,24 +44,51 @@ export default function BlogPageContent() {
   const [search, setSearch] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [visibleCount, setVisibleCount] = useState(9);
+  const [allBlogs, setAllBlogs] = useState<ApiBlog[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const categoryCounts = useMemo(() => getCategoryCounts(), []);
-  const popularTags = useMemo(() => getPopularTags(), []);
+  useEffect(() => {
+    fetchAllBlogs().then((data) => {
+      setAllBlogs(data);
+      setLoading(false);
+    });
+  }, []);
+
+  const blogCategories = useMemo(() => {
+    const cats = new Set(allBlogs.map(b => b.category));
+    return Array.from(cats);
+  }, [allBlogs]);
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { "All": allBlogs.length };
+    allBlogs.forEach(b => {
+      counts[b.category] = (counts[b.category] || 0) + 1;
+    });
+    return counts;
+  }, [allBlogs]);
+
+  const popularTags = useMemo(() => {
+    const counts: Record<string, number> = {};
+    allBlogs.forEach(b => {
+      b.tags.forEach(t => { counts[t] = (counts[t] || 0) + 1; });
+    });
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10).map(x => x[0]);
+  }, [allBlogs]);
 
   const filteredPosts = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return BLOG_POSTS.filter((post) => {
+    return allBlogs.filter((post) => {
       const matchesCategory = category === "All" || post.category === category;
       const matchesTag = !activeTag || post.tags.includes(activeTag);
       const matchesSearch =
         !q ||
         post.title.toLowerCase().includes(q) ||
-        post.excerpt.toLowerCase().includes(q) ||
+        post.shortDescription.toLowerCase().includes(q) ||
         post.tags.some((t) => t.toLowerCase().includes(q)) ||
         post.category.toLowerCase().includes(q);
       return matchesCategory && matchesTag && matchesSearch;
     });
-  }, [category, activeTag, search]);
+  }, [category, activeTag, search, allBlogs]);
 
   const resetFilters = () => {
     setCategory("All");
@@ -123,7 +145,7 @@ export default function BlogPageContent() {
             >
               <h2 className={styles.panelTitle}>Categories</h2>
               <ul className={styles.categoryList}>
-                {(["All", ...BLOG_CATEGORIES] as FilterCategory[]).map((cat) => (
+                {(["All", ...blogCategories] as FilterCategory[]).map((cat) => (
                   <li key={cat}>
                     <button
                       type="button"
@@ -218,13 +240,24 @@ export default function BlogPageContent() {
                 <h2 className={styles.mainTitle}>All Posts</h2>
                 <p className={styles.mainCount}>
                   Showing <strong>{filteredPosts.length}</strong> of{" "}
-                  <strong>{BLOG_POSTS.length}</strong> Posts
+                  <strong>{allBlogs.length}</strong> Posts
                 </p>
               </div>
             </motion.div>
 
             <AnimatePresence mode="wait">
-              {filteredPosts.length === 0 ? (
+              {loading ? (
+                <motion.div
+                  key="loading"
+                  className="flex flex-col items-center justify-center py-24"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <Loader2 className="w-10 h-10 animate-spin text-gray-400 mb-4" />
+                  <p className="text-gray-500 font-medium">Loading stories...</p>
+                </motion.div>
+              ) : filteredPosts.length === 0 ? (
                 <motion.div
                   key="empty"
                   className={styles.empty}
@@ -254,25 +287,25 @@ export default function BlogPageContent() {
                   transition={{ duration: 0.3 }}
                 >
                   <div className={styles.grid}>
-                    {filteredPosts.slice(0, visibleCount).map((post) => {
+                    {filteredPosts.slice(0, visibleCount).map((post, index) => {
                       return (
                         <Link 
-                          key={post.id} 
+                          key={post.id || post._id || index} 
                           href={`/blog/${post.slug}`} 
                           className={`${styles.card} ${styles.cardVertical}`}
                         >
                           <div className={styles.cardImageWrap}>
-                            <img src={post.image} alt={post.title} className={styles.cardImage} />
+                            <img src={post.image || "/assets/images/blog/default.jpg"} alt={post.title} className={styles.cardImage} />
                             <span className={styles.cardShimmer} aria-hidden="true" />
                             <span className={styles.cardBadge}>{post.category}</span>
                           </div>
                           <div className={styles.cardBody}>
                             <div className={styles.cardMeta}>
-                              <span>{post.date}</span>
-                              <span>{post.readTime}</span>
+                              <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+                              <span>{post.readTime} min read</span>
                             </div>
                             <h3 className={styles.cardTitle}>{post.title}</h3>
-                            <p className={styles.cardExcerpt}>{post.excerpt}</p>
+                            <p className={styles.cardExcerpt}>{post.shortDescription}</p>
                             <div className={styles.cardTags}>
                               {post.tags.slice(0, 3).map((tag) => (
                                 <span key={tag} className={styles.cardTag}>{tag}</span>

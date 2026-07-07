@@ -1,42 +1,69 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { PERFUME_CATALOG, toCatalogCard, type CatalogCardProduct } from "../data/perfumeCatalog";
+import { fetchAllProducts, type ApiProduct } from "../lib/api";
 import { useCart } from "./cart/CartProvider";
 import { useWishlist } from "./wishlist/WishlistProvider";
 
-type Product = CatalogCardProduct;
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  originalPrice?: string;
+  image: string;
+  hoverImage?: string;
+  badges: { text: string; color: string; textColor?: string }[];
+  outOfStock?: boolean;
+  isExternal?: boolean;
+}
 
-const newestProducts: Product[] = PERFUME_CATALOG.slice(0, 12).map(toCatalogCard);
-
-const products: Record<string, Product[]> = {
-  NEWEST: newestProducts,
-  POPULAR: [
-    newestProducts[1], newestProducts[3], newestProducts[5], newestProducts[7], newestProducts[9], 
-    newestProducts[11], newestProducts[0], newestProducts[2], newestProducts[4], newestProducts[6]
-  ],
-  CATEGORY: [
-    newestProducts[0], newestProducts[2], newestProducts[4], newestProducts[6], newestProducts[8], 
-    newestProducts[10], newestProducts[1], newestProducts[3], newestProducts[5], newestProducts[7]
-  ],
-  BRAND: [
-    newestProducts[1], newestProducts[2], newestProducts[4], newestProducts[7], newestProducts[8], 
-    newestProducts[11], newestProducts[0], newestProducts[3], newestProducts[6], newestProducts[9]
-  ],
-};
+function mapApiProduct(p: ApiProduct): Product {
+  const hasDiscount = p.old_price > p.new_price;
+  return {
+    id: p.id,
+    name: p.brand || p.name,
+    description: p.description,
+    price: `$${p.new_price.toFixed(2)}`,
+    originalPrice: hasDiscount ? `$${p.old_price.toFixed(2)}` : undefined,
+    image: p.image,
+    hoverImage: p.images?.[1],
+    badges: [
+      ...(hasDiscount ? [{ text: `-${Math.round(((p.old_price - p.new_price) / p.old_price) * 100)}%`, color: "#000000" }] : []),
+      ...(p.id <= 6 ? [{ text: "NEW", color: "#ffd700", textColor: "#000" }] : []),
+      ...(p.id % 4 === 0 ? [{ text: "FEATURED", color: "#c8a96e" }] : []),
+    ],
+    outOfStock: false,
+  };
+}
 
 const tabs = ["NEWEST", "POPULAR", "CATEGORY", "BRAND"];
 
 export default function TopCategory() {
   const [activeTab, setActiveTab] = useState("NEWEST");
   const [animKey, setAnimKey] = useState(0);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
 
   const router = useRouter();
   const { add: addToCart } = useCart();
   const { add: addToWishlist } = useWishlist();
+
+  useEffect(() => {
+    fetchAllProducts().then((apiProducts) => {
+      setAllProducts(apiProducts.slice(0, 12).map(mapApiProduct));
+    });
+  }, []);
+
+  // Build tab views from the same product list, just reordered
+  const productsByTab: Record<string, Product[]> = {
+    NEWEST: allProducts,
+    POPULAR: [...allProducts].sort((a, b) => b.id - a.id),
+    CATEGORY: [...allProducts].filter((_, i) => i % 2 === 0).concat([...allProducts].filter((_, i) => i % 2 !== 0)),
+    BRAND: [...allProducts].sort((a, b) => a.name.localeCompare(b.name)),
+  };
 
   const handleQuickView = (e: React.MouseEvent, id: number) => {
     e.preventDefault();
@@ -55,7 +82,7 @@ export default function TopCategory() {
     router.push("/cart");
   };
 
-  const currentProducts = (products[activeTab] || []).slice(0, 10);
+  const currentProducts = (productsByTab[activeTab] || []).slice(0, 10);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -124,7 +151,7 @@ export default function TopCategory() {
           <line x1="0" y1="80%" x2="100%" y2="80%" stroke="rgba(0, 8, 157, 0.06)" strokeWidth="1" strokeDasharray="50 300">
             <animate attributeName="stroke-dashoffset" values="350; 0" dur="15s" repeatCount="indefinite" />
           </line>
-          
+
           <line x1="20%" y1="0" x2="20%" y2="100%" stroke="rgba(0, 8, 157, 0.05)" strokeWidth="1" strokeDasharray="80 400">
             <animate attributeName="stroke-dashoffset" values="0; 480" dur="20s" repeatCount="indefinite" />
           </line>
@@ -135,163 +162,163 @@ export default function TopCategory() {
         {/* ── Title ── */}
         <h2 className="tp-title">TOP PRODUCTS</h2>
 
-      {/* ── Tabs ── */}
-      <div className="tp-tabs-wrap">
-        <nav className="tp-tabs">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              className={`tp-tab${activeTab === tab ? " tp-tab--on" : ""}`}
-              onClick={() => handleTabChange(tab)}
-              type="button"
-            >
-              {tab}
-              <span className="tp-tab-indicator" />
-            </button>
-          ))}
-        </nav>
-        <span className="tp-tabs-rule" />
-      </div>
+        {/* ── Tabs ── */}
+        <div className="tp-tabs-wrap">
+          <nav className="tp-tabs">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                className={`tp-tab${activeTab === tab ? " tp-tab--on" : ""}`}
+                onClick={() => handleTabChange(tab)}
+                type="button"
+              >
+                {tab}
+                <span className="tp-tab-indicator" />
+              </button>
+            ))}
+          </nav>
+          <span className="tp-tabs-rule" />
+        </div>
 
-      {/* ── Grid ── */}
-      <div className="tp-container">
-        <div className="tp-grid" key={animKey}>
-          {currentProducts.map((product, idx) => {
-            const leftBadges = product.badges.filter((b) => b.text !== "FEATURED");
-            const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
+        {/* ── Grid ── */}
+        <div className="tp-container">
+          <div className="tp-grid" key={animKey}>
+            {currentProducts.map((product, idx) => {
+              const leftBadges = product.badges.filter((b) => b.text !== "FEATURED");
+              const rightBadges = product.badges.filter((b) => b.text === "FEATURED");
 
-            return (
-              <Link href={`/product/${product.id}`} key={product.id} style={{ display: 'contents', textDecoration: 'none' }}>
-                <article
-                  className="tp-card cursor-pointer"
-                  style={{ animationDelay: `${idx * 0.07}s` }}
-                >
-                {/* ▸ Image area (Top box) */}
-                <div className="tp-card-img-wrap">
-                  {/* Left Badges */}
-                  {leftBadges.length > 0 && (
-                    <div className="tp-badges-left">
-                      {leftBadges.map((b, i) => (
-                        <span
-                          key={i}
-                          className="tp-badge"
-                          style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}
-                        >
-                          {b.text}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+              return (
+                <Link href={`/product/${product.id}`} key={product.id} style={{ display: 'contents', textDecoration: 'none' }}>
+                  <article
+                    className="tp-card cursor-pointer"
+                    style={{ animationDelay: `${idx * 0.07}s` }}
+                  >
+                    {/* ▸ Image area (Top box) */}
+                    <div className="tp-card-img-wrap">
+                      {/* Left Badges */}
+                      {leftBadges.length > 0 && (
+                        <div className="tp-badges-left">
+                          {leftBadges.map((b, i) => (
+                            <span
+                              key={i}
+                              className="tp-badge"
+                              style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}
+                            >
+                              {b.text}
+                            </span>
+                          ))}
+                        </div>
+                      )}
 
-                  {/* Right Badges */}
-                  {rightBadges.length > 0 && (
-                    <div className="tp-badges-right">
-                      {rightBadges.map((b, i) => (
-                        <span
-                          key={i}
-                          className="tp-badge"
-                          style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}
-                        >
-                          {b.text}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                      {/* Right Badges */}
+                      {rightBadges.length > 0 && (
+                        <div className="tp-badges-right">
+                          {rightBadges.map((b, i) => (
+                            <span
+                              key={i}
+                              className="tp-badge"
+                              style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}
+                            >
+                              {b.text}
+                            </span>
+                          ))}
+                        </div>
+                      )}
 
-                  {/* Out‑of‑stock pill */}
-                  {product.outOfStock && (
-                    <span className="tp-oos">OUT OF STOCK</span>
-                  )}
+                      {/* Out‑of‑stock pill */}
+                      {product.outOfStock && (
+                        <span className="tp-oos">OUT OF STOCK</span>
+                      )}
 
-                  {/* Product image */}
-                  <div className="tp-card-img">
-                    <div className={`tp-img-layer tp-img-primary ${product.hoverImage ? 'has-hover' : ''}`}>
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        style={{ objectFit: "cover" }}
-                        sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
-                      />
-                    </div>
-                    {product.hoverImage && (
-                      <div className="tp-img-layer tp-img-hover">
-                        <Image
-                          src={product.hoverImage}
-                          alt={`${product.name} Alternate`}
-                          fill
-                          style={{ objectFit: "cover" }}
-                          sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
-                        />
+                      {/* Product image */}
+                      <div className="tp-card-img">
+                        <div className={`tp-img-layer tp-img-primary ${product.hoverImage ? 'has-hover' : ''}`}>
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            style={{ objectFit: "cover" }}
+                            sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
+                          />
+                        </div>
+                        {product.hoverImage && (
+                          <div className="tp-img-layer tp-img-hover">
+                            <Image
+                              src={product.hoverImage}
+                              alt={`${product.name} Alternate`}
+                              fill
+                              style={{ objectFit: "cover" }}
+                              sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
+                            />
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
 
-                  {/* Hover white overlay background */}
-                  <div className="tp-card-hover-bg" />
+                      {/* Hover white overlay background */}
+                      <div className="tp-card-hover-bg" />
 
-                  {/* Center Eye / Heart Action buttons */}
-                  <div className="tp-hover-actions">
-                    <button className="tp-action-btn" type="button" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    </button>
-                    <button className="tp-action-btn" type="button" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                      </svg>
-                    </button>
-                  </div>
+                      {/* Center Eye / Heart Action buttons */}
+                      <div className="tp-hover-actions">
+                        <button className="tp-action-btn" type="button" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                        </button>
+                        <button className="tp-action-btn" type="button" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                          </svg>
+                        </button>
+                      </div>
 
-                  {/* Bottom Add to Cart / External Button */}
-                  {product.outOfStock ? (
-                    <button className="tp-atc-btn tp-btn-disabled" type="button" disabled>
-                      OUT OF STOCK
-                    </button>
-                  ) : product.isExternal ? (
-                    <button type="button" className="tp-atc-btn" onClick={(e) => e.preventDefault()}>
-                      BUY ON AMAZON
-                    </button>
-                  ) : (
-                    <button className="tp-atc-btn" type="button" onClick={(e) => handleAddToCart(e, product.id)}>
-                      ADD TO CART
-                    </button>
-                  )}
-                </div>
+                      {/* Bottom Add to Cart / External Button */}
+                      {product.outOfStock ? (
+                        <button className="tp-atc-btn tp-btn-disabled" type="button" disabled>
+                          OUT OF STOCK
+                        </button>
+                      ) : product.isExternal ? (
+                        <button type="button" className="tp-atc-btn" onClick={(e) => e.preventDefault()}>
+                          BUY ON AMAZON
+                        </button>
+                      ) : (
+                        <button className="tp-atc-btn" type="button" onClick={(e) => handleAddToCart(e, product.id)}>
+                          ADD TO CART
+                        </button>
+                      )}
+                    </div>
 
-                {/* ▸ Info area (Bottom box) */}
-                <div className="tp-card-info">
-                  <h3 className="tp-card-name">{product.name}</h3>
-                  <div className="tp-card-stars" aria-label="Rated 5 out of 5">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <svg key={s} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="tp-card-desc">{product.description}</p>
-                  <div className="tp-card-price-wrap">
-                    {product.originalPrice && (
-                      <span className="tp-card-original-price">
-                        {product.originalPrice}
-                      </span>
-                    )}
-                    <span className="tp-card-price">{product.price}</span>
-                  </div>
-                </div>
-                </article>
-              </Link>
-            );
-          })}
+                    {/* ▸ Info area (Bottom box) */}
+                    <div className="tp-card-info">
+                      <h3 className="tp-card-name">{product.name}</h3>
+                      <div className="tp-card-stars" aria-label="Rated 5 out of 5">
+                        {[0, 1, 2, 3, 4].map((s) => (
+                          <svg key={s} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="tp-card-desc">{product.description}</p>
+                      <div className="tp-card-price-wrap">
+                        {product.originalPrice && (
+                          <span className="tp-card-original-price">
+                            {product.originalPrice}
+                          </span>
+                        )}
+                        <span className="tp-card-price">{product.price}</span>
+                      </div>
+                    </div>
+                  </article>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="tp-view-all-wrap">
+            <button type="button" onClick={() => router.push('/shop')} className="tp-view-all-btn">
+              LOAD MORE
+            </button>
+          </div>
         </div>
-        <div className="tp-view-all-wrap">
-          <button type="button" onClick={() => router.push('/shop')} className="tp-view-all-btn">
-            LOAD MORE
-          </button>
-        </div>
-      </div>
       </div>
 
       {/* ═══════════════════ STYLES ═══════════════════ */}

@@ -6,26 +6,37 @@ import ShopToolbar, { type SortOption, type LayoutMode } from "./ShopToolbar";
 import ShopProductCard from "./ShopProductCard";
 import ShopQuickView from "./ShopQuickView";
 import ShopSidebar from "./ShopSidebar";
-import { PERFUME_CATALOG, type PerfumeProduct } from "../../data/perfumeCatalog";
+import { Loader2 } from "lucide-react";
+import { fetchAllProducts, type ApiProduct } from "../../lib/api";
 
 const PER_PAGE = 20;
 
 export default function ShopGrid() {
+  const [products, setProducts] = useState<ApiProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  
   const [sortBy, setSortBy] = useState<SortOption>("featured");
   const [layoutMode, setLayoutMode] = useState<LayoutMode>("cinematic");
   const [animKey, setAnimKey] = useState(0);
-  const [quickViewProduct, setQuickViewProduct] = useState<PerfumeProduct | null>(null);
+  const [quickViewProduct, setQuickViewProduct] = useState<ApiProduct | null>(null);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [visibleCount, setVisibleCount] = useState(PER_PAGE);
 
-  /* Filter by search query (brand, description, notes) and category */
+  useEffect(() => {
+    fetchAllProducts().then((data) => {
+      setProducts(data);
+      setLoading(false);
+    });
+  }, []);
+
+  /* Filter by search query (brand, description, short_description) and category */
   const filteredProducts = useMemo(() => {
-    let products = PERFUME_CATALOG;
+    let filtered = products;
 
     if (activeCategory !== "all") {
-      products = products.filter((p) => {
-        const notes = p.notes.toLowerCase();
+      filtered = filtered.filter((p) => {
+        const notes = (p.short_description || "").toLowerCase();
         if (activeCategory === "him") {
           return notes.includes("oud") || notes.includes("leather") || notes.includes("wood") || notes.includes("cedar") || notes.includes("vetiver");
         }
@@ -46,33 +57,33 @@ export default function ShopGrid() {
     }
 
     const q = search.trim().toLowerCase();
-    if (!q) return products;
-    
-    return products.filter(
+    if (!q) return filtered;
+
+    return filtered.filter(
       (p) =>
         p.brand.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q) ||
-        p.notes.toLowerCase().includes(q)
+        (p.short_description || "").toLowerCase().includes(q)
     );
-  }, [search, activeCategory]);
+  }, [search, activeCategory, products]);
 
   /* Sorted products */
   const sortedProducts = useMemo(() => {
-    const products = [...filteredProducts];
+    const sorted = [...filteredProducts];
     switch (sortBy) {
       case "price-asc":
-        return products.sort((a, b) => a.price - b.price);
+        return sorted.sort((a, b) => a.new_price - b.new_price);
       case "price-desc":
-        return products.sort((a, b) => b.price - a.price);
+        return sorted.sort((a, b) => b.new_price - a.new_price);
       case "alpha-asc":
-        return products.sort((a, b) => a.brand.localeCompare(b.brand));
+        return sorted.sort((a, b) => a.brand.localeCompare(b.brand));
       case "alpha-desc":
-        return products.sort((a, b) => b.brand.localeCompare(a.brand));
+        return sorted.sort((a, b) => b.brand.localeCompare(a.brand));
       case "newest":
-        return products.sort((a, b) => b.id - a.id);
+        return sorted.sort((a, b) => b.id - a.id);
       case "featured":
       default:
-        return products;
+        return sorted;
     }
   }, [sortBy, filteredProducts]);
 
@@ -99,6 +110,7 @@ export default function ShopGrid() {
     );
   };
 
+
   return (
     <div className="sg-wrapper">
       <ShopToolbar
@@ -111,7 +123,12 @@ export default function ShopGrid() {
         onSearchChange={setSearch}
       />
 
-      {visibleProducts.length === 0 ? (
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-24">
+          <Loader2 className="w-10 h-10 animate-spin text-gray-400 mb-4" />
+          <p className="text-gray-500 font-medium">Loading fragrances...</p>
+        </div>
+      ) : visibleProducts.length === 0 ? (
         <div className="sg-empty">
           <p className="sg-empty-title">No fragrances found</p>
           <p className="sg-empty-sub">Try a different search term.</p>
@@ -120,9 +137,9 @@ export default function ShopGrid() {
         <div className="sg-layout-inner">
           {layoutMode !== "grid" && (
             <aside className="sg-sidebar-container">
-              <ShopSidebar 
-                activeCategory={activeCategory} 
-                onSelectCategory={setActiveCategory} 
+              <ShopSidebar
+                activeCategory={activeCategory}
+                onSelectCategory={setActiveCategory}
               />
             </aside>
           )}

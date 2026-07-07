@@ -84,13 +84,11 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
           <button
             type="button"
             onClick={() => toggleWishlist(Number(product.id))}
-            className={`group flex items-center gap-2 text-xs font-semibold tracking-wider transition-all ${
-              isInWishlist(Number(product.id)) ? 'text-[#1a1a1a]' : 'text-gray-500 hover:text-[#1a1a1a]'
-            }`}
+            className={`group flex items-center gap-2 text-xs font-semibold tracking-wider transition-all ${isInWishlist(Number(product.id)) ? 'text-[#1a1a1a]' : 'text-gray-500 hover:text-[#1a1a1a]'
+              }`}
           >
-            <Heart className={`h-4 w-4 transition-all duration-300 group-hover:scale-110 ${
-              isInWishlist(Number(product.id)) ? 'fill-[#1a1a1a] text-[#1a1a1a]' : 'group-hover:fill-[#1a1a1a]'
-            }`} />
+            <Heart className={`h-4 w-4 transition-all duration-300 group-hover:scale-110 ${isInWishlist(Number(product.id)) ? 'fill-[#1a1a1a] text-[#1a1a1a]' : 'group-hover:fill-[#1a1a1a]'
+              }`} />
             {isInWishlist(Number(product.id)) ? 'IN WISHLIST' : 'ADD TO WISHLIST'}
           </button>
         </motion.div>

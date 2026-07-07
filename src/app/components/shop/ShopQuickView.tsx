@@ -3,10 +3,10 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { PerfumeProduct } from "../../data/perfumeCatalog";
+import type { ApiProduct } from "../../lib/api";
 
 interface ShopQuickViewProps {
-  product: PerfumeProduct | null;
+  product: ApiProduct | null;
   onClose: () => void;
 }
 
@@ -98,11 +98,11 @@ export default function ShopQuickView({ product, onClose }: ShopQuickViewProps) 
 
               <div className="sq-notes-block">
                 <span className="sq-notes-label">NOTES</span>
-                <p className="sq-notes">{product.notes}</p>
+                <p className="sq-notes">{product.short_description}</p>
               </div>
 
               <div className="sq-price-row">
-                <span className="sq-price">${product.price.toFixed(2)}</span>
+                <span className="sq-price">${product.new_price.toFixed(2)}</span>
                 <span className="sq-size">100 ml</span>
               </div>
 

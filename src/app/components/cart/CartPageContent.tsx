@@ -17,11 +17,8 @@ import {
 import styles from "./cart.module.css";
 import { useCart } from "./CartProvider";
 import { useLoginModal } from "../auth/LoginModalProvider";
-import {
-  PERFUME_CATALOG,
-  formatPerfumePrice,
-  type PerfumeProduct,
-} from "../../data/perfumeCatalog";
+import { fetchAllProducts, type ApiProduct } from "../../lib/api";
+import { formatPerfumePrice } from "../../data/perfumeCatalog";
 
 const FREE_SHIPPING_THRESHOLD = 75;
 
@@ -52,13 +49,13 @@ function CartLineItem({
   onRemove,
   onQuantityChange,
 }: {
-  product: PerfumeProduct;
+  product: ApiProduct;
   quantity: number;
   index: number;
   onRemove: (id: number) => void;
   onQuantityChange: (id: number, qty: number) => void;
 }) {
-  const lineTotal = product.price * quantity;
+  const lineTotal = product.new_price * quantity;
 
   return (
     <motion.article
@@ -83,7 +80,7 @@ function CartLineItem({
         </Link>
         <p className={styles.lineDesc}>{product.description}</p>
         <p className={styles.lineUnitPrice}>
-          {formatPerfumePrice(product.price)} each
+          {formatPerfumePrice(product.new_price)} each
         </p>
       </div>
 
@@ -138,6 +135,11 @@ export default function CartPageContent() {
   const { openLoginModal } = useLoginModal();
   const [showContent, setShowContent] = useState(false);
   const [showCheckoutOptions, setShowCheckoutOptions] = useState(false);
+  const [allProducts, setAllProducts] = useState<ApiProduct[]>([]);
+
+  useEffect(() => {
+    fetchAllProducts().then(setAllProducts);
+  }, []);
 
   useEffect(() => {
     if (!loaded) return;
@@ -149,21 +151,21 @@ export default function CartPageContent() {
     () =>
       lines
         .map((line) => {
-          const product = PERFUME_CATALOG.find((p) => p.id === line.productId);
+          const product = allProducts.find((p) => p.id === line.productId);
           if (!product) return null;
           return { product, quantity: line.quantity };
         })
         .filter(
-          (item): item is { product: PerfumeProduct; quantity: number } =>
+          (item): item is { product: ApiProduct; quantity: number } =>
             Boolean(item)
         ),
-    [lines]
+    [lines, allProducts]
   );
 
   const subtotal = useMemo(
     () =>
       cartItems.reduce(
-        (sum, { product, quantity }) => sum + product.price * quantity,
+        (sum, { product, quantity }) => sum + product.new_price * quantity,
         0
       ),
     [cartItems]
@@ -294,8 +296,8 @@ export default function CartPageContent() {
                   </span>
                 </div>
 
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={`poi-btn ${styles.checkoutBtn}`}
                   onClick={() => setShowCheckoutOptions(true)}
                 >
@@ -367,8 +369,8 @@ export default function CartPageContent() {
             <h2 className={styles.modalTitle}>Checkout Options</h2>
             <p className={styles.modalSub}>How would you like to proceed with your order?</p>
             <div className={styles.modalActions}>
-              <button 
-                className={`poi-btn ${styles.modalBtnLogin}`} 
+              <button
+                className={`poi-btn ${styles.modalBtnLogin}`}
                 onClick={() => {
                   setShowCheckoutOptions(false);
                   openLoginModal();
@@ -376,8 +378,8 @@ export default function CartPageContent() {
               >
                 Login to Checkout
               </button>
-              <Link 
-                href="/checkout" 
+              <Link
+                href="/checkout"
                 className={`poi-btn ${styles.modalBtnGuest}`}
                 onClick={() => setShowCheckoutOptions(false)}
               >

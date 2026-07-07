@@ -6,7 +6,7 @@ import styles from "../components/profile/profile.module.css";
 import { Package, ExternalLink, Search, Loader2, Calendar, Eye, Box, X } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { PERFUME_CATALOG } from "../data/perfumeCatalog";
+import { fetchAllProducts, type ApiProduct } from "../lib/api";
 import Image from "next/image";
 
 type OrderItem = {
@@ -62,6 +62,11 @@ export default function OrdersPage() {
   const [statusFilter, setStatusFilter] = useState("");
   const [selectedOrder, setSelectedOrder] = useState<OrderType | null>(null);
   const [alertState, setAlertState] = useState<AlertState | null>(null);
+  const [allProducts, setAllProducts] = useState<ApiProduct[]>([]);
+
+  useEffect(() => {
+    fetchAllProducts().then(setAllProducts);
+  }, []);
 
   // Simulate network loading
   useEffect(() => {
@@ -120,7 +125,7 @@ export default function OrdersPage() {
             order.id === orderId ? { ...order, status: "Cancelled" } : order
           )
         );
-        setSelectedOrder((prev) => 
+        setSelectedOrder((prev) =>
           prev?.id === orderId ? { ...prev, status: "Cancelled" } : prev
         );
         setAlertState(null);
@@ -222,8 +227,8 @@ export default function OrdersPage() {
             <div className="flex flex-col gap-6">
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                 {filteredOrders.map((order) => (
-                  <div 
-                    key={order.id} 
+                  <div
+                    key={order.id}
                     className="bg-white rounded-xl p-5 shadow-sm border border-gray-200 cursor-pointer hover:shadow-md hover:border-gray-300 transition-all"
                     onClick={() => setSelectedOrder(order)}
                   >
@@ -233,11 +238,10 @@ export default function OrdersPage() {
                         <p className="text-gray-500 text-xs mb-1">Order</p>
                         <p className="font-bold text-[#1a1a1a]">{order.id}</p>
                       </div>
-                      <div className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 ${
-                        order.status === 'Pending' ? 'bg-yellow-50 text-yellow-700' : 
-                        order.status === 'Processing' ? 'bg-blue-50 text-blue-700' : 
-                        order.status === 'Delivered' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-700'
-                      }`}>
+                      <div className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 ${order.status === 'Pending' ? 'bg-yellow-50 text-yellow-700' :
+                          order.status === 'Processing' ? 'bg-blue-50 text-blue-700' :
+                            order.status === 'Delivered' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-700'
+                        }`}>
                         {order.status === 'Pending' ? (
                           <Loader2 size={12} className="animate-spin" />
                         ) : order.status === 'Processing' ? (
@@ -267,19 +271,18 @@ export default function OrdersPage() {
 
                     {/* Actions */}
                     <div className="flex gap-3">
-                      <button 
+                      <button
                         className="poi-btn flex-1 py-2.5 rounded-lg text-sm flex items-center justify-center gap-2"
                         onClick={(e) => { e.stopPropagation(); setSelectedOrder(order); }}
                       >
                         <Eye size={16} /> View Details
                       </button>
-                      <button 
+                      <button
                         onClick={(e) => { e.stopPropagation(); handleCancelOrder(order.id, order.status); }}
-                        className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                          order.status === 'Cancelled' 
-                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                        className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-colors ${order.status === 'Cancelled'
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                             : 'bg-transparent border border-gray-300 text-gray-700 hover:bg-red-50 hover:text-red-600 hover:border-red-200'
-                        }`}>
+                          }`}>
                         {order.status === 'Cancelled' ? 'Cancelled' : 'Cancel'}
                       </button>
                     </div>
@@ -370,11 +373,10 @@ export default function OrdersPage() {
                     <p className="font-bold text-lg text-[#1a1a1a]">{selectedOrder.id}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 ${
-                      selectedOrder.status === 'Pending' ? 'bg-yellow-50 text-yellow-700' : 
-                      selectedOrder.status === 'Processing' ? 'bg-blue-50 text-blue-700' : 
-                      selectedOrder.status === 'Delivered' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-700'
-                    }`}>
+                    <div className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 ${selectedOrder.status === 'Pending' ? 'bg-yellow-50 text-yellow-700' :
+                        selectedOrder.status === 'Processing' ? 'bg-blue-50 text-blue-700' :
+                          selectedOrder.status === 'Delivered' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-700'
+                      }`}>
                       {selectedOrder.status}
                     </div>
                     <span className="text-sm text-gray-500">{selectedOrder.date}</span>
@@ -385,7 +387,7 @@ export default function OrdersPage() {
                   <h3 className="font-semibold text-[#1a1a1a] mb-4">Items</h3>
                   <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
                     {selectedOrder.items.map((item, idx) => {
-                      const product = PERFUME_CATALOG.find((p) => p.id === item.productId);
+                      const product = allProducts.find((p) => p.id === item.productId);
                       if (!product) return null;
                       return (
                         <div key={idx}>
@@ -396,11 +398,11 @@ export default function OrdersPage() {
                               </div>
                               <div>
                                 <p className="font-semibold text-[#1a1a1a]">{product.brand}</p>
-                                <p className="text-sm text-gray-500 mt-0.5">Qty: {item.qty} • ${product.price.toFixed(2)} each</p>
+                                <p className="text-sm text-gray-500 mt-0.5">Qty: {item.qty} • ${product.new_price.toFixed(2)} each</p>
                               </div>
                             </div>
                             <p className="font-semibold text-[#1a1a1a]">
-                              ${(product.price * item.qty).toFixed(2)}
+                              ${(product.new_price * item.qty).toFixed(2)}
                             </p>
                           </div>
                           {idx < selectedOrder.items.length - 1 && (
@@ -423,14 +425,14 @@ export default function OrdersPage() {
                       <p className="pt-2">+1 (555) 123-4567</p>
                     </div>
                   </div>
-                  
+
                   <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
                     <h3 className="font-semibold text-[#1a1a1a] mb-3">Payment</h3>
                     <div className="text-sm space-y-2 mb-4 text-gray-600">
                       <p>Method: Cash on Delivery</p>
                       <p>Status: <span className="capitalize">{selectedOrder.status.toLowerCase()}</span></p>
                     </div>
-                    
+
                     <div className="space-y-2 text-sm pt-4 border-t border-gray-100">
                       <div className="flex justify-between text-gray-600">
                         <span>Subtotal</span>
@@ -479,17 +481,17 @@ export default function OrdersPage() {
               </div>
               <h3 className="text-xl font-bold text-[#1a1a1a] mb-2">{alertState.title}</h3>
               <p className="text-gray-600 mb-6 text-sm">{alertState.message}</p>
-              
+
               <div className="flex gap-3 justify-center">
                 {alertState.type === 'confirm' && (
-                  <button 
+                  <button
                     onClick={() => setAlertState(null)}
                     className="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                   >
                     Keep Order
                   </button>
                 )}
-                <button 
+                <button
                   onClick={() => {
                     if (alertState.type === 'confirm' && alertState.onConfirm) {
                       alertState.onConfirm();
@@ -497,9 +499,8 @@ export default function OrdersPage() {
                       setAlertState(null);
                     }
                   }}
-                  className={`px-6 py-2.5 rounded-lg text-sm font-medium text-white transition-colors ${
-                    alertState.type === 'confirm' ? 'bg-red-600 hover:bg-red-700' : 'bg-[#1a1a1a] hover:bg-black'
-                  }`}
+                  className={`px-6 py-2.5 rounded-lg text-sm font-medium text-white transition-colors ${alertState.type === 'confirm' ? 'bg-red-600 hover:bg-red-700' : 'bg-[#1a1a1a] hover:bg-black'
+                    }`}
                 >
                   {alertState.type === 'confirm' ? 'Yes, Cancel It' : 'Okay'}
                 </button>

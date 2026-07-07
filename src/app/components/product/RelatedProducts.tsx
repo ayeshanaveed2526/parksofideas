@@ -1,33 +1,43 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { PERFUME_CATALOG, formatPerfumePrice } from '../../data/perfumeCatalog';
+import { fetchAllProducts, type ApiProduct } from '../../lib/api';
+import { formatPerfumePrice } from '../../data/perfumeCatalog';
 import { useCart } from '../cart/CartProvider';
 import { useWishlist } from '../wishlist/WishlistProvider';
-
-const relatedProducts = PERFUME_CATALOG.slice(0, 8).map((p) => {
-  const hasDiscount = p.id === 5;
-  const currentPrice = hasDiscount ? p.price * 0.9 : p.price;
-  
-  return {
-    id: String(p.id),
-    name: p.brand,
-    desc: p.description,
-    price: currentPrice,
-    originalPrice: hasDiscount ? p.price : undefined,
-    image: p.image,
-    badge: p.id === 5 ? '-10%' : p.id % 4 === 0 ? 'FEATURED' : p.id <= 8 ? 'NEW' : null,
-  };
-});
+import { Loader2 } from 'lucide-react';
 
 export default function RelatedProducts() {
   const router = useRouter();
   const { add: addToCart } = useCart();
   const { add: addToWishlist } = useWishlist();
+  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAllProducts().then((data) => {
+      const top8 = data.slice(0, 8).map((p: ApiProduct) => {
+        const hasDiscount = p.old_price > p.new_price;
+        const discountPercent = hasDiscount ? Math.round(((p.old_price - p.new_price) / p.old_price) * 100) : 0;
+        
+        return {
+          id: String(p.id),
+          name: p.brand,
+          desc: p.description,
+          price: p.new_price,
+          originalPrice: hasDiscount ? p.old_price : undefined,
+          image: p.image,
+          badge: hasDiscount ? `-${discountPercent}%` : p.id % 4 === 0 ? 'FEATURED' : p.id <= 8 ? 'NEW' : null,
+        };
+      });
+      setRelatedProducts(top8);
+      setLoading(false);
+    });
+  }, []);
 
   const handleQuickView = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
@@ -61,82 +71,89 @@ export default function RelatedProducts() {
         </motion.div>
       </div>
 
-      <div className="rp-marquee-wrap">
-        <div className="rp-marquee-track">
-          {[...relatedProducts, ...relatedProducts].map((product, idx) => (
-            <div key={`${product.id}-${idx}`} className="rp-marquee-item">
-                <Link href={`/product/${product.id}`} className="rp-card-link">
-                  <article className="rp-card">
-                    <div className="rp-img-wrap">
-                      {product.badge && (
-                        <span className="rp-badge">{product.badge}</span>
-                      )}
-                      <div className="rp-img-inner">
-                        <motion.div
-                          animate={{ y: [0, -10, 0] }}
-                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: (idx % 8) * 0.2 }}
-                          style={{ width: '100%', height: '100%', position: 'relative' }}
-                        >
-                            <Image
-                              src={product.image}
-                              alt={product.name}
-                              fill
-                              style={{ objectFit: 'cover' }}
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                              className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
-                            />
-                        </motion.div>
-                      </div>
-                      <div className="rp-hover-bg"></div>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-gray-400 mb-4" />
+          <p className="text-gray-500 text-sm tracking-widest uppercase">Loading Recommendations...</p>
+        </div>
+      ) : (
+        <div className="rp-marquee-wrap">
+          <div className="rp-marquee-track">
+            {[...relatedProducts, ...relatedProducts].map((product, idx) => (
+              <div key={`${product.id}-${idx}`} className="rp-marquee-item">
+              <Link href={`/product/${product.id}`} className="rp-card-link">
+                <article className="rp-card">
+                  <div className="rp-img-wrap">
+                    {product.badge && (
+                      <span className="rp-badge">{product.badge}</span>
+                    )}
+                    <div className="rp-img-inner">
+                      <motion.div
+                        animate={{ y: [0, -10, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: (idx % 8) * 0.2 }}
+                        style={{ width: '100%', height: '100%', position: 'relative' }}
+                      >
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          style={{ objectFit: 'cover' }}
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="drop-shadow-[0_15px_25px_rgba(0,0,0,0.12)]"
+                        />
+                      </motion.div>
+                    </div>
+                    <div className="rp-hover-bg"></div>
 
-                      {/* Action buttons */}
-                      <div className="rp-actions">
-                        <button className="rp-action-btn" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                            <circle cx="12" cy="12" r="3" />
-                          </svg>
-                        </button>
-                        <button className="rp-action-btn" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                          </svg>
-                        </button>
-                      </div>
-
-                      {/* ATC Button */}
-                      <button className="rp-atc" onClick={(e) => handleAddToCart(e, product.id)}>
-                        ADD TO CART
+                    {/* Action buttons */}
+                    <div className="rp-actions">
+                      <button className="rp-action-btn" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                      </button>
+                      <button className="rp-action-btn" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                        </svg>
                       </button>
                     </div>
 
-                    <div className="rp-info">
-                      <div className="rp-info-header">
-                        <h3 className="rp-name">{product.name}</h3>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-                          <p className="rp-price">{formatPerfumePrice(product.price)}</p>
-                          {product.originalPrice && (
-                            <p style={{ textDecoration: 'line-through', color: '#9CA3AF', fontSize: '13px', margin: 0 }}>
-                              {formatPerfumePrice(product.originalPrice)}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <p className="rp-desc">{product.desc}</p>
-                      <div className="rp-rating">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <svg key={i} viewBox="0 0 20 20" fill="currentColor" className="rp-star">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
+                    {/* ATC Button */}
+                    <button className="rp-atc" onClick={(e) => handleAddToCart(e, product.id)}>
+                      ADD TO CART
+                    </button>
+                  </div>
+
+                  <div className="rp-info">
+                    <div className="rp-info-header">
+                      <h3 className="rp-name">{product.name}</h3>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                        <p className="rp-price">{formatPerfumePrice(product.price)}</p>
+                        {product.originalPrice && (
+                          <p style={{ textDecoration: 'line-through', color: '#9CA3AF', fontSize: '13px', margin: 0 }}>
+                            {formatPerfumePrice(product.originalPrice)}
+                          </p>
+                        )}
                       </div>
                     </div>
-                  </article>
-                </Link>
-              </div>
-            ))}
-          </div>
+                    <p className="rp-desc">{product.desc}</p>
+                    <div className="rp-rating">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <svg key={i} viewBox="0 0 20 20" fill="currentColor" className="rp-star">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </Link>
+            </div>
+          ))}
         </div>
+      </div>
+      )}
 
       <style jsx>{`
         .rp-section {

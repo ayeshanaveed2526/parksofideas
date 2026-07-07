@@ -4,15 +4,15 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { PERFUME_CATALOG, type PerfumeProduct } from "../../data/perfumeCatalog";
+import type { ApiProduct } from "../../lib/api";
 import type { LayoutMode } from "./ShopToolbar";
 import { useWishlist } from "../wishlist/WishlistProvider";
 import { useCart } from "../cart/CartProvider";
 
 interface ShopProductCardProps {
-  product: PerfumeProduct;
+  product: ApiProduct;
   index: number;
-  onQuickView: (product: PerfumeProduct) => void;
+  onQuickView: (product: ApiProduct) => void;
   layoutMode: LayoutMode;
 }
 
@@ -25,16 +25,22 @@ export default function ShopProductCard({ product, index, onQuickView, layoutMod
   const badges: { text: string; color: string; textColor?: string }[] = [];
   if (product.id <= 6) badges.push({ text: "NEW", color: "#ffd700", textColor: "#000" });
   if (product.id % 4 === 0) badges.push({ text: "FEATURED", color: "#c8a96e" });
-  if (product.id === 5) badges.push({ text: "-10%", color: "#1a1a1a" });
+  
+  const hasDiscount = product.old_price > product.new_price;
+  if (hasDiscount) {
+    const discountPercent = Math.round(((product.old_price - product.new_price) / product.old_price) * 100);
+    badges.push({ text: `-${discountPercent}%`, color: "#1a1a1a" });
+  }
+  
   const leftBadges = badges.filter((b) => b.text !== "FEATURED");
 
-  const hasDiscount = product.id === 5;
-  const currentPrice = hasDiscount ? product.price * 0.9 : product.price;
+  const currentPrice = product.new_price;
+  const originalPrice = hasDiscount ? product.old_price : null;
 
   const formattedPrice = `$${currentPrice.toFixed(2)}`;
-  const formattedOriginalPrice = hasDiscount ? `$${product.price.toFixed(2)}` : null;
-  const hoverProduct = PERFUME_CATALOG[(index + 1) % PERFUME_CATALOG.length];
-  const hoverImage = hoverProduct ? hoverProduct.image : product.image;
+  const formattedOriginalPrice = originalPrice ? `$${originalPrice.toFixed(2)}` : null;
+  
+  const hoverImage = product.images && product.images.length > 1 ? product.images[1] : product.image;
 
   const handleCardClick = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest("button")) return;

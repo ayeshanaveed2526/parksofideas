@@ -1,70 +1,41 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, A11y } from "swiper/modules";
 import "swiper/css";
-import { PERFUME_CATALOG, PRODUCT_GRID_IMAGES } from "../data/perfumeCatalog";
-
-const bySlug = (slug: string) => PERFUME_CATALOG.find((p) => p.slug === slug)!;
+import { fetchAllProducts, type ApiProduct } from "../lib/api";
+import { PRODUCT_GRID_IMAGES } from "../data/perfumeCatalog";
+import { Loader2 } from "lucide-react";
 
 type Collection = {
   key: string;
   label: string;
-  perfumes: ReturnType<typeof bySlug>[];
+  perfumes: ApiProduct[];
 };
 
-const collections: Collection[] = [
-  {
-    key: "her",
-    label: "For Her",
-    perfumes: [
-      bySlug("roselle"),
-      bySlug("lumiere"),
-      bySlug("mirabelle"),
-      bySlug("celeste"),
-      bySlug("floren"),
-      bySlug("velora"),
-      bySlug("elysia"),
-      bySlug("seraphine"),
-    ],
-  },
-  {
-    key: "him",
-    label: "For Him",
-    perfumes: [
-      bySlug("orlune"),
-      bySlug("noctelle"),
-      bySlug("vespera"),
-      bySlug("verdelle"),
-      bySlug("montrea"),
-      bySlug("armonia"),
-      bySlug("azelia"),
-      bySlug("celeva"),
-    ],
-  },
-  {
-    key: "unisex",
-    label: "Unisex",
-    perfumes: [
-      bySlug("lucent"),
-      bySlug("azure"),
-      bySlug("aura-crystal"),
-      bySlug("ambrette"),
-      bySlug("elaria"),
-      bySlug("mystique"),
-      bySlug("solene"),
-      bySlug("opaline"),
-    ],
-  },
-];
-
 export default function ShopByCategory() {
-  const [active, setActive] = useState(collections[1].key);
-  const activeCollection =
-    collections.find((c) => c.key === active) ?? collections[0];
+  const [active, setActive] = useState("him");
+  const [products, setProducts] = useState<ApiProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAllProducts().then((data) => {
+      const sortedData = [...data].sort((a, b) => a.id - b.id);
+      setProducts(sortedData);
+      setLoading(false);
+    });
+  }, []);
+
+  const collections: Collection[] = [
+    { key: "her", label: "For Her", perfumes: products.slice(0, 8) },
+    { key: "him", label: "For Him", perfumes: products.slice(8, 16) },
+    { key: "unisex", label: "Unisex", perfumes: products.slice(16, 24) },
+  ];
+
+  const activeCollection = collections.find((c) => c.key === active) ?? collections[0];
 
   return (
     <section className="relative w-full overflow-hidden pt-4 pb-[70px] md:pt-6 md:pb-[90px]">
@@ -121,53 +92,60 @@ export default function ShopByCategory() {
         </div>
 
         <div className="w-full">
-          <Swiper
-            modules={[Autoplay, A11y]}
-            spaceBetween={12}
-            slidesPerView={2}
-            autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-            loop={true}
-            breakpoints={{
-              640: { slidesPerView: 3, spaceBetween: 16 },
-              1024: { slidesPerView: 5, spaceBetween: 16 },
-            }}
-            className="w-full pb-[20px]"
-          >
-            {activeCollection.perfumes.map((perfume, idx) => {
-              const distinctImage = PRODUCT_GRID_IMAGES[(perfume.id * 3 + idx) % PRODUCT_GRID_IMAGES.length];
-              return (
-              <SwiperSlide key={perfume.id}>
-                <Link
-                  href={`/product/${perfume.id}`}
-                  className="group relative block aspect-[3/4.6] overflow-hidden rounded-[18px] border border-[#d6d8df] shadow-[0_10px_30px_rgba(0,8,157,0.08)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[rgba(0,8,157,0.25)] hover:shadow-[0_22px_55px_rgba(0,8,157,0.22)]"
-                  style={{
-                    background:
-                      "linear-gradient(150deg, #eceef2 0%, #dcdee4 55%, #cfd2da 100%)",
-                  }}
-                >
-                  <div className="relative h-full w-full">
-                    <Image
-                      src={distinctImage}
-                      alt={perfume.brand}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
-                    />
-                  </div>
-
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-full bg-linear-to-t from-black/85 via-black/55 to-transparent px-4 pb-5 pt-12 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 flex items-end justify-center">
-                    <p
-                      className="text-center text-[10px] md:text-[11px] uppercase tracking-[0.15em] text-white/90 leading-relaxed"
-                      style={{ fontFamily: "Inter, sans-serif", fontWeight: 300 }}
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <Loader2 className="w-10 h-10 animate-spin text-gray-400 mb-4" />
+              <p className="text-gray-500 font-medium text-sm tracking-widest uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Loading collections...</p>
+            </div>
+          ) : (
+            <Swiper
+              modules={[Autoplay, A11y]}
+              spaceBetween={12}
+              slidesPerView={2}
+              autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+              loop={activeCollection.perfumes.length >= 6}
+              breakpoints={{
+                640: { slidesPerView: 3, spaceBetween: 16 },
+                1024: { slidesPerView: 5, spaceBetween: 16 },
+              }}
+              className="w-full pb-[20px]"
+            >
+              {activeCollection.perfumes.map((perfume, idx) => {
+                const distinctImage = perfume.image || PRODUCT_GRID_IMAGES[(perfume.id * 3 + idx) % PRODUCT_GRID_IMAGES.length];
+                return (
+                  <SwiperSlide key={perfume.id}>
+                    <Link
+                      href={`/product/${perfume.id}`}
+                      className="group relative block aspect-[3/4.6] overflow-hidden rounded-[18px] border border-[#d6d8df] shadow-[0_10px_30px_rgba(0,8,157,0.08)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[rgba(0,8,157,0.25)] hover:shadow-[0_22px_55px_rgba(0,8,157,0.22)]"
+                      style={{
+                        background:
+                          "linear-gradient(150deg, #eceef2 0%, #dcdee4 55%, #cfd2da 100%)",
+                      }}
                     >
-                      {perfume.notes}
-                    </p>
-                  </div>
-                </Link>
-              </SwiperSlide>
-              );
-            })}
-          </Swiper>
+                      <div className="relative h-full w-full">
+                        <Image
+                          src={distinctImage}
+                          alt={perfume.brand}
+                          fill
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
+                        />
+                      </div>
+
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-full bg-linear-to-t from-black/85 via-black/55 to-transparent px-4 pb-5 pt-12 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 flex items-end justify-center">
+                        <p
+                          className="text-center text-[10px] md:text-[11px] uppercase tracking-[0.15em] text-white/90 leading-relaxed"
+                          style={{ fontFamily: "Inter, sans-serif", fontWeight: 300 }}
+                        >
+                          {perfume.short_description}
+                        </p>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          )}
         </div>
       </div>
     </section>

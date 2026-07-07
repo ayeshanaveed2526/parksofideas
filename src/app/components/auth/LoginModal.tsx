@@ -135,7 +135,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         <header className={styles.header}>
           {isSignUp ? (
             <>
-              <img src="/assets/logo.png" alt="ELIX BY IR" className={styles.logoImage} />
+
               <h2 id="login-modal-title" className={styles.title}>
                 Join Elix by IR
               </h2>
@@ -143,7 +143,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             </>
           ) : (
             <>
-              <img src="/assets/logo.png" alt="ELIX BY IR" className={styles.logoImage} />
+
               <h2 id="login-modal-title" className={styles.title}>
                 Welcome Back
               </h2>

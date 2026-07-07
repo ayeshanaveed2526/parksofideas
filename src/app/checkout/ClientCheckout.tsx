@@ -7,11 +7,8 @@ import { motion } from "framer-motion";
 import { CheckCircle, ShieldCheck, CreditCard, ChevronRight, X, Wallet, Truck } from "lucide-react";
 import styles from "./checkout.module.css";
 import { useCart } from "../components/cart/CartProvider";
-import {
-  PERFUME_CATALOG,
-  formatPerfumePrice,
-  type PerfumeProduct,
-} from "../data/perfumeCatalog";
+import { fetchAllProducts, type ApiProduct } from "../lib/api";
+import { formatPerfumePrice } from "../data/perfumeCatalog";
 
 const FREE_SHIPPING_THRESHOLD = 75;
 
@@ -30,13 +27,19 @@ export default function CheckoutClient() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
-  
+
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expDate, setExpDate] = useState("");
   const [cvc, setCvc] = useState("");
 
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+
+  const [allProducts, setAllProducts] = useState<ApiProduct[]>([]);
+
+  useEffect(() => {
+    fetchAllProducts().then(setAllProducts);
+  }, []);
 
   useEffect(() => {
     if (!loaded) return;
@@ -48,16 +51,16 @@ export default function CheckoutClient() {
     () =>
       lines
         .map((line) => {
-          const product = PERFUME_CATALOG.find((p) => p.id === line.productId);
+          const product = allProducts.find((p) => p.id === line.productId);
           if (!product) return null;
           return { product, quantity: line.quantity };
         })
-        .filter((item): item is { product: PerfumeProduct; quantity: number } => Boolean(item)),
-    [lines]
+        .filter((item): item is { product: ApiProduct; quantity: number } => Boolean(item)),
+    [lines, allProducts]
   );
 
   const subtotal = useMemo(
-    () => cartItems.reduce((sum, { product, quantity }) => sum + product.price * quantity, 0),
+    () => cartItems.reduce((sum, { product, quantity }) => sum + product.new_price * quantity, 0),
     [cartItems]
   );
 
@@ -66,7 +69,7 @@ export default function CheckoutClient() {
 
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newErrors: Record<string, string | undefined> = {};
 
     if (!email.trim()) {
@@ -160,7 +163,7 @@ export default function CheckoutClient() {
                 <h2 className={styles.sectionTitle}>Contact Information</h2>
                 <div className={styles.formGroup}>
                   <label htmlFor="email">Email Address</label>
-                  <input type="email" id="email" required placeholder="you@example.com" value={email} onChange={e => { setEmail(e.target.value); if(errors.email) setErrors({...errors, email: undefined})}} />
+                  <input type="email" id="email" required placeholder="you@example.com" value={email} onChange={e => { setEmail(e.target.value); if (errors.email) setErrors({ ...errors, email: undefined }) }} />
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
 
@@ -168,34 +171,34 @@ export default function CheckoutClient() {
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
                     <label htmlFor="firstName">First Name</label>
-                    <input type="text" id="firstName" required value={firstName} onChange={e => { setFirstName(e.target.value); if(errors.firstName) setErrors({...errors, firstName: undefined})}} />
+                    <input type="text" id="firstName" required value={firstName} onChange={e => { setFirstName(e.target.value); if (errors.firstName) setErrors({ ...errors, firstName: undefined }) }} />
                     {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="lastName">Last Name</label>
-                    <input type="text" id="lastName" required value={lastName} onChange={e => { setLastName(e.target.value); if(errors.lastName) setErrors({...errors, lastName: undefined})}} />
+                    <input type="text" id="lastName" required value={lastName} onChange={e => { setLastName(e.target.value); if (errors.lastName) setErrors({ ...errors, lastName: undefined }) }} />
                     {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
                   </div>
                 </div>
                 <div className={styles.formGroup}>
                   <label htmlFor="address">Address</label>
-                  <input type="text" id="address" required placeholder="123 Fragrance Lane" value={address} onChange={e => { setAddress(e.target.value); if(errors.address) setErrors({...errors, address: undefined})}} />
+                  <input type="text" id="address" required placeholder="123 Fragrance Lane" value={address} onChange={e => { setAddress(e.target.value); if (errors.address) setErrors({ ...errors, address: undefined }) }} />
                   {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
                 </div>
                 <div className={styles.formGroup}>
                   <label htmlFor="city">City</label>
-                  <input type="text" id="city" required value={city} onChange={e => { setCity(e.target.value); if(errors.city) setErrors({...errors, city: undefined})}} />
+                  <input type="text" id="city" required value={city} onChange={e => { setCity(e.target.value); if (errors.city) setErrors({ ...errors, city: undefined }) }} />
                   {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
                 </div>
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
                     <label htmlFor="state">State / Province</label>
-                    <input type="text" id="state" required value={state} onChange={e => { setState(e.target.value); if(errors.state) setErrors({...errors, state: undefined})}} />
+                    <input type="text" id="state" required value={state} onChange={e => { setState(e.target.value); if (errors.state) setErrors({ ...errors, state: undefined }) }} />
                     {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="zip">ZIP / Postal Code</label>
-                    <input type="text" id="zip" required value={zip} onChange={e => { setZip(e.target.value); if(errors.zip) setErrors({...errors, zip: undefined})}} />
+                    <input type="text" id="zip" required value={zip} onChange={e => { setZip(e.target.value); if (errors.zip) setErrors({ ...errors, zip: undefined }) }} />
                     {errors.zip && <p className="text-red-500 text-xs mt-1">{errors.zip}</p>}
                   </div>
                 </div>
@@ -232,8 +235,8 @@ export default function CheckoutClient() {
                         </>
                       )}
                     </div>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       className={styles.changePaymentBtn}
                       onClick={() => setIsPaymentModalOpen(true)}
                     >
@@ -245,23 +248,23 @@ export default function CheckoutClient() {
                     <div className={styles.creditCardForm}>
                       <div className={styles.formGroup}>
                         <label htmlFor="cardName">Name on Card</label>
-                        <input type="text" id="cardName" required value={cardName} onChange={e => { setCardName(e.target.value); if(errors.cardName) setErrors({...errors, cardName: undefined})}} />
+                        <input type="text" id="cardName" required value={cardName} onChange={e => { setCardName(e.target.value); if (errors.cardName) setErrors({ ...errors, cardName: undefined }) }} />
                         {errors.cardName && <p className="text-red-500 text-xs mt-1">{errors.cardName}</p>}
                       </div>
                       <div className={styles.formGroup}>
                         <label htmlFor="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" required placeholder="0000 0000 0000 0000" value={cardNumber} onChange={e => { setCardNumber(e.target.value); if(errors.cardNumber) setErrors({...errors, cardNumber: undefined})}} />
+                        <input type="text" id="cardNumber" required placeholder="0000 0000 0000 0000" value={cardNumber} onChange={e => { setCardNumber(e.target.value); if (errors.cardNumber) setErrors({ ...errors, cardNumber: undefined }) }} />
                         {errors.cardNumber && <p className="text-red-500 text-xs mt-1">{errors.cardNumber}</p>}
                       </div>
                       <div className={styles.formRow}>
                         <div className={styles.formGroup}>
                           <label htmlFor="expDate">Expiration Date (MM/YY)</label>
-                          <input type="text" id="expDate" required placeholder="MM/YY" value={expDate} onChange={e => { setExpDate(e.target.value); if(errors.expDate) setErrors({...errors, expDate: undefined})}} />
+                          <input type="text" id="expDate" required placeholder="MM/YY" value={expDate} onChange={e => { setExpDate(e.target.value); if (errors.expDate) setErrors({ ...errors, expDate: undefined }) }} />
                           {errors.expDate && <p className="text-red-500 text-xs mt-1">{errors.expDate}</p>}
                         </div>
                         <div className={styles.formGroup}>
                           <label htmlFor="cvc">Security Code (CVC)</label>
-                          <input type="text" id="cvc" required placeholder="123" value={cvc} onChange={e => { setCvc(e.target.value); if(errors.cvc) setErrors({...errors, cvc: undefined})}} />
+                          <input type="text" id="cvc" required placeholder="123" value={cvc} onChange={e => { setCvc(e.target.value); if (errors.cvc) setErrors({ ...errors, cvc: undefined }) }} />
                           {errors.cvc && <p className="text-red-500 text-xs mt-1">{errors.cvc}</p>}
                         </div>
                       </div>
@@ -288,7 +291,7 @@ export default function CheckoutClient() {
             {/* Order Summary */}
             <aside className={styles.summarySection}>
               <h2 className={styles.summaryTitle}>Order Summary</h2>
-              
+
               <div className={styles.itemList}>
                 {cartItems.map(({ product, quantity }) => (
                   <div key={product.id} className={styles.summaryItem}>
@@ -301,7 +304,7 @@ export default function CheckoutClient() {
                       <p className={styles.itemDesc}>{product.description}</p>
                     </div>
                     <div className={styles.itemPrice}>
-                      {formatPerfumePrice(product.price * quantity)}
+                      {formatPerfumePrice(product.new_price * quantity)}
                     </div>
                   </div>
                 ))}
@@ -329,7 +332,7 @@ export default function CheckoutClient() {
       {/* Left-Side Payment Modal */}
       {isPaymentModalOpen && (
         <div className={styles.leftModalOverlay} onClick={() => setIsPaymentModalOpen(false)}>
-          <motion.div 
+          <motion.div
             className={styles.leftModalContent}
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
@@ -343,12 +346,12 @@ export default function CheckoutClient() {
                 <X size={24} />
               </button>
             </div>
-            
+
             <div className={styles.leftModalBody}>
               <p className={styles.leftModalSub}>Select how you would like to pay for your order.</p>
-              
+
               <div className={styles.paymentOptionsList}>
-                <button 
+                <button
                   type="button"
                   className={`${styles.paymentOptionItem} ${paymentMethod === 'credit_card' ? styles.paymentOptionActive : ''}`}
                   onClick={() => { setPaymentMethod('credit_card'); setIsPaymentModalOpen(false); }}
@@ -361,7 +364,7 @@ export default function CheckoutClient() {
                   {paymentMethod === 'credit_card' && <CheckCircle size={18} className={styles.paymentOptionCheck} />}
                 </button>
 
-                <button 
+                <button
                   type="button"
                   className={`${styles.paymentOptionItem} ${paymentMethod === 'paypal' ? styles.paymentOptionActive : ''}`}
                   onClick={() => { setPaymentMethod('paypal'); setIsPaymentModalOpen(false); }}
@@ -374,7 +377,7 @@ export default function CheckoutClient() {
                   {paymentMethod === 'paypal' && <CheckCircle size={18} className={styles.paymentOptionCheck} />}
                 </button>
 
-                <button 
+                <button
                   type="button"
                   className={`${styles.paymentOptionItem} ${paymentMethod === 'cod' ? styles.paymentOptionActive : ''}`}
                   onClick={() => { setPaymentMethod('cod'); setIsPaymentModalOpen(false); }}

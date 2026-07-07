@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Autoplay, A11y } from "swiper/modules";
-import { PERFUME_CATALOG, formatPerfumePrice } from "../data/perfumeCatalog";
 import { useCart } from "./cart/CartProvider";
 import { useWishlist } from "./wishlist/WishlistProvider";
+import { fetchAllProducts, type ApiProduct } from "../lib/api";
 import "swiper/css";
 
 interface Product {
@@ -22,34 +22,38 @@ interface Product {
   rating: number;
   badges: { text: string; color: string; textColor?: string }[];
   outOfStock?: boolean;
-  isExternal?: boolean;
 }
 
-const productsData: Product[] = PERFUME_CATALOG.slice(0, 16).map((perfume) => {
-  const hasDiscount = perfume.id === 5;
-  const currentPrice = hasDiscount ? perfume.price * 0.9 : perfume.price;
-
+function mapApiProduct(p: ApiProduct): Product {
+  const hasDiscount = p.old_price > p.new_price;
   return {
-    id: perfume.id,
-    name: perfume.brand,
-    description: perfume.description,
-    price: formatPerfumePrice(currentPrice),
-    oldPrice: hasDiscount ? formatPerfumePrice(perfume.price) : undefined,
-    image: perfume.image,
+    id: p.id,
+    name: p.brand || p.name,
+    description: p.description,
+    price: `$${p.new_price.toFixed(2)}`,
+    oldPrice: hasDiscount ? `$${p.old_price.toFixed(2)}` : undefined,
+    image: p.image,
     rating: 5,
     badges: [
-      ...(hasDiscount ? [{ text: "-10%", color: "#000000" }] : []),
-      ...(perfume.id % 4 === 0 ? [{ text: "FEATURED", color: "#c8a96e" }] : []),
-      ...(perfume.id <= 6 && perfume.id !== 5 && perfume.id % 4 !== 0 ? [{ text: "NEW", color: "#ffd700", textColor: "#000" }] : []),
+      ...(hasDiscount ? [{ text: `-${Math.round(((p.old_price - p.new_price) / p.old_price) * 100)}%`, color: "#000000" }] : []),
+      ...(p.id <= 6 ? [{ text: "NEW", color: "#ffd700", textColor: "#000" }] : []),
+      ...(p.id % 4 === 0 ? [{ text: "FEATURED", color: "#c8a96e" }] : []),
     ],
   };
-});
+}
 
 export default function NewProducts() {
   const swiperRef = useRef<SwiperType | null>(null);
   const router = useRouter();
   const { add: addToCart } = useCart();
   const { add: addToWishlist } = useWishlist();
+  const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetchAllProducts().then((apiProducts) => {
+      setCurrentProducts(apiProducts.slice(0, 16).map(mapApiProduct));
+    });
+  }, []);
 
   const pauseMarquee = () => swiperRef.current?.autoplay?.stop();
   const resumeMarquee = () => swiperRef.current?.autoplay?.start();
@@ -70,8 +74,6 @@ export default function NewProducts() {
     addToCart(id, 1);
     router.push("/cart");
   };
-
-  const currentProducts = productsData;
 
   return (
     <section className="np-section">
@@ -95,17 +97,17 @@ export default function NewProducts() {
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
           }}
-          loop
+          loop={currentProducts.length >= 6}
           slidesPerView="auto"
           spaceBetween={16}
-          speed={16000}
+          speed={800}
           allowTouchMove
           grabCursor
-          autoplay={{
-            delay: 0,
+          autoplay={currentProducts.length >= 6 ? {
+            delay: 2500,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
-          }}
+          } : false}
           className="np-swiper"
         >
           {currentProducts.map((product, idx) => {
@@ -122,89 +124,89 @@ export default function NewProducts() {
                     className="np-card"
                     style={{ animationDelay: `${idx * 0.08}s` }}
                   >
-                  {/* Image wrapper */}
-                  <div className="np-card-img-wrap">
-                    {/* Left Badges */}
-                    {leftBadges.length > 0 && (
-                      <div className="np-badges-left">
-                        {leftBadges.map((b, i) => (
-                          <span key={i} className="np-badge" style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}>
-                            {b.text}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Right Badges */}
-                    {rightBadges.length > 0 && (
-                      <div className="np-badges-right">
-                        {rightBadges.map((b, i) => (
-                          <span key={i} className="np-badge" style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}>
-                            {b.text}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Product Image */}
-                    <div className="np-card-img">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        style={{ objectFit: "cover" }}
-                        sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
-                      />
-                    </div>
-
-                    {/* Hover Overlays */}
-                    <div className="np-card-hover-bg" />
-
-                    {/* Center Eye / Heart Action buttons */}
-                    <div className="np-hover-actions">
-                      <button className="np-action-btn" type="button" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                      </button>
-                      <button className="np-action-btn" type="button" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                        </svg>
-                      </button>
-                    </div>
-
-                    {/* Bottom Add to Cart Button */}
-                    <button className="np-atc-btn" type="button" onClick={(e) => handleAddToCart(e, product.id)}>
-                      ADD TO CART
-                    </button>
-                  </div>
-
-                  {/* Description Box */}
-                  <div className="np-card-info">
-                    <h3 className="np-card-name">{product.name}</h3>
-
-                    {/* Star Rating */}
-                    <div className="np-card-rating">
-                      {Array.from({ length: product.rating }).map((_, i) => (
-                        <span key={i} className="np-star">★</span>
-                      ))}
-                    </div>
-
-                    <p className="np-card-desc">{product.description}</p>
-
-                    {/* Prices */}
-                    <div className="np-card-prices">
-                      {product.oldPrice && (
-                        <span className="np-price-old">{product.oldPrice}</span>
+                    {/* Image wrapper */}
+                    <div className="np-card-img-wrap">
+                      {/* Left Badges */}
+                      {leftBadges.length > 0 && (
+                        <div className="np-badges-left">
+                          {leftBadges.map((b, i) => (
+                            <span key={i} className="np-badge" style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}>
+                              {b.text}
+                            </span>
+                          ))}
+                        </div>
                       )}
-                      <span className="np-price-current">{product.price}</span>
+
+                      {/* Right Badges */}
+                      {rightBadges.length > 0 && (
+                        <div className="np-badges-right">
+                          {rightBadges.map((b, i) => (
+                            <span key={i} className="np-badge" style={{ backgroundColor: b.color, color: b.textColor || '#fff' }}>
+                              {b.text}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Product Image */}
+                      <div className="np-card-img">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          style={{ objectFit: "cover" }}
+                          sizes="(max-width: 559px) 45vw, (max-width: 1189px) 30vw, 260px"
+                        />
+                      </div>
+
+                      {/* Hover Overlays */}
+                      <div className="np-card-hover-bg" />
+
+                      {/* Center Eye / Heart Action buttons */}
+                      <div className="np-hover-actions">
+                        <button className="np-action-btn" type="button" aria-label="Quick View" onClick={(e) => handleQuickView(e, product.id)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                        </button>
+                        <button className="np-action-btn" type="button" aria-label="Add to Wishlist" onClick={(e) => handleWishlist(e, product.id)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      {/* Bottom Add to Cart Button */}
+                      <button className="np-atc-btn" type="button" onClick={(e) => handleAddToCart(e, product.id)}>
+                        ADD TO CART
+                      </button>
                     </div>
-                  </div>
-                </article>
-              </Link>
-            </SwiperSlide>
+
+                    {/* Description Box */}
+                    <div className="np-card-info">
+                      <h3 className="np-card-name">{product.name}</h3>
+
+                      {/* Star Rating */}
+                      <div className="np-card-rating">
+                        {Array.from({ length: product.rating }).map((_, i) => (
+                          <span key={i} className="np-star">★</span>
+                        ))}
+                      </div>
+
+                      <p className="np-card-desc">{product.description}</p>
+
+                      {/* Prices */}
+                      <div className="np-card-prices">
+                        {product.oldPrice && (
+                          <span className="np-price-old">{product.oldPrice}</span>
+                        )}
+                        <span className="np-price-current">{product.price}</span>
+                      </div>
+                    </div>
+                  </article>
+                </Link>
+              </SwiperSlide>
             );
           })}
         </Swiper>
@@ -251,7 +253,6 @@ export default function NewProducts() {
 
         :global(.np-swiper .swiper-wrapper) {
           align-items: stretch;
-          transition-timing-function: linear !important;
         }
 
         @media (min-width: 640px) {

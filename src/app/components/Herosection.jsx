@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { fetchAllProducts } from "../lib/api";
 
 export default function Herosection() {
-  const leftSlides = [
+  const [leftSlides, setLeftSlides] = useState([
     {
       id: 1,
       image: "/images/primary_1.png",
@@ -29,11 +30,11 @@ export default function Herosection() {
       link: "/shop",
       theme: "light",
     },
-  ];
+  ]);
 
-  const rightSlides = [
+  const [rightSlides, setRightSlides] = useState([
     {
-      id: 1,
+      id: 4,
       image: "/images/primary_4.png",
       subtitle: "NEW BRAND",
       title: "TOUCH",
@@ -41,7 +42,7 @@ export default function Herosection() {
       theme: "light",
     },
     {
-      id: 2,
+      id: 5,
       image: "/images/primary_5.png",
       subtitle: "PURE SAND",
       title: "LUXURY",
@@ -49,14 +50,16 @@ export default function Herosection() {
       theme: "dark",
     },
     {
-      id: 3,
+      id: 6,
       image: "/images/primary_6.png",
       subtitle: "MINIMALIST",
       title: "SERUM",
       link: "/shop",
       theme: "light",
     },
-  ];
+  ]);
+
+
 
   const [currentLeft, setCurrentLeft] = useState(0);
   const [currentRight, setCurrentRight] = useState(0);

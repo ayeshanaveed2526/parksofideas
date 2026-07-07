@@ -127,7 +127,7 @@ export default function Footer() {
           {/* Left Column */}
           <div className="footer-col footer-left">
             <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <img src="/assets/logo.png" alt="ELIX BY IR Logo" style={{ height: '50px', objectFit: 'contain' }} />
+
               <span className="footer-logo-text">ELIX BY IR</span>
             </div>
             <p className="footer-desc">
