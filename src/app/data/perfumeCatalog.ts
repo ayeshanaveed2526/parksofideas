@@ -11,33 +11,33 @@ export interface PerfumeProduct {
 
 /** User-uploaded ELIX product shots — cycled across the catalog grid. */
 export const PRODUCT_GRID_IMAGES = [
-  "/images/products/elix-01.png",
-  "/images/products/elix-02.png",
-  "/images/products/elix-03.png",
-  "/images/products/elix-04.png",
-  "/images/products/elix-05.png",
-  "/images/products/elix-06.png",
-  "/images/products/elix-07.png",
-  "/images/products/elix-08.png",
-  "/images/products/elix-09.png",
-  "/images/products/elix-10.png",
+  "/assets/images/products/elix-01.png",
+  "/assets/images/products/elix-02.png",
+  "/assets/images/products/elix-03.png",
+  "/assets/images/products/elix-04.png",
+  "/assets/images/products/elix-05.png",
+  "/assets/images/products/elix-06.png",
+  "/assets/images/products/elix-07.png",
+  "/assets/images/products/elix-08.png",
+  "/assets/images/products/elix-09.png",
+  "/assets/images/products/elix-10.png",
 ] as const;
 
 export function getProductImageForId(id: number): string {
   const index = (id - 1) % 4;
-  if (index === 0) return "/images/products/top-cat-1.png";
-  if (index === 1) return "/images/products/top-cat-2.png";
-  if (index === 2) return "/images/products/top-cat-3.png";
-  if (index === 3) return "/images/products/top-cat-4.png";
+  if (index === 0) return "/assets/images/products/top-cat-1.png";
+  if (index === 1) return "/assets/images/products/top-cat-2.png";
+  if (index === 2) return "/assets/images/products/top-cat-3.png";
+  if (index === 3) return "/assets/images/products/top-cat-4.png";
   return PRODUCT_GRID_IMAGES[(id - 1) % PRODUCT_GRID_IMAGES.length];
 }
 
 export function getProductHoverImageForId(id: number): string | undefined {
   const index = (id - 1) % 4;
-  if (index === 0) return "/images/products/top-cat-1-hover.png";
-  if (index === 1) return "/images/products/top-cat-2-hover.png";
-  if (index === 2) return "/images/products/top-cat-3-hover.png";
-  if (index === 3) return "/images/products/top-cat-4-hover.png";
+  if (index === 0) return "/assets/images/products/top-cat-1-hover.png";
+  if (index === 1) return "/assets/images/products/top-cat-2-hover.png";
+  if (index === 2) return "/assets/images/products/top-cat-3-hover.png";
+  if (index === 3) return "/assets/images/products/top-cat-4-hover.png";
   return undefined;
 }
 

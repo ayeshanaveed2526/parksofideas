@@ -63,7 +63,7 @@ export default function MainNavbar() {
           {/* Logo */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
             <Link href="/" aria-label="Luchiana Home" className="shrink-0 flex items-center gap-2 hover-scale-sm transition-transform duration-300">
-              <img src="/logo.png" alt="ELIX BY IR Logo" className="h-[40px] md:h-[50px] object-contain" />
+              <img src="/assets/logo.png" alt="ELIX BY IR Logo" className="h-[40px] md:h-[50px] object-contain" />
               <span className="text-[20px] md:text-[24px] font-bold tracking-widest uppercase text-black" style={{ fontFamily: "Inter, sans-serif" }}>ELIX BY IR</span>
             </Link>
           </motion.div>

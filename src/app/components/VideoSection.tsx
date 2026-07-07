@@ -11,7 +11,7 @@ export default function VideoSection() {
       <div
         className="relative w-full h-full bg-[#fae8e2] bg-cover bg-center transition-all duration-700"
         style={{
-          backgroundImage: "url('/images/video-bg.png')",
+          backgroundImage: "url('/assets/images/video-bg.png')",
         }}
       >
         {isPlaying ? (

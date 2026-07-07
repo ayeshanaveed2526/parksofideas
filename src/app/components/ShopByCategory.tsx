@@ -71,7 +71,7 @@ export default function ShopByCategory() {
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('/images/marble-bg.png')",
+          backgroundImage: "url('/assets/images/marble-bg.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

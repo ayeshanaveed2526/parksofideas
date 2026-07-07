@@ -41,13 +41,13 @@ export default function ShopHero() {
       <div className="sh-slideshow" aria-hidden="true">
         <video
           ref={videoRef}
-          src="/generate_a_video_for_my_websit.mp4"
+          src="/assets/generate_a_video_for_my_websit.mp4"
           className="sh-video-bg"
           autoPlay
           loop
           muted={isMuted}
           playsInline
-          poster="/images/primary_2.png"
+          poster="/assets/images/primary_2.png"
         />
         {/* Gradient overlays for premium depth and readability */}
         <div className="sh-overlay-gradient" />

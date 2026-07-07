@@ -6,7 +6,7 @@ export default function FBottomBar() {
   const promotionalBanners = [
     {
       id: 1,
-      image: "/images/banner-golden.png",
+      image: "/assets/images/banner-golden.png",
       subtitle: "SIGNATURE",
       title: "GOLDEN OUD",
       link: "/shop",
@@ -14,7 +14,7 @@ export default function FBottomBar() {
     },
     {
       id: 2,
-      image: "/images/banner-blue.png",
+      image: "/assets/images/banner-blue.png",
       subtitle: "FRESH AQUATIC",
       title: "AZURE BLUE",
       link: "/shop",
@@ -22,7 +22,7 @@ export default function FBottomBar() {
     },
     {
       id: 3,
-      image: "/images/banner-gray.png",
+      image: "/assets/images/banner-gray.png",
       subtitle: "NEW ARRIVAL",
       title: "SILVER MUSK",
       link: "/shop",

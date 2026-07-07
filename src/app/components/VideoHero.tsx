@@ -27,7 +27,7 @@ export default function VideoHero() {
         playsInline
         preload="auto"
       >
-        <source src="/Generate_a_elegant_videos_of_p.mp4" type="video/mp4" />
+        <source src="/assets/Generate_a_elegant_videos_of_p.mp4" type="video/mp4" />
       </video>
 
     </section>
